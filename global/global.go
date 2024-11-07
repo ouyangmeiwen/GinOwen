@@ -3,7 +3,7 @@ package global
 import (
 	"sync"
 
-	"github.com/qiniu/qmgo"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
 
 	"github.com/redis/go-redis/v9"
@@ -34,7 +34,10 @@ type YarmConfig struct {
 	} `yaml:"redis"`
 
 	MongoDB struct {
-		URL string `yaml:"url"`
+		URI      string `yaml:"uri"`
+		Database string `yaml:"database"`
+		Username string `yaml:"username"`
+		Password string `yaml:"password"`
 	} `yaml:"mongodb"`
 }
 
@@ -42,7 +45,7 @@ var (
 	OWEN_DB     *gorm.DB
 	OWEN_DBList map[string]*gorm.DB
 	OWEN_REDIS  redis.UniversalClient
-	OWEN_MONGO  *qmgo.QmgoClient
+	OWEN_MONGO  *mongo.Client
 	OWEN_CONFIG YarmConfig
 	OWEN_LOCK   sync.RWMutex
 	OWEN_LOG    *zap.Logger

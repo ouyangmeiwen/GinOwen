@@ -4,11 +4,15 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/models"
 	"context"
+	"errors"
+	"fmt"
 	"log"
 	"os"
 	"time"
 
 	"github.com/redis/go-redis/v9"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/yaml.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -102,9 +106,42 @@ func InitRedis() {
 
 func AutoMigrateDB() {
 	// 自动迁移数据库结构
-	err := DB.AutoMigrate(&models.User{})
+	var err error
+	err = DB.AutoMigrate(&models.User{})
 	err = DB.AutoMigrate(&models.Order{})
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
 	}
+}
+
+// InitMongoDB 连接 MongoDB
+func InitMongoDB() (*mongo.Client, error) {
+	config := global.OWEN_CONFIG
+	if len(config.MongoDB.URI) <= 0 {
+		return nil, errors.New("入参不能空")
+	}
+	clientOptions := options.Client().ApplyURI(config.MongoDB.URI)
+	if config.MongoDB.Username != "" && config.MongoDB.Password != "" {
+		clientOptions.SetAuth(options.Credential{
+			Username: config.MongoDB.Username,
+			Password: config.MongoDB.Password,
+		})
+	}
+
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+	if err != nil {
+		return nil, err
+	}
+
+	// 检查连接
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println("Connected to MongoDB!")
+	global.OWEN_MONGO = client
+	return client, nil
 }
