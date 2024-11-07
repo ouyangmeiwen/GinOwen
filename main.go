@@ -4,10 +4,9 @@ import (
 	"GINOWEN/config"
 	"GINOWEN/docs"
 	"GINOWEN/initcontrollers"
-	"fmt"
-	"os/exec"
-
 	"GINOWEN/middlewares"
+	"GINOWEN/utils"
+	"fmt"
 	"log"
 
 	"GINOWEN/routes"
@@ -52,11 +51,12 @@ func main() {
 	// 注册路由
 	routes.RegisterUserRoutes(r, userController)
 	routes.RegisterOrderRoutes(r, orderController)
-
+	fmt.Println("========================================================")
 	port := 7899
 	url := "http://localhost:" + fmt.Sprint(port) + "/swagger-ui/index.html"
 	fmt.Println(url)
-	exec.Command("C:\\Windows\\System32\\cmd.exe", "/C", "start", url).Start()
+	fmt.Println("========================================================")
+	utils.OpenBrowser(url)
 
 	// 启动服务
 	if err := r.Run(":" + fmt.Sprint(port)); err != nil {
