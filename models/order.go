@@ -1,11 +1,11 @@
 package models
 
-import "gorm.io/gorm"
-
 // Order 订单模型
+// @Description 订单数据模型
+// @Tags Order
 type Order struct {
-	gorm.Model
-	UserID uint    `json:"user_id"`
-	Status string  `json:"status"`
-	Amount float64 `json:"amount"`
+	// @ID
+	ID       uint    `json:"id" gorm:"primaryKey"`
+	Amount   float64 `json:"amount" example:"100.50"`
+	Customer string  `json:"customer" example:"John Doe"`
 }

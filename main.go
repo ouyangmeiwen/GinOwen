@@ -3,6 +3,7 @@ package main
 import (
 	"GINOWEN/config"
 	"GINOWEN/initcontrollers"
+	"fmt"
 
 	"GINOWEN/middlewares"
 	"log"
@@ -38,6 +39,7 @@ func main() {
 	if err := r.Run(":7899"); err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("Swagger UI available at http://localhost:7899/swagger/index.html")
 
 	// 在应用结束时关闭数据库连接
 	defer func() {
