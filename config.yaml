@@ -1,6 +1,18 @@
+system:
+  port: 6789
+
 db:
   type: mysql # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
   url: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local"
+redis:
+  url: 127.0.0.1:6379,password=002161
+  db: 0
+mongodb:
+  url:
+
+
+
+
 
 # 如果是 PostgreSQL
 # db:

@@ -11,48 +11,49 @@ import (
 
 	"GINOWEN/routes"
 
-	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
-	// 初始化数据库
-	db := initcontrollers.InitDB()
 
-	// 初始化用户和订单控制器
-	userController := initcontrollers.InitUserController(db)
-	orderController := initcontrollers.InitOrderController(db)
-	// 创建 Gin 引擎
 	// 加载配置文件
-	config.LoadConfig()
+	config := config.LoadConfig()
 	// 创建 Gin 引擎
 	r := gin.New()
 	// 启用 CORS
-	r.Use(cors.Default())
+	// r.Use(cors.Default())
 	r.Use(gin.Recovery())
 	r.Use(middlewares.Cors())
+
 	// 如果 swagger.json 存放在 docs 目录下，确保提供静态文件服务
 	r.Static("/swagger", "./docs")
-
 	// 注册Swagger路由  要放到注册路由的后面
 	r.GET(docs.SwaggerInfo.BasePath+"/swagger-ui/*any", func(c *gin.Context) {
 		ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger/swagger.json"))(c)
 	})
 
 	// 添加中间件
-	api := r.Group("/api")
-
+	api := r.Group("/api")                //API开头的增加熔断
 	api.Use(middlewares.Recovery())       // 异常恢复
 	api.Use(middlewares.RateLimiter())    // 添加限流中间件
 	api.Use(middlewares.CircuitBreaker()) // 添加熔断中间件
 
+	// 初始化数据库
+	db := initcontrollers.InitDB()
+
+	// 初始化用户和订单控制器
+	userController := initcontrollers.InitUserController(db)
+	orderController := initcontrollers.InitOrderController(db)
+
 	// 注册路由
 	routes.RegisterUserRoutes(r, userController)
 	routes.RegisterOrderRoutes(r, orderController)
+
 	fmt.Println("========================================================")
-	port := 7899
+	port := config.System.Port
+
 	url := "http://localhost:" + fmt.Sprint(port) + "/swagger-ui/index.html"
 	fmt.Println(url)
 	fmt.Println("========================================================")
