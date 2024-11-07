@@ -1,0 +1,23 @@
+db:
+  type: mysql # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+  url: "root:abc%40123@tcp(127.0.0.1:3306)/ginowen?charset=utf8mb4&parseTime=True&loc=Local"
+
+# 如果是 PostgreSQL
+# db:
+#   type: postgres
+#   url: "user=postgres password=secret dbname=mydb host=127.0.0.1 port=5432 sslmode=disable"
+
+# 如果是 SQLite
+# db:
+#   type: sqlite
+#   url: "data.db"
+
+# 如果是 SQL Server
+# db:
+#   type: sqlserver
+#   url: "server=localhost;user id=sa;password=your_password;database=your_db"
+
+# 如果是 Oracle
+# db:
+#   type: oracle
+#   url: "user/password@localhost:1521/xe"
