@@ -14,16 +14,13 @@ import (
 )
 
 func InitAllRouter(r *gin.Engine) {
-	// 注册路由
-	RegisterUserRoutes(r)
-	RegisterOrderRoutes(r)
-}
-func InitApi(r *gin.Engine) {
 	// 添加中间件
 	api := r.Group("/api")          //API开头的增加熔断
 	api.Use(middlewares.Recovery()) // 异常恢复
-	//api.Use(middlewares.RateLimiter())    // 添加限流中间件
-	//api.Use(middlewares.CircuitBreaker()) // 添加熔断中间件
+
+	// 注册路由
+	RegisterUserRoutes(r)
+	RegisterOrderRoutes(r)
 }
 func InitSwag(r *gin.Engine) {
 	// 如果 swagger.json 存放在 docs 目录下，确保提供静态文件服务

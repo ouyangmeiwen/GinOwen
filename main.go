@@ -31,7 +31,6 @@ func main() {
 	r.Use(middlewares.Cors())
 
 	routers.InitSwag(r)      //生成swagger文档 Swag init
-	routers.InitApi(r)       //API控制
 	routers.InitAllRouter(r) //注册所有路由
 	routers.RunAsService(r)
 }
