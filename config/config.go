@@ -1,6 +1,7 @@
 package config
 
 import (
+	"GINOWEN/global"
 	"GINOWEN/models"
 	"log"
 	"os"
@@ -51,7 +52,8 @@ func LoadConfig() Config {
 	return config
 }
 
-func InitDB(config Config) *gorm.DB {
+func InitDB() *gorm.DB {
+	config := global.GVA_CONFIG
 	var dbErr error
 	switch config.DB.Type {
 	case "mysql":

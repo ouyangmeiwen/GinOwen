@@ -1,7 +1,6 @@
-package routes
+package routers
 
 import (
-	"GINOWEN/config"
 	"GINOWEN/docs"
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
@@ -34,9 +33,9 @@ func InitSwag(r *gin.Engine) {
 		ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger/swagger.json"))(c)
 	})
 }
-func RunAsService(r *gin.Engine, cfg config.Config) {
+func RunAsService(r *gin.Engine) {
 	fmt.Println("========================================================")
-	port := cfg.System.Port
+	port := global.GVA_CONFIG.System.Port
 	url := "http://localhost:" + fmt.Sprint(port) + "/swagger-ui/index.html"
 	fmt.Println(url)
 	fmt.Println("========================================================")

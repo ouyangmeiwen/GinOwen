@@ -4,7 +4,7 @@ import (
 	"GINOWEN/config"
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
-	"GINOWEN/routes"
+	"GINOWEN/routers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,8 +12,8 @@ import (
 func main() {
 
 	// 加载配置文件
-	cfg := config.LoadConfig()
-	global.GVA_DB = config.InitDB(cfg)
+	global.GVA_CONFIG = config.LoadConfig()
+	global.GVA_DB = config.InitDB()
 	config.AutoMigrateDB() //数据库自动迁移
 
 	// 创建 Gin 引擎
@@ -22,8 +22,8 @@ func main() {
 	r.Use(gin.Recovery())
 	r.Use(middlewares.Cors())
 
-	routes.InitSwag(r)
-	routes.InitApi(r)       //API控制
-	routes.InitAllRouter(r) //注册所有路由
-	routes.RunAsService(r, cfg)
+	routers.InitSwag(r)      //生成swagger文档 Swag init
+	routers.InitApi(r)       //API控制
+	routers.InitAllRouter(r) //注册所有路由
+	routers.RunAsService(r)
 }
