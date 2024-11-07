@@ -8,16 +8,26 @@ import (
 	"github.com/sony/gobreaker"
 )
 
-var cbSettings = gobreaker.Settings{
-	Name:        "HTTP Circuit Breaker",
-	MaxRequests: 5,
-	Interval:    0,
-	Timeout:     5 * time.Second,
-}
-var breaker = gobreaker.NewCircuitBreaker(cbSettings)
-
 // CircuitBreaker 熔断中间件
-func CircuitBreaker() gin.HandlerFunc {
+// 可以通过传递自定义的参数来控制熔断器的行为
+func CircuitBreaker(maxRequests uint32, timeout time.Duration) gin.HandlerFunc {
+	// 默认配置
+	if maxRequests == 0 {
+		maxRequests = 5 // 默认最大请求数
+	}
+	if timeout == 0 {
+		timeout = 5 * time.Second // 默认熔断超时时间
+	}
+
+	// 创建一个新的熔断器
+	cbSettings := gobreaker.Settings{
+		Name:        "HTTP Circuit Breaker",
+		MaxRequests: maxRequests,
+		Interval:    0, // 可选配置：用来控制熔断器的状态更新频率，通常设为0
+		Timeout:     timeout,
+	}
+	breaker := gobreaker.NewCircuitBreaker(cbSettings)
+
 	return func(c *gin.Context) {
 		_, err := breaker.Execute(func() (interface{}, error) {
 			c.Next()

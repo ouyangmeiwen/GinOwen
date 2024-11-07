@@ -11,15 +11,14 @@ import (
 )
 
 func main() {
-
+	// 加载配置文件
+	global.OWEN_CONFIG = config.LoadConfig()
 	// 初始化日志
 	utils.InitLogger()
 	defer utils.Sync()
 
 	global.OWEN_LOG.Debug("开始程序！")
 
-	// 加载配置文件
-	global.OWEN_CONFIG = config.LoadConfig()
 	global.OWEN_DB = config.InitDB()
 	config.InitRedis() //初始化redis
 

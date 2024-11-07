@@ -2,3 +2,5 @@
 {"level":"DEBUG","time":"2024-11-08T00:07:30.350+0800","caller":"GinOwen/main.go:19","msg":"开始程序！"}
 {"level":"DEBUG","time":"2024-11-08T00:08:22.446+0800","caller":"GinOwen/main.go:19","msg":"开始程序！"}
 {"level":"DEBUG","time":"2024-11-08T00:15:34.638+0800","caller":"GinOwen/main.go:19","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T00:28:05.128+0800","caller":"GinOwen/main.go:20","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T00:28:30.562+0800","caller":"GinOwen/main.go:20","msg":"开始程序！"}
