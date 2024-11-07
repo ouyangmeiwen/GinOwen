@@ -5,11 +5,18 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
 	"GINOWEN/routers"
+	"GINOWEN/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+
+	// 初始化日志
+	utils.InitLogger()
+	defer utils.Sync()
+
+	global.OWEN_LOG.Debug("开始程序！")
 
 	// 加载配置文件
 	global.OWEN_CONFIG = config.LoadConfig()

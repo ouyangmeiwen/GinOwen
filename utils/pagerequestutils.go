@@ -1,4 +1,4 @@
-package gpiutils
+package utils
 
 type PagedResultRequest struct {
 	SkipCount      int `json:"SkipCount" form:"SkipCount"  default:"0"  validate:"min=-1,max=99999"`            //跳过多少数量

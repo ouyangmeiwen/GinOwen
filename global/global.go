@@ -4,6 +4,7 @@ import (
 	"sync"
 
 	"github.com/qiniu/qmgo"
+	"go.uber.org/zap"
 
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
@@ -44,6 +45,7 @@ var (
 	OWEN_MONGO  *qmgo.QmgoClient
 	OWEN_CONFIG YarmConfig
 	OWEN_LOCK   sync.RWMutex
+	OWEN_LOG    *zap.Logger
 )
 
 // GetGlobalDBByDBName 通过名称获取db list中的db

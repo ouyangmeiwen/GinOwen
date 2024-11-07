@@ -1,4 +1,4 @@
-package gpiutils
+package utils
 
 type RespBaseResult struct {
 	//Success bool   `json:"Success" form:"Success"  ` //是否成功

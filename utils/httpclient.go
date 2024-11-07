@@ -1,4 +1,4 @@
-package gpiutils
+package utils
 
 import (
 	"bytes"
