@@ -12,8 +12,8 @@ import (
 func main() {
 
 	// 加载配置文件
-	global.GVA_CONFIG = config.LoadConfig()
-	global.GVA_DB = config.InitDB()
+	global.OWEN_CONFIG = config.LoadConfig()
+	global.OWEN_DB = config.InitDB()
 	config.AutoMigrateDB() //数据库自动迁移
 
 	// 创建 Gin 引擎

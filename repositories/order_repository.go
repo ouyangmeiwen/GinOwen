@@ -11,13 +11,13 @@ type GormOrderRepository struct {
 
 // CreateOrder 创建订单
 func (r *GormOrderRepository) CreateOrder(order *models.Order) error {
-	return global.GVA_DB.Create(order).Error
+	return global.OWEN_DB.Create(order).Error
 }
 
 // GetAllOrders 获取所有订单
 func (r *GormOrderRepository) GetAllOrders() ([]models.Order, error) {
 	var orders []models.Order
-	if err := global.GVA_DB.Find(&orders).Error; err != nil {
+	if err := global.OWEN_DB.Find(&orders).Error; err != nil {
 		return nil, err
 	}
 	return orders, nil

@@ -35,7 +35,7 @@ func InitSwag(r *gin.Engine) {
 }
 func RunAsService(r *gin.Engine) {
 	fmt.Println("========================================================")
-	port := global.GVA_CONFIG.System.Port
+	port := global.OWEN_CONFIG.System.Port
 	url := "http://localhost:" + fmt.Sprint(port) + "/swagger-ui/index.html"
 	fmt.Println(url)
 	fmt.Println("========================================================")
@@ -49,8 +49,8 @@ func RunAsService(r *gin.Engine) {
 	// 在应用结束时关闭数据库连接
 	defer func() {
 		// 确保关闭数据库连接
-		if global.GVA_DB != nil {
-			sqlDB, err := global.GVA_DB.DB()
+		if global.OWEN_DB != nil {
+			sqlDB, err := global.OWEN_DB.DB()
 			if err == nil {
 				sqlDB.Close()
 			}

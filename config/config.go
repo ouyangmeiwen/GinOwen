@@ -17,34 +17,14 @@ import (
 
 var DB *gorm.DB
 
-type Config struct {
-	System struct {
-		Port int `yaml:"port"`
-	} `yaml:"system"`
-
-	DB struct {
-		Type string `yaml:"type"`
-		URL  string `yaml:"url"`
-	} `yaml:"db"`
-
-	Redis struct {
-		URL string `yaml:"url"`
-		DB  int    `yaml:"db"`
-	} `yaml:"redis"`
-
-	MongoDB struct {
-		URL string `yaml:"url"`
-	} `yaml:"mongodb"`
-}
-
-func LoadConfig() Config {
+func LoadConfig() global.YarmConfig {
 	configFile, err := os.Open("config.yaml")
 	if err != nil {
 		log.Fatalf("Error opening config file: %v", err)
 	}
 	defer configFile.Close()
 
-	var config Config
+	var config global.YarmConfig
 	decoder := yaml.NewDecoder(configFile)
 	if err := decoder.Decode(&config); err != nil {
 		log.Fatalf("Error decoding config file: %v", err)
@@ -53,7 +33,7 @@ func LoadConfig() Config {
 }
 
 func InitDB() *gorm.DB {
-	config := global.GVA_CONFIG
+	config := global.OWEN_CONFIG
 	var dbErr error
 	switch config.DB.Type {
 	case "mysql":
