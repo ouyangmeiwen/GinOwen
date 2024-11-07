@@ -15,6 +15,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var DB *gorm.DB
@@ -37,15 +38,26 @@ func LoadConfig() global.YarmConfig {
 func InitDB() *gorm.DB {
 	config := global.OWEN_CONFIG
 	var dbErr error
+
+	// 配置 Gorm 日志
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io.Writer 输出日志
+		logger.Config{
+			SlowThreshold: time.Second, // 慢查询 SQL 阈值
+			LogLevel:      logger.Info, // 日志级别
+			Colorful:      true,        // 彩色打印
+		},
+	)
+
 	switch config.DB.Type {
 	case "mysql":
-		DB, dbErr = gorm.Open(mysql.Open(config.DB.Mysql), &gorm.Config{})
+		DB, dbErr = gorm.Open(mysql.Open(config.DB.Mysql), &gorm.Config{Logger: newLogger})
 	case "postgres":
-		DB, dbErr = gorm.Open(postgres.Open(config.DB.Postgres), &gorm.Config{})
+		DB, dbErr = gorm.Open(postgres.Open(config.DB.Postgres), &gorm.Config{Logger: newLogger})
 	case "sqlite":
-		DB, dbErr = gorm.Open(sqlite.Open(config.DB.Sqlite), &gorm.Config{})
+		DB, dbErr = gorm.Open(sqlite.Open(config.DB.Sqlite), &gorm.Config{Logger: newLogger})
 	case "sqlserver":
-		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.Mssql), &gorm.Config{})
+		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.Mssql), &gorm.Config{Logger: newLogger})
 	default:
 		log.Fatalf("Unsupported database type: %s", config.DB.Type)
 	}
