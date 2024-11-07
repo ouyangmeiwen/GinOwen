@@ -29,7 +29,7 @@ func NewOrderController(orderService *services.OrderService) *OrderController {
 // @Success 201 {object} response.CommonResponse "成功创建的订单信息"
 // @Failure 400 {object} response.CommonResponse "无效的请求"
 // @Failure 500 {object} response.CommonResponse "服务器内部错误"
-// @Router /orders [post]
+// @Router /api/orders/CreateOrder [post]
 func (c *OrderController) CreateOrder(ctx *gin.Context) {
 	var order models.Order
 	if err := ctx.ShouldBindJSON(&order); err != nil {
@@ -63,7 +63,7 @@ func (c *OrderController) CreateOrder(ctx *gin.Context) {
 // @Produce  json
 // @Success 200 {object} response.CommonResponse "订单列表"
 // @Failure 500 {object} response.CommonResponse "服务器内部错误"
-// @Router /orders [get]
+// @Router /api/orders/GetOrders [get]
 func (c *OrderController) GetOrders(ctx *gin.Context) {
 	orders, err := c.OrderService.GetAllOrders()
 	if err != nil {

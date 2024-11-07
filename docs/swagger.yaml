@@ -33,25 +33,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /orders:
-    get:
-      consumes:
-      - application/json
-      description: 获取所有订单信息
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 订单列表
-          schema:
-            $ref: '#/definitions/response.CommonResponse'
-        "500":
-          description: 服务器内部错误
-          schema:
-            $ref: '#/definitions/response.CommonResponse'
-      summary: 获取所有订单
-      tags:
-      - orders
+  /api/orders/CreateOrder:
     post:
       consumes:
       - application/json
@@ -81,25 +63,26 @@ paths:
       summary: 创建订单
       tags:
       - orders
-  /users:
+  /api/orders/GetOrders:
     get:
       consumes:
       - application/json
-      description: 获取所有用户信息
+      description: 获取所有订单信息
       produces:
       - application/json
       responses:
         "200":
-          description: 获取到的所有用户列表
+          description: 订单列表
           schema:
             $ref: '#/definitions/response.CommonResponse'
         "500":
-          description: 内部服务器错误
+          description: 服务器内部错误
           schema:
             $ref: '#/definitions/response.CommonResponse'
-      summary: 获取所有用户
+      summary: 获取所有订单
       tags:
-      - users
+      - orders
+  /api/user/CreateUser:
     post:
       consumes:
       - application/json
@@ -127,6 +110,25 @@ paths:
           schema:
             $ref: '#/definitions/response.CommonResponse'
       summary: 创建新用户
+      tags:
+      - users
+  /api/user/GetUsers:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有用户信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取到的所有用户列表
+          schema:
+            $ref: '#/definitions/response.CommonResponse'
+        "500":
+          description: 内部服务器错误
+          schema:
+            $ref: '#/definitions/response.CommonResponse'
+      summary: 获取所有用户
       tags:
       - users
 swagger: "2.0"

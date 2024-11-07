@@ -15,34 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/orders": {
-            "get": {
-                "description": "获取所有订单信息",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "summary": "获取所有订单",
-                "responses": {
-                    "200": {
-                        "description": "订单列表",
-                        "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "服务器内部错误",
-                        "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
-                        }
-                    }
-                }
-            },
+        "/api/orders/CreateOrder": {
             "post": {
                 "description": "创建新的订单并返回订单信息",
                 "consumes": [
@@ -88,9 +61,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/users": {
+        "/api/orders/GetOrders": {
             "get": {
-                "description": "获取所有用户信息",
+                "description": "获取所有订单信息",
                 "consumes": [
                     "application/json"
                 ],
@@ -98,24 +71,26 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "orders"
                 ],
-                "summary": "获取所有用户",
+                "summary": "获取所有订单",
                 "responses": {
                     "200": {
-                        "description": "获取到的所有用户列表",
+                        "description": "订单列表",
                         "schema": {
                             "$ref": "#/definitions/response.CommonResponse"
                         }
                     },
                     "500": {
-                        "description": "内部服务器错误",
+                        "description": "服务器内部错误",
                         "schema": {
                             "$ref": "#/definitions/response.CommonResponse"
                         }
                     }
                 }
-            },
+            }
+        },
+        "/api/user/CreateUser": {
             "post": {
                 "description": "创建一个新的用户并返回用户信息",
                 "consumes": [
@@ -154,6 +129,35 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "创建用户失败",
+                        "schema": {
+                            "$ref": "#/definitions/response.CommonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/GetUsers": {
+            "get": {
+                "description": "获取所有用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "获取所有用户",
+                "responses": {
+                    "200": {
+                        "description": "获取到的所有用户列表",
+                        "schema": {
+                            "$ref": "#/definitions/response.CommonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "内部服务器错误",
                         "schema": {
                             "$ref": "#/definitions/response.CommonResponse"
                         }

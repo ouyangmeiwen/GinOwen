@@ -8,9 +8,9 @@ import (
 
 // RegisterRoutes 注册所有路由
 func RegisterUserRoutes(r *gin.Engine, userController *controllers.UserController) {
-	api := r.Group("/api")
+	api := r.Group("api/user")
 	{
-		api.GET("/users", userController.GetUsers)
-		api.POST("/users", userController.CreateUser)
+		api.GET("GetUsers", userController.GetUsers)
+		api.POST("CreateUser", userController.CreateUser)
 	}
 }

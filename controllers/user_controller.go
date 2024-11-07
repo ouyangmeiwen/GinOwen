@@ -27,7 +27,7 @@ func NewUserController(userService *services.UserService) *UserController {
 // @Produce  json
 // @Success 200 {object} response.CommonResponse "获取到的所有用户列表"
 // @Failure 500 {object} response.CommonResponse "内部服务器错误"
-// @Router /users [get]
+// @Router /api/user/GetUsers [get]
 func (c *UserController) GetUsers(ctx *gin.Context) {
 	users, err := c.UserService.GetAllUsers()
 	if err != nil {
@@ -55,7 +55,7 @@ func (c *UserController) GetUsers(ctx *gin.Context) {
 // @Success 200 {object} response.CommonResponse "成功创建的用户信息"
 // @Failure 400 {object} response.CommonResponse "无效的输入"
 // @Failure 500 {object} response.CommonResponse "创建用户失败"
-// @Router /users [post]
+// @Router /api/user/CreateUser [post]
 func (c *UserController) CreateUser(ctx *gin.Context) {
 	var req request.UserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
