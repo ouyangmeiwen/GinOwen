@@ -26,6 +26,7 @@ func main() {
 	r := gin.New()
 	// 添加中间件
 	api := r.Group("/api")
+	api.Use(middlewares.RateLimiter())    // 异常恢复
 	api.Use(middlewares.RateLimiter())    // 添加限流中间件
 	api.Use(middlewares.CircuitBreaker()) // 添加熔断中间件
 

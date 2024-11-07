@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"GINOWEN/models/request"
 	"GINOWEN/services"
 	"net/http"
 
@@ -25,7 +26,7 @@ func (c *UserController) GetUsers(ctx *gin.Context) {
 }
 
 func (c *UserController) CreateUser(ctx *gin.Context) {
-	var req services.UserRequest
+	var req request.UserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		return
