@@ -15,7 +15,7 @@ db:
 # 如果是 SQL Server
 # db:
 #   type: sqlserver
-#   url: "server=localhost;user id=sa;password=your_password;database=your_db"
+#   url: "server=192.168.8.75,1433;user id=sa;password=123456;database=owen"
 
 # 如果是 Oracle
 # db:

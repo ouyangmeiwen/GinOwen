@@ -35,7 +35,7 @@ func main() {
 	routes.RegisterOrderRoutes(r, orderController)
 
 	// 启动服务
-	if err := r.Run("7899"); err != nil {
+	if err := r.Run(":7899"); err != nil {
 		log.Fatal(err)
 	}
 
