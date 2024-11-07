@@ -3,7 +3,6 @@ package controllers
 import (
 	"GINOWEN/models"
 	"GINOWEN/models/response"
-	"GINOWEN/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,12 +10,6 @@ import (
 
 // OrderController 订单控制器
 type OrderController struct {
-	OrderService *services.OrderService
-}
-
-// NewOrderController 创建 OrderController
-func NewOrderController(orderService *services.OrderService) *OrderController {
-	return &OrderController{OrderService: orderService}
 }
 
 // CreateOrder 创建订单
@@ -40,7 +33,7 @@ func (c *OrderController) CreateOrder(ctx *gin.Context) {
 		})
 		return
 	}
-	if err := c.OrderService.CreateOrder(&order); err != nil {
+	if err := ServicesApp.orderService.CreateOrder(&order); err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
 			Code:    http.StatusInternalServerError,
 			Message: "Failed to create order",
@@ -65,7 +58,7 @@ func (c *OrderController) CreateOrder(ctx *gin.Context) {
 // @Failure 500 {object} response.CommonResponse "服务器内部错误"
 // @Router /api/orders/GetOrders [get]
 func (c *OrderController) GetOrders(ctx *gin.Context) {
-	orders, err := c.OrderService.GetAllOrders()
+	orders, err := ServicesApp.orderService.GetAllOrders()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
 			Code:    http.StatusInternalServerError,

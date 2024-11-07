@@ -3,7 +3,6 @@ package controllers
 import (
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
-	"GINOWEN/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,12 +10,6 @@ import (
 
 // UserController 用户控制器
 type UserController struct {
-	UserService *services.UserService
-}
-
-// NewUserController 创建一个新的 UserController 实例
-func NewUserController(userService *services.UserService) *UserController {
-	return &UserController{UserService: userService}
 }
 
 // GetUsers 获取所有用户
@@ -29,7 +22,7 @@ func NewUserController(userService *services.UserService) *UserController {
 // @Failure 500 {object} response.CommonResponse "内部服务器错误"
 // @Router /api/user/GetUsers [get]
 func (c *UserController) GetUsers(ctx *gin.Context) {
-	users, err := c.UserService.GetAllUsers()
+	users, err := ServicesApp.userService.GetAllUsers()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
 			Code:    http.StatusInternalServerError,
@@ -67,7 +60,7 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	user, err := c.UserService.CreateUser(req)
+	user, err := ServicesApp.userService.CreateUser(req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
 			Code:    http.StatusInternalServerError,

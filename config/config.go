@@ -83,12 +83,14 @@ func InitDB(config Config) *gorm.DB {
 	sqlDB.SetMaxIdleConns(10)                  // 最大空闲连接数
 	sqlDB.SetConnMaxLifetime(30 * time.Minute) // 连接的最大生命周期
 
-	// 自动迁移数据库结构
-	err = DB.AutoMigrate(&models.User{})
-	err = DB.AutoMigrate(&models.Order{})
+	return DB
+}
 
+func AutoMigrateDB() {
+	// 自动迁移数据库结构
+	err := DB.AutoMigrate(&models.User{})
+	err = DB.AutoMigrate(&models.Order{})
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
 	}
-	return DB
 }

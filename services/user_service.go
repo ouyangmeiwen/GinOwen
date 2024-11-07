@@ -4,21 +4,15 @@ import (
 	"GINOWEN/models"
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
-	"GINOWEN/repositories"
 
 	"gorm.io/gorm"
 )
 
 type UserService struct {
-	Repo repositories.UserRepository
-}
-
-func NewUserService(repo repositories.UserRepository) *UserService {
-	return &UserService{Repo: repo}
 }
 
 func (s *UserService) GetAllUsers() ([]response.UserResponse, error) {
-	users, err := s.Repo.GetAllUsers()
+	users, err := RepoApp.userRepo.GetAllUsers()
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +29,7 @@ func (s *UserService) GetAllUsers() ([]response.UserResponse, error) {
 
 func (s *UserService) CreateUser(userRequest request.UserRequest) (response.UserResponse, error) {
 	user := models.User{Name: userRequest.Name}
-	if err := s.Repo.CreateUser(&user); err != nil {
+	if err := RepoApp.userRepo.CreateUser(&user); err != nil {
 		return response.UserResponse{}, err
 	}
 	return response.UserResponse{
@@ -45,8 +39,8 @@ func (s *UserService) CreateUser(userRequest request.UserRequest) (response.User
 }
 
 func (s *UserService) UpdateUserAndCreateOrder(userID uint, order *models.User) error {
-	return s.Repo.ExecuteInTransaction(func(tx *gorm.DB) error {
-		if err := s.Repo.UpdateUser(userID, map[string]interface{}{"status": "updated"}); err != nil {
+	return RepoApp.userRepo.ExecuteInTransaction(func(tx *gorm.DB) error {
+		if err := RepoApp.userRepo.UpdateUser(userID, map[string]interface{}{"status": "updated"}); err != nil {
 			return err
 		}
 
