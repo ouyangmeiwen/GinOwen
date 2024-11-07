@@ -5,6 +5,7 @@ import (
 	"GINOWEN/docs"
 	"GINOWEN/initcontrollers"
 	"fmt"
+	"os/exec"
 
 	"GINOWEN/middlewares"
 	"log"
@@ -32,15 +33,19 @@ func main() {
 	// 启用 CORS
 	r.Use(cors.Default())
 	r.Use(gin.Recovery())
+	r.Use(middlewares.Cors())
+	// 如果 swagger.json 存放在 docs 目录下，确保提供静态文件服务
+	r.Static("/swagger", "./docs")
+
 	// 注册Swagger路由  要放到注册路由的后面
-	r.GET(docs.SwaggerInfo.BasePath+"/swagger/*any", func(c *gin.Context) {
-		ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger.json"))(c)
+	r.GET(docs.SwaggerInfo.BasePath+"/swagger-ui/*any", func(c *gin.Context) {
+		ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger/swagger.json"))(c)
 	})
 
 	// 添加中间件
 	api := r.Group("/api")
 
-	api.Use(middlewares.RateLimiter())    // 异常恢复
+	api.Use(middlewares.Recovery())       // 异常恢复
 	api.Use(middlewares.RateLimiter())    // 添加限流中间件
 	api.Use(middlewares.CircuitBreaker()) // 添加熔断中间件
 
@@ -48,11 +53,15 @@ func main() {
 	routes.RegisterUserRoutes(r, userController)
 	routes.RegisterOrderRoutes(r, orderController)
 
+	port := 7899
+	url := "http://localhost:" + fmt.Sprint(port) + "/swagger-ui/index.html"
+	fmt.Println(url)
+	exec.Command("C:\\Windows\\System32\\cmd.exe", "/C", "start", url).Start()
+
 	// 启动服务
-	if err := r.Run(":7899"); err != nil {
+	if err := r.Run(":" + fmt.Sprint(port)); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Swagger UI available at http://localhost:7899/swagger/index.html")
 
 	// 在应用结束时关闭数据库连接
 	defer func() {
