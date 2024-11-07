@@ -10,7 +10,10 @@ import (
 
 	"GINOWEN/routes"
 
+	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -25,6 +28,9 @@ func main() {
 	config.LoadConfig()
 	// 创建 Gin 引擎
 	r := gin.New()
+	// 启用 CORS
+	r.Use(cors.Default())
+
 	// 添加中间件
 	api := r.Group("/api")
 	api.Use(middlewares.RateLimiter())    // 异常恢复
@@ -34,6 +40,12 @@ func main() {
 	// 注册路由
 	routes.RegisterUserRoutes(r, userController)
 	routes.RegisterOrderRoutes(r, orderController)
+
+	// 注册Swagger路由
+	r.GET("/swagger/*any", func(c *gin.Context) {
+		fmt.Println("Swagger route accessed") // 这是调试日志
+		ginSwagger.WrapHandler(swaggerFiles.Handler)(c)
+	})
 
 	// 启动服务
 	if err := r.Run(":7899"); err != nil {
