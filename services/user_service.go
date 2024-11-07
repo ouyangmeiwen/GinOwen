@@ -1,18 +1,18 @@
 package services
 
 import (
+	"GINOWEN/global"
 	"GINOWEN/models"
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
-
-	"gorm.io/gorm"
 )
 
 type UserService struct {
 }
 
 func (s *UserService) GetAllUsers() ([]response.UserResponse, error) {
-	users, err := RepoApp.userRepo.GetAllUsers()
+	var users []models.User
+	err := global.OWEN_DB.Find(&users).Error
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func (s *UserService) GetAllUsers() ([]response.UserResponse, error) {
 
 func (s *UserService) CreateUser(userRequest request.UserRequest) (response.UserResponse, error) {
 	user := models.User{Name: userRequest.Name}
-	if err := RepoApp.userRepo.CreateUser(&user); err != nil {
+	if err := global.OWEN_DB.Create(user).Error; err != nil {
 		return response.UserResponse{}, err
 	}
 	return response.UserResponse{
@@ -39,15 +39,27 @@ func (s *UserService) CreateUser(userRequest request.UserRequest) (response.User
 }
 
 func (s *UserService) UpdateUserAndCreateOrder(userID uint, order *models.User) error {
-	return RepoApp.userRepo.ExecuteInTransaction(func(tx *gorm.DB) error {
-		if err := RepoApp.userRepo.UpdateUser(userID, map[string]interface{}{"status": "updated"}); err != nil {
-			return err
-		}
-
-		if err := tx.Create(order).Error; err != nil {
-			return err
-		}
-
-		return nil
-	})
+	// 开启事务
+	tx := global.OWEN_DB.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+	// 使用事务进行更新操作
+	err := tx.Model(&models.User{}).Where("id = ?", userID).Updates(map[string]interface{}{"status": "updated"}).Error
+	if err != nil {
+		// 更新失败，回滚事务
+		tx.Rollback()
+		return err
+	}
+	// 使用事务进行创建操作
+	if err := tx.Create(order).Error; err != nil {
+		// 创建失败，回滚事务
+		tx.Rollback()
+		return err
+	}
+	// 提交事务
+	if err := tx.Commit().Error; err != nil {
+		return err
+	}
+	return nil // 成功
 }
