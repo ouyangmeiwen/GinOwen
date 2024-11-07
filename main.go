@@ -14,6 +14,8 @@ func main() {
 	// 加载配置文件
 	global.OWEN_CONFIG = config.LoadConfig()
 	global.OWEN_DB = config.InitDB()
+	config.InitRedis() //初始化redis
+
 	config.AutoMigrateDB() //数据库自动迁移
 
 	// 创建 Gin 引擎

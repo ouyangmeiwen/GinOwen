@@ -3,10 +3,12 @@ package config
 import (
 	"GINOWEN/global"
 	"GINOWEN/models"
+	"context"
 	"log"
 	"os"
 	"time"
 
+	"github.com/redis/go-redis/v9"
 	"gopkg.in/yaml.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -37,13 +39,13 @@ func InitDB() *gorm.DB {
 	var dbErr error
 	switch config.DB.Type {
 	case "mysql":
-		DB, dbErr = gorm.Open(mysql.Open(config.DB.URL), &gorm.Config{})
+		DB, dbErr = gorm.Open(mysql.Open(config.DB.Mysql), &gorm.Config{})
 	case "postgres":
-		DB, dbErr = gorm.Open(postgres.Open(config.DB.URL), &gorm.Config{})
+		DB, dbErr = gorm.Open(postgres.Open(config.DB.Postgres), &gorm.Config{})
 	case "sqlite":
-		DB, dbErr = gorm.Open(sqlite.Open(config.DB.URL), &gorm.Config{})
+		DB, dbErr = gorm.Open(sqlite.Open(config.DB.Sqlite), &gorm.Config{})
 	case "sqlserver":
-		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.URL), &gorm.Config{})
+		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.Mssql), &gorm.Config{})
 	default:
 		log.Fatalf("Unsupported database type: %s", config.DB.Type)
 	}
@@ -61,11 +63,29 @@ func InitDB() *gorm.DB {
 		log.Fatalf("Failed to get database instance: %v", err)
 	}
 
-	sqlDB.SetMaxOpenConns(100)                 // 最大连接数
-	sqlDB.SetMaxIdleConns(10)                  // 最大空闲连接数
-	sqlDB.SetConnMaxLifetime(30 * time.Minute) // 连接的最大生命周期
+	sqlDB.SetMaxOpenConns(config.DB.MaxOpenConns)                                      // 最大连接数
+	sqlDB.SetMaxIdleConns(config.DB.MaxIdleConns)                                      // 最大空闲连接数
+	sqlDB.SetConnMaxLifetime((time.Duration(config.DB.ConnMaxLifetime)) * time.Minute) // 连接的最大生命周期
 
 	return DB
+}
+func InitRedis() {
+	redisCfg := global.OWEN_CONFIG.Redis
+	if len(redisCfg.Addr) <= 0 {
+		return
+	}
+	var client redis.UniversalClient
+	client = redis.NewClient(&redis.Options{
+		Addr:     redisCfg.Addr,
+		Password: redisCfg.Password,
+		DB:       redisCfg.DB,
+	})
+	_, err := client.Ping(context.Background()).Result()
+	if err != nil {
+		panic(err)
+	} else {
+		global.OWEN_REDIS = client
+	}
 }
 
 func AutoMigrateDB() {

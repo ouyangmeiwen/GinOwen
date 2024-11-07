@@ -15,13 +15,21 @@ type YarmConfig struct {
 	} `yaml:"system"`
 
 	DB struct {
-		Type string `yaml:"type"`
-		URL  string `yaml:"url"`
+		Type            string `yaml:"type"`
+		Mysql           string `yaml:"mysql"`
+		Mssql           string `yaml:"mssql"`
+		Oracle          string `yaml:"oracle"`
+		Postgres        string `yaml:"postgres"`
+		Sqlite          string `yaml:"sqlite"`
+		MaxOpenConns    int    `yaml:"maxopenconns"`
+		MaxIdleConns    int    `yaml:"maxidleconns"`
+		ConnMaxLifetime int    `yaml:"connmaxlifetime"`
 	} `yaml:"db"`
 
 	Redis struct {
-		URL string `yaml:"url"`
-		DB  int    `yaml:"db"`
+		Addr     string `yaml:"addr"`
+		Password string `yaml:"password"`
+		DB       int    `yaml:"db"`
 	} `yaml:"redis"`
 
 	MongoDB struct {
