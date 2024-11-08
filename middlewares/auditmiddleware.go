@@ -84,7 +84,7 @@ func AuditMiddleware(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		// 创建审计日志记录
-		auditLog := models.AuditLog{
+		auditLog := models.OwenAuditLog{
 			UserID:    userIDUint, // 假设已经通过 JWT 或 Session 获取用户 ID
 			Action:    truncateString(c.Request.RequestURI, 255),
 			Request:   truncateString(string(requestBody), 1000),
@@ -115,5 +115,5 @@ func StartAuditLogCleanup(db *gorm.DB) {
 
 func cleanupAuditLogs(db *gorm.DB) {
 	expirationDate := time.Now().AddDate(0, 0, -30) // 30天前的日期
-	db.Where("created_at < ?", expirationDate).Unscoped().Delete(&models.AuditLog{})
+	db.Where("created_at < ?", expirationDate).Unscoped().Delete(&models.OwenAuditLog{})
 }

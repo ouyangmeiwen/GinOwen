@@ -29,7 +29,7 @@ func AuthMiddleware(db *gorm.DB, requiredPermissions ...string) gin.HandlerFunc 
 		}
 
 		// 从数据库加载用户角色
-		var role models.Role
+		var role models.OwenRole
 		if err := db.First(&role, claims.RoleID).Error; err != nil {
 			c.JSON(http.StatusForbidden, gin.H{"error": "role not found"})
 			c.Abort()

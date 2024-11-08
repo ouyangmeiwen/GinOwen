@@ -7,7 +7,7 @@ import (
 )
 
 // 审计日志模型
-type AuditLog struct {
+type OwenAuditLog struct {
 	ID        uint           `gorm:"primaryKey"`
 	UserID    uint           `gorm:"index"`             // 用户ID
 	Action    string         `gorm:"type:varchar(255)"` // 操作描述（限制长度255）
@@ -22,6 +22,6 @@ type AuditLog struct {
 }
 
 // TableName Libitem's table name
-func (*AuditLog) TableName() string {
+func (*OwenAuditLog) TableName() string {
 	return "owen_auditlog"
 }

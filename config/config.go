@@ -107,9 +107,9 @@ func InitRedis() {
 func AutoMigrateDB() {
 	// 自动迁移数据库结构
 	var err error
-	err = DB.AutoMigrate(&models.User{})
-	err = DB.AutoMigrate(&models.Role{})
-	err = DB.AutoMigrate(&models.AuditLog{})
+	err = DB.AutoMigrate(&models.OwenUser{})
+	err = DB.AutoMigrate(&models.OwenRole{})
+	err = DB.AutoMigrate(&models.OwenAuditLog{})
 	// err = DB.AutoMigrate(&models.TestOrder{})
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
