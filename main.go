@@ -37,8 +37,7 @@ func main() {
 
 	// 应用 AuthMiddleware 和 AuditMiddleware
 	//r.Use(middlewares.AuthMiddleware(global.OWEN_DB))
-
-	r.Use(middlewares.AuditMiddleware(global.OWEN_DB)) //审计日志
+	//r.Use(middlewares.AuditMiddleware(global.OWEN_DB)) //审计日志
 
 	// 健康检查接口
 	r.GET("/health", func(c *gin.Context) {

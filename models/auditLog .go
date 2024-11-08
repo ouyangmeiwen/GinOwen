@@ -20,3 +20,8 @@ type AuditLog struct {
 	UpdatedAt time.Time      // 更新时间
 	DeletedAt gorm.DeletedAt `gorm:"index"` // 软删除时间
 }
+
+// TableName Libitem's table name
+func (*AuditLog) TableName() string {
+	return "owen_auditlog"
+}
