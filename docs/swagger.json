@@ -4,6 +4,240 @@
         "contact": {}
     },
     "paths": {
+        "/api/services/app/Sysauditlmslog/CreateLmsLog": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sysauditlmslog"
+                ],
+                "summary": "新增LMS审计日志",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateLmsLogInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.CreateLmsLogDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/Sysauditlmslog/DeleteLmsLog": {
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sysauditlmslog"
+                ],
+                "summary": "查询LMS日志",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "根据主键删除",
+                        "name": "Id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回清单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.DeleteLmsLogDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/Sysauditlmslog/QueryLmsLog": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sysauditlmslog"
+                ],
+                "summary": "查询LMS日志",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "最大执行时间",
+                        "name": "ExecutionDuration",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否异常",
+                        "name": "IsException",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 99999,
+                        "minimum": 1,
+                        "type": "integer",
+                        "default": 100,
+                        "description": "获取多少条结果",
+                        "name": "MaxResultCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "方法",
+                        "name": "MethodName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "参数",
+                        "name": "Parameters",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "服务名",
+                        "name": "ServiceName",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 99999,
+                        "minimum": -1,
+                        "type": "integer",
+                        "default": 0,
+                        "description": "跳过多少数量",
+                        "name": "SkipCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "租户",
+                        "name": "TenantId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回清单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.QueryLmsDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/Sysauditlmslog/UpdateLmsLog": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sysauditlmslog"
+                ],
+                "summary": "修改LMS审计日志",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateLmsLogInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.UpdateLmsLogDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/file/UploadFile": {
             "post": {
                 "description": "接收一个文件和对象信息",
@@ -499,6 +733,59 @@
                 }
             }
         },
+        "request.CreateLmsLogInput": {
+            "type": "object",
+            "properties": {
+                "BrowserInfo": {
+                    "type": "string"
+                },
+                "ClientIpAddress": {
+                    "type": "string"
+                },
+                "ClientName": {
+                    "type": "string"
+                },
+                "CustomData": {
+                    "type": "string"
+                },
+                "Exception": {
+                    "type": "string"
+                },
+                "ExecutionDuration": {
+                    "type": "integer"
+                },
+                "ExecutionTime": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                },
+                "ImpersonatorTenantId": {
+                    "type": "integer"
+                },
+                "ImpersonatorUserId": {
+                    "type": "integer"
+                },
+                "MethodName": {
+                    "type": "string"
+                },
+                "Parameters": {
+                    "type": "string"
+                },
+                "ReturnValue": {
+                    "type": "string"
+                },
+                "ServiceName": {
+                    "type": "string"
+                },
+                "TenantId": {
+                    "type": "integer"
+                },
+                "UserId": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.ImportExcelInput": {
             "type": "object",
             "required": [
@@ -582,6 +869,59 @@
                 }
             }
         },
+        "request.UpdateLmsLogInput": {
+            "type": "object",
+            "properties": {
+                "BrowserInfo": {
+                    "type": "string"
+                },
+                "ClientIpAddress": {
+                    "type": "string"
+                },
+                "ClientName": {
+                    "type": "string"
+                },
+                "CustomData": {
+                    "type": "string"
+                },
+                "Exception": {
+                    "type": "string"
+                },
+                "ExecutionDuration": {
+                    "type": "integer"
+                },
+                "ExecutionTime": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                },
+                "ImpersonatorTenantId": {
+                    "type": "integer"
+                },
+                "ImpersonatorUserId": {
+                    "type": "integer"
+                },
+                "MethodName": {
+                    "type": "string"
+                },
+                "Parameters": {
+                    "type": "string"
+                },
+                "ReturnValue": {
+                    "type": "string"
+                },
+                "ServiceName": {
+                    "type": "string"
+                },
+                "TenantId": {
+                    "type": "integer"
+                },
+                "UserId": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.UserRequest": {
             "type": "object",
             "required": [
@@ -593,7 +933,85 @@
                 }
             }
         },
+        "response.CreateLmsLogDto": {
+            "type": "object"
+        },
+        "response.DeleteLmsLogDto": {
+            "type": "object"
+        },
         "response.ImportExcelDto": {
+            "type": "object"
+        },
+        "response.QueryLmsDto": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "description": "数据集",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.QueryLmsItem"
+                    }
+                },
+                "totalCount": {
+                    "description": "总数量",
+                    "type": "integer"
+                }
+            }
+        },
+        "response.QueryLmsItem": {
+            "type": "object",
+            "properties": {
+                "BrowserInfo": {
+                    "type": "string"
+                },
+                "ClientIpAddress": {
+                    "type": "string"
+                },
+                "ClientName": {
+                    "type": "string"
+                },
+                "CustomData": {
+                    "type": "string"
+                },
+                "Exception": {
+                    "type": "string"
+                },
+                "ExecutionDuration": {
+                    "type": "integer"
+                },
+                "ExecutionTime": {
+                    "type": "string"
+                },
+                "Id": {
+                    "type": "integer"
+                },
+                "ImpersonatorTenantId": {
+                    "type": "integer"
+                },
+                "ImpersonatorUserId": {
+                    "type": "integer"
+                },
+                "MethodName": {
+                    "type": "string"
+                },
+                "Parameters": {
+                    "type": "string"
+                },
+                "ReturnValue": {
+                    "type": "string"
+                },
+                "ServiceName": {
+                    "type": "string"
+                },
+                "TenantId": {
+                    "type": "integer"
+                },
+                "UserId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.UpdateLmsLogDto": {
             "type": "object"
         },
         "response.UploadResponse": {
