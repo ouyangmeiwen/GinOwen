@@ -5,6 +5,8 @@ type LoginRequest struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+type LoginOutRequest struct {
+}
 
 // RegisterRequest 用于接收前端注册请求的数据
 type RegisterRequest struct {

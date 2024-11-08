@@ -54,7 +54,15 @@ func (JWTAPI) Login(ctx *gin.Context) {
 		utils.FailWithMessage("Could not generate token", ctx)
 		return
 	}
+
+	utils.SetToken(ctx, token, 60*60*24)
+
 	utils.OkWithDetailed(token, "success", ctx)
+}
+
+func (JWTAPI) LoginOut(ctx *gin.Context) {
+	utils.ClearToken(ctx)
+	utils.OkWithDetailed("", "success", ctx)
 }
 
 // Register 注册接口

@@ -14,6 +14,6 @@ func RegisterJWTRoutes(r *gin.Engine) {
 	api := r.Group("auth").Use(middlewares.AuditMiddleware())
 	{
 		api.POST("Login", ApiGroup.jwtApi.Login)
-		api.POST("Register", middlewares.AuthMiddleware(), ApiGroup.jwtApi.Register)
+		api.POST("Register", ApiGroup.jwtApi.Register)
 	}
 }

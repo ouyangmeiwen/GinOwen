@@ -4,6 +4,8 @@ import (
 	"GINOWEN/auth"
 	"GINOWEN/global"
 	"GINOWEN/models"
+	"GINOWEN/utils"
+
 	"fmt"
 	"net/http"
 	"strings"
@@ -16,14 +18,16 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 打印所有请求头
 		fmt.Println("Request Headers:", c.Request.Header)
-
 		// 获取 Authorization 头
 		tokenStr := c.GetHeader("Authorization")
 		if tokenStr == "" {
-			// 如果没有提供 Authorization 头，返回错误信息
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "missing Authorization header"})
-			c.Abort()
-			return
+			tokenStr = utils.GetToken(c)
+			if tokenStr == "" {
+				// 如果没有提供 Authorization 头，返回错误信息
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "missing Authorization header"})
+				c.Abort()
+				return
+			}
 		}
 
 		// 移除 Bearer 前缀
@@ -55,11 +59,16 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 		// 检查用户是否具有所需权限
 		userPermissions := strings.Split(role.Permissions, ",")
 		hasPermission := false
-		for _, permission := range requiredPermissions {
-			if contains(userPermissions, permission) {
-				hasPermission = true
-				break
+		if len(requiredPermissions) <= 0 {
+			hasPermission = true //默认不需要权限
+		} else {
+			for _, permission := range requiredPermissions {
+				if contains(userPermissions, permission) {
+					hasPermission = true
+					break
+				}
 			}
+
 		}
 
 		if !hasPermission {
@@ -77,6 +86,9 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 // contains 检查权限是否在权限列表中
 func contains(list []string, item string) bool {
 	for _, v := range list {
+		if v == "all" { //管理员权限
+			return true
+		}
 		if v == item {
 			return true
 		}
