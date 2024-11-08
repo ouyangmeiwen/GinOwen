@@ -7,7 +7,6 @@ require (
 	gorm.io/gen v0.3.16
 	gorm.io/gorm v1.23.9
 	gorm.io/plugin/dbresolver v1.2.3
-	gorm.io/plugin/soft_delete v1.2.0
 )
 
 require (

@@ -13,7 +13,7 @@ const TableNameLibbookinfo = "libbookinfo"
 // Libbookinfo mapped from table <libbookinfo>
 type Libbookinfo struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
 	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
 	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
