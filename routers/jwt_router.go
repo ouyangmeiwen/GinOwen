@@ -13,7 +13,7 @@ type JWTRouter struct {
 func RegisterJWTRoutes(r *gin.Engine) {
 	api := r.Group("auth")
 	{
-		api.POST("Login", middlewares.AuditMiddleware(), Router.jwtApi.Login)
-		api.POST("Register", middlewares.AuditMiddleware(), Router.jwtApi.Register)
+		api.POST("Login", middlewares.AuditMiddleware(), ApiGroup.jwtApi.Login)
+		api.POST("Register", middlewares.AuditMiddleware(), ApiGroup.jwtApi.Register)
 	}
 }

@@ -10,6 +10,6 @@ import (
 func RegisterLibitemRoutes(r *gin.Engine) {
 	api := r.Group(global.OWEN_CONFIG.System.Pre + "/libitem")
 	{
-		api.POST("ImportExcel", Router.libItemApi.ImportExcel)
+		api.POST("ImportExcel", ApiGroup.libItemApi.ImportExcel)
 	}
 }

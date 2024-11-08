@@ -10,6 +10,6 @@ import (
 func RegisterUploadfileRoutes(r *gin.Engine) {
 	api := r.Group(global.OWEN_CONFIG.System.Pre + "/file")
 	{
-		api.POST("UploadFile", Router.uploadfileApi.UploadFile)
+		api.POST("UploadFile", ApiGroup.uploadfileApi.UploadFile)
 	}
 }

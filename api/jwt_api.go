@@ -34,7 +34,7 @@ func (JWTAPI) Login(ctx *gin.Context) {
 	}
 
 	// 假设我们从数据库获取用户数据
-	user, err := ServicesApp.jwtService.GetUserByUsername(loginReq)
+	user, err := ServicesGroup.jwtService.GetUserByUsername(loginReq)
 	if err != nil {
 		utils.FailWithMessage("Invalid username or password", ctx)
 		return
@@ -78,7 +78,7 @@ func (JWTAPI) Register(ctx *gin.Context) {
 	// 检查用户名是否已存在
 	var loginReq request.LoginRequest
 	loginReq.Username = registerReq.Username
-	_, err := ServicesApp.jwtService.GetUserByUsername(loginReq)
+	_, err := ServicesGroup.jwtService.GetUserByUsername(loginReq)
 	if err == nil {
 		utils.FailWithMessage("Username already exists", ctx)
 		return

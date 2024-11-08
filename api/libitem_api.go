@@ -30,7 +30,7 @@ func (b *LibItemApi) ImportExcel(ctx *gin.Context) {
 		utils.FailWithMessage("参数无效", ctx)
 		return
 	}
-	list, err := ServicesApp.libitemService.ImportExcel(req)
+	list, err := ServicesGroup.libitemService.ImportExcel(req)
 	if err != nil {
 		global.OWEN_LOG.Error("导入失败!"+err.Error(), zap.Error(err))
 		utils.FailWithMessage("导入失败!"+err.Error(), ctx)

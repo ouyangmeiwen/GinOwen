@@ -36,7 +36,7 @@ func (b *SysauditlmslogApi) QueryLmsLog(c *gin.Context) {
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, err := ServicesApp.sysauditlmslogService.QueryLmsLog(req)
+	list, err := ServicesGroup.sysauditlmslogService.QueryLmsLog(req)
 	if err != nil {
 		global.OWEN_LOG.Error("获取失败!"+err.Error(), zap.Error(err))
 		utils.FailWithMessage("获取失败!"+err.Error(), c)
@@ -78,7 +78,7 @@ func (b *SysauditlmslogApi) CreateLmsLog(c *gin.Context) {
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, err := ServicesApp.sysauditlmslogService.CreateLmsLog(req)
+	list, err := ServicesGroup.sysauditlmslogService.CreateLmsLog(req)
 	if err != nil {
 		global.OWEN_LOG.Error("创建失败!"+err.Error(), zap.Error(err))
 		utils.FailWithMessage("创建失败!"+err.Error(), c)
@@ -120,7 +120,7 @@ func (b *SysauditlmslogApi) UpdateLmsLog(c *gin.Context) {
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, err := ServicesApp.sysauditlmslogService.UpdateLmsLog(req)
+	list, err := ServicesGroup.sysauditlmslogService.UpdateLmsLog(req)
 	if err != nil {
 		global.OWEN_LOG.Error("更新失败!"+err.Error(), zap.Error(err))
 		utils.FailWithMessage("更新失败!"+err.Error(), c)
@@ -145,7 +145,7 @@ func (b *SysauditlmslogApi) DeleteLmsLog(c *gin.Context) {
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, err := ServicesApp.sysauditlmslogService.DeleteLmsLog(req)
+	list, err := ServicesGroup.sysauditlmslogService.DeleteLmsLog(req)
 	if err != nil {
 		global.OWEN_LOG.Error("删除失败!"+err.Error(), zap.Error(err))
 		utils.FailWithMessage("删除失败!"+err.Error(), c)

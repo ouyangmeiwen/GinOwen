@@ -9,4 +9,4 @@ type RouterApis struct {
 	jwtApi            api.JWTAPI
 }
 
-var Router = new(RouterApis)
+var ApiGroup = new(RouterApis)

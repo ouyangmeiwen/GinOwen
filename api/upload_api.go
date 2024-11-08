@@ -81,7 +81,7 @@ func (b *UploadfileApi) UploadFile(c *gin.Context) {
 		utils.FailWithMessage("获取文件绝对路径失败:!"+err.Error(), c)
 		return
 	}
-	resp, err := ServicesApp.uploadfileService.UploadFileHandler(req)
+	resp, err := ServicesGroup.uploadfileService.UploadFileHandler(req)
 	resp.FilePath = absDst
 	if err != nil {
 		global.OWEN_LOG.Error("上传失败!"+err.Error(), zap.Error(err))

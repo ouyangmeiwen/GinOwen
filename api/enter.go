@@ -9,4 +9,4 @@ type Services struct {
 	jwtService            services.JWTService
 }
 
-var ServicesApp = new(Services)
+var ServicesGroup = new(Services)
