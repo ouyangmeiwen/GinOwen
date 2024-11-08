@@ -3,10 +3,10 @@ package routers
 import (
 	"GINOWEN/docs"
 	"GINOWEN/global"
-	"GINOWEN/middlewares"
 	"GINOWEN/utils"
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -14,10 +14,12 @@ import (
 )
 
 func InitAllRouter(r *gin.Engine) {
-	// 添加中间件
-	api := r.Group("/api")          //API开头的增加熔断
-	api.Use(middlewares.Recovery()) // 异常恢复
-
+	// 健康检查接口
+	r.GET("/health", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "OK",
+		})
+	})
 	// 注册路由
 	RegisterLibitemRoutes(r)
 	RegisterUploadfileRoutes(r)
@@ -32,7 +34,7 @@ func InitSwag(r *gin.Engine) {
 		ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger/swagger.json"))(c)
 	})
 }
-func RunAsService(r *gin.Engine) {
+func RunAsServer(r *gin.Engine) {
 	fmt.Println("========================================================")
 	port := global.OWEN_CONFIG.System.Port
 	url := "http://localhost:" + fmt.Sprint(port) + "/swagger-ui/index.html"

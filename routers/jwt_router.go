@@ -11,9 +11,9 @@ type JWTRouter struct {
 
 // RegisterOrderRoutes 注册订单路由
 func RegisterJWTRoutes(r *gin.Engine) {
-	api := r.Group("auth")
+	api := r.Group("auth").Use(middlewares.AuditMiddleware())
 	{
-		api.POST("Login", middlewares.AuditMiddleware(), ApiGroup.jwtApi.Login)
-		api.POST("Register", middlewares.AuditMiddleware(), ApiGroup.jwtApi.Register)
+		api.POST("Login", ApiGroup.jwtApi.Login)
+		api.POST("Register", middlewares.AuthMiddleware(), ApiGroup.jwtApi.Register)
 	}
 }

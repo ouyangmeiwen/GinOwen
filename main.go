@@ -6,7 +6,6 @@ import (
 	"GINOWEN/middlewares"
 	"GINOWEN/routers"
 	"GINOWEN/utils"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -43,19 +42,7 @@ func main() {
 	r.Use(gin.Recovery())
 	r.Use(middlewares.Cors())
 	//r.Use(cors.Default())
-
-	// 应用 AuthMiddleware 和 AuditMiddleware
-	//r.Use(middlewares.AuthMiddleware(global.OWEN_DB))
-	//r.Use(middlewares.AuditMiddleware(global.OWEN_DB)) //审计日志
-
-	// 健康检查接口
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status": "OK",
-		})
-	})
-
 	routers.InitSwag(r)      //生成swagger文档 Swag init
 	routers.InitAllRouter(r) //注册所有路由
-	routers.RunAsService(r)
+	routers.RunAsServer(r)
 }
