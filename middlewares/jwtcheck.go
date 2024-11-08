@@ -2,16 +2,16 @@ package middlewares
 
 import (
 	"GINOWEN/auth"
+	"GINOWEN/global"
 	"GINOWEN/models"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 // 权限控制中间件
-func AuthMiddleware(db *gorm.DB, requiredPermissions ...string) gin.HandlerFunc {
+func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenStr := c.GetHeader("Authorization")
 		if tokenStr == "" {
@@ -30,7 +30,7 @@ func AuthMiddleware(db *gorm.DB, requiredPermissions ...string) gin.HandlerFunc 
 
 		// 从数据库加载用户角色
 		var role models.OwenRole
-		if err := db.First(&role, claims.RoleID).Error; err != nil {
+		if err := global.OWEN_DB.First(&role, claims.RoleID).Error; err != nil {
 			c.JSON(http.StatusForbidden, gin.H{"error": "role not found"})
 			c.Abort()
 			return

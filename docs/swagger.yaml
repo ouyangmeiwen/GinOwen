@@ -100,6 +100,29 @@ definitions:
     - path
     - tenantid
     type: object
+  request.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.RegisterRequest:
+    properties:
+      password:
+        type: string
+      role_id:
+        type: integer
+      username:
+        type: string
+    required:
+    - password
+    - role_id
+    - username
+    type: object
   request.UpdateLmsLogInput:
     properties:
       BrowserInfo:
@@ -453,4 +476,64 @@ paths:
       summary: 导入图书信息
       tags:
       - libitems
+  /auth/Login:
+    post:
+      consumes:
+      - application/json
+      description: 用户输入用户名和密码，验证通过后返回JWT Token。
+      parameters:
+      - description: 用户登录请求
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWT token
+          schema:
+            type: string
+        "400":
+          description: Invalid input
+          schema:
+            type: string
+        "401":
+          description: Invalid username or password
+          schema:
+            type: string
+      summary: 用户登录，获取JWT Token
+      tags:
+      - Auth
+  /auth/Register:
+    post:
+      consumes:
+      - application/json
+      description: 用户提交注册信息，注册成功后返回成功消息。
+      parameters:
+      - description: 用户注册请求
+        in: body
+        name: registerRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User registered successfully
+          schema:
+            type: string
+        "400":
+          description: Invalid input
+          schema:
+            type: string
+        "409":
+          description: Username already exists
+          schema:
+            type: string
+      summary: 用户注册
+      tags:
+      - Auth
 swagger: "2.0"

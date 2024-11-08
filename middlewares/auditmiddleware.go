@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"GINOWEN/global"
 	"GINOWEN/models"
 	"bytes"
 	"io/ioutil"
@@ -32,7 +33,7 @@ func (w CustomResponseWriter) Write(b []byte) (int, error) {
 }
 
 // 审计日志中间件
-func AuditMiddleware(db *gorm.DB) gin.HandlerFunc {
+func AuditMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 
@@ -96,7 +97,7 @@ func AuditMiddleware(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		// 保存日志到数据库
-		if err := db.Create(&auditLog).Error; err != nil {
+		if err := global.OWEN_DB.Create(&auditLog).Error; err != nil {
 			log.Printf("failed to save audit log: %v", err)
 		}
 	}

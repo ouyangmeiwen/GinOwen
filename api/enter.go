@@ -6,6 +6,7 @@ type Services struct {
 	libitemService        services.LibItemService
 	uploadfileService     services.UploadfileService
 	sysauditlmslogService services.SysauditlmslogService
+	jwtService            services.JWTService
 }
 
 var ServicesApp = new(Services)
