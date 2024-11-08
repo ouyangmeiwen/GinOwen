@@ -15,7 +15,6 @@ import (
 // @version 1.0
 // @description This is a sample API using Gin and Swagger.
 // @termsOfService https://example.com/terms
-
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
@@ -27,7 +26,7 @@ func main() {
 	utils.InitLogger()
 	defer utils.Sync()
 
-	global.OWEN_LOG.Debug("开始程序！")
+	//global.OWEN_LOG.Debug("开始程序！")
 
 	global.OWEN_DB = config.InitDB()
 	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
