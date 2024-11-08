@@ -27,10 +27,6 @@ func TrimSpaces(s string) string {
 }
 
 func ConvertToUTF8(str string) string {
-	// 使用正则表达式过滤掉非数字、字母、中文和蒙文字符
-	// reg := regexp.MustCompile(`[^a-zA-Z0-9\p{Han}\p{Mongolian}]`)
-	// filtered := reg.ReplaceAllString(str, "")
-	// return filtered
 	return str
 }
 

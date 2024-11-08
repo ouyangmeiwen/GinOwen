@@ -7,7 +7,6 @@ import (
 	"GINOWEN/models/response"
 
 	"GINOWEN/utils"
-	"database/sql"
 	"errors"
 	"fmt"
 	"log"
@@ -44,7 +43,7 @@ func (LibItemService) ImportExcel(req request.ImportExcelInput) (resp response.I
 		log.Fatalf("failed to get rows: %v", err)
 	}
 	dic := make(map[string]int)
-	datas := []models.LibItem{}
+	datas := []models.Libitem{}
 	for i, row := range rows {
 		// 跳过表头
 		if i == 0 {
@@ -58,16 +57,17 @@ func (LibItemService) ImportExcel(req request.ImportExcelInput) (resp response.I
 		if len(row) <= 0 {
 			continue
 		}
-		obj := models.LibItem{}
-		obj.Id = utils.GenerateGUID()
-		obj.CreationTime = time.Now()
-		obj.CreatorUserId = sql.NullInt64{Valid: false, Int64: 0}
-		obj.LastModificationTime = sql.NullTime{Valid: false, Time: time.Now()}
-		obj.LastModifierUserId = sql.NullInt64{Valid: false, Int64: 0}
+		obj := models.Libitem{}
+		obj.ID = utils.GenerateGUID()
+		CreationTime := time.Now()
+		obj.CreationTime = &CreationTime
+		obj.CreatorUserID = nil
+		obj.LastModificationTime = nil
+		obj.LastModifierUserID = nil
 		obj.IsDeleted = []uint8{0}
-		obj.DeletionTime = sql.NullTime{Valid: false, Time: time.Now()}
-		obj.DeleterUserId = sql.NullInt64{Valid: false, Int64: 0}
-		obj.InfoId = sql.NullString{Valid: false, String: ""}
+		obj.DeletionTime = nil
+		obj.DeleterUserID = nil
+		obj.InfoID = nil
 		println(row[0])
 		if len(req.Title) > 0 {
 			if value, ok := dic[req.Title]; ok && (len(row) > value) {
@@ -84,7 +84,7 @@ func (LibItemService) ImportExcel(req request.ImportExcelInput) (resp response.I
 				rowval := utils.ConvertToUTF8(row[value])
 				utf8_str := utils.SafeSubstring(rowval, 0, 100)
 				utf8_str = utils.TrimSpaces(utf8_str)
-				obj.Author = sql.NullString{Valid: true, String: utf8_str}
+				obj.Author = &utf8_str
 			}
 		}
 		if len(req.Barcode) > 0 {
@@ -99,62 +99,64 @@ func (LibItemService) ImportExcel(req request.ImportExcelInput) (resp response.I
 		obj.IsEnable = []uint8{1}
 		if len(req.CallNo) > 0 {
 			if value, ok := dic[req.CallNo]; ok && (len(row) > value) {
-				obj.CallNo = sql.NullString{Valid: true, String: row[value]}
+				obj.CallNo = &row[value]
 			}
 		}
-		obj.PreCallNo = sql.NullString{Valid: false, String: ""}
+		obj.PreCallNo = nil
 		if len(req.CatalogCode) > 0 {
 			if value, ok := dic[req.CatalogCode]; ok && (len(row) > value) {
-				obj.CatalogCode = sql.NullString{Valid: true, String: row[value]}
+				obj.CatalogCode = &row[value]
 			}
 		}
 		obj.ItemState = 3
-		obj.PressmarkId = sql.NullString{Valid: false, String: ""}
-		obj.PressmarkName = sql.NullString{Valid: false, String: ""}
-		obj.LocationId = sql.NullString{Valid: false, String: ""}
+		obj.PressmarkID = nil
+		obj.PressmarkName = nil
+		obj.LocationID = nil
 		if len(req.Locationname) > 0 {
 			if value, ok := dic[req.Locationname]; ok && (len(row) > value) {
-				obj.LocationName = sql.NullString{Valid: true, String: row[value]}
+				rowval := utils.ConvertToUTF8(row[value])
+				utf8_str := utils.TrimSpaces(rowval)
+				obj.LocationName = &utf8_str
 			}
 		}
-		obj.BookBarcode = sql.NullString{Valid: false, String: ""}
+		obj.BookBarcode = nil
 		if len(req.ISBN) > 0 {
 			if value, ok := dic[req.ISBN]; ok && (len(row) > value) {
-				obj.ISBN = sql.NullString{Valid: true, String: row[value]}
+				obj.ISBN = &row[value]
 			}
 		}
-		obj.PubNo = sql.NullInt16{Valid: false, Int16: 0}
+		obj.PubNo = nil
 		if len(req.Publisher) > 0 { //如果最后一位没有是不会初始化数组的
 			if value, ok := dic[req.Publisher]; ok && (len(row) > value) {
 				rowval := utils.ConvertToUTF8(row[value])
 				utf8_str := utils.SafeSubstring(rowval, 0, 200)
 				utf8_str = utils.TrimSpaces(utf8_str)
-				obj.Publisher = sql.NullString{Valid: true, String: utf8_str}
+				obj.Publisher = &utf8_str
 			}
 		}
 		if len(req.PubDate) > 0 {
 			if value, ok := dic[req.PubDate]; ok && (len(row) > value) {
 				utf8_str := utils.SafeSubstring(row[value], 0, 16)
-				obj.PubDate = sql.NullString{Valid: true, String: utf8_str}
+				obj.PubDate = &utf8_str
 			}
 		}
 		if len(req.Price) > 0 {
 			if value, ok := dic[req.Price]; ok && (len(row) > value) {
-				obj.Price = sql.NullString{Valid: true, String: row[value]}
+				obj.Price = &row[value]
 			}
 		}
 		if len(req.Pages) > 0 {
 			if value, ok := dic[req.Pages]; ok && (len(row) > value) {
-				obj.Pages = sql.NullString{Valid: true, String: row[value]}
+				obj.Pages = &row[value]
 			}
 		}
-		obj.Summary = sql.NullString{Valid: false, String: ""}
+		obj.Summary = nil
 		obj.ItemType = 1
-		obj.Remark = sql.NullString{Valid: true, String: "导入数据"}
+		remark := "GO导入"
+		obj.Remark = &remark
 		obj.OriginType = 1
 		obj.CreateType = 1
-		obj.TenantId = req.Tenantid
-		//global.GVA_DB.Model(&gpi.LibItem{}).Create(obj)
+		obj.TenantID = int64(req.Tenantid)
 		datas = append(datas, obj)
 	}
 	fmt.Println("总共插入:" + strconv.Itoa(len(datas)))

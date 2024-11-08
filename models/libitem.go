@@ -1,47 +1,50 @@
 package models
 
 import (
-	"database/sql"
 	"time"
 )
 
-type LibItem struct {
-	Id                   string         `json:"Id" gorm:"primaryKey;column:Id;comment:Id"`
-	CreationTime         time.Time      `json:"CreationTime" gorm:"column:CreationTime;comment:CreationTime:"`
-	CreatorUserId        sql.NullInt64  `json:"CreatorUserId" gorm:"column:CreatorUserId;comment:CreatorUserId:"`
-	LastModificationTime sql.NullTime   `json:"LastModificationTime" gorm:"column:LastModificationTime;comment:LastModificationTime:"`
-	LastModifierUserId   sql.NullInt64  `json:"LastModifierUserId" gorm:"column:LastModifierUserId;comment:LastModifierUserId:"`
-	IsDeleted            []uint8        `json:"IsDeleted" gorm:"column:IsDeleted;comment:IsDeleted:"` //注意不可用interface{}
-	DeleterUserId        sql.NullInt64  `json:"DeleterUserId" gorm:"column:DeleterUserId;comment:DeleterUserId:"`
-	DeletionTime         sql.NullTime   `json:"DeletionTime" gorm:"column:DeletionTime;comment:DeletionTime:"`
-	InfoId               sql.NullString `json:"InfoId" gorm:"column:InfoId;comment:InfoId"`
-	Title                string         `json:"Title" gorm:"column:Title;comment:Title"`
-	Author               sql.NullString `json:"Author" gorm:"column:Author;comment:Author"`
-	Barcode              string         `json:"Barcode" gorm:"column:Barcode;comment:Barcode"`
-	IsEnable             []uint8        `json:"IsEnable" gorm:"column:IsEnable;comment:IsEnable"` //注意不可用interface{}
-	CallNo               sql.NullString `json:"CallNo" gorm:"column:CallNo;comment:CallNo"`
-	PreCallNo            sql.NullString `json:"PreCallNo" gorm:"column:PreCallNo;comment:PreCallNo"`
-	CatalogCode          sql.NullString `json:"CatalogCode" gorm:"column:CatalogCode;comment:CatalogCode"`
-	ItemState            uint8          `json:"ItemState" gorm:"column:ItemState;comment:ItemState"`
-	PressmarkId          sql.NullString `json:"PressmarkId" gorm:"column:PressmarkId;comment:PressmarkId"`
-	PressmarkName        sql.NullString `json:"PressmarkName" gorm:"column:PressmarkName;comment:PressmarkName"`
-	LocationId           sql.NullString `json:"LocationId" gorm:"column:LocationId;comment:LocationId"`
-	LocationName         sql.NullString `json:"LocationName" gorm:"column:LocationName;comment:LocationName"`
-	BookBarcode          sql.NullString `json:"BookBarcode" gorm:"column:BookBarcode;comment:BookBarcode"`
-	ISBN                 sql.NullString `json:"ISBN" gorm:"ISBN;column:ISBN;comment:ISBN"`
-	PubNo                sql.NullInt16  `json:"PubNo" gorm:"column:PubNo;comment:PubNo"`
-	Publisher            sql.NullString `json:"Publisher" gorm:"column:Publisher;comment:Publisher"`
-	PubDate              sql.NullString `json:"PubDate" gorm:"column:PubDate;comment:PubDate"`
-	Price                sql.NullString `json:"Price" gorm:"column:Price;comment:Price"`
-	Pages                sql.NullString `json:"Pages" gorm:"column:Pages;comment:Pages"`
-	Summary              sql.NullString `json:"Summary" gorm:"column:Summary;comment:Summary"`
-	ItemType             uint8          `json:"ItemType" gorm:"column:ItemType;comment:ItemType"`
-	Remark               sql.NullString `json:"Remark" gorm:"column:Remark;comment:Remark"`
-	OriginType           uint8          `json:"OriginType" gorm:"column:OriginType;comment:OriginType"`
-	CreateType           uint8          `json:"CreateType" gorm:"column:CreateType;comment:CreateType"`
-	TenantId             int            `json:"TenantId" gorm:"column:TenantId;comment:TenantId"`
+const TableNameLibitem = "libitem"
+
+// Libitem mapped from table <libitem>
+type Libitem struct {
+	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
+	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
+	InfoID               *string    `gorm:"column:InfoId;type:varchar(32)" json:"InfoId"`
+	Title                string     `gorm:"column:Title;type:varchar(256);not null" json:"Title"`
+	Author               *string    `gorm:"column:Author;type:varchar(256)" json:"Author"`
+	Barcode              string     `gorm:"column:Barcode;type:varchar(32);not null" json:"Barcode"`
+	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
+	CallNo               *string    `gorm:"column:CallNo;type:varchar(64)" json:"CallNo"`
+	PreCallNo            *string    `gorm:"column:PreCallNo;type:varchar(64)" json:"PreCallNo"`
+	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
+	ItemState            int64      `gorm:"column:ItemState;type:tinyint unsigned;not null" json:"ItemState"`
+	PressmarkID          *string    `gorm:"column:PressmarkId;type:varchar(32)" json:"PressmarkId"`
+	PressmarkName        *string    `gorm:"column:PressmarkName;type:varchar(64)" json:"PressmarkName"`
+	LocationID           *string    `gorm:"column:LocationId;type:varchar(32)" json:"LocationId"`
+	LocationName         *string    `gorm:"column:LocationName;type:varchar(128)" json:"LocationName"`
+	BookBarcode          *string    `gorm:"column:BookBarcode;type:varchar(32)" json:"BookBarcode"`
+	ISBN                 *string    `gorm:"column:ISBN;type:varchar(32)" json:"ISBN"`
+	PubNo                *int64     `gorm:"column:PubNo;type:smallint" json:"PubNo"`
+	Publisher            *string    `gorm:"column:Publisher;type:varchar(512)" json:"Publisher"`
+	PubDate              *string    `gorm:"column:PubDate;type:varchar(32)" json:"PubDate"`
+	Price                *string    `gorm:"column:Price;type:varchar(32)" json:"Price"`
+	Pages                *string    `gorm:"column:Pages;type:varchar(32)" json:"Pages"`
+	Summary              *string    `gorm:"column:Summary;type:longtext" json:"Summary"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint unsigned;not null" json:"ItemType"`
+	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	CreateType           int64      `gorm:"column:CreateType;type:tinyint unsigned;not null" json:"CreateType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
-func (LibItem) TableName() string {
-	return "libitem"
+// TableName Libitem's table name
+func (*Libitem) TableName() string {
+	return TableNameLibitem
 }
