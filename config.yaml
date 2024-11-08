@@ -1,5 +1,6 @@
 system:
   port: 6789
+  pre: api/services/app/
 redis:
   addr: 127.0.0.1:6379
   password:

@@ -12,7 +12,8 @@ import (
 
 type YarmConfig struct {
 	System struct {
-		Port int `yaml:"port"`
+		Port int    `yaml:"port"`
+		Pre  string `yaml:"pre"`
 	} `yaml:"system"`
 
 	DB struct {

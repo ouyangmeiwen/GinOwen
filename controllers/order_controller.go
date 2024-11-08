@@ -2,8 +2,7 @@ package controllers
 
 import (
 	"GINOWEN/models"
-	"GINOWEN/models/response"
-	"net/http"
+	"GINOWEN/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,34 +17,22 @@ type OrderController struct {
 // @Tags orders
 // @Accept  json
 // @Produce  json
-// @Param order body models.Order true "订单信息"
-// @Success 201 {object} response.CommonResponse "成功创建的订单信息"
-// @Failure 400 {object} response.CommonResponse "无效的请求"
-// @Failure 500 {object} response.CommonResponse "服务器内部错误"
-// @Router /api/orders/CreateOrder [post]
+// @Param order body models.TestOrder true "订单信息"
+// @Success 201 {object} utils.Response{data=models.TestOrder,msg=string} "成功创建的订单信息"
+// @Failure 400 {object} utils.Response{msg=string} "无效的请求"
+// @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
+// @Router /api/services/app/order/CreateOrder [post]
 func (c *OrderController) CreateOrder(ctx *gin.Context) {
-	var order models.Order
+	var order models.TestOrder
 	if err := ctx.ShouldBindJSON(&order); err != nil {
-		ctx.JSON(http.StatusBadRequest, response.CommonResponse{
-			Code:    http.StatusBadRequest,
-			Message: "Invalid request data",
-			Data:    nil,
-		})
+		utils.FailWithMessage("Invalid request data", ctx)
 		return
 	}
 	if err := ServicesApp.orderService.CreateOrder(&order); err != nil {
-		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
-			Code:    http.StatusInternalServerError,
-			Message: "Failed to create order",
-			Data:    nil,
-		})
+		utils.FailWithMessage("Failed to create", ctx)
 		return
 	}
-	ctx.JSON(http.StatusCreated, response.CommonResponse{
-		Code:    http.StatusCreated,
-		Message: "Order created successfully",
-		Data:    order,
-	})
+	utils.OkWithDetailed(order, "created successfully", ctx)
 }
 
 // GetOrders 获取所有订单
@@ -54,22 +41,14 @@ func (c *OrderController) CreateOrder(ctx *gin.Context) {
 // @Tags orders
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} response.CommonResponse "订单列表"
-// @Failure 500 {object} response.CommonResponse "服务器内部错误"
-// @Router /api/orders/GetOrders [get]
+// @Success 200 {object} utils.Response{data=[]models.TestOrder,msg=string} "订单列表"
+// @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
+// @Router /api/services/app/order/GetOrders [get]
 func (c *OrderController) GetOrders(ctx *gin.Context) {
 	orders, err := ServicesApp.orderService.GetAllOrders()
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
-			Code:    http.StatusInternalServerError,
-			Message: "Failed to retrieve orders",
-			Data:    nil,
-		})
+		utils.FailWithMessage("Failed to retrieve", ctx)
 		return
 	}
-	ctx.JSON(http.StatusOK, response.CommonResponse{
-		Code:    http.StatusOK,
-		Message: "Orders retrieved successfully",
-		Data:    orders,
-	})
+	utils.OkWithDetailed(orders, "get successfully", ctx)
 }

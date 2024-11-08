@@ -73,7 +73,7 @@ func InitDB() *gorm.DB {
 		log.Fatalf("Failed to connect to the database: %v", dbErr)
 	}
 
-	if err := DB.AutoMigrate(&models.User{}); err != nil {
+	if err := DB.AutoMigrate(&models.TestUser{}); err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
 	}
 	// 配置数据库连接池
@@ -110,8 +110,8 @@ func InitRedis() {
 func AutoMigrateDB() {
 	// 自动迁移数据库结构
 	var err error
-	err = DB.AutoMigrate(&models.User{})
-	err = DB.AutoMigrate(&models.Order{})
+	err = DB.AutoMigrate(&models.TestUser{})
+	err = DB.AutoMigrate(&models.TestOrder{})
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
 	}

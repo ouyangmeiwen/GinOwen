@@ -2,8 +2,7 @@ package controllers
 
 import (
 	"GINOWEN/models/request"
-	"GINOWEN/models/response"
-	"net/http"
+	"GINOWEN/utils" // Import the response package
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,24 +17,16 @@ type UserController struct {
 // @Tags users
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} response.CommonResponse "获取到的所有用户列表"
-// @Failure 500 {object} response.CommonResponse "内部服务器错误"
-// @Router /api/user/GetUsers [get]
+// @Success 200 {object} utils.Response{data=[]response.UserDto,msg=string} "获取到的所有用户列表"
+// @Failure 500 {object} utils.Response{msg=string} "内部服务器错误"
+// @Router /api/services/app/user/GetUsers [get]
 func (c *UserController) GetUsers(ctx *gin.Context) {
 	users, err := ServicesApp.userService.GetAllUsers()
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
-			Code:    http.StatusInternalServerError,
-			Message: "Failed to retrieve users",
-			Data:    nil,
-		})
+		utils.FailWithMessage("Failed to retrieve", ctx)
 		return
 	}
-	ctx.JSON(http.StatusOK, response.CommonResponse{
-		Code:    http.StatusOK,
-		Message: "Users retrieved successfully",
-		Data:    users,
-	})
+	utils.OkWithDetailed(users, "get successfully", ctx)
 }
 
 // CreateUser 创建用户
@@ -45,34 +36,20 @@ func (c *UserController) GetUsers(ctx *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param user body request.UserRequest true "用户信息"
-// @Success 200 {object} response.CommonResponse "成功创建的用户信息"
-// @Failure 400 {object} response.CommonResponse "无效的输入"
-// @Failure 500 {object} response.CommonResponse "创建用户失败"
-// @Router /api/user/CreateUser [post]
+// @Success 200 {object} utils.Response{data=response.UserDto,msg=string} "成功创建的用户信息"
+// @Failure 400 {object} utils.Response{msg=string} "无效的输入"
+// @Failure 500 {object} utils.Response{msg=string} "创建用户失败"
+// @Router /api/services/app/user/CreateUser [post]
 func (c *UserController) CreateUser(ctx *gin.Context) {
 	var req request.UserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, response.CommonResponse{
-			Code:    http.StatusBadRequest,
-			Message: "Invalid input data",
-			Data:    nil,
-		})
+		utils.FailWithMessage("Invalid request data", ctx)
 		return
 	}
-
 	user, err := ServicesApp.userService.CreateUser(req)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, response.CommonResponse{
-			Code:    http.StatusInternalServerError,
-			Message: "Failed to create user",
-			Data:    nil,
-		})
+		utils.FailWithMessage("Failed to create", ctx)
 		return
 	}
-
-	ctx.JSON(http.StatusOK, response.CommonResponse{
-		Code:    http.StatusOK,
-		Message: "User created successfully",
-		Data:    user,
-	})
+	utils.OkWithDetailed(user, "created successfully", ctx)
 }

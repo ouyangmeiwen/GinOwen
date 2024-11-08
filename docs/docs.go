@@ -15,7 +15,92 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/orders/CreateOrder": {
+        "/api/services/app/libitem/ImportExcel": {
+            "post": {
+                "description": "通过提供的Excel文件导入图书信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "libitems"
+                ],
+                "summary": "导入图书信息",
+                "parameters": [
+                    {
+                        "description": "导入参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ImportExcelInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "导入成功，返回导入的数据",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.ImportExcelDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "无效的请求",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/order/CreateOrder": {
             "post": {
                 "description": "创建新的订单并返回订单信息",
                 "consumes": [
@@ -35,7 +120,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Order"
+                            "$ref": "#/definitions/models.TestOrder"
                         }
                     }
                 ],
@@ -43,25 +128,64 @@ const docTemplate = `{
                     "201": {
                         "description": "成功创建的订单信息",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.TestOrder"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
                         "description": "无效的请求",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
                         "description": "服务器内部错误",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
             }
         },
-        "/api/orders/GetOrders": {
+        "/api/services/app/order/GetOrders": {
             "get": {
                 "description": "获取所有订单信息",
                 "consumes": [
@@ -78,19 +202,49 @@ const docTemplate = `{
                     "200": {
                         "description": "订单列表",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/models.TestOrder"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
                         "description": "服务器内部错误",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
             }
         },
-        "/api/user/CreateUser": {
+        "/api/services/app/user/CreateUser": {
             "post": {
                 "description": "创建一个新的用户并返回用户信息",
                 "consumes": [
@@ -118,25 +272,64 @@ const docTemplate = `{
                     "200": {
                         "description": "成功创建的用户信息",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UserDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
                         "description": "无效的输入",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
                         "description": "创建用户失败",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
             }
         },
-        "/api/user/GetUsers": {
+        "/api/services/app/user/GetUsers": {
             "get": {
                 "description": "获取所有用户信息",
                 "consumes": [
@@ -153,13 +346,43 @@ const docTemplate = `{
                     "200": {
                         "description": "获取到的所有用户列表",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.UserDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
                         "description": "内部服务器错误",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -167,7 +390,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.Order": {
+        "models.TestOrder": {
             "description": "订单数据模型",
             "type": "object",
             "properties": {
@@ -185,6 +408,89 @@ const docTemplate = `{
                 }
             }
         },
+        "request.ImportExcelInput": {
+            "type": "object",
+            "required": [
+                "path",
+                "tenantid"
+            ],
+            "properties": {
+                "author": {
+                    "description": "作者",
+                    "type": "string",
+                    "default": "作者"
+                },
+                "barcode": {
+                    "description": "条码号",
+                    "type": "string",
+                    "default": "条码号"
+                },
+                "callNo": {
+                    "description": "索书号",
+                    "type": "string",
+                    "default": "索书号"
+                },
+                "catalogCode": {
+                    "description": "分类号",
+                    "type": "string",
+                    "default": "分类号"
+                },
+                "isbn": {
+                    "description": "ISBN",
+                    "type": "string",
+                    "default": "ISBN"
+                },
+                "locationname": {
+                    "description": "当前馆藏地点",
+                    "type": "string",
+                    "default": "当前馆藏地点"
+                },
+                "pages": {
+                    "description": "页数",
+                    "type": "string",
+                    "default": "页数"
+                },
+                "path": {
+                    "description": "excel 服务器本地路径",
+                    "type": "string",
+                    "default": "d:/4.xlsx",
+                    "maxLength": 100,
+                    "minLength": 3
+                },
+                "price": {
+                    "description": "单价",
+                    "type": "string",
+                    "default": "单价"
+                },
+                "pubDate": {
+                    "description": "出版日期",
+                    "type": "string",
+                    "default": "出版日期"
+                },
+                "publisher": {
+                    "description": "出版社",
+                    "type": "string",
+                    "default": "出版社"
+                },
+                "tenantid": {
+                    "description": "租户",
+                    "type": "integer",
+                    "default": 1,
+                    "maximum": 99999,
+                    "minimum": 1
+                },
+                "tid": {
+                    "description": "tid",
+                    "type": "string",
+                    "default": "tid"
+                },
+                "title": {
+                    "description": "题名",
+                    "type": "string",
+                    "default": "题名"
+                }
+            }
+        },
         "request.UserRequest": {
             "type": "object",
             "required": [
@@ -196,18 +502,30 @@ const docTemplate = `{
                 }
             }
         },
-        "response.CommonResponse": {
+        "response.ImportExcelDto": {
+            "type": "object"
+        },
+        "response.UserDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "用户ID",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "用户名",
+                    "type": "string"
+                }
+            }
+        },
+        "utils.Response": {
             "type": "object",
             "properties": {
                 "code": {
-                    "description": "状态码",
                     "type": "integer"
                 },
-                "data": {
-                    "description": "返回的数据，可以是任何类型"
-                },
-                "message": {
-                    "description": "提示信息",
+                "data": {},
+                "msg": {
                     "type": "string"
                 }
             }

@@ -10,16 +10,16 @@ import (
 type UserService struct {
 }
 
-func (s *UserService) GetAllUsers() ([]response.UserResponse, error) {
-	var users []models.User
+func (s *UserService) GetAllUsers() ([]response.UserDto, error) {
+	var users []models.TestUser
 	err := global.OWEN_DB.Find(&users).Error
 	if err != nil {
 		return nil, err
 	}
 
-	var userResponses []response.UserResponse
+	var userResponses []response.UserDto
 	for _, user := range users {
-		userResponses = append(userResponses, response.UserResponse{
+		userResponses = append(userResponses, response.UserDto{
 			ID:   user.ID,
 			Name: user.Name,
 		})
@@ -27,25 +27,25 @@ func (s *UserService) GetAllUsers() ([]response.UserResponse, error) {
 	return userResponses, nil
 }
 
-func (s *UserService) CreateUser(userRequest request.UserRequest) (response.UserResponse, error) {
-	user := models.User{Name: userRequest.Name}
+func (s *UserService) CreateUser(userRequest request.UserRequest) (response.UserDto, error) {
+	user := models.TestUser{Name: userRequest.Name}
 	if err := global.OWEN_DB.Create(user).Error; err != nil {
-		return response.UserResponse{}, err
+		return response.UserDto{}, err
 	}
-	return response.UserResponse{
+	return response.UserDto{
 		ID:   user.ID,
 		Name: user.Name,
 	}, nil
 }
 
-func (s *UserService) UpdateUserAndCreateOrder(userID uint, order *models.User) error {
+func (s *UserService) UpdateUserAndCreateOrder(userID uint, order *models.TestUser) error {
 	// 开启事务
 	tx := global.OWEN_DB.Begin()
 	if tx.Error != nil {
 		return tx.Error
 	}
 	// 使用事务进行更新操作
-	err := tx.Model(&models.User{}).Where("id = ?", userID).Updates(map[string]interface{}{"status": "updated"}).Error
+	err := tx.Model(&models.TestUser{}).Where("id = ?", userID).Updates(map[string]interface{}{"status": "updated"}).Error
 	if err != nil {
 		// 更新失败，回滚事务
 		tx.Rollback()

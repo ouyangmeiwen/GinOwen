@@ -1,5 +1,5 @@
 definitions:
-  models.Order:
+  models.TestOrder:
     description: 订单数据模型
     properties:
       amount:
@@ -12,6 +12,72 @@ definitions:
         description: '@ID'
         type: integer
     type: object
+  request.ImportExcelInput:
+    properties:
+      author:
+        default: 作者
+        description: 作者
+        type: string
+      barcode:
+        default: 条码号
+        description: 条码号
+        type: string
+      callNo:
+        default: 索书号
+        description: 索书号
+        type: string
+      catalogCode:
+        default: 分类号
+        description: 分类号
+        type: string
+      isbn:
+        default: ISBN
+        description: ISBN
+        type: string
+      locationname:
+        default: 当前馆藏地点
+        description: 当前馆藏地点
+        type: string
+      pages:
+        default: 页数
+        description: 页数
+        type: string
+      path:
+        default: d:/4.xlsx
+        description: excel 服务器本地路径
+        maxLength: 100
+        minLength: 3
+        type: string
+      price:
+        default: 单价
+        description: 单价
+        type: string
+      pubDate:
+        default: 出版日期
+        description: 出版日期
+        type: string
+      publisher:
+        default: 出版社
+        description: 出版社
+        type: string
+      tenantid:
+        default: 1
+        description: 租户
+        maximum: 99999
+        minimum: 1
+        type: integer
+      tid:
+        default: tid
+        description: tid
+        type: string
+      title:
+        default: 题名
+        description: 题名
+        type: string
+    required:
+    - path
+    - tenantid
+    type: object
   request.UserRequest:
     properties:
       name:
@@ -19,21 +85,76 @@ definitions:
     required:
     - name
     type: object
-  response.CommonResponse:
+  response.ImportExcelDto:
+    type: object
+  response.UserDto:
+    properties:
+      id:
+        description: 用户ID
+        type: integer
+      name:
+        description: 用户名
+        type: string
+    type: object
+  utils.Response:
     properties:
       code:
-        description: 状态码
         type: integer
-      data:
-        description: 返回的数据，可以是任何类型
-      message:
-        description: 提示信息
+      data: {}
+      msg:
         type: string
     type: object
 info:
   contact: {}
 paths:
-  /api/orders/CreateOrder:
+  /api/services/app/libitem/ImportExcel:
+    post:
+      consumes:
+      - application/json
+      description: 通过提供的Excel文件导入图书信息
+      parameters:
+      - description: 导入参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ImportExcelInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 导入成功，返回导入的数据
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ImportExcelDto'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 无效的请求
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "500":
+          description: 服务器内部错误
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 导入图书信息
+      tags:
+      - libitems
+  /api/services/app/order/CreateOrder:
     post:
       consumes:
       - application/json
@@ -44,26 +165,43 @@ paths:
         name: order
         required: true
         schema:
-          $ref: '#/definitions/models.Order'
+          $ref: '#/definitions/models.TestOrder'
       produces:
       - application/json
       responses:
         "201":
           description: 成功创建的订单信息
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.TestOrder'
+                msg:
+                  type: string
+              type: object
         "400":
           description: 无效的请求
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
         "500":
           description: 服务器内部错误
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       summary: 创建订单
       tags:
       - orders
-  /api/orders/GetOrders:
+  /api/services/app/order/GetOrders:
     get:
       consumes:
       - application/json
@@ -74,15 +212,29 @@ paths:
         "200":
           description: 订单列表
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.TestOrder'
+                  type: array
+                msg:
+                  type: string
+              type: object
         "500":
           description: 服务器内部错误
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       summary: 获取所有订单
       tags:
       - orders
-  /api/user/CreateUser:
+  /api/services/app/user/CreateUser:
     post:
       consumes:
       - application/json
@@ -100,19 +252,36 @@ paths:
         "200":
           description: 成功创建的用户信息
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UserDto'
+                msg:
+                  type: string
+              type: object
         "400":
           description: 无效的输入
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
         "500":
           description: 创建用户失败
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       summary: 创建新用户
       tags:
       - users
-  /api/user/GetUsers:
+  /api/services/app/user/GetUsers:
     get:
       consumes:
       - application/json
@@ -123,11 +292,25 @@ paths:
         "200":
           description: 获取到的所有用户列表
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.UserDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
         "500":
           description: 内部服务器错误
           schema:
-            $ref: '#/definitions/response.CommonResponse'
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
       summary: 获取所有用户
       tags:
       - users

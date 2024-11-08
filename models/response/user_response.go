@@ -1,6 +1,8 @@
+// models/response/user.go
 package response
 
-type UserResponse struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name"`
+// UserDto 用户返回的DTO
+type UserDto struct {
+    ID   uint   `json:"id"`   // 用户ID
+    Name string `json:"name"` // 用户名
 }
