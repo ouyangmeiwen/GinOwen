@@ -1,4 +1,4 @@
-package controllers
+package api
 
 import (
 	"GINOWEN/global"
@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type SysauditlmslogController struct {
+type SysauditlmslogApi struct {
 }
 
 // QueryLmsLog
@@ -20,7 +20,7 @@ type SysauditlmslogController struct {
 // @Param    data  query     request.QueryLmsInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.QueryLmsDto,msg=string}  "返回清单"
 // @Router   /api/services/app/Sysauditlmslog/QueryLmsLog [get]
-func (b *SysauditlmslogController) QueryLmsLog(c *gin.Context) {
+func (b *SysauditlmslogApi) QueryLmsLog(c *gin.Context) {
 
 	// 打印查询字符串
 	queryStr := c.Request.URL.RawQuery
@@ -71,7 +71,7 @@ func (b *SysauditlmslogController) QueryLmsLog(c *gin.Context) {
 // @Param    data  body     request.CreateLmsLogInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.CreateLmsLogDto,msg=string}  "返回"
 // @Router   /api/services/app/Sysauditlmslog/CreateLmsLog [post]
-func (b *SysauditlmslogController) CreateLmsLog(c *gin.Context) {
+func (b *SysauditlmslogApi) CreateLmsLog(c *gin.Context) {
 	var req request.CreateLmsLogInput
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
@@ -113,7 +113,7 @@ func (b *SysauditlmslogController) CreateLmsLog(c *gin.Context) {
 // @Param    data  body     request.UpdateLmsLogInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.UpdateLmsLogDto,msg=string}  "返回"
 // @Router   /api/services/app/Sysauditlmslog/UpdateLmsLog [put]
-func (b *SysauditlmslogController) UpdateLmsLog(c *gin.Context) {
+func (b *SysauditlmslogApi) UpdateLmsLog(c *gin.Context) {
 	var req request.UpdateLmsLogInput
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
@@ -136,7 +136,7 @@ func (b *SysauditlmslogController) UpdateLmsLog(c *gin.Context) {
 // @Param    data  query     request.DeleteLmsLogInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.DeleteLmsLogDto,msg=string}  "返回清单"
 // @Router   /api/services/app/Sysauditlmslog/DeleteLmsLog [delete]
-func (b *SysauditlmslogController) DeleteLmsLog(c *gin.Context) {
+func (b *SysauditlmslogApi) DeleteLmsLog(c *gin.Context) {
 
 	var req request.DeleteLmsLogInput
 	err := c.ShouldBindQuery(&req) //大小写敏感

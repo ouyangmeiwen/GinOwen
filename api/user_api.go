@@ -1,4 +1,4 @@
-package controllers
+package api
 
 import (
 	"GINOWEN/models/request"
@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UserController 用户控制器
-type UserController struct {
+// UserApi 用户控制器
+type UserApi struct {
 }
 
 // GetUsers 获取所有用户
@@ -20,7 +20,7 @@ type UserController struct {
 // @Success 200 {object} utils.Response{data=[]response.UserDto,msg=string} "获取到的所有用户列表"
 // @Failure 500 {object} utils.Response{msg=string} "内部服务器错误"
 // @Router /api/services/app/user/GetUsers [get]
-func (c *UserController) GetUsers(ctx *gin.Context) {
+func (c *UserApi) GetUsers(ctx *gin.Context) {
 	users, err := ServicesApp.userService.GetAllUsers()
 	if err != nil {
 		utils.FailWithMessage("Failed to retrieve", ctx)
@@ -40,7 +40,7 @@ func (c *UserController) GetUsers(ctx *gin.Context) {
 // @Failure 400 {object} utils.Response{msg=string} "无效的输入"
 // @Failure 500 {object} utils.Response{msg=string} "创建用户失败"
 // @Router /api/services/app/user/CreateUser [post]
-func (c *UserController) CreateUser(ctx *gin.Context) {
+func (c *UserApi) CreateUser(ctx *gin.Context) {
 	var req request.UserRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		utils.FailWithMessage("Invalid request data", ctx)

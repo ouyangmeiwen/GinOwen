@@ -1,4 +1,4 @@
-package controllers
+package api
 
 import (
 	"GINOWEN/models"
@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// OrderController 订单控制器
-type OrderController struct {
+// OrderApi 订单控制器
+type OrderApi struct {
 }
 
 // CreateOrder 创建订单
@@ -22,7 +22,7 @@ type OrderController struct {
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
 // @Router /api/services/app/order/CreateOrder [post]
-func (c *OrderController) CreateOrder(ctx *gin.Context) {
+func (c *OrderApi) CreateOrder(ctx *gin.Context) {
 	var order models.TestOrder
 	if err := ctx.ShouldBindJSON(&order); err != nil {
 		utils.FailWithMessage("Invalid request data", ctx)
@@ -44,7 +44,7 @@ func (c *OrderController) CreateOrder(ctx *gin.Context) {
 // @Success 200 {object} utils.Response{data=[]models.TestOrder,msg=string} "订单列表"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
 // @Router /api/services/app/order/GetOrders [get]
-func (c *OrderController) GetOrders(ctx *gin.Context) {
+func (c *OrderApi) GetOrders(ctx *gin.Context) {
 	orders, err := ServicesApp.orderService.GetAllOrders()
 	if err != nil {
 		utils.FailWithMessage("Failed to retrieve", ctx)

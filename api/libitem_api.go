@@ -1,4 +1,4 @@
-package controllers
+package api
 
 import (
 	"GINOWEN/global"
@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type LibItemController struct {
+type LibItemApi struct {
 }
 
 // ImportExcel 导入图书信息
@@ -23,7 +23,7 @@ type LibItemController struct {
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
 // @Router /api/services/app/libitem/ImportExcel [post]
-func (b *LibItemController) ImportExcel(ctx *gin.Context) {
+func (b *LibItemApi) ImportExcel(ctx *gin.Context) {
 	var req request.ImportExcelInput
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {

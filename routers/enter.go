@@ -1,13 +1,13 @@
 package routers
 
-import "GINOWEN/controllers"
+import "GINOWEN/api"
 
-type RouterControllers struct {
-	orderController          controllers.OrderController
-	userController           controllers.UserController
-	libItemController        controllers.LibItemController
-	uploadfileControllers    controllers.UploadfileControllers
-	sysauditlmslogController controllers.SysauditlmslogController
+type RouterApis struct {
+	orderApi          api.OrderApi
+	userApi           api.UserApi
+	libItemApi        api.LibItemApi
+	uploadfileApi     api.UploadfileApi
+	sysauditlmslogApi api.SysauditlmslogApi
 }
 
-var Router = new(RouterControllers)
+var Router = new(RouterApis)

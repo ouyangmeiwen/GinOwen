@@ -1,4 +1,4 @@
-package controllers
+package api
 
 import (
 	"GINOWEN/global"
@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type UploadfileControllers struct {
+type UploadfileApi struct {
 }
 
 // uploadFileHandler 文件上传接口
@@ -30,7 +30,7 @@ type UploadfileControllers struct {
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
 // @Router /api/services/app/file/UploadFile [post]
-func (b *UploadfileControllers) UploadFile(c *gin.Context) {
+func (b *UploadfileApi) UploadFile(c *gin.Context) {
 	var req request.UploadRequest
 	err := c.ShouldBind(&req)
 	if err != nil {
