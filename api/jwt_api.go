@@ -14,7 +14,8 @@ import (
 type JWTAPI struct {
 }
 
-// Login 登录接口获取 JWT
+// JWT 登录接口
+// @Summary User Login
 // @Summary 用户登录，获取JWT Token
 // @Description 用户输入用户名和密码，验证通过后返回JWT Token。
 // @Tags Auth

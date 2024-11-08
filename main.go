@@ -8,9 +8,19 @@ import (
 	"GINOWEN/utils"
 	"net/http"
 
+	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
+// @title Swagger Example API
+// @version 1.0
+// @description This is a sample API using Gin and Swagger.
+// @termsOfService https://example.com/terms
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description JWT Authorization header (Bearer token)
 func main() {
 	// 加载配置文件
 	global.OWEN_CONFIG = config.LoadConfig()
@@ -33,7 +43,8 @@ func main() {
 	r := gin.New()
 	// r.Use(cors.Default())
 	r.Use(gin.Recovery())
-	r.Use(middlewares.Cors())
+	// r.Use(middlewares.Cors())
+	r.Use(cors.Default())
 
 	// 应用 AuthMiddleware 和 AuditMiddleware
 	//r.Use(middlewares.AuthMiddleware(global.OWEN_DB))

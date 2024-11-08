@@ -36,3 +36,17 @@
 {"level":"DEBUG","time":"2024-11-08T16:52:49.743+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
 {"level":"DEBUG","time":"2024-11-08T16:54:12.471+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
 {"level":"DEBUG","time":"2024-11-08T16:56:02.326+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T16:59:59.604+0800","caller":"GinOwen/main.go:29","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:01:24.949+0800","caller":"GinOwen/main.go:29","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:01:55.770+0800","caller":"GinOwen/main.go:29","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:05:07.309+0800","caller":"GinOwen/main.go:29","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:06:46.448+0800","caller":"GinOwen/main.go:29","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:08:27.307+0800","caller":"GinOwen/main.go:30","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:10:02.121+0800","caller":"GinOwen/main.go:30","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:13:06.028+0800","caller":"GinOwen/main.go:31","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:14:00.605+0800","caller":"GinOwen/main.go:31","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:14:40.154+0800","caller":"GinOwen/main.go:31","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:17:02.390+0800","caller":"GinOwen/main.go:31","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:18:57.943+0800","caller":"GinOwen/main.go:31","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:21:01.641+0800","caller":"GinOwen/main.go:31","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T17:21:55.111+0800","caller":"GinOwen/main.go:31","msg":"开始程序！"}
