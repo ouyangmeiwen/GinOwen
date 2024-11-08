@@ -21,6 +21,8 @@ func main() {
 	global.OWEN_LOG.Debug("开始程序！")
 
 	global.OWEN_DB = config.InitDB()
+	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
+
 	config.InitRedis() //初始化redis
 
 	config.AutoMigrateDB() //数据库自动迁移
@@ -32,6 +34,11 @@ func main() {
 	// r.Use(cors.Default())
 	r.Use(gin.Recovery())
 	r.Use(middlewares.Cors())
+
+	// 应用 AuthMiddleware 和 AuditMiddleware
+	//r.Use(middlewares.AuthMiddleware(global.OWEN_DB))
+
+	r.Use(middlewares.AuditMiddleware(global.OWEN_DB)) //审计日志
 
 	// 健康检查接口
 	r.GET("/health", func(c *gin.Context) {

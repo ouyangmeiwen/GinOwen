@@ -5,6 +5,7 @@ go 1.22.4
 toolchain go1.23.2
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.4.0
 	github.com/redis/go-redis/v9 v9.7.0

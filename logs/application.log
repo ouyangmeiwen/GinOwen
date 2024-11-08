@@ -22,3 +22,10 @@
 {"level":"DEBUG","time":"2024-11-08T13:03:55.017+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
 {"level":"DEBUG","time":"2024-11-08T13:17:12.155+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
 {"level":"DEBUG","time":"2024-11-08T13:17:47.975+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T15:48:11.886+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T15:51:16.907+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T15:51:59.451+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T15:54:16.847+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T15:56:16.476+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T16:00:18.028+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}
+{"level":"DEBUG","time":"2024-11-08T16:01:05.882+0800","caller":"GinOwen/main.go:21","msg":"开始程序！"}

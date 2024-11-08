@@ -2,6 +2,7 @@ package config
 
 import (
 	"GINOWEN/global"
+	"GINOWEN/models"
 	"context"
 	"errors"
 	"fmt"
@@ -106,7 +107,9 @@ func InitRedis() {
 func AutoMigrateDB() {
 	// 自动迁移数据库结构
 	var err error
-	// err = DB.AutoMigrate(&models.TestUser{})
+	err = DB.AutoMigrate(&models.User{})
+	err = DB.AutoMigrate(&models.Role{})
+	err = DB.AutoMigrate(&models.AuditLog{})
 	// err = DB.AutoMigrate(&models.TestOrder{})
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
