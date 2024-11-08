@@ -2,7 +2,6 @@ package config
 
 import (
 	"GINOWEN/global"
-	"GINOWEN/models"
 	"context"
 	"errors"
 	"fmt"
@@ -73,9 +72,6 @@ func InitDB() *gorm.DB {
 		log.Fatalf("Failed to connect to the database: %v", dbErr)
 	}
 
-	if err := DB.AutoMigrate(&models.TestUser{}); err != nil {
-		log.Fatalf("Failed to migrate the database: %v", err)
-	}
 	// 配置数据库连接池
 	sqlDB, err := DB.DB()
 	if err != nil {
@@ -110,8 +106,8 @@ func InitRedis() {
 func AutoMigrateDB() {
 	// 自动迁移数据库结构
 	var err error
-	err = DB.AutoMigrate(&models.TestUser{})
-	err = DB.AutoMigrate(&models.TestOrder{})
+	// err = DB.AutoMigrate(&models.TestUser{})
+	// err = DB.AutoMigrate(&models.TestOrder{})
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
 	}

@@ -1,17 +1,4 @@
 definitions:
-  models.TestOrder:
-    description: 订单数据模型
-    properties:
-      amount:
-        example: 100.5
-        type: number
-      customer:
-        example: John Doe
-        type: string
-      id:
-        description: '@ID'
-        type: integer
-    type: object
   request.CreateLmsLogInput:
     properties:
       BrowserInfo:
@@ -148,13 +135,6 @@ definitions:
       UserId:
         type: integer
     type: object
-  request.UserRequest:
-    properties:
-      name:
-        type: string
-    required:
-    - name
-    type: object
   response.CreateLmsLogDto:
     type: object
   response.DeleteLmsLogDto:
@@ -212,15 +192,6 @@ definitions:
   response.UploadResponse:
     properties:
       filePath:
-        type: string
-    type: object
-  response.UserDto:
-    properties:
-      id:
-        description: 用户ID
-        type: integer
-      name:
-        description: 用户名
         type: string
     type: object
   utils.Response:
@@ -482,164 +453,4 @@ paths:
       summary: 导入图书信息
       tags:
       - libitems
-  /api/services/app/order/CreateOrder:
-    post:
-      consumes:
-      - application/json
-      description: 创建新的订单并返回订单信息
-      parameters:
-      - description: 订单信息
-        in: body
-        name: order
-        required: true
-        schema:
-          $ref: '#/definitions/models.TestOrder'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: 成功创建的订单信息
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/models.TestOrder'
-                msg:
-                  type: string
-              type: object
-        "400":
-          description: 无效的请求
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-        "500":
-          description: 服务器内部错误
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      summary: 创建订单
-      tags:
-      - orders
-  /api/services/app/order/GetOrders:
-    get:
-      consumes:
-      - application/json
-      description: 获取所有订单信息
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 订单列表
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                data:
-                  items:
-                    $ref: '#/definitions/models.TestOrder'
-                  type: array
-                msg:
-                  type: string
-              type: object
-        "500":
-          description: 服务器内部错误
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      summary: 获取所有订单
-      tags:
-      - orders
-  /api/services/app/user/CreateUser:
-    post:
-      consumes:
-      - application/json
-      description: 创建一个新的用户并返回用户信息
-      parameters:
-      - description: 用户信息
-        in: body
-        name: user
-        required: true
-        schema:
-          $ref: '#/definitions/request.UserRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 成功创建的用户信息
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/response.UserDto'
-                msg:
-                  type: string
-              type: object
-        "400":
-          description: 无效的输入
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-        "500":
-          description: 创建用户失败
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      summary: 创建新用户
-      tags:
-      - users
-  /api/services/app/user/GetUsers:
-    get:
-      consumes:
-      - application/json
-      description: 获取所有用户信息
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 获取到的所有用户列表
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                data:
-                  items:
-                    $ref: '#/definitions/response.UserDto'
-                  type: array
-                msg:
-                  type: string
-              type: object
-        "500":
-          description: 内部服务器错误
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      summary: 获取所有用户
-      tags:
-      - users
 swagger: "2.0"

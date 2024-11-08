@@ -19,8 +19,6 @@ func InitAllRouter(r *gin.Engine) {
 	api.Use(middlewares.Recovery()) // 异常恢复
 
 	// 注册路由
-	RegisterUserRoutes(r)
-	RegisterOrderRoutes(r)
 	RegisterLibitemRoutes(r)
 	RegisterUploadfileRoutes(r)
 	RegisterSysauditlmslogRoutes(r)

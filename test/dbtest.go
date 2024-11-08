@@ -1,7 +1,6 @@
 package test
 
 import (
-	"GINOWEN/models"
 	"log"
 	"net/http"
 	"strconv"
@@ -12,7 +11,7 @@ import (
 )
 
 // 定义 User 结构体作为数据模型
-type User struct {
+type TestUser struct {
 	ID       uint   `gorm:"primaryKey"`  // 主键
 	Name     string `gorm:"size:100"`    // 字符串类型字段
 	Email    string `gorm:"uniqueIndex"` // 唯一索引
@@ -21,7 +20,7 @@ type User struct {
 
 // 初始化数据库并创建表
 func Migrate(db *gorm.DB) {
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(&TestUser{})
 }
 
 var DB *gorm.DB
@@ -41,7 +40,7 @@ func InitDB() {
 
 // 创建一个新的用户
 func CreateUser(c *gin.Context) {
-	var user models.TestUser
+	var user TestUser
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -55,7 +54,7 @@ func CreateUser(c *gin.Context) {
 
 // 根据用户名查找用户
 func GetUserByName(c *gin.Context) {
-	var user models.TestUser
+	var user TestUser
 	name := c.Query("name")
 	if err := DB.Where("name = ?", name).First(&user).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
@@ -66,7 +65,7 @@ func GetUserByName(c *gin.Context) {
 
 // 获取多个符合条件的用户
 func GetUsersByCondition(c *gin.Context) {
-	var users []models.TestUser
+	var users []TestUser
 	if err := DB.Where("email LIKE ?", "%@example.com%").Find(&users).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -76,7 +75,7 @@ func GetUsersByCondition(c *gin.Context) {
 
 // 根据 ID 更新用户信息
 func UpdateUserEmail(c *gin.Context) {
-	var user models.TestUser
+	var user TestUser
 	id := c.Param("id")
 	newEmail := c.Query("email")
 
@@ -89,7 +88,7 @@ func UpdateUserEmail(c *gin.Context) {
 
 // 删除用户
 func DeleteUser1(c *gin.Context) {
-	var user models.TestUser
+	var user TestUser
 	id := c.Param("id")
 
 	if err := DB.Delete(&user, id).Error; err != nil {
@@ -101,7 +100,7 @@ func DeleteUser1(c *gin.Context) {
 
 // 获取所有用户，按创建时间降序排列
 func GetAllUsers(c *gin.Context) {
-	var users []models.TestUser
+	var users []TestUser
 	if err := DB.Order("created_at desc").Find(&users).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -111,7 +110,7 @@ func GetAllUsers(c *gin.Context) {
 
 // 获取最新的一个用户记录
 func GetLatestUser(c *gin.Context) {
-	var user models.TestUser
+	var user TestUser
 	if err := DB.Order("created_at desc").First(&user).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 		return
@@ -121,7 +120,7 @@ func GetLatestUser(c *gin.Context) {
 
 // 批量更新：将所有 email 为空的用户的 email 设置为 "unknown@example.com"
 func UpdateUsersEmail(c *gin.Context) {
-	result := DB.Model(&models.TestUser{}).Where("email = ?", "").Update("email", "unknown@example.com")
+	result := DB.Model(&TestUser{}).Where("email = ?", "").Update("email", "unknown@example.com")
 	c.JSON(http.StatusOK, gin.H{"rows_affected": result.RowsAffected})
 }
 
@@ -134,7 +133,7 @@ func UpdateUserEmailTransaction(c *gin.Context) {
 		}
 	}()
 
-	var user models.TestUser
+	var user TestUser
 	if err := tx.Model(&user).Where("id = ?", 1).Update("email", "newemail1@example.com").Error; err != nil {
 		tx.Rollback()
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -153,14 +152,14 @@ func UpdateUserEmailTransaction(c *gin.Context) {
 
 // 使用原生 SQL 查询
 func RawSQLQuery(c *gin.Context) {
-	var users []models.TestUser
+	var users []TestUser
 	DB.Raw("SELECT * FROM users WHERE email LIKE ?", "%@example.com%").Scan(&users)
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
 // 获取分页用户数据
 func GetUsersPaginated(c *gin.Context) {
-	var users []models.TestUser
+	var users []TestUser
 	page, _ := strconv.Atoi(c.Query("page"))
 	limit, _ := strconv.Atoi(c.Query("limit"))
 
@@ -172,13 +171,13 @@ func GetUsersPaginated(c *gin.Context) {
 // 获取用户总数
 func GetUserCount(c *gin.Context) {
 	var count int64
-	DB.Model(&models.TestUser{}).Count(&count)
+	DB.Model(&TestUser{}).Count(&count)
 	c.JSON(http.StatusOK, gin.H{"total_users": count})
 }
 
 // 多条件查询用户
 func GetUsersByMultipleConditions(c *gin.Context) {
-	var users []models.TestUser
+	var users []TestUser
 	DB.Where("email LIKE ?", "%@example.com%").Or("name = ?", "John Doe").Find(&users)
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
