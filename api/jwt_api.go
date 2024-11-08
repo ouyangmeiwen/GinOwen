@@ -98,7 +98,7 @@ func (JWTAPI) Register(ctx *gin.Context) {
 	}
 
 	// 存储用户到数据库
-	if err := global.OWEN_DB.Create(newUser); err != nil {
+	if err := global.OWEN_DB.Create(&newUser); err != nil {
 		utils.FailWithMessage("Error creating user", ctx)
 		return
 	}
