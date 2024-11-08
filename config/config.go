@@ -62,6 +62,9 @@ func InitDB() *gorm.DB {
 		DB, dbErr = gorm.Open(sqlite.Open(config.DB.Sqlite), &gorm.Config{Logger: newLogger})
 	case "sqlserver":
 		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.Mssql), &gorm.Config{Logger: newLogger})
+	case "oracle":
+		// 使用 godror 驱动连接到 Oracle 数据库
+		DB, dbErr = gorm.Open(mysql.Open(config.DB.Mysql), &gorm.Config{Logger: newLogger})
 	default:
 		log.Fatalf("Unsupported database type: %s", config.DB.Type)
 	}
