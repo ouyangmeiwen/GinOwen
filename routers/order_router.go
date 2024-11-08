@@ -10,7 +10,7 @@ import (
 func RegisterOrderRoutes(r *gin.Engine) {
 	api := r.Group(global.OWEN_CONFIG.System.Pre + "/order")
 	{
-		api.GET("GetOrders", ApiApp.orderController.GetOrders)
-		api.POST("CreateOrder", ApiApp.orderController.CreateOrder)
+		api.GET("GetOrders", Router.orderController.GetOrders)
+		api.POST("CreateOrder", Router.orderController.CreateOrder)
 	}
 }

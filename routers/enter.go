@@ -2,10 +2,11 @@ package routers
 
 import "GINOWEN/controllers"
 
-type Controllers struct {
-	orderController   controllers.OrderController
-	userController    controllers.UserController
-	libItemController controllers.LibItemController
+type RouterControllers struct {
+	orderController       controllers.OrderController
+	userController        controllers.UserController
+	libItemController     controllers.LibItemController
+	uploadfileControllers controllers.UploadfileControllers
 }
 
-var ApiApp = new(Controllers)
+var Router = new(RouterControllers)
