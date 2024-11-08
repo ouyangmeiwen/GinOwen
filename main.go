@@ -8,7 +8,6 @@ import (
 	"GINOWEN/utils"
 	"net/http"
 
-	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -43,8 +42,8 @@ func main() {
 	r := gin.New()
 	// r.Use(cors.Default())
 	r.Use(gin.Recovery())
-	// r.Use(middlewares.Cors())
-	r.Use(cors.Default())
+	r.Use(middlewares.Cors())
+	//r.Use(cors.Default())
 
 	// 应用 AuthMiddleware 和 AuditMiddleware
 	//r.Use(middlewares.AuthMiddleware(global.OWEN_DB))

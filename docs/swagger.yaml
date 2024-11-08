@@ -542,6 +542,7 @@ paths:
       - Auth
 securityDefinitions:
   BearerAuth:
+    description: JWT Authorization header (Bearer token)
     in: header
     name: Authorization
     type: apiKey
