@@ -12,8 +12,10 @@ import (
 
 type YarmConfig struct {
 	System struct {
-		Port int    `yaml:"port"`
-		Pre  string `yaml:"pre"`
+		Port        int    `yaml:"port"`
+		Pre         string `yaml:"pre"`
+		TokenExpire int    `yaml:"tokenexpire"` //token
+		Token       string `yaml:"token"`       //token
 	} `yaml:"system"`
 
 	DB struct {

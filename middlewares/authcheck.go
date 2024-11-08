@@ -5,6 +5,7 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/models"
 	"GINOWEN/utils"
+	"context"
 
 	"fmt"
 	"net/http"
@@ -50,12 +51,30 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 
 		// 从数据库加载角色信息
 		var role models.OwenRole
-		if err := global.OWEN_DB.First(&role, claims.RoleID).Error; err != nil {
-			c.JSON(http.StatusForbidden, gin.H{"error": "role not found"})
-			c.Abort()
-			return
-		}
 
+		if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
+			var back = context.Background()
+			rolestr, err := global.OWEN_REDIS.Get(back, tokenStr).Result()
+			if err != nil {
+				// 如果解析失败，返回错误信息
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "token expire"})
+				c.Abort()
+				return
+			}
+			err = utils.FromJSON(rolestr, &role)
+			if err != nil {
+				// 如果解析失败，返回错误信息
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "token valid"})
+				c.Abort()
+				return
+			}
+		} else {
+			if err := global.OWEN_DB.First(&role, claims.RoleID).Error; err != nil {
+				c.JSON(http.StatusForbidden, gin.H{"error": "role not found"})
+				c.Abort()
+				return
+			}
+		}
 		// 检查用户是否具有所需权限
 		userPermissions := strings.Split(role.Permissions, ",")
 		hasPermission := false

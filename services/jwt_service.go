@@ -18,5 +18,11 @@ func (JWTService) GetUserByUsername(req request.LoginRequest) (resp response.Log
 		return resp, errors.New("user not found")
 	}
 	resp.User = user
+
+	var role models.OwenRole
+	err = global.OWEN_DB.Model(&models.OwenRole{}).Where(" Id=?", user.RoleID).First(&role).Error
+	if err == nil {
+		resp.User.Role = role
+	}
 	return resp, err
 }

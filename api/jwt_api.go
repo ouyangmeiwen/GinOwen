@@ -6,6 +6,8 @@ import (
 	"GINOWEN/models"
 	"GINOWEN/models/request"
 	"GINOWEN/utils"
+	"context"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -54,9 +56,15 @@ func (JWTAPI) Login(ctx *gin.Context) {
 		utils.FailWithMessage("Could not generate token", ctx)
 		return
 	}
-
-	utils.SetToken(ctx, token, 60*60*24)
-
+	TokenExpire := global.OWEN_CONFIG.System.TokenExpire
+	utils.SetToken(ctx, token, TokenExpire)
+	var back = context.Background()
+	if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
+		rolestr, err := utils.ToJSON(user.User.Role)
+		if err == nil {
+			global.OWEN_REDIS.Set(back, token, rolestr, time.Duration(TokenExpire)*time.Second)
+		}
+	}
 	utils.OkWithDetailed(token, "success", ctx)
 }
 
