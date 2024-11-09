@@ -15,8 +15,14 @@ type Claims struct {
 }
 
 // 生成JWT令牌
-func GenerateJWT(userID uint, roleID uint) (string, error) {
-	expirationTime := time.Now().Add(24 * time.Hour)
+func GenerateJWT(userID uint, roleID uint, expireTime ...int) (string, error) {
+	// 设置默认过期时间为24小时
+	defaultExpireTime := 24
+	if len(expireTime) > 0 {
+		defaultExpireTime = expireTime[0]
+	}
+
+	expirationTime := time.Now().Add(time.Duration(defaultExpireTime) * time.Hour)
 	claims := &Claims{
 		UserID: userID,
 		RoleID: roleID,

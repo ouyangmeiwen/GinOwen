@@ -1,7 +1,7 @@
 system:
   port: 6789
   pre: api/services/app/
-  tokenexpire: 36000
+  tokenexpire: 24 #hour
   token: owentoken
   debug: true
 redis:

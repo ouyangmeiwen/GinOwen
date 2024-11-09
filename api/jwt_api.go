@@ -51,19 +51,18 @@ func (JWTAPI) Login(ctx *gin.Context) {
 		utils.FailWithMessage("Invalid username or password", ctx)
 		return
 	}
-
+	TokenExpire := global.OWEN_CONFIG.System.TokenExpire
 	// 用户身份验证通过，生成 JWT
-	token, err := auth.GenerateJWT(user.User.ID, user.User.RoleID)
+	token, err := auth.GenerateJWT(user.User.ID, user.User.RoleID, TokenExpire)
 	if err != nil {
 		utils.FailWithMessage("Could not generate token", ctx)
 		return
 	}
-	TokenExpire := global.OWEN_CONFIG.System.TokenExpire
 
 	if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
 		rolestr, err := utils.ToJSON(user.User.Role)
 		if err == nil {
-			global.OWEN_REDIS.Set(back, token, rolestr, time.Duration(TokenExpire)*time.Second)
+			global.OWEN_REDIS.Set(back, token, rolestr, time.Duration(TokenExpire)*time.Hour)
 		}
 	}
 	utils.OkWithDetailed(token, "success", ctx)
