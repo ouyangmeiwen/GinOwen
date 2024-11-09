@@ -480,6 +480,42 @@ paths:
       summary: 导入图书信息
       tags:
       - libitems
+  /auth/DebugIn:
+    get:
+      consumes:
+      - application/json
+      description: 本地调试写入token
+      parameters:
+      - description: get 请求一定要带上form:"token" json:"token" TODO
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token input success
+          schema:
+            type: string
+      summary: 本地调试写入token
+      tags:
+      - Debug
+  /auth/DebugOut:
+    get:
+      consumes:
+      - application/json
+      description: 本地调试注销token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token clear success
+          schema:
+            type: string
+      summary: 本地调试注销token
+      tags:
+      - Debug
   /auth/Login:
     post:
       consumes:
@@ -508,6 +544,21 @@ paths:
           schema:
             type: string
       summary: 用户登录，获取JWT Token
+      tags:
+      - Auth
+  /auth/LoginOut:
+    post:
+      consumes:
+      - application/json
+      description: 注销token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User logout successfully
+          schema:
+            type: string
+      summary: 注销token
       tags:
       - Auth
   /auth/Register:

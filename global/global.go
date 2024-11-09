@@ -15,7 +15,8 @@ type YarmConfig struct {
 		Port        int    `yaml:"port"`
 		Pre         string `yaml:"pre"`
 		TokenExpire int    `yaml:"tokenexpire"` //token
-		Token       string `yaml:"token"`       //token
+		Token       string `yaml:"token"`       //debug
+		Debug       bool   `yaml:"debug"`       //debug
 	} `yaml:"system"`
 
 	DB struct {

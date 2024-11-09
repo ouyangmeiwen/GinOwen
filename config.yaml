@@ -3,6 +3,7 @@ system:
   pre: api/services/app/
   tokenexpire: 36000
   token: owentoken
+  debug: true
 redis:
   addr: 127.0.0.1:6379
   password:

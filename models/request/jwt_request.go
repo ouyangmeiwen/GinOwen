@@ -14,3 +14,12 @@ type RegisterRequest struct {
 	Password string `json:"password" binding:"required"`
 	RoleID   uint   `json:"role_id" binding:"required"`
 }
+
+type LocalLoginRequest struct {
+	//get 请求一定要带上form:"token" json:"token" TODO
+	Token string `form:"token" json:"token" binding:"required"`
+}
+
+type LocalOutRequest struct {
+	Token string `json:"token" binding:"required"`
+}

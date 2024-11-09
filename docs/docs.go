@@ -437,6 +437,61 @@ const docTemplate = `{
                 }
             }
         },
+        "/auth/DebugIn": {
+            "get": {
+                "description": "本地调试写入token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Debug"
+                ],
+                "summary": "本地调试写入token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "get 请求一定要带上form:\"token\" json:\"token\" TODO",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "token input success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/DebugOut": {
+            "get": {
+                "description": "本地调试注销token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Debug"
+                ],
+                "summary": "本地调试注销token",
+                "responses": {
+                    "200": {
+                        "description": "token clear success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/Login": {
             "post": {
                 "description": "用户输入用户名和密码，验证通过后返回JWT Token。",
@@ -476,6 +531,29 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Invalid username or password",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/LoginOut": {
+            "post": {
+                "description": "注销token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "注销token",
+                "responses": {
+                    "200": {
+                        "description": "User logout successfully",
                         "schema": {
                             "type": "string"
                         }

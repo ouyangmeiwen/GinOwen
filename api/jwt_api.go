@@ -7,11 +7,14 @@ import (
 	"GINOWEN/models/request"
 	"GINOWEN/utils"
 	"context"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
+
+var back = context.Background()
 
 type JWTAPI struct {
 }
@@ -34,7 +37,6 @@ func (JWTAPI) Login(ctx *gin.Context) {
 		utils.FailWithMessage("Invalid input", ctx)
 		return
 	}
-
 	// 假设我们从数据库获取用户数据
 	user, err := ServicesGroup.jwtService.GetUserByUsername(loginReq)
 	if err != nil {
@@ -57,8 +59,7 @@ func (JWTAPI) Login(ctx *gin.Context) {
 		return
 	}
 	TokenExpire := global.OWEN_CONFIG.System.TokenExpire
-	utils.SetToken(ctx, token, TokenExpire)
-	var back = context.Background()
+
 	if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
 		rolestr, err := utils.ToJSON(user.User.Role)
 		if err == nil {
@@ -68,9 +69,62 @@ func (JWTAPI) Login(ctx *gin.Context) {
 	utils.OkWithDetailed(token, "success", ctx)
 }
 
+// LoginOut 登出接口
+// @Summary 注销token
+// @Description 注销token
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Success 200 {string} string "User logout successfully"
+// @Router /auth/LoginOut [post]
 func (JWTAPI) LoginOut(ctx *gin.Context) {
-	utils.ClearToken(ctx)
-	utils.OkWithDetailed("", "success", ctx)
+	// 从请求头中获取特定的 header 值，比如 "Authorization"
+	authHeader := ctx.GetHeader("Authorization")
+	if len(authHeader) <= 0 {
+		utils.FailWithMessage("Authorization is lost", ctx)
+		return
+	}
+	tokenStr := strings.TrimPrefix(authHeader, "Bearer ")
+	if (len(tokenStr)) <= 0 {
+		utils.FailWithMessage("token is valid", ctx)
+		return
+	}
+	if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
+		global.OWEN_REDIS.Set(back, tokenStr, "", -1)
+	}
+	utils.OkWithMessage("logout success", ctx)
+}
+
+// DebugIn 本地调试登入接口
+// @Summary 本地调试写入token
+// @Description 本地调试写入token
+// @Tags Debug
+// @Accept json
+// @Produce json
+// @Param req query request.LocalLoginRequest true "指明token"
+// @Success 200 {string} string "token input success"
+// @Router /auth/DebugIn [get]
+func (JWTAPI) DebugIn(ctx *gin.Context) {
+	var req request.LocalLoginRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		utils.FailWithMessage("Invalid token", ctx)
+		return
+	}
+	utils.SetToken(ctx, req.Token, 60*60) //1小时有效
+	utils.OkWithMessage("token input success", ctx)
+}
+
+// DebugOut 本地调试登出接口
+// @Summary 本地调试注销token
+// @Description 本地调试注销token
+// @Tags Debug
+// @Accept json
+// @Produce json
+// @Success 200 {string} string "token clear success"
+// @Router /auth/DebugOut [get]
+func (JWTAPI) DebugOut(ctx *gin.Context) {
+	utils.ClearToken(ctx) //10分钟失效
+	utils.OkWithMessage("token clear success", ctx)
 }
 
 // Register 注册接口
