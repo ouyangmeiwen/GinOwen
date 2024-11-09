@@ -486,8 +486,7 @@ paths:
       - application/json
       description: 本地调试写入token
       parameters:
-      - description: get 请求一定要带上form:"token" json:"token" TODO
-        in: query
+      - in: query
         name: token
         required: true
         type: string

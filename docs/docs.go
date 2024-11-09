@@ -453,7 +453,6 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "get 请求一定要带上form:\"token\" json:\"token\" TODO",
                         "name": "token",
                         "in": "query",
                         "required": true

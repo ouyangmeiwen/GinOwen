@@ -9,11 +9,11 @@ import (
 
 // RegisterOrderRoutes 注册订单路由
 func RegisterSysauditlmslogRoutes(r *gin.Engine) {
-	api := r.Group(global.OWEN_CONFIG.System.Pre + "/Sysauditlmslog").Use(middlewares.AuditMiddleware())
+	api := r.Group(global.OWEN_CONFIG.System.Pre + "/Sysauditlmslog").Use(middlewares.AuditMiddleware()).Use(middlewares.AuthMiddleware("sysauditlmslog"))
 	{
-		api.POST("CreateLmsLog", middlewares.AuthMiddleware("sysauditlmslog"), ApiGroup.sysauditlmslogApi.CreateLmsLog)
-		api.DELETE("DeleteLmsLog", middlewares.AuthMiddleware("sysauditlmslog"), ApiGroup.sysauditlmslogApi.DeleteLmsLog)
-		api.PUT("UpdateLmsLog", middlewares.AuthMiddleware("sysauditlmslog"), ApiGroup.sysauditlmslogApi.UpdateLmsLog)
+		api.POST("CreateLmsLog", ApiGroup.sysauditlmslogApi.CreateLmsLog)
+		api.DELETE("DeleteLmsLog", ApiGroup.sysauditlmslogApi.DeleteLmsLog)
+		api.PUT("UpdateLmsLog", ApiGroup.sysauditlmslogApi.UpdateLmsLog)
 		api.GET("QueryLmsLog", ApiGroup.sysauditlmslogApi.QueryLmsLog)
 	}
 }

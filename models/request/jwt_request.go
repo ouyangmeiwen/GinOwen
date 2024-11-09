@@ -16,8 +16,8 @@ type RegisterRequest struct {
 }
 
 type LocalLoginRequest struct {
-	//get 请求一定要带上form:"token" json:"token" TODO
 	Token string `form:"token" json:"token" binding:"required"`
+	// #get 请求一定要带上form:"token" json:"token" TODO
 }
 
 type LocalOutRequest struct {
