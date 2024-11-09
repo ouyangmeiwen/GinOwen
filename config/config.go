@@ -123,7 +123,7 @@ func addDefaultData() {
 	if err := DB.First(&models.OwenRole{}).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 		defaultRoles := []models.OwenRole{
 			{Name: "Admin", Permissions: "all"},
-			{Name: "User", Permissions: "query"},
+			{Name: "User", Permissions: "sysauditlmslog"},
 		}
 		for _, role := range defaultRoles {
 			if err := DB.Create(&role).Error; err != nil {
