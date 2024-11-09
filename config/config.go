@@ -13,6 +13,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/yaml.v3"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -114,6 +115,41 @@ func AutoMigrateDB() {
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
 	}
+	addDefaultData()
+}
+func addDefaultData() {
+
+	// 检查并添加默认角色数据
+	if err := DB.First(&models.OwenRole{}).Error; errors.Is(err, gorm.ErrRecordNotFound) {
+		defaultRoles := []models.OwenRole{
+			{Name: "Admin", Permissions: "all"},
+			{Name: "User", Permissions: "query"},
+		}
+		for _, role := range defaultRoles {
+			if err := DB.Create(&role).Error; err != nil {
+				log.Printf("Failed to insert default role %s: %v", role.Name, err)
+			}
+		}
+	}
+	// 加密密码
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("123456"), bcrypt.DefaultCost)
+	if err != nil {
+		return
+	}
+
+	// 检查并添加默认用户数据
+	if err := DB.First(&models.OwenUser{}).Error; errors.Is(err, gorm.ErrRecordNotFound) {
+		defaultUsers := []models.OwenUser{
+			{Username: "admin", Password: string(hashedPassword), RoleID: 1}, // 示例用户
+			{Username: "user", Password: string(hashedPassword), RoleID: 2},
+		}
+		for _, user := range defaultUsers {
+			if err := DB.Create(&user).Error; err != nil {
+				log.Printf("Failed to insert default user %s: %v", user.Username, err)
+			}
+		}
+	}
+
 }
 
 // InitMongoDB 连接 MongoDB

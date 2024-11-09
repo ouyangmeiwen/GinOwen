@@ -21,7 +21,7 @@ type JWTAPI struct {
 
 // JWT 登录接口
 // @Summary User Login
-// @Summary 用户登录，获取JWT Token
+// @Summary 用户登录
 // @Description 用户输入用户名和密码，验证通过后返回JWT Token。
 // @Tags Auth
 // @Accept json

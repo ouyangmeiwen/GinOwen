@@ -543,7 +543,7 @@ paths:
           description: Invalid username or password
           schema:
             type: string
-      summary: 用户登录，获取JWT Token
+      summary: 用户登录
       tags:
       - Auth
   /auth/LoginOut:

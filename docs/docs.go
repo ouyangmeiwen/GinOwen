@@ -504,7 +504,7 @@ const docTemplate = `{
                 "tags": [
                     "Auth"
                 ],
-                "summary": "用户登录，获取JWT Token",
+                "summary": "用户登录",
                 "parameters": [
                     {
                         "description": "用户登录请求",
