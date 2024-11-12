@@ -4,9 +4,14 @@ import (
 	"GINOWEN/docs"
 	"GINOWEN/global"
 	"GINOWEN/utils"
+	"context"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -34,27 +39,59 @@ func InitSwag(r *gin.Engine) {
 		ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger/swagger.json"))(c)
 	})
 }
+
+// initServer 函数创建并返回一个具有精细化配置的 http.Server 实例
+func initServer(address string, router *gin.Engine) *http.Server {
+	return &http.Server{
+		Addr:           address,
+		Handler:        router,
+		ReadTimeout:    20 * time.Second, // 读取超时
+		WriteTimeout:   20 * time.Second, // 写入超时
+		IdleTimeout:    60 * time.Second, // 空闲连接超时
+		MaxHeaderBytes: 1 << 20,          // 最大请求头大小 (1 MB)
+	}
+}
+
 func RunAsServer(r *gin.Engine) {
-	fmt.Println("========================================================")
 	port := global.OWEN_CONFIG.System.Port
-	url := "http://localhost:" + fmt.Sprint(port) + "/swagger-ui/index.html"
-	fmt.Println(url)
-	fmt.Println("========================================================")
+	url := fmt.Sprintf("http://localhost:%d/swagger-ui/index.html", port)
+
+	log.Printf("Swagger URL: %s\n", url)
 	utils.OpenBrowser(url)
 
-	// 启动服务
-	if err := r.Run(":" + fmt.Sprint(port)); err != nil {
-		log.Fatal(err)
-	}
+	// 初始化服务器
+	srv := initServer(fmt.Sprintf(":%d", port), r)
 
-	// 在应用结束时关闭数据库连接
-	defer func() {
-		// 确保关闭数据库连接
-		if global.OWEN_DB != nil {
-			sqlDB, err := global.OWEN_DB.DB()
-			if err == nil {
-				sqlDB.Close()
-			}
+	// 优雅关闭信号
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+
+	// 在协程中启动服务器
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Server listen error: %v\n", err)
 		}
 	}()
+	log.Printf("Server started on port %d\n", port)
+
+	// 监听信号并优雅关闭
+	<-quit
+	log.Println("Shutting down server...")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Fatalf("Server forced to shutdown: %v", err)
+	}
+
+	// 确保数据库连接关闭
+	if global.OWEN_DB != nil {
+		sqlDB, err := global.OWEN_DB.DB()
+		if err == nil {
+			sqlDB.Close()
+			log.Println("Database connection closed.")
+		}
+	}
+
+	log.Println("Server exiting.")
 }
