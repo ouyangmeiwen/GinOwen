@@ -47,7 +47,7 @@ func initServer(address string, router *gin.Engine) *http.Server {
 		Handler:        router,
 		ReadTimeout:    20 * time.Second, // 读取超时
 		WriteTimeout:   20 * time.Second, // 写入超时
-		IdleTimeout:    60 * time.Second, // 空闲连接超时
+		IdleTimeout:    10 * time.Second, // 空闲连接超时
 		MaxHeaderBytes: 1 << 20,          // 最大请求头大小 (1 MB)
 	}
 }
