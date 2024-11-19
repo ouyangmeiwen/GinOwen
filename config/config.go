@@ -10,6 +10,8 @@ import (
 	"os"
 	"time"
 
+	//"github.com/dzwvip/oracle"
+	//_ "github.com/godror/godror"
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -64,8 +66,11 @@ func InitDB() *gorm.DB {
 	case "sqlserver":
 		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.Mssql), &gorm.Config{Logger: newLogger})
 	case "oracle":
-		// 使用 godror 驱动连接到 Oracle 数据库
-		DB, dbErr = gorm.Open(mysql.Open(config.DB.Mysql), &gorm.Config{Logger: newLogger})
+		// oracleConfig := oracle.Config{
+		// 	DSN:               config.DB.Oracle, // DSN data source name
+		// 	DefaultStringSize: 191,              // string 类型字段的默认长度
+		// }
+		// DB, dbErr = gorm.Open(oracle.New(oracleConfig), &gorm.Config{Logger: newLogger})
 	default:
 		log.Fatalf("Unsupported database type: %s", config.DB.Type)
 	}
