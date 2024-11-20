@@ -12,5 +12,6 @@ func RegisterLibitemRoutes(r *gin.Engine) {
 	api := r.Group(global.OWEN_CONFIG.System.Pre + "/libitem").Use(middlewares.AuthMiddleware("libitem"))
 	{
 		api.POST("ImportExcel", ApiGroup.libItemApi.ImportExcel)
+		api.POST("ImportExcel2", ApiGroup.libItemApi.ImportExcel2)
 	}
 }

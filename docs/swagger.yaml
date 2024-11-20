@@ -34,6 +34,72 @@ definitions:
       UserId:
         type: integer
     type: object
+  request.ImportExcel2Input:
+    properties:
+      author:
+        default: -1
+        description: 作者
+        type: integer
+      barcode:
+        default: -1
+        description: 条码号
+        type: integer
+      callNo:
+        default: -1
+        description: 索书号
+        type: integer
+      catalogCode:
+        default: -1
+        description: 分类号
+        type: integer
+      isbn:
+        default: -1
+        description: ISBN
+        type: integer
+      locationname:
+        default: -1
+        description: 当前馆藏地点
+        type: integer
+      pages:
+        default: -1
+        description: 页数
+        type: integer
+      path:
+        default: d:/4.xlsx
+        description: excel 服务器本地路径
+        maxLength: 100
+        minLength: 3
+        type: string
+      price:
+        default: -1
+        description: 单价
+        type: integer
+      pubDate:
+        default: -1
+        description: 出版日期
+        type: integer
+      publisher:
+        default: -1
+        description: 出版社
+        type: integer
+      tenantid:
+        default: 1
+        description: 租户
+        maximum: 99999
+        minimum: 1
+        type: integer
+      tid:
+        default: -1
+        description: tid
+        type: integer
+      title:
+        default: -1
+        description: 题名
+        type: integer
+    required:
+    - path
+    - tenantid
+    type: object
   request.ImportExcelInput:
     properties:
       author:
@@ -445,6 +511,53 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/request.ImportExcelInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 导入成功，返回导入的数据
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ImportExcelDto'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 无效的请求
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "500":
+          description: 服务器内部错误
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 导入图书信息
+      tags:
+      - libitems
+  /api/services/app/libitem/ImportExcel2:
+    post:
+      consumes:
+      - application/json
+      description: 通过提供的Excel文件导入图书信息
+      parameters:
+      - description: 导入参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ImportExcel2Input'
       produces:
       - application/json
       responses:

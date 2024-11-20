@@ -429,6 +429,91 @@
                 }
             }
         },
+        "/api/services/app/libitem/ImportExcel2": {
+            "post": {
+                "description": "通过提供的Excel文件导入图书信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "libitems"
+                ],
+                "summary": "导入图书信息",
+                "parameters": [
+                    {
+                        "description": "导入参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ImportExcel2Input"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "导入成功，返回导入的数据",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.ImportExcelDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "无效的请求",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/auth/DebugIn": {
             "get": {
                 "description": "本地调试写入token",
@@ -650,6 +735,89 @@
                 },
                 "UserId": {
                     "type": "integer"
+                }
+            }
+        },
+        "request.ImportExcel2Input": {
+            "type": "object",
+            "required": [
+                "path",
+                "tenantid"
+            ],
+            "properties": {
+                "author": {
+                    "description": "作者",
+                    "type": "integer",
+                    "default": -1
+                },
+                "barcode": {
+                    "description": "条码号",
+                    "type": "integer",
+                    "default": -1
+                },
+                "callNo": {
+                    "description": "索书号",
+                    "type": "integer",
+                    "default": -1
+                },
+                "catalogCode": {
+                    "description": "分类号",
+                    "type": "integer",
+                    "default": -1
+                },
+                "isbn": {
+                    "description": "ISBN",
+                    "type": "integer",
+                    "default": -1
+                },
+                "locationname": {
+                    "description": "当前馆藏地点",
+                    "type": "integer",
+                    "default": -1
+                },
+                "pages": {
+                    "description": "页数",
+                    "type": "integer",
+                    "default": -1
+                },
+                "path": {
+                    "description": "excel 服务器本地路径",
+                    "type": "string",
+                    "default": "d:/4.xlsx",
+                    "maxLength": 100,
+                    "minLength": 3
+                },
+                "price": {
+                    "description": "单价",
+                    "type": "integer",
+                    "default": -1
+                },
+                "pubDate": {
+                    "description": "出版日期",
+                    "type": "integer",
+                    "default": -1
+                },
+                "publisher": {
+                    "description": "出版社",
+                    "type": "integer",
+                    "default": -1
+                },
+                "tenantid": {
+                    "description": "租户",
+                    "type": "integer",
+                    "default": 1,
+                    "maximum": 99999,
+                    "minimum": 1
+                },
+                "tid": {
+                    "description": "tid",
+                    "type": "integer",
+                    "default": -1
+                },
+                "title": {
+                    "description": "题名",
+                    "type": "integer",
+                    "default": -1
                 }
             }
         },
