@@ -1,6 +1,6 @@
 package request
 
-type ImportExcelInput struct {
+type ImportExcelByNameInput struct {
 	Path         string `default:"d:/4.xlsx" binding:"required" validate:"min=3,max=100"` //excel 服务器本地路径
 	Title        string `default:"题名"`                                                    //题名
 	Author       string `default:"作者"`                                                    //作者
@@ -16,7 +16,7 @@ type ImportExcelInput struct {
 	Locationname string `default:"当前馆藏地点"`                                                //当前馆藏地点
 	Tenantid     int    `default:"1" binding:"required" validate:"min=1,max=99999"`       //租户
 }
-type ImportExcel2Input struct {
+type ImportExcelByIndexInput struct {
 	Path         string `default:"d:/4.xlsx" binding:"required" validate:"min=3,max=100"` //excel 服务器本地路径
 	Title        int    `default:"-1"`                                                    //题名
 	Author       int    `default:"-1"`                                                    //作者

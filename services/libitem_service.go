@@ -21,7 +21,7 @@ type LibItemService struct {
 }
 
 // 导入excel 到数据库
-func (LibItemService) ImportExcel(req request.ImportExcelInput) (resp response.ImportExcelDto, err error) {
+func (LibItemService) ImportExcelByName(req request.ImportExcelByNameInput) (resp response.ImportExcelDto, err error) {
 	begin := time.Now()
 	fmt.Println("进入方法的时间" + begin.Format("2006-01-02 15:04:05"))
 	if !utils.FileExists(req.Path) {
@@ -171,7 +171,7 @@ func (LibItemService) ImportExcel(req request.ImportExcelInput) (resp response.I
 	fmt.Println("插入" + strconv.Itoa(len(datas)) + ",总共消耗:" + strconv.FormatFloat(end.Sub(begin).Seconds(), 'f', 2, 64))
 	return resp, err
 }
-func (LibItemService) ImportExcel2(req request.ImportExcel2Input) (resp response.ImportExcelDto, err error) {
+func (LibItemService) ImportExcelByIndex(req request.ImportExcelByIndexInput) (resp response.ImportExcelDto, err error) {
 	begin := time.Now()
 	fmt.Println("进入方法的时间" + begin.Format("2006-01-02 15:04:05"))
 	if !utils.FileExists(req.Path) {

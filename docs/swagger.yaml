@@ -34,7 +34,7 @@ definitions:
       UserId:
         type: integer
     type: object
-  request.ImportExcel2Input:
+  request.ImportExcelByIndexInput:
     properties:
       author:
         default: -1
@@ -100,7 +100,7 @@ definitions:
     - path
     - tenantid
     type: object
-  request.ImportExcelInput:
+  request.ImportExcelByNameInput:
     properties:
       author:
         default: 作者
@@ -499,7 +499,7 @@ paths:
       summary: 上传文件
       tags:
       - File
-  /api/services/app/libitem/ImportExcel:
+  /api/services/app/libitem/ImportExcelByIndex:
     post:
       consumes:
       - application/json
@@ -510,7 +510,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.ImportExcelInput'
+          $ref: '#/definitions/request.ImportExcelByIndexInput'
       produces:
       - application/json
       responses:
@@ -546,7 +546,7 @@ paths:
       summary: 导入图书信息
       tags:
       - libitems
-  /api/services/app/libitem/ImportExcel2:
+  /api/services/app/libitem/ImportExcelByName:
     post:
       consumes:
       - application/json
@@ -557,7 +557,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.ImportExcel2Input'
+          $ref: '#/definitions/request.ImportExcelByNameInput'
       produces:
       - application/json
       responses:

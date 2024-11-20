@@ -352,7 +352,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/services/app/libitem/ImportExcel": {
+        "/api/services/app/libitem/ImportExcelByIndex": {
             "post": {
                 "description": "通过提供的Excel文件导入图书信息",
                 "consumes": [
@@ -372,7 +372,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ImportExcelInput"
+                            "$ref": "#/definitions/request.ImportExcelByIndexInput"
                         }
                     }
                 ],
@@ -437,7 +437,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/services/app/libitem/ImportExcel2": {
+        "/api/services/app/libitem/ImportExcelByName": {
             "post": {
                 "description": "通过提供的Excel文件导入图书信息",
                 "consumes": [
@@ -457,7 +457,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ImportExcel2Input"
+                            "$ref": "#/definitions/request.ImportExcelByNameInput"
                         }
                     }
                 ],
@@ -746,7 +746,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ImportExcel2Input": {
+        "request.ImportExcelByIndexInput": {
             "type": "object",
             "required": [
                 "path",
@@ -829,7 +829,7 @@ const docTemplate = `{
                 }
             }
         },
-        "request.ImportExcelInput": {
+        "request.ImportExcelByNameInput": {
             "type": "object",
             "required": [
                 "path",
