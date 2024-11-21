@@ -15,7 +15,7 @@ type OwenAuditLog struct {
 	Response  string         `gorm:"type:text"`         // 响应内容
 	Error     string         `gorm:"type:varchar(500)"` // 异常信息，限制500字符
 	Status    int            // 响应状态码
-	Duration  time.Duration  // 请求耗时
+	Duration  float64        // 请求耗时
 	CreatedAt time.Time      `gorm:"index"` // 创建时间
 	UpdatedAt time.Time      // 更新时间
 	DeletedAt gorm.DeletedAt `gorm:"index"` // 软删除时间

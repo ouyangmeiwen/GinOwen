@@ -4,7 +4,7 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/models"
 	"bytes"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"time"
@@ -40,8 +40,8 @@ func AuditLogMiddleware() gin.HandlerFunc {
 		// 捕获请求参数
 		var requestBody []byte
 		if c.Request.Body != nil {
-			requestBody, _ = ioutil.ReadAll(c.Request.Body)
-			c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(requestBody)) // 重置 Body 以供后续读取
+			requestBody, _ = io.ReadAll(c.Request.Body)
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(requestBody)) // 重置 Body 以供后续读取
 		}
 
 		// 捕获响应内容
@@ -76,7 +76,7 @@ func AuditLogMiddleware() gin.HandlerFunc {
 		// 记录响应状态、内容和执行时间
 		statusCode := c.Writer.Status()
 		responseBody := writer.body.String()
-		duration := time.Since(start)
+		duration := time.Since(start).Seconds()
 
 		// 捕获异常信息
 		var errMsg string
