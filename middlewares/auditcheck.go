@@ -33,7 +33,7 @@ func (w CustomResponseWriter) Write(b []byte) (int, error) {
 }
 
 // 审计日志中间件
-func AuditMiddleware() gin.HandlerFunc {
+func AuditLogMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 
