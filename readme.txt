@@ -13,9 +13,9 @@ Swag init
 
 go 打包
 
-windwos:
-    go build -o ginowen.exe    然后依赖文件过去比如config.yaml
+    windwos:
+        go build -o ginowen.exe    然后依赖文件过去比如config.yaml
 
-linux:
-    docker build -t ginowen-app .
-    docker run --rm -p 8080:8080 ginowen-app
+    linux:
+        docker build -t ginowen-app .
+        docker run --rm -p 8080:8080 ginowen-app
