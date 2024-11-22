@@ -7,6 +7,7 @@ type RouterApis struct {
 	uploadfileApi     api.UploadfileApi
 	sysauditlmslogApi api.SysauditlmslogApi
 	jwtApi            api.JWTAPI
+	ipApi             api.IPApi
 }
 
 var ApiGroup = new(RouterApis)

@@ -8,6 +8,20 @@ func GetCurrentTime() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
 
+func FormatLocalTime(timestr string) (ts time.Time, err error) {
+	// 解析时间
+	// 获取当前时区（本地时区）
+	location, err := time.LoadLocation("Local")
+	if err != nil {
+		return time.Time{}, err
+	}
+	localtime, err := time.ParseInLocation("2006-01-02 15:04:05", timestr, location)
+	if err != nil {
+		return time.Time{}, err
+	}
+	return localtime, nil
+}
+
 // 获取当前时间的字符串表示
 func GetCurrentTimeString(format string) string {
 	return time.Now().Format(format)

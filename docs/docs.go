@@ -16,6 +16,92 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/IP/AddBlackList": {
+            "post": {
+                "description": "增加IP限制",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IP"
+                ],
+                "summary": "增加IP限制",
+                "parameters": [
+                    {
+                        "description": "增加黑名单参数",
+                        "name": "AddBlackListInput",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddBlackListInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid unlock time format",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/IP/UnLockIp": {
+            "post": {
+                "description": "解除IP限制",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IP"
+                ],
+                "summary": "解除IP限制",
+                "parameters": [
+                    {
+                        "description": "解锁参数",
+                        "name": "UnLockIpInput",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UnLockIpInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "IP not found in the blacklist",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/Sysauditlmslog/CreateLmsLog": {
             "post": {
                 "produces": [
@@ -779,6 +865,18 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "request.AddBlackListInput": {
+            "type": "object",
+            "properties": {
+                "ip": {
+                    "type": "string"
+                },
+                "unlock_time": {
+                    "description": "解锁时间，格式：\"yyyy-mm-dd hh:mm:ss\"",
+                    "type": "string"
+                }
+            }
+        },
         "request.CreateLmsLogInput": {
             "type": "object",
             "properties": {
@@ -1028,6 +1126,14 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UnLockIpInput": {
+            "type": "object",
+            "properties": {
+                "ip": {
                     "type": "string"
                 }
             }

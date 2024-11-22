@@ -1,4 +1,12 @@
 definitions:
+  request.AddBlackListInput:
+    properties:
+      ip:
+        type: string
+      unlock_time:
+        description: 解锁时间，格式："yyyy-mm-dd hh:mm:ss"
+        type: string
+    type: object
   request.CreateLmsLogInput:
     properties:
       BrowserInfo:
@@ -189,6 +197,11 @@ definitions:
     - role_id
     - username
     type: object
+  request.UnLockIpInput:
+    properties:
+      ip:
+        type: string
+    type: object
   request.UpdateLmsLogInput:
     properties:
       BrowserInfo:
@@ -298,6 +311,62 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
+  /IP/AddBlackList:
+    post:
+      consumes:
+      - application/json
+      description: 增加IP限制
+      parameters:
+      - description: 增加黑名单参数
+        in: body
+        name: AddBlackListInput
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddBlackListInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Invalid unlock time format
+          schema:
+            type: string
+      summary: 增加IP限制
+      tags:
+      - IP
+  /IP/UnLockIp:
+    post:
+      consumes:
+      - application/json
+      description: 解除IP限制
+      parameters:
+      - description: 解锁参数
+        in: body
+        name: UnLockIpInput
+        required: true
+        schema:
+          $ref: '#/definitions/request.UnLockIpInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+        "404":
+          description: IP not found in the blacklist
+          schema:
+            type: string
+      summary: 解除IP限制
+      tags:
+      - IP
   /api/services/app/Sysauditlmslog/CreateLmsLog:
     post:
       parameters:
