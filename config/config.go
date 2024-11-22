@@ -63,7 +63,7 @@ func InitDB() *gorm.DB {
 		DB, dbErr = gorm.Open(postgres.Open(config.DB.Postgres), &gorm.Config{Logger: newLogger})
 	case "sqlite":
 		DB, dbErr = gorm.Open(sqlite.Open(config.DB.Sqlite), &gorm.Config{Logger: newLogger})
-	case "sqlserver":
+	case "mssql":
 		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.Mssql), &gorm.Config{Logger: newLogger})
 	case "oracle":
 		// oracleConfig := oracle.Config{

@@ -16,7 +16,7 @@ mongodb:
   password: "your_password"
 
 db:
-  type: sqlite
+  type: mssql
   mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
   mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=owen"
   oracle: "user/password@localhost:1521/service_name"
