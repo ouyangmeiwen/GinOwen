@@ -3,9 +3,6 @@
 
 
 
-站在巨人的肩膀上我才能看的更远！感谢 [xiaobaiTech/golangFamily](https://github.com/xiaobaiTech/golangFamily)  整理的文章。
-
-
 # 目录(善用Ctrl+F)
 
 - ## 基础入门
