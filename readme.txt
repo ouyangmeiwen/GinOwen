@@ -8,3 +8,14 @@ go mod vendor // 如果你的项目需要使用 vendor 目录作为依赖项的�
 重新生成swagger
 
 Swag init
+
+
+
+go 打包
+
+windwos:
+    go build -o ginowen.exe    然后依赖文件过去比如config.yaml
+
+linux:
+    docker build -t ginowen-app .
+    docker run --rm -p 8080:8080 ginowen-app
