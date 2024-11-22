@@ -13,10 +13,10 @@ const TableNameLcpterminalbox = "lcpterminalbox"
 // Lcpterminalbox mapped from table <lcpterminalbox>
 type Lcpterminalbox struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	Name                 string     `gorm:"column:Name;type:varchar(64);not null" json:"Name"`
 	TerminalID           string     `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
 	TerminalCode         string     `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
@@ -25,7 +25,7 @@ type Lcpterminalbox struct {
 	IsDisable            []uint8    `gorm:"column:IsDisable;type:bit(1);not null" json:"IsDisable"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	DisableReason        *string    `gorm:"column:DisableReason;type:varchar(256)" json:"DisableReason"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Lcpterminalbox's table name

@@ -13,12 +13,12 @@ const TableNameSysdataitemdetail = "sysdataitemdetail"
 // Sysdataitemdetail mapped from table <sysdataitemdetail>
 type Sysdataitemdetail struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	ItemID               string     `gorm:"column:ItemId;type:varchar(32);not null" json:"ItemId"`
 	ItemCode             string     `gorm:"column:ItemCode;type:varchar(32);not null" json:"ItemCode"`
@@ -27,7 +27,7 @@ type Sysdataitemdetail struct {
 	QuickQuery           *string    `gorm:"column:QuickQuery;type:varchar(256)" json:"QuickQuery"`
 	SimpleSpelling       *string    `gorm:"column:SimpleSpelling;type:varchar(256)" json:"SimpleSpelling"`
 	IsDefault            []uint8    `gorm:"column:IsDefault;type:bit(1);not null" json:"IsDefault"`
-	SortCode             int64      `gorm:"column:SortCode;type:int;not null" json:"SortCode"`
+	SortCode             int64      `gorm:"column:SortCode;type:int(11);not null" json:"SortCode"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	ParentID             *string    `gorm:"column:ParentId;type:varchar(32)" json:"ParentId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`

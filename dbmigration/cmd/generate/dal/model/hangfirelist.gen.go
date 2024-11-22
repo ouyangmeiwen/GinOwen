@@ -12,7 +12,7 @@ const TableNameHangfirelist = "hangfirelist"
 
 // Hangfirelist mapped from table <hangfirelist>
 type Hangfirelist struct {
-	ID       int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
+	ID       int64      `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
 	Key      string     `gorm:"column:Key;type:varchar(100);not null" json:"Key"`
 	Value    *string    `gorm:"column:Value;type:longtext" json:"Value"`
 	ExpireAt *time.Time `gorm:"column:ExpireAt;type:datetime(6)" json:"ExpireAt"`

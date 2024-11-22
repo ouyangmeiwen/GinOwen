@@ -12,13 +12,13 @@ const TableNameSysfaceofflinegroup = "sysfaceofflinegroup"
 
 // Sysfaceofflinegroup mapped from table <sysfaceofflinegroup>
 type Sysfaceofflinegroup struct {
-	ID                   string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	GroupID              *string    `gorm:"column:GroupId;type:varchar(32)" json:"GroupId"`
 	GroupName            *string    `gorm:"column:GroupName;type:varchar(128)" json:"GroupName"`

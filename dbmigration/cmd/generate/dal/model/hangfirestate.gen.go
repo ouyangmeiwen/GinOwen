@@ -12,12 +12,12 @@ const TableNameHangfirestate = "hangfirestate"
 
 // Hangfirestate mapped from table <hangfirestate>
 type Hangfirestate struct {
-	ID        int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
-	JobID     int64      `gorm:"column:JobId;type:int;not null" json:"JobId"`
-	Name      string     `gorm:"column:Name;type:varchar(20);not null" json:"Name"`
-	Reason    *string    `gorm:"column:Reason;type:varchar(100)" json:"Reason"`
-	CreatedAt *time.Time `gorm:"column:CreatedAt;type:datetime(6)" json:"CreatedAt"`
-	Data      *string    `gorm:"column:Data;type:longtext" json:"Data"`
+	ID        int64     `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
+	JobID     int64     `gorm:"column:JobId;type:int(11);not null" json:"JobId"`
+	Name      string    `gorm:"column:Name;type:varchar(20);not null" json:"Name"`
+	Reason    *string   `gorm:"column:Reason;type:varchar(100)" json:"Reason"`
+	CreatedAt time.Time `gorm:"column:CreatedAt;type:datetime(6);not null" json:"CreatedAt"`
+	Data      *string   `gorm:"column:Data;type:longtext" json:"Data"`
 }
 
 // TableName Hangfirestate's table name

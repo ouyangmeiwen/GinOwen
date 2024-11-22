@@ -13,20 +13,20 @@ const TableNameDasvisitpage = "dasvisitpage"
 // Dasvisitpage mapped from table <dasvisitpage>
 type Dasvisitpage struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	RefDate              *string    `gorm:"column:ref_date;type:varchar(32)" json:"ref_date"`
 	PagePath             *string    `gorm:"column:page_path;type:varchar(256)" json:"page_path"`
-	PageVisitPv          int64      `gorm:"column:page_visit_pv;type:int;not null" json:"page_visit_pv"`
+	PageVisitPv          int64      `gorm:"column:page_visit_pv;type:int(11);not null" json:"page_visit_pv"`
 	PageVisitUv          *string    `gorm:"column:page_visit_uv;type:varchar(32)" json:"page_visit_uv"`
 	PageStaytimePv       float64    `gorm:"column:page_staytime_pv;type:double;not null" json:"page_staytime_pv"`
-	EntrypagePv          int64      `gorm:"column:entrypage_pv;type:int;not null" json:"entrypage_pv"`
-	ExitpagePv           int64      `gorm:"column:exitpage_pv;type:int;not null" json:"exitpage_pv"`
-	PageSharePv          int64      `gorm:"column:page_share_pv;type:int;not null" json:"page_share_pv"`
-	PageShareUv          int64      `gorm:"column:page_share_uv;type:int;not null" json:"page_share_uv"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	EntrypagePv          int64      `gorm:"column:entrypage_pv;type:int(11);not null" json:"entrypage_pv"`
+	ExitpagePv           int64      `gorm:"column:exitpage_pv;type:int(11);not null" json:"exitpage_pv"`
+	PageSharePv          int64      `gorm:"column:page_share_pv;type:int(11);not null" json:"page_share_pv"`
+	PageShareUv          int64      `gorm:"column:page_share_uv;type:int(11);not null" json:"page_share_uv"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	AppID                *string    `gorm:"column:AppId;type:varchar(32)" json:"AppId"`
 }
 

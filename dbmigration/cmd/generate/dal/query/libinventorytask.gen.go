@@ -32,7 +32,7 @@ func newLibinventorytask(db *gorm.DB) libinventorytask {
 	_libinventorytask.CreatorUserID = field.NewInt64(tableName, "CreatorUserId")
 	_libinventorytask.LastModificationTime = field.NewTime(tableName, "LastModificationTime")
 	_libinventorytask.LastModifierUserID = field.NewInt64(tableName, "LastModifierUserId")
-	_libinventorytask.IsDeleted = field.NewInt64(tableName, "IsDeleted")
+	_libinventorytask.IsDeleted = field.NewField(tableName, "IsDeleted")
 	_libinventorytask.DeleterUserID = field.NewInt64(tableName, "DeleterUserId")
 	_libinventorytask.DeletionTime = field.NewTime(tableName, "DeletionTime")
 	_libinventorytask.TaskName = field.NewString(tableName, "TaskName")
@@ -41,7 +41,7 @@ func newLibinventorytask(db *gorm.DB) libinventorytask {
 	_libinventorytask.InventoryStartDate = field.NewTime(tableName, "InventoryStartDate")
 	_libinventorytask.InventoryEndDate = field.NewTime(tableName, "InventoryEndDate")
 	_libinventorytask.Interval = field.NewInt64(tableName, "Interval")
-	_libinventorytask.IsEnable = field.NewInt64(tableName, "IsEnable")
+	_libinventorytask.IsEnable = field.NewField(tableName, "IsEnable")
 	_libinventorytask.Remark = field.NewString(tableName, "Remark")
 	_libinventorytask.TenantID = field.NewInt64(tableName, "TenantId")
 	_libinventorytask.OriginType = field.NewInt64(tableName, "OriginType")
@@ -60,7 +60,7 @@ type libinventorytask struct {
 	CreatorUserID        field.Int64
 	LastModificationTime field.Time
 	LastModifierUserID   field.Int64
-	IsDeleted            field.Int64
+	IsDeleted            field.Field
 	DeleterUserID        field.Int64
 	DeletionTime         field.Time
 	TaskName             field.String
@@ -69,7 +69,7 @@ type libinventorytask struct {
 	InventoryStartDate   field.Time
 	InventoryEndDate     field.Time
 	Interval             field.Int64
-	IsEnable             field.Int64
+	IsEnable             field.Field
 	Remark               field.String
 	TenantID             field.Int64
 	OriginType           field.Int64
@@ -94,7 +94,7 @@ func (l *libinventorytask) updateTableName(table string) *libinventorytask {
 	l.CreatorUserID = field.NewInt64(table, "CreatorUserId")
 	l.LastModificationTime = field.NewTime(table, "LastModificationTime")
 	l.LastModifierUserID = field.NewInt64(table, "LastModifierUserId")
-	l.IsDeleted = field.NewInt64(table, "IsDeleted")
+	l.IsDeleted = field.NewField(table, "IsDeleted")
 	l.DeleterUserID = field.NewInt64(table, "DeleterUserId")
 	l.DeletionTime = field.NewTime(table, "DeletionTime")
 	l.TaskName = field.NewString(table, "TaskName")
@@ -103,7 +103,7 @@ func (l *libinventorytask) updateTableName(table string) *libinventorytask {
 	l.InventoryStartDate = field.NewTime(table, "InventoryStartDate")
 	l.InventoryEndDate = field.NewTime(table, "InventoryEndDate")
 	l.Interval = field.NewInt64(table, "Interval")
-	l.IsEnable = field.NewInt64(table, "IsEnable")
+	l.IsEnable = field.NewField(table, "IsEnable")
 	l.Remark = field.NewString(table, "Remark")
 	l.TenantID = field.NewInt64(table, "TenantId")
 	l.OriginType = field.NewInt64(table, "OriginType")

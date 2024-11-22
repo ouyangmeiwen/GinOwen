@@ -8,11 +8,11 @@ const TableNameAbpuserlogin = "abpuserlogins"
 
 // Abpuserlogin mapped from table <abpuserlogins>
 type Abpuserlogin struct {
-	ID            int64  `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	TenantID      *int64 `gorm:"column:TenantId;type:int" json:"TenantId"`
-	UserID        int64  `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
+	ID            int64  `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	TenantID      *int64 `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	UserID        int64  `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
 	LoginProvider string `gorm:"column:LoginProvider;type:varchar(128);not null" json:"LoginProvider"`
-	ProviderKey   string `gorm:"column:ProviderKey;type:varchar(100);not null" json:"ProviderKey"`
+	ProviderKey   string `gorm:"column:ProviderKey;type:varchar(256);not null" json:"ProviderKey"`
 }
 
 // TableName Abpuserlogin's table name

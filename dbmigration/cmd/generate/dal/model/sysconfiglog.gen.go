@@ -12,13 +12,13 @@ const TableNameSysconfiglog = "sysconfiglog"
 
 // Sysconfiglog mapped from table <sysconfiglog>
 type Sysconfiglog struct {
-	ID            string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime  *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
-	TerminalID    *string    `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
-	ConfigType    *string    `gorm:"column:ConfigType;type:varchar(128)" json:"ConfigType"`
-	Content       *string    `gorm:"column:Content;type:longtext" json:"Content"`
-	TenantID      *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
+	ID            string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
+	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	TerminalID    *string   `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
+	ConfigType    *string   `gorm:"column:ConfigType;type:varchar(128)" json:"ConfigType"`
+	Content       *string   `gorm:"column:Content;type:longtext" json:"Content"`
+	TenantID      *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 }
 
 // TableName Sysconfiglog's table name

@@ -30,7 +30,7 @@ func newLibailibrarainquestionmetric(db *gorm.DB) libailibrarainquestionmetric {
 	_libailibrarainquestionmetric.ID = field.NewInt64(tableName, "Id")
 	_libailibrarainquestionmetric.Date = field.NewTime(tableName, "Date")
 	_libailibrarainquestionmetric.SessionMetricsID = field.NewInt64(tableName, "SessionMetricsId")
-	_libailibrarainquestionmetric.Classification = field.NewString(tableName, "Classification")
+	_libailibrarainquestionmetric.Classification = field.NewInt64(tableName, "Classification")
 	_libailibrarainquestionmetric.Count = field.NewInt64(tableName, "Count")
 	_libailibrarainquestionmetric.TenantID = field.NewInt64(tableName, "TenantId")
 	_libailibrarainquestionmetric.DeviceID = field.NewString(tableName, "DeviceId")
@@ -47,7 +47,7 @@ type libailibrarainquestionmetric struct {
 	ID               field.Int64
 	Date             field.Time
 	SessionMetricsID field.Int64
-	Classification   field.String
+	Classification   field.Int64
 	Count            field.Int64
 	TenantID         field.Int64
 	DeviceID         field.String
@@ -70,7 +70,7 @@ func (l *libailibrarainquestionmetric) updateTableName(table string) *libailibra
 	l.ID = field.NewInt64(table, "Id")
 	l.Date = field.NewTime(table, "Date")
 	l.SessionMetricsID = field.NewInt64(table, "SessionMetricsId")
-	l.Classification = field.NewString(table, "Classification")
+	l.Classification = field.NewInt64(table, "Classification")
 	l.Count = field.NewInt64(table, "Count")
 	l.TenantID = field.NewInt64(table, "TenantId")
 	l.DeviceID = field.NewString(table, "DeviceId")

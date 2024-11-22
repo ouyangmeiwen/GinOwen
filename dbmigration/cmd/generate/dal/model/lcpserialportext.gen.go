@@ -13,20 +13,20 @@ const TableNameLcpserialportext = "lcpserialportext"
 // Lcpserialportext mapped from table <lcpserialportext>
 type Lcpserialportext struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	Name                 *string    `gorm:"column:Name;type:varchar(32)" json:"Name"`
 	SerialPortID         string     `gorm:"column:SerialPortId;type:varchar(32);not null" json:"SerialPortId"`
-	HubID                int64      `gorm:"column:HubId;type:int;not null" json:"HubId"`
-	SerialPortExtPort    int64      `gorm:"column:SerialPortExtPort;type:int;not null" json:"SerialPortExtPort"`
+	HubID                int64      `gorm:"column:HubId;type:int(11);not null" json:"HubId"`
+	SerialPortExtPort    int64      `gorm:"column:SerialPortExtPort;type:int(11);not null" json:"SerialPortExtPort"`
 	LayerID              string     `gorm:"column:LayerId;type:varchar(32);not null" json:"LayerId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Lcpserialportext's table name

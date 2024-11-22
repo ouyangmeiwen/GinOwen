@@ -13,25 +13,25 @@ const TableNameLcpservice = "lcpservice"
 // Lcpservice mapped from table <lcpservice>
 type Lcpservice struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	ServiceType          int64      `gorm:"column:ServiceType;type:tinyint unsigned;not null" json:"ServiceType"`
+	ServiceType          int64      `gorm:"column:ServiceType;type:tinyint(3) unsigned;not null" json:"ServiceType"`
 	Name                 string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	IsError              []uint8    `gorm:"column:IsError;type:bit(1);not null" json:"IsError"`
 	ErrorMessage         *string    `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
-	VersionCode          int64      `gorm:"column:VersionCode;type:int;not null" json:"VersionCode"`
+	VersionCode          int64      `gorm:"column:VersionCode;type:int(11);not null" json:"VersionCode"`
 	VersionName          *string    `gorm:"column:VersionName;type:varchar(32)" json:"VersionName"`
 	MAC                  *string    `gorm:"column:MAC;type:varchar(32)" json:"MAC"`
 	IP                   *string    `gorm:"column:IP;type:varchar(32)" json:"IP"`
 	ConnStr              *string    `gorm:"column:ConnStr;type:varchar(256)" json:"ConnStr"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Lcpservice's table name

@@ -13,12 +13,12 @@ const TableNameAppmessageboard = "appmessageboard"
 // Appmessageboard mapped from table <appmessageboard>
 type Appmessageboard struct {
 	ID                   string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	OpenID               *string    `gorm:"column:OpenId;type:varchar(32)" json:"OpenId"`
 	PatronID             *string    `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
@@ -27,7 +27,7 @@ type Appmessageboard struct {
 	Content              string     `gorm:"column:Content;type:varchar(2000);not null" json:"Content"`
 	ParentID             *string    `gorm:"column:ParentId;type:varchar(32)" json:"ParentId"`
 	AttachmentID         *string    `gorm:"column:AttachmentId;type:varchar(512)" json:"AttachmentId"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Appmessageboard's table name

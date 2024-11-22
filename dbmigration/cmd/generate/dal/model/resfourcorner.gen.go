@@ -8,7 +8,7 @@ const TableNameResfourcorner = "resfourcorner"
 
 // Resfourcorner mapped from table <resfourcorner>
 type Resfourcorner struct {
-	ID   int64  `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
+	ID   int64  `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
 	Code string `gorm:"column:Code;type:varchar(16);not null" json:"Code"`
 	Name string `gorm:"column:Name;type:varchar(16);not null" json:"Name"`
 }

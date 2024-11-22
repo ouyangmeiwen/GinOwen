@@ -14,22 +14,22 @@ const TableNameLibinventorytask = "libinventorytask"
 type Libinventorytask struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
-	IsDeleted            int64      `gorm:"column:IsDeleted;type:tinyint(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	TaskName             *string    `gorm:"column:TaskName;type:varchar(256)" json:"TaskName"`
-	TaskType             int64      `gorm:"column:TaskType;type:int;not null" json:"TaskType"`
-	TriggerSatus         int64      `gorm:"column:TriggerSatus;type:int;not null" json:"TriggerSatus"`
+	TaskType             int64      `gorm:"column:TaskType;type:int(11);not null" json:"TaskType"`
+	TriggerSatus         int64      `gorm:"column:TriggerSatus;type:int(11);not null" json:"TriggerSatus"`
 	InventoryStartDate   *time.Time `gorm:"column:InventoryStartDate;type:datetime(6)" json:"InventoryStartDate"`
 	InventoryEndDate     *time.Time `gorm:"column:InventoryEndDate;type:datetime(6)" json:"InventoryEndDate"`
-	Interval             int64      `gorm:"column:Interval;type:int;not null" json:"Interval"`
-	IsEnable             int64      `gorm:"column:IsEnable;type:tinyint(1);not null" json:"IsEnable"`
+	Interval             int64      `gorm:"column:Interval;type:int(11);not null" json:"Interval"`
+	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
 }
 
 // TableName Libinventorytask's table name

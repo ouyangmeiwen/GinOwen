@@ -13,14 +13,14 @@ const TableNameLibrfidantlayer = "librfidantlayer"
 // Librfidantlayer mapped from table <librfidantlayer>
 type Librfidantlayer struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	AntennaID            string     `gorm:"column:AntennaId;type:varchar(32);not null" json:"AntennaId"`
 	LayerID              *string    `gorm:"column:LayerId;type:varchar(50)" json:"LayerId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Librfidantlayer's table name

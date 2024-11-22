@@ -12,15 +12,15 @@ const TableNameAbprole = "abproles"
 
 // Abprole mapped from table <abproles>
 type Abprole struct {
-	ID                   int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                   int64      `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 	Name                 string     `gorm:"column:Name;type:varchar(32);not null" json:"Name"`
 	DisplayName          string     `gorm:"column:DisplayName;type:varchar(64);not null" json:"DisplayName"`
 	IsStatic             []uint8    `gorm:"column:IsStatic;type:bit(1);not null" json:"IsStatic"`

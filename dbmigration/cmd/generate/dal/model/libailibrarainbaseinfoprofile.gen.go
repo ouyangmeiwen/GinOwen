@@ -12,14 +12,14 @@ const TableNameLibailibrarainbaseinfoprofile = "libailibrarainbaseinfoprofile"
 
 // Libailibrarainbaseinfoprofile mapped from table <libailibrarainbaseinfoprofile>
 type Libailibrarainbaseinfoprofile struct {
-	ID                   int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
+	ID                   int64      `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
-	Status               int64      `gorm:"column:Status;type:int;not null" json:"Status"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	Status               int64      `gorm:"column:Status;type:int(11);not null" json:"Status"`
 	LastAppliedTime      *time.Time `gorm:"column:LastAppliedTime;type:datetime(6)" json:"LastAppliedTime"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	AppID                string     `gorm:"column:AppId;type:varchar(60);not null" json:"AppId"`
 	AppKey               string     `gorm:"column:AppKey;type:varchar(200);not null" json:"AppKey"`
 }

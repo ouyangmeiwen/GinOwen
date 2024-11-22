@@ -13,26 +13,26 @@ const TableNameLcprfidreader = "lcprfidreader"
 // Lcprfidreader mapped from table <lcprfidreader>
 type Lcprfidreader struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	TerminalID           *string    `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	Name                 *string    `gorm:"column:Name;type:varchar(32)" json:"Name"`
 	IP                   string     `gorm:"column:IP;type:varchar(32);not null" json:"IP"`
 	ConnectionString     string     `gorm:"column:ConnectionString;type:varchar(32);not null" json:"ConnectionString"`
-	PortType             int64      `gorm:"column:PortType;type:tinyint unsigned;not null" json:"PortType"`
-	MemoryBankType       int64      `gorm:"column:MemoryBankType;type:tinyint unsigned;not null" json:"MemoryBankType"`
-	Duration             int64      `gorm:"column:Duration;type:int;not null" json:"Duration"`
-	Interval             int64      `gorm:"column:Interval;type:int;not null" json:"Interval"`
-	LoopCount            int64      `gorm:"column:LoopCount;type:int;not null" json:"LoopCount"`
-	AntennaInterval      int64      `gorm:"column:AntennaInterval;type:int;not null" json:"AntennaInterval"`
+	PortType             int64      `gorm:"column:PortType;type:tinyint(3) unsigned;not null" json:"PortType"`
+	MemoryBankType       int64      `gorm:"column:MemoryBankType;type:tinyint(3) unsigned;not null" json:"MemoryBankType"`
+	Duration             int64      `gorm:"column:Duration;type:int(11);not null" json:"Duration"`
+	Interval             int64      `gorm:"column:Interval;type:int(11);not null" json:"Interval"`
+	LoopCount            int64      `gorm:"column:LoopCount;type:int(11);not null" json:"LoopCount"`
+	AntennaInterval      int64      `gorm:"column:AntennaInterval;type:int(11);not null" json:"AntennaInterval"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Lcprfidreader's table name

@@ -12,8 +12,8 @@ const TableNameHangfiredistributedlock = "hangfiredistributedlock"
 
 // Hangfiredistributedlock mapped from table <hangfiredistributedlock>
 type Hangfiredistributedlock struct {
-	Resource  string     `gorm:"column:Resource;type:varchar(100);not null" json:"Resource"`
-	CreatedAt *time.Time `gorm:"column:CreatedAt;type:datetime(6)" json:"CreatedAt"`
+	Resource  string    `gorm:"column:Resource;type:varchar(100);not null" json:"Resource"`
+	CreatedAt time.Time `gorm:"column:CreatedAt;type:datetime(6);not null" json:"CreatedAt"`
 }
 
 // TableName Hangfiredistributedlock's table name

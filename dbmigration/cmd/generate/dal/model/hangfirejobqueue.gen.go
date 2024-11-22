@@ -12,8 +12,8 @@ const TableNameHangfirejobqueue = "hangfirejobqueue"
 
 // Hangfirejobqueue mapped from table <hangfirejobqueue>
 type Hangfirejobqueue struct {
-	ID         int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
-	JobID      int64      `gorm:"column:JobId;type:int;not null" json:"JobId"`
+	ID         int64      `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
+	JobID      int64      `gorm:"column:JobId;type:int(11);not null" json:"JobId"`
 	FetchedAt  *time.Time `gorm:"column:FetchedAt;type:datetime(6)" json:"FetchedAt"`
 	Queue      string     `gorm:"column:Queue;type:varchar(50);not null" json:"Queue"`
 	FetchToken *string    `gorm:"column:FetchToken;type:varchar(36)" json:"FetchToken"`

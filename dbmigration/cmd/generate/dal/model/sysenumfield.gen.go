@@ -9,14 +9,14 @@ const TableNameSysenumfield = "sysenumfield"
 // Sysenumfield mapped from table <sysenumfield>
 type Sysenumfield struct {
 	ID            string  `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	FieldID       int64   `gorm:"column:FieldId;type:int;not null" json:"FieldId"`
+	FieldID       int64   `gorm:"column:FieldId;type:int(11);not null" json:"FieldId"`
 	FieldName     *string `gorm:"column:FieldName;type:varchar(32)" json:"FieldName"`
 	FieldTrans    *string `gorm:"column:FieldTrans;type:varchar(200)" json:"FieldTrans"`
 	IsEdit        []uint8 `gorm:"column:IsEdit;type:bit(1);not null" json:"IsEdit"`
 	IsShow        []uint8 `gorm:"column:IsShow;type:bit(1);not null" json:"IsShow"`
 	IsSingleValue []uint8 `gorm:"column:IsSingleValue;type:bit(1);not null" json:"IsSingleValue"`
 	Remark        *string `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID      int64   `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID      int64   `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Sysenumfield's table name

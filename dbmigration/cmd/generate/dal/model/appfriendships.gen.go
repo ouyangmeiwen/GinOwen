@@ -12,16 +12,16 @@ const TableNameAppfriendship = "appfriendships"
 
 // Appfriendship mapped from table <appfriendships>
 type Appfriendship struct {
-	ID                     int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	UserID                 int64      `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
-	TenantID               *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	FriendUserID           int64      `gorm:"column:FriendUserId;type:bigint;not null" json:"FriendUserId"`
-	FriendTenantID         *int64     `gorm:"column:FriendTenantId;type:int" json:"FriendTenantId"`
-	FriendUserName         string     `gorm:"column:FriendUserName;type:varchar(100);not null" json:"FriendUserName"`
-	FriendTenancyName      *string    `gorm:"column:FriendTenancyName;type:longtext" json:"FriendTenancyName"`
-	FriendProfilePictureID *string    `gorm:"column:FriendProfilePictureId;type:char(36)" json:"FriendProfilePictureId"`
-	State                  int64      `gorm:"column:State;type:int;not null" json:"State"`
-	CreationTime           *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
+	ID                     int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	UserID                 int64     `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
+	TenantID               *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	FriendUserID           int64     `gorm:"column:FriendUserId;type:bigint(20);not null" json:"FriendUserId"`
+	FriendTenantID         *int64    `gorm:"column:FriendTenantId;type:int(11)" json:"FriendTenantId"`
+	FriendUserName         string    `gorm:"column:FriendUserName;type:varchar(256);not null" json:"FriendUserName"`
+	FriendTenancyName      *string   `gorm:"column:FriendTenancyName;type:longtext" json:"FriendTenancyName"`
+	FriendProfilePictureID *string   `gorm:"column:FriendProfilePictureId;type:char(36)" json:"FriendProfilePictureId"`
+	State                  int64     `gorm:"column:State;type:int(11);not null" json:"State"`
+	CreationTime           time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
 }
 
 // TableName Appfriendship's table name

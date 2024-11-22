@@ -12,7 +12,7 @@ const TableNameHangfireset = "hangfireset"
 
 // Hangfireset mapped from table <hangfireset>
 type Hangfireset struct {
-	ID       int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
+	ID       int64      `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
 	Key      string     `gorm:"column:Key;type:varchar(100);not null" json:"Key"`
 	Value    string     `gorm:"column:Value;type:varchar(256);not null" json:"Value"`
 	Score    float32    `gorm:"column:Score;type:float;not null" json:"Score"`

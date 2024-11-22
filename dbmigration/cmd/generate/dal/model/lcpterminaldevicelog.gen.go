@@ -12,21 +12,21 @@ const TableNameLcpterminaldevicelog = "lcpterminaldevicelog"
 
 // Lcpterminaldevicelog mapped from table <lcpterminaldevicelog>
 type Lcpterminaldevicelog struct {
-	ID                 string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime       *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID      *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
-	TerminalID         string     `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
-	TerminalCode       string     `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
-	TerminalName       string     `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
-	TerminalDeviceID   string     `gorm:"column:TerminalDeviceId;type:varchar(32);not null" json:"TerminalDeviceId"`
-	TerminalDeviceType int64      `gorm:"column:TerminalDeviceType;type:tinyint unsigned;not null" json:"TerminalDeviceType"`
-	IsError            []uint8    `gorm:"column:IsError;type:bit(1);not null" json:"IsError"`
-	ErrorMessage       *string    `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
-	Brand              string     `gorm:"column:Brand;type:varchar(64);not null" json:"Brand"`
-	Model              *string    `gorm:"column:Model;type:varchar(64)" json:"Model"`
-	Version            *string    `gorm:"column:Version;type:varchar(64)" json:"Version"`
-	Remark             *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID           int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	ID                 string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
+	CreationTime       time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID      *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	TerminalID         string    `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
+	TerminalCode       string    `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
+	TerminalName       string    `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
+	TerminalDeviceID   string    `gorm:"column:TerminalDeviceId;type:varchar(32);not null" json:"TerminalDeviceId"`
+	TerminalDeviceType int64     `gorm:"column:TerminalDeviceType;type:tinyint(3) unsigned;not null" json:"TerminalDeviceType"`
+	IsError            []uint8   `gorm:"column:IsError;type:bit(1);not null" json:"IsError"`
+	ErrorMessage       *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
+	Brand              string    `gorm:"column:Brand;type:varchar(64);not null" json:"Brand"`
+	Model              *string   `gorm:"column:Model;type:varchar(64)" json:"Model"`
+	Version            *string   `gorm:"column:Version;type:varchar(64)" json:"Version"`
+	Remark             *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
+	TenantID           int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Lcpterminaldevicelog's table name

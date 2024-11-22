@@ -13,16 +13,16 @@ const TableNameLibstruct = "libstruct"
 // Libstruct mapped from table <libstruct>
 type Libstruct struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	BuildNo              int64      `gorm:"column:BuildNo;type:int;not null" json:"BuildNo"`
-	FloorNo              int64      `gorm:"column:FloorNo;type:int;not null" json:"FloorNo"`
-	RoomNo               int64      `gorm:"column:RoomNo;type:int;not null" json:"RoomNo"`
+	BuildNo              int64      `gorm:"column:BuildNo;type:int(11);not null" json:"BuildNo"`
+	FloorNo              int64      `gorm:"column:FloorNo;type:int(11);not null" json:"FloorNo"`
+	RoomNo               int64      `gorm:"column:RoomNo;type:int(11);not null" json:"RoomNo"`
 	BuildingName         *string    `gorm:"column:BuildingName;type:varchar(32)" json:"BuildingName"`
 	FloorName            *string    `gorm:"column:FloorName;type:varchar(32)" json:"FloorName"`
 	RoomName             *string    `gorm:"column:RoomName;type:varchar(32)" json:"RoomName"`
@@ -30,7 +30,7 @@ type Libstruct struct {
 	Img                  *[]byte    `gorm:"column:Img;type:longblob" json:"Img"`
 	ExtensionName        *string    `gorm:"column:ExtensionName;type:varchar(32)" json:"ExtensionName"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Libstruct's table name

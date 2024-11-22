@@ -53,6 +53,7 @@ func newLcpterminalshelf(db *gorm.DB) lcpterminalshelf {
 	_lcpterminalshelf.DisableReason = field.NewString(tableName, "DisableReason")
 	_lcpterminalshelf.TenantID = field.NewInt64(tableName, "TenantId")
 	_lcpterminalshelf.ReserveOverdueTime = field.NewTime(tableName, "ReserveOverdueTime")
+	_lcpterminalshelf.DisablePatronBarcode = field.NewString(tableName, "DisablePatronBarcode")
 
 	_lcpterminalshelf.fillFieldMap()
 
@@ -89,6 +90,7 @@ type lcpterminalshelf struct {
 	DisableReason        field.String
 	TenantID             field.Int64
 	ReserveOverdueTime   field.Time
+	DisablePatronBarcode field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -131,6 +133,7 @@ func (l *lcpterminalshelf) updateTableName(table string) *lcpterminalshelf {
 	l.DisableReason = field.NewString(table, "DisableReason")
 	l.TenantID = field.NewInt64(table, "TenantId")
 	l.ReserveOverdueTime = field.NewTime(table, "ReserveOverdueTime")
+	l.DisablePatronBarcode = field.NewString(table, "DisablePatronBarcode")
 
 	l.fillFieldMap()
 
@@ -155,7 +158,7 @@ func (l *lcpterminalshelf) GetFieldByName(fieldName string) (field.OrderExpr, bo
 }
 
 func (l *lcpterminalshelf) fillFieldMap() {
-	l.fieldMap = make(map[string]field.Expr, 26)
+	l.fieldMap = make(map[string]field.Expr, 27)
 	l.fieldMap["Id"] = l.ID
 	l.fieldMap["CreationTime"] = l.CreationTime
 	l.fieldMap["CreatorUserId"] = l.CreatorUserID
@@ -182,6 +185,7 @@ func (l *lcpterminalshelf) fillFieldMap() {
 	l.fieldMap["DisableReason"] = l.DisableReason
 	l.fieldMap["TenantId"] = l.TenantID
 	l.fieldMap["ReserveOverdueTime"] = l.ReserveOverdueTime
+	l.fieldMap["DisablePatronBarcode"] = l.DisablePatronBarcode
 }
 
 func (l lcpterminalshelf) clone(db *gorm.DB) lcpterminalshelf {

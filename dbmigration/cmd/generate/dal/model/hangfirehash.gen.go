@@ -12,7 +12,7 @@ const TableNameHangfirehash = "hangfirehash"
 
 // Hangfirehash mapped from table <hangfirehash>
 type Hangfirehash struct {
-	ID       int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
+	ID       int64      `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
 	Key      string     `gorm:"column:Key;type:varchar(100);not null" json:"Key"`
 	Field    string     `gorm:"column:Field;type:varchar(40);not null" json:"Field"`
 	Value    *string    `gorm:"column:Value;type:longtext" json:"Value"`

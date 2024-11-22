@@ -12,14 +12,14 @@ const TableNameDasbusinesscount = "dasbusinesscount"
 
 // Dasbusinesscount mapped from table <dasbusinesscount>
 type Dasbusinesscount struct {
-	ID            string     `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
-	CreationTime  *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
-	Business      *string    `gorm:"column:Business;type:varchar(32)" json:"Business"`
-	Type          string     `gorm:"column:Type;type:varchar(32);not null" json:"Type"`
-	Time          string     `gorm:"column:Time;type:varchar(32);not null" json:"Time"`
-	Count         int64      `gorm:"column:Count;type:int;not null" json:"Count"`
-	TenantID      int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	ID            string    `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
+	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	Business      *string   `gorm:"column:Business;type:varchar(32)" json:"Business"`
+	Type          string    `gorm:"column:Type;type:varchar(32);not null" json:"Type"`
+	Time          string    `gorm:"column:Time;type:varchar(32);not null" json:"Time"`
+	Count         int64     `gorm:"column:Count;type:int(11);not null" json:"Count"`
+	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Dasbusinesscount's table name

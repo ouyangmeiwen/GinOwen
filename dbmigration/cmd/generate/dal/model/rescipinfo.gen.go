@@ -8,7 +8,7 @@ const TableNameRescipinfo = "rescipinfo"
 
 // Rescipinfo mapped from table <rescipinfo>
 type Rescipinfo struct {
-	ID          int64   `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
+	ID          int64   `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
 	CIP         string  `gorm:"column:CIP;type:varchar(32);not null" json:"CIP"`
 	ISBN        *string `gorm:"column:ISBN;type:varchar(32)" json:"ISBN"`
 	Title       string  `gorm:"column:Title;type:varchar(256);not null" json:"Title"`

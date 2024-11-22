@@ -12,9 +12,9 @@ const TableNameAbpusertoken = "abpusertokens"
 
 // Abpusertoken mapped from table <abpusertokens>
 type Abpusertoken struct {
-	ID            int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	TenantID      *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	UserID        int64      `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
+	ID            int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	TenantID      *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	UserID        int64      `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
 	LoginProvider *string    `gorm:"column:LoginProvider;type:varchar(128)" json:"LoginProvider"`
 	Name          *string    `gorm:"column:Name;type:varchar(128)" json:"Name"`
 	Value         *string    `gorm:"column:Value;type:varchar(512)" json:"Value"`

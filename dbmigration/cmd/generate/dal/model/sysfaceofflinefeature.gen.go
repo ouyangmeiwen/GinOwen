@@ -12,19 +12,19 @@ const TableNameSysfaceofflinefeature = "sysfaceofflinefeature"
 
 // Sysfaceofflinefeature mapped from table <sysfaceofflinefeature>
 type Sysfaceofflinefeature struct {
-	ID                   string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	UserID               *string    `gorm:"column:UserId;type:varchar(32)" json:"UserId"`
 	GroupID              *string    `gorm:"column:GroupId;type:varchar(32)" json:"GroupId"`
 	FaceToken            *string    `gorm:"column:FaceToken;type:varchar(128)" json:"FaceToken"`
 	Feature              *string    `gorm:"column:Feature;type:longtext" json:"Feature"`
-	FaceID               int64      `gorm:"column:FaceId;type:int;not null" json:"FaceId"`
+	FaceID               int64      `gorm:"column:FaceId;type:int(11);not null" json:"FaceId"`
 	Image                *string    `gorm:"column:Image;type:longtext" json:"Image"`
 }
 

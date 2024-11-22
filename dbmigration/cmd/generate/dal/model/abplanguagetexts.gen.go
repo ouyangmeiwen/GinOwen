@@ -12,15 +12,15 @@ const TableNameAbplanguagetext = "abplanguagetexts"
 
 // Abplanguagetext mapped from table <abplanguagetexts>
 type Abplanguagetext struct {
-	ID                   int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                   int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 	LanguageName         string     `gorm:"column:LanguageName;type:varchar(128);not null" json:"LanguageName"`
 	Source               string     `gorm:"column:Source;type:varchar(128);not null" json:"Source"`
-	Key                  string     `gorm:"column:Key;type:varchar(100);not null" json:"Key"`
+	Key                  string     `gorm:"column:Key;type:varchar(256);not null" json:"Key"`
 	Value                string     `gorm:"column:Value;type:longtext;not null" json:"Value"`
 }
 

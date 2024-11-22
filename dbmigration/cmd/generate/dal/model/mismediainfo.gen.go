@@ -13,20 +13,20 @@ const TableNameMismediainfo = "mismediainfo"
 // Mismediainfo mapped from table <mismediainfo>
 type Mismediainfo struct {
 	ID                   string     `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	Name                 string     `gorm:"column:Name;type:varchar(256);not null" json:"Name"`
-	MediaType            int64      `gorm:"column:MediaType;type:tinyint unsigned;not null" json:"MediaType"`
+	MediaType            int64      `gorm:"column:MediaType;type:tinyint(3) unsigned;not null" json:"MediaType"`
 	AttachmentID         *string    `gorm:"column:AttachmentId;type:varchar(32)" json:"AttachmentId"`
-	SortCode             int64      `gorm:"column:SortCode;type:int;not null" json:"SortCode"`
-	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint unsigned;not null" json:"InformationStatus"`
+	SortCode             int64      `gorm:"column:SortCode;type:int(11);not null" json:"SortCode"`
+	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint(3) unsigned;not null" json:"InformationStatus"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 }
 
 // TableName Mismediainfo's table name

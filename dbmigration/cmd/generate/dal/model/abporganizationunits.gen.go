@@ -12,16 +12,16 @@ const TableNameAbporganizationunit = "abporganizationunits"
 
 // Abporganizationunit mapped from table <abporganizationunits>
 type Abporganizationunit struct {
-	ID                   int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                   int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	ParentID             *int64     `gorm:"column:ParentId;type:bigint" json:"ParentId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	ParentID             *int64     `gorm:"column:ParentId;type:bigint(20)" json:"ParentId"`
 	Code                 string     `gorm:"column:Code;type:varchar(95);not null" json:"Code"`
 	DisplayName          string     `gorm:"column:DisplayName;type:varchar(128);not null" json:"DisplayName"`
 }

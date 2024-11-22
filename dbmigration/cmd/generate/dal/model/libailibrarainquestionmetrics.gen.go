@@ -12,12 +12,12 @@ const TableNameLibailibrarainquestionmetric = "libailibrarainquestionmetrics"
 
 // Libailibrarainquestionmetric mapped from table <libailibrarainquestionmetrics>
 type Libailibrarainquestionmetric struct {
-	ID               int64     `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	Date             time.Time `gorm:"column:Date;type:datetime(6);not null" json:"Date"`
-	SessionMetricsID int64     `gorm:"column:SessionMetricsId;type:bigint;not null" json:"SessionMetricsId"`
-	Classification   string    `gorm:"column:Classification;type:varchar(30);not null" json:"Classification"`
-	Count            int64     `gorm:"column:Count;type:int;not null" json:"Count"`
-	TenantID         int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	ID               int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	Date             time.Time `gorm:"column:Date;type:date;not null" json:"Date"`
+	SessionMetricsID int64     `gorm:"column:SessionMetricsId;type:bigint(20);not null" json:"SessionMetricsId"`
+	Classification   int64     `gorm:"column:Classification;type:int(11);not null" json:"Classification"`
+	Count            int64     `gorm:"column:Count;type:int(11);not null" json:"Count"`
+	TenantID         int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	DeviceID         string    `gorm:"column:DeviceId;type:varchar(1024);not null" json:"DeviceId"`
 }
 

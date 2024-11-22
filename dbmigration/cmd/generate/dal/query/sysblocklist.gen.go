@@ -39,6 +39,8 @@ func newSysblocklist(db *gorm.DB) sysblocklist {
 	_sysblocklist.IDCard = field.NewString(tableName, "IdCard")
 	_sysblocklist.Barcode = field.NewString(tableName, "Barcode")
 	_sysblocklist.TenantID = field.NewInt64(tableName, "TenantId")
+	_sysblocklist.OverdueTime = field.NewTime(tableName, "OverdueTime")
+	_sysblocklist.TerminalCategory = field.NewString(tableName, "TerminalCategory")
 
 	_sysblocklist.fillFieldMap()
 
@@ -61,6 +63,8 @@ type sysblocklist struct {
 	IDCard               field.String
 	Barcode              field.String
 	TenantID             field.Int64
+	OverdueTime          field.Time
+	TerminalCategory     field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -89,6 +93,8 @@ func (s *sysblocklist) updateTableName(table string) *sysblocklist {
 	s.IDCard = field.NewString(table, "IdCard")
 	s.Barcode = field.NewString(table, "Barcode")
 	s.TenantID = field.NewInt64(table, "TenantId")
+	s.OverdueTime = field.NewTime(table, "OverdueTime")
+	s.TerminalCategory = field.NewString(table, "TerminalCategory")
 
 	s.fillFieldMap()
 
@@ -113,7 +119,7 @@ func (s *sysblocklist) GetFieldByName(fieldName string) (field.OrderExpr, bool) 
 }
 
 func (s *sysblocklist) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 12)
+	s.fieldMap = make(map[string]field.Expr, 14)
 	s.fieldMap["Id"] = s.ID
 	s.fieldMap["CreationTime"] = s.CreationTime
 	s.fieldMap["CreatorUserId"] = s.CreatorUserID
@@ -126,6 +132,8 @@ func (s *sysblocklist) fillFieldMap() {
 	s.fieldMap["IdCard"] = s.IDCard
 	s.fieldMap["Barcode"] = s.Barcode
 	s.fieldMap["TenantId"] = s.TenantID
+	s.fieldMap["OverdueTime"] = s.OverdueTime
+	s.fieldMap["TerminalCategory"] = s.TerminalCategory
 }
 
 func (s sysblocklist) clone(db *gorm.DB) sysblocklist {

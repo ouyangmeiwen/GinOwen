@@ -12,25 +12,25 @@ const TableNameAbpuser = "abpusers"
 
 // Abpuser mapped from table <abpusers>
 type Abpuser struct {
-	ID                              int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime                    *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID                   *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                              int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime                    time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID                   *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime            *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID              *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID              *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted                       []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID                   *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID                   *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime                    *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	AuthenticationSource            *string    `gorm:"column:AuthenticationSource;type:varchar(64)" json:"AuthenticationSource"`
-	UserName                        string     `gorm:"column:UserName;type:varchar(100);not null" json:"UserName"`
-	TenantID                        *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	EmailAddress                    string     `gorm:"column:EmailAddress;type:varchar(100);not null" json:"EmailAddress"`
+	UserName                        string     `gorm:"column:UserName;type:varchar(256);not null" json:"UserName"`
+	TenantID                        *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	EmailAddress                    string     `gorm:"column:EmailAddress;type:varchar(256);not null" json:"EmailAddress"`
 	Name                            string     `gorm:"column:Name;type:varchar(64);not null" json:"Name"`
 	Surname                         string     `gorm:"column:Surname;type:varchar(64);not null" json:"Surname"`
 	Password                        string     `gorm:"column:Password;type:varchar(128);not null" json:"Password"`
 	EmailConfirmationCode           *string    `gorm:"column:EmailConfirmationCode;type:varchar(328)" json:"EmailConfirmationCode"`
 	PasswordResetCode               *string    `gorm:"column:PasswordResetCode;type:varchar(328)" json:"PasswordResetCode"`
 	LockoutEndDateUtc               *time.Time `gorm:"column:LockoutEndDateUtc;type:datetime(6)" json:"LockoutEndDateUtc"`
-	AccessFailedCount               int64      `gorm:"column:AccessFailedCount;type:int;not null" json:"AccessFailedCount"`
+	AccessFailedCount               int64      `gorm:"column:AccessFailedCount;type:int(11);not null" json:"AccessFailedCount"`
 	IsLockoutEnabled                []uint8    `gorm:"column:IsLockoutEnabled;type:bit(1);not null" json:"IsLockoutEnabled"`
 	PhoneNumber                     *string    `gorm:"column:PhoneNumber;type:varchar(32)" json:"PhoneNumber"`
 	IsPhoneNumberConfirmed          []uint8    `gorm:"column:IsPhoneNumberConfirmed;type:bit(1);not null" json:"IsPhoneNumberConfirmed"`
@@ -38,8 +38,8 @@ type Abpuser struct {
 	IsTwoFactorEnabled              []uint8    `gorm:"column:IsTwoFactorEnabled;type:bit(1);not null" json:"IsTwoFactorEnabled"`
 	IsEmailConfirmed                []uint8    `gorm:"column:IsEmailConfirmed;type:bit(1);not null" json:"IsEmailConfirmed"`
 	IsActive                        []uint8    `gorm:"column:IsActive;type:bit(1);not null" json:"IsActive"`
-	NormalizedUserName              string     `gorm:"column:NormalizedUserName;type:varchar(100);not null" json:"NormalizedUserName"`
-	NormalizedEmailAddress          string     `gorm:"column:NormalizedEmailAddress;type:varchar(100);not null" json:"NormalizedEmailAddress"`
+	NormalizedUserName              string     `gorm:"column:NormalizedUserName;type:varchar(256);not null" json:"NormalizedUserName"`
+	NormalizedEmailAddress          string     `gorm:"column:NormalizedEmailAddress;type:varchar(256);not null" json:"NormalizedEmailAddress"`
 	ConcurrencyStamp                *string    `gorm:"column:ConcurrencyStamp;type:varchar(128)" json:"ConcurrencyStamp"`
 	ProfilePictureID                *string    `gorm:"column:ProfilePictureId;type:char(36)" json:"ProfilePictureId"`
 	ShouldChangePasswordOnNextLogin []uint8    `gorm:"column:ShouldChangePasswordOnNextLogin;type:bit(1);not null" json:"ShouldChangePasswordOnNextLogin"`

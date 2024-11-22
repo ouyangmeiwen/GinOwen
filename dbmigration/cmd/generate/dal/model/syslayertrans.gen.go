@@ -22,7 +22,7 @@ type Syslayertran struct {
 	ColumnSort     *string `gorm:"column:ColumnSort;type:varchar(32)" json:"ColumnSort"`
 	Description    *string `gorm:"column:Description;type:varchar(256)" json:"Description"`
 	IsSelected     []uint8 `gorm:"column:IsSelected;type:bit(1);not null" json:"IsSelected"`
-	TenantID       int64   `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID       int64   `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Syslayertran's table name

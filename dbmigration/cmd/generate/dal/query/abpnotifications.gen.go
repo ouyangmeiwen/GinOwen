@@ -40,6 +40,8 @@ func newAbpnotification(db *gorm.DB) abpnotification {
 	_abpnotification.UserIds = field.NewString(tableName, "UserIds")
 	_abpnotification.ExcludedUserIds = field.NewString(tableName, "ExcludedUserIds")
 	_abpnotification.TenantIds = field.NewString(tableName, "TenantIds")
+	_abpnotification.Discriminator = field.NewString(tableName, "Discriminator")
+	_abpnotification.MessageName = field.NewString(tableName, "MessageName")
 
 	_abpnotification.fillFieldMap()
 
@@ -63,6 +65,8 @@ type abpnotification struct {
 	UserIds                         field.String
 	ExcludedUserIds                 field.String
 	TenantIds                       field.String
+	Discriminator                   field.String
+	MessageName                     field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -92,6 +96,8 @@ func (a *abpnotification) updateTableName(table string) *abpnotification {
 	a.UserIds = field.NewString(table, "UserIds")
 	a.ExcludedUserIds = field.NewString(table, "ExcludedUserIds")
 	a.TenantIds = field.NewString(table, "TenantIds")
+	a.Discriminator = field.NewString(table, "Discriminator")
+	a.MessageName = field.NewString(table, "MessageName")
 
 	a.fillFieldMap()
 
@@ -116,7 +122,7 @@ func (a *abpnotification) GetFieldByName(fieldName string) (field.OrderExpr, boo
 }
 
 func (a *abpnotification) fillFieldMap() {
-	a.fieldMap = make(map[string]field.Expr, 13)
+	a.fieldMap = make(map[string]field.Expr, 15)
 	a.fieldMap["Id"] = a.ID
 	a.fieldMap["CreationTime"] = a.CreationTime
 	a.fieldMap["CreatorUserId"] = a.CreatorUserID
@@ -130,6 +136,8 @@ func (a *abpnotification) fillFieldMap() {
 	a.fieldMap["UserIds"] = a.UserIds
 	a.fieldMap["ExcludedUserIds"] = a.ExcludedUserIds
 	a.fieldMap["TenantIds"] = a.TenantIds
+	a.fieldMap["Discriminator"] = a.Discriminator
+	a.fieldMap["MessageName"] = a.MessageName
 }
 
 func (a abpnotification) clone(db *gorm.DB) abpnotification {

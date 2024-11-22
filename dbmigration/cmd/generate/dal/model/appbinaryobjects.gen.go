@@ -9,7 +9,7 @@ const TableNameAppbinaryobject = "appbinaryobjects"
 // Appbinaryobject mapped from table <appbinaryobjects>
 type Appbinaryobject struct {
 	ID       string `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
-	TenantID *int64 `gorm:"column:TenantId;type:int" json:"TenantId"`
+	TenantID *int64 `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 	Bytes    []byte `gorm:"column:Bytes;type:longblob;not null" json:"Bytes"`
 }
 

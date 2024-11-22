@@ -12,25 +12,25 @@ const TableNameAbptenant = "abptenants"
 
 // Abptenant mapped from table <abptenants>
 type Abptenant struct {
-	ID                      int64      `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime            *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID           *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                      int64      `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime            time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID           *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime    *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID      *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID      *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted               []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID           *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID           *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime            *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	TenancyName             string     `gorm:"column:TenancyName;type:varchar(64);not null" json:"TenancyName"`
 	Name                    string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	ConnectionString        *string    `gorm:"column:ConnectionString;type:varchar(1024)" json:"ConnectionString"`
 	IsActive                []uint8    `gorm:"column:IsActive;type:bit(1);not null" json:"IsActive"`
-	EditionID               *int64     `gorm:"column:EditionId;type:int" json:"EditionId"`
+	EditionID               *int64     `gorm:"column:EditionId;type:int(11)" json:"EditionId"`
 	SubscriptionEndDateUtc  *time.Time `gorm:"column:SubscriptionEndDateUtc;type:datetime(6)" json:"SubscriptionEndDateUtc"`
 	IsInTrialPeriod         []uint8    `gorm:"column:IsInTrialPeriod;type:bit(1);not null" json:"IsInTrialPeriod"`
 	CustomCSSID             *string    `gorm:"column:CustomCssId;type:char(36)" json:"CustomCssId"`
 	LogoID                  *string    `gorm:"column:LogoId;type:char(36)" json:"LogoId"`
 	LogoFileType            *string    `gorm:"column:LogoFileType;type:varchar(64)" json:"LogoFileType"`
-	SubscriptionPaymentType int64      `gorm:"column:SubscriptionPaymentType;type:int;not null" json:"SubscriptionPaymentType"`
+	SubscriptionPaymentType int64      `gorm:"column:SubscriptionPaymentType;type:int(11);not null" json:"SubscriptionPaymentType"`
 }
 
 // TableName Abptenant's table name

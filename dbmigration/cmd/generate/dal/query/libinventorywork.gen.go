@@ -32,7 +32,7 @@ func newLibinventorywork(db *gorm.DB) libinventorywork {
 	_libinventorywork.CreatorUserID = field.NewInt64(tableName, "CreatorUserId")
 	_libinventorywork.LastModificationTime = field.NewTime(tableName, "LastModificationTime")
 	_libinventorywork.LastModifierUserID = field.NewInt64(tableName, "LastModifierUserId")
-	_libinventorywork.IsDeleted = field.NewInt64(tableName, "IsDeleted")
+	_libinventorywork.IsDeleted = field.NewField(tableName, "IsDeleted")
 	_libinventorywork.DeleterUserID = field.NewInt64(tableName, "DeleterUserId")
 	_libinventorywork.DeletionTime = field.NewTime(tableName, "DeletionTime")
 	_libinventorywork.TaskStatus = field.NewInt64(tableName, "TaskStatus")
@@ -64,7 +64,7 @@ type libinventorywork struct {
 	CreatorUserID        field.Int64
 	LastModificationTime field.Time
 	LastModifierUserID   field.Int64
-	IsDeleted            field.Int64
+	IsDeleted            field.Field
 	DeleterUserID        field.Int64
 	DeletionTime         field.Time
 	TaskStatus           field.Int64
@@ -102,7 +102,7 @@ func (l *libinventorywork) updateTableName(table string) *libinventorywork {
 	l.CreatorUserID = field.NewInt64(table, "CreatorUserId")
 	l.LastModificationTime = field.NewTime(table, "LastModificationTime")
 	l.LastModifierUserID = field.NewInt64(table, "LastModifierUserId")
-	l.IsDeleted = field.NewInt64(table, "IsDeleted")
+	l.IsDeleted = field.NewField(table, "IsDeleted")
 	l.DeleterUserID = field.NewInt64(table, "DeleterUserId")
 	l.DeletionTime = field.NewTime(table, "DeletionTime")
 	l.TaskStatus = field.NewInt64(table, "TaskStatus")

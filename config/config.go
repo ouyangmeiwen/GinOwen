@@ -116,6 +116,7 @@ func AutoMigrateDB() {
 	err = DB.AutoMigrate(&models.OwenUser{})
 	err = DB.AutoMigrate(&models.OwenRole{})
 	err = DB.AutoMigrate(&models.OwenAuditLog{})
+
 	// err = DB.AutoMigrate(&models.TestOrder{})
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)

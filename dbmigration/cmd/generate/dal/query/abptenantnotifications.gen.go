@@ -38,6 +38,8 @@ func newAbptenantnotification(db *gorm.DB) abptenantnotification {
 	_abptenantnotification.EntityTypeAssemblyQualifiedName = field.NewString(tableName, "EntityTypeAssemblyQualifiedName")
 	_abptenantnotification.EntityID = field.NewString(tableName, "EntityId")
 	_abptenantnotification.Severity = field.NewInt64(tableName, "Severity")
+	_abptenantnotification.Discriminator = field.NewString(tableName, "Discriminator")
+	_abptenantnotification.MessageName = field.NewString(tableName, "MessageName")
 
 	_abptenantnotification.fillFieldMap()
 
@@ -59,6 +61,8 @@ type abptenantnotification struct {
 	EntityTypeAssemblyQualifiedName field.String
 	EntityID                        field.String
 	Severity                        field.Int64
+	Discriminator                   field.String
+	MessageName                     field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -86,6 +90,8 @@ func (a *abptenantnotification) updateTableName(table string) *abptenantnotifica
 	a.EntityTypeAssemblyQualifiedName = field.NewString(table, "EntityTypeAssemblyQualifiedName")
 	a.EntityID = field.NewString(table, "EntityId")
 	a.Severity = field.NewInt64(table, "Severity")
+	a.Discriminator = field.NewString(table, "Discriminator")
+	a.MessageName = field.NewString(table, "MessageName")
 
 	a.fillFieldMap()
 
@@ -110,7 +116,7 @@ func (a *abptenantnotification) GetFieldByName(fieldName string) (field.OrderExp
 }
 
 func (a *abptenantnotification) fillFieldMap() {
-	a.fieldMap = make(map[string]field.Expr, 11)
+	a.fieldMap = make(map[string]field.Expr, 13)
 	a.fieldMap["Id"] = a.ID
 	a.fieldMap["CreationTime"] = a.CreationTime
 	a.fieldMap["CreatorUserId"] = a.CreatorUserID
@@ -122,6 +128,8 @@ func (a *abptenantnotification) fillFieldMap() {
 	a.fieldMap["EntityTypeAssemblyQualifiedName"] = a.EntityTypeAssemblyQualifiedName
 	a.fieldMap["EntityId"] = a.EntityID
 	a.fieldMap["Severity"] = a.Severity
+	a.fieldMap["Discriminator"] = a.Discriminator
+	a.fieldMap["MessageName"] = a.MessageName
 }
 
 func (a abptenantnotification) clone(db *gorm.DB) abptenantnotification {

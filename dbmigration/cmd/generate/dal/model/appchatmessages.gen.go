@@ -12,17 +12,17 @@ const TableNameAppchatmessage = "appchatmessages"
 
 // Appchatmessage mapped from table <appchatmessages>
 type Appchatmessage struct {
-	ID                int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	UserID            int64      `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
-	TenantID          *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	TargetUserID      int64      `gorm:"column:TargetUserId;type:bigint;not null" json:"TargetUserId"`
-	TargetTenantID    *int64     `gorm:"column:TargetTenantId;type:int" json:"TargetTenantId"`
-	Message           string     `gorm:"column:Message;type:longtext;not null" json:"Message"`
-	CreationTime      *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	Side              int64      `gorm:"column:Side;type:int;not null" json:"Side"`
-	ReadState         int64      `gorm:"column:ReadState;type:int;not null" json:"ReadState"`
-	ReceiverReadState int64      `gorm:"column:ReceiverReadState;type:int;not null" json:"ReceiverReadState"`
-	SharedMessageID   *string    `gorm:"column:SharedMessageId;type:char(36)" json:"SharedMessageId"`
+	ID                int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	UserID            int64     `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
+	TenantID          *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	TargetUserID      int64     `gorm:"column:TargetUserId;type:bigint(20);not null" json:"TargetUserId"`
+	TargetTenantID    *int64    `gorm:"column:TargetTenantId;type:int(11)" json:"TargetTenantId"`
+	Message           string    `gorm:"column:Message;type:longtext;not null" json:"Message"`
+	CreationTime      time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	Side              int64     `gorm:"column:Side;type:int(11);not null" json:"Side"`
+	ReadState         int64     `gorm:"column:ReadState;type:int(11);not null" json:"ReadState"`
+	ReceiverReadState int64     `gorm:"column:ReceiverReadState;type:int(11);not null" json:"ReceiverReadState"`
+	SharedMessageID   *string   `gorm:"column:SharedMessageId;type:char(36)" json:"SharedMessageId"`
 }
 
 // TableName Appchatmessage's table name

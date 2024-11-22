@@ -12,16 +12,16 @@ const TableNameAbpuserloginattempt = "abpuserloginattempts"
 
 // Abpuserloginattempt mapped from table <abpuserloginattempts>
 type Abpuserloginattempt struct {
-	ID                     int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	TenantID               *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	TenancyName            *string    `gorm:"column:TenancyName;type:varchar(64)" json:"TenancyName"`
-	UserID                 *int64     `gorm:"column:UserId;type:bigint" json:"UserId"`
-	UserNameOrEmailAddress *string    `gorm:"column:UserNameOrEmailAddress;type:varchar(100)" json:"UserNameOrEmailAddress"`
-	ClientIPAddress        *string    `gorm:"column:ClientIpAddress;type:varchar(64)" json:"ClientIpAddress"`
-	ClientName             *string    `gorm:"column:ClientName;type:varchar(128)" json:"ClientName"`
-	BrowserInfo            *string    `gorm:"column:BrowserInfo;type:varchar(512)" json:"BrowserInfo"`
-	Result                 int64      `gorm:"column:Result;type:tinyint unsigned;not null" json:"Result"`
-	CreationTime           *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
+	ID                     int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	TenantID               *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	TenancyName            *string   `gorm:"column:TenancyName;type:varchar(64)" json:"TenancyName"`
+	UserID                 *int64    `gorm:"column:UserId;type:bigint(20)" json:"UserId"`
+	UserNameOrEmailAddress *string   `gorm:"column:UserNameOrEmailAddress;type:varchar(255)" json:"UserNameOrEmailAddress"`
+	ClientIPAddress        *string   `gorm:"column:ClientIpAddress;type:varchar(64)" json:"ClientIpAddress"`
+	ClientName             *string   `gorm:"column:ClientName;type:varchar(128)" json:"ClientName"`
+	BrowserInfo            *string   `gorm:"column:BrowserInfo;type:varchar(512)" json:"BrowserInfo"`
+	Result                 int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	CreationTime           time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
 }
 
 // TableName Abpuserloginattempt's table name

@@ -12,26 +12,26 @@ const TableNameLcpterminalshelflog = "lcpterminalshelflog"
 
 // Lcpterminalshelflog mapped from table <lcpterminalshelflog>
 type Lcpterminalshelflog struct {
-	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
-	TerminalID           string     `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
-	TerminalCode         string     `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
-	TerminalName         string     `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
-	TerminalShelfID      *string    `gorm:"column:TerminalShelfId;type:varchar(32)" json:"TerminalShelfId"`
-	TerminalShelfName    string     `gorm:"column:TerminalShelfName;type:varchar(64);not null" json:"TerminalShelfName"`
-	ItemID               *string    `gorm:"column:ItemId;type:varchar(32)" json:"ItemId"`
-	ItemTitle            *string    `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
-	ItemBarcode          *string    `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
-	TerminalShelfLogType int64      `gorm:"column:TerminalShelfLogType;type:tinyint unsigned;not null" json:"TerminalShelfLogType"`
-	IsAdmin              []uint8    `gorm:"column:IsAdmin;type:bit(1);not null" json:"IsAdmin"`
-	OperatorID           *string    `gorm:"column:OperatorId;type:varchar(32)" json:"OperatorId"`
-	OperatorName         *string    `gorm:"column:OperatorName;type:varchar(64)" json:"OperatorName"`
-	OperatorAccount      *string    `gorm:"column:OperatorAccount;type:varchar(256)" json:"OperatorAccount"`
-	Result               int64      `gorm:"column:Result;type:tinyint unsigned;not null" json:"Result"`
-	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	ErrorMessage         *string    `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	ID                   string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
+	CreationTime         time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	TerminalID           string    `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
+	TerminalCode         string    `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
+	TerminalName         string    `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
+	TerminalShelfID      *string   `gorm:"column:TerminalShelfId;type:varchar(32)" json:"TerminalShelfId"`
+	TerminalShelfName    string    `gorm:"column:TerminalShelfName;type:varchar(64);not null" json:"TerminalShelfName"`
+	ItemID               *string   `gorm:"column:ItemId;type:varchar(32)" json:"ItemId"`
+	ItemTitle            *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
+	ItemBarcode          *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
+	TerminalShelfLogType int64     `gorm:"column:TerminalShelfLogType;type:tinyint(3) unsigned;not null" json:"TerminalShelfLogType"`
+	IsAdmin              []uint8   `gorm:"column:IsAdmin;type:bit(1);not null" json:"IsAdmin"`
+	OperatorID           *string   `gorm:"column:OperatorId;type:varchar(32)" json:"OperatorId"`
+	OperatorName         *string   `gorm:"column:OperatorName;type:varchar(64)" json:"OperatorName"`
+	OperatorAccount      *string   `gorm:"column:OperatorAccount;type:varchar(256)" json:"OperatorAccount"`
+	Result               int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Remark               *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
+	ErrorMessage         *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
+	TenantID             int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Lcpterminalshelflog's table name

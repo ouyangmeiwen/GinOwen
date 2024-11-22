@@ -14,9 +14,9 @@ const TableNameLibainirobotinfo = "libainirobotinfo"
 type Libainirobotinfo struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	Date                 *string    `gorm:"column:Date;type:varchar(32)" json:"Date"`
 	TerminalID           *string    `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	FlowList             *string    `gorm:"column:FlowList;type:varchar(32)" json:"FlowList"`
@@ -24,7 +24,7 @@ type Libainirobotinfo struct {
 	DialogListNum        *string    `gorm:"column:DialogListNum;type:varchar(32)" json:"DialogListNum"`
 	AskListNum           *string    `gorm:"column:AskListNum;type:varchar(32)" json:"AskListNum"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Libainirobotinfo's table name

@@ -12,13 +12,13 @@ const TableNameAbproleclaim = "abproleclaims"
 
 // Abproleclaim mapped from table <abproleclaims>
 type Abproleclaim struct {
-	ID            int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime  *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
-	TenantID      *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	RoleID        int64      `gorm:"column:RoleId;type:int;not null" json:"RoleId"`
-	ClaimType     *string    `gorm:"column:ClaimType;type:varchar(100)" json:"ClaimType"`
-	ClaimValue    *string    `gorm:"column:ClaimValue;type:longtext" json:"ClaimValue"`
+	ID            int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	TenantID      *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	RoleID        int64     `gorm:"column:RoleId;type:int(11);not null" json:"RoleId"`
+	ClaimType     *string   `gorm:"column:ClaimType;type:varchar(256)" json:"ClaimType"`
+	ClaimValue    *string   `gorm:"column:ClaimValue;type:longtext" json:"ClaimValue"`
 }
 
 // TableName Abproleclaim's table name

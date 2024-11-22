@@ -13,12 +13,12 @@ const TableNameLibitemlocinfo = "libitemlocinfo"
 // Libitemlocinfo mapped from table <libitemlocinfo>
 type Libitemlocinfo struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	ItemBarcode          string     `gorm:"column:ItemBarcode;type:varchar(32);not null" json:"ItemBarcode"`
 	ItemCallNo           string     `gorm:"column:ItemCallNo;type:varchar(64);not null" json:"ItemCallNo"`
@@ -26,11 +26,11 @@ type Libitemlocinfo struct {
 	LayerID              string     `gorm:"column:LayerId;type:varchar(32);not null" json:"LayerId"`
 	IsPreFlag            []uint8    `gorm:"column:IsPreFlag;type:bit(1);not null" json:"IsPreFlag"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	IsForceSort          []uint8    `gorm:"column:IsForceSort;type:bit(1);not null;default:b'0" json:"IsForceSort"`
 	LayerCode            *string    `gorm:"column:LayerCode;type:varchar(32)" json:"LayerCode"`
 	OCRItemTitle         *string    `gorm:"column:OCRItemTitle;type:varchar(256)" json:"OCRItemTitle"`
-	OriginType           *int64     `gorm:"column:OriginType;type:tinyint unsigned" json:"OriginType"`
+	OriginType           *int64     `gorm:"column:OriginType;type:tinyint(3) unsigned" json:"OriginType"`
 }
 
 // TableName Libitemlocinfo's table name

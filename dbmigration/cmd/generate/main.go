@@ -13,10 +13,10 @@ func main() {
 
 	//MySQLDSN := "root:abc%40123@(localhost:3306)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local"
 	username := "root"
-	password := `abc@123`
-	host := "127.0.0.1"
-	port := "3306"
-	dbname := "invengodbv41"
+	password := `qyisno1forever@world`
+	host := "192.168.0.126"
+	port := "29010"
+	dbname := "invengodbv4"
 
 	MySQLDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbname)
 	// 连接数据库

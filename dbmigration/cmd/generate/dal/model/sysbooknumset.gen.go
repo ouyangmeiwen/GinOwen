@@ -12,9 +12,9 @@ type Sysbooknumset struct {
 	LocationName *string `gorm:"column:LocationName;type:varchar(128)" json:"LocationName"`
 	BookType     *string `gorm:"column:BookType;type:varchar(32)" json:"BookType"`
 	FontWord     *string `gorm:"column:FontWord;type:varchar(10)" json:"FontWord"`
-	NumLength    int64   `gorm:"column:NumLength;type:smallint;not null" json:"NumLength"`
+	NumLength    int64   `gorm:"column:NumLength;type:smallint(6);not null" json:"NumLength"`
 	IsCRC        []uint8 `gorm:"column:IsCRC;type:bit(1);not null" json:"IsCRC"`
-	TenantID     int64   `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID     int64   `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Sysbooknumset's table name

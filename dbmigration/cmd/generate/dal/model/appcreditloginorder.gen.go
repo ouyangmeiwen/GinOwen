@@ -13,10 +13,10 @@ const TableNameAppcreditloginorder = "appcreditloginorder"
 // Appcreditloginorder mapped from table <appcreditloginorder>
 type Appcreditloginorder struct {
 	ID                   string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	OutTransNo           string     `gorm:"column:OutTransNo;type:varchar(64);not null" json:"OutTransNo"`
 	QrURL                *string    `gorm:"column:QrUrl;type:varchar(100)" json:"QrUrl"`
 	Code                 *string    `gorm:"column:Code;type:varchar(32)" json:"Code"`
@@ -29,7 +29,7 @@ type Appcreditloginorder struct {
 	IsSuccess            []uint8    `gorm:"column:IsSuccess;type:bit(1);not null" json:"IsSuccess"`
 	IsCancel             []uint8    `gorm:"column:IsCancel;type:bit(1);not null" json:"IsCancel"`
 	Remark               *string    `gorm:"column:Remark;type:longtext" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Appcreditloginorder's table name

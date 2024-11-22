@@ -12,19 +12,19 @@ const TableNameSysdatalog = "sysdatalog"
 
 // Sysdatalog mapped from table <sysdatalog>
 type Sysdatalog struct {
-	ID              string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime    *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID   *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
-	KeyValue        *string    `gorm:"column:KeyValue;type:varchar(64)" json:"KeyValue"`
-	InsertType      int64      `gorm:"column:InsertType;type:int;not null" json:"InsertType"`
-	DBType          *string    `gorm:"column:DBType;type:varchar(16)" json:"DBType"`
-	Business        *string    `gorm:"column:Business;type:varchar(16)" json:"Business"`
-	SysName         *string    `gorm:"column:SysName;type:varchar(64)" json:"SysName"`
-	ClientName      *string    `gorm:"column:ClientName;type:varchar(64)" json:"ClientName"`
-	Description     *string    `gorm:"column:Description;type:varchar(256)" json:"Description"`
-	IsOffLine       []uint8    `gorm:"column:IsOffLine;type:bit(1);not null" json:"IsOffLine"`
-	TenantID        int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
-	CreatorUserName *string    `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
+	ID              string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
+	CreationTime    time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	KeyValue        *string   `gorm:"column:KeyValue;type:varchar(64)" json:"KeyValue"`
+	InsertType      int64     `gorm:"column:InsertType;type:int(11);not null" json:"InsertType"`
+	DBType          *string   `gorm:"column:DBType;type:varchar(16)" json:"DBType"`
+	Business        *string   `gorm:"column:Business;type:varchar(16)" json:"Business"`
+	SysName         *string   `gorm:"column:SysName;type:varchar(64)" json:"SysName"`
+	ClientName      *string   `gorm:"column:ClientName;type:varchar(64)" json:"ClientName"`
+	Description     *string   `gorm:"column:Description;type:varchar(256)" json:"Description"`
+	IsOffLine       []uint8   `gorm:"column:IsOffLine;type:bit(1);not null" json:"IsOffLine"`
+	TenantID        int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	CreatorUserName *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 }
 
 // TableName Sysdatalog's table name

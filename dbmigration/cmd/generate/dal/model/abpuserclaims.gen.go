@@ -12,13 +12,13 @@ const TableNameAbpuserclaim = "abpuserclaims"
 
 // Abpuserclaim mapped from table <abpuserclaims>
 type Abpuserclaim struct {
-	ID            int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime  *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
-	TenantID      *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	UserID        int64      `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
-	ClaimType     *string    `gorm:"column:ClaimType;type:varchar(100)" json:"ClaimType"`
-	ClaimValue    *string    `gorm:"column:ClaimValue;type:longtext" json:"ClaimValue"`
+	ID            int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	TenantID      *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	UserID        int64     `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
+	ClaimType     *string   `gorm:"column:ClaimType;type:varchar(256)" json:"ClaimType"`
+	ClaimValue    *string   `gorm:"column:ClaimValue;type:longtext" json:"ClaimValue"`
 }
 
 // TableName Abpuserclaim's table name

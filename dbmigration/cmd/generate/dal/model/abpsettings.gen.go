@@ -12,14 +12,14 @@ const TableNameAbpsetting = "abpsettings"
 
 // Abpsetting mapped from table <abpsettings>
 type Abpsetting struct {
-	ID                   int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	ID                   int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
-	UserID               *int64     `gorm:"column:UserId;type:bigint" json:"UserId"`
-	Name                 string     `gorm:"column:Name;type:varchar(100);not null" json:"Name"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	UserID               *int64     `gorm:"column:UserId;type:bigint(20)" json:"UserId"`
+	Name                 string     `gorm:"column:Name;type:varchar(256);not null" json:"Name"`
 	Value                *string    `gorm:"column:Value;type:varchar(2000)" json:"Value"`
 }
 

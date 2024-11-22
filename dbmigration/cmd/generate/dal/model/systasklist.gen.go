@@ -13,23 +13,23 @@ const TableNameSystasklist = "systasklist"
 // Systasklist mapped from table <systasklist>
 type Systasklist struct {
 	ID             string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime   *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID  *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime   time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID  *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	TaskName       *string    `gorm:"column:TaskName;type:varchar(256)" json:"TaskName"`
 	CronExpression *string    `gorm:"column:CronExpression;type:varchar(64)" json:"CronExpression"`
 	AssemblyName   *string    `gorm:"column:AssemblyName;type:varchar(32)" json:"AssemblyName"`
 	ClassName      *string    `gorm:"column:ClassName;type:varchar(32)" json:"ClassName"`
-	TaskType       int64      `gorm:"column:TaskType;type:tinyint unsigned;not null" json:"TaskType"`
-	Order          int64      `gorm:"column:Order;type:tinyint unsigned;not null" json:"Order"`
+	TaskType       int64      `gorm:"column:TaskType;type:tinyint(3) unsigned;not null" json:"TaskType"`
+	Order          int64      `gorm:"column:Order;type:tinyint(3) unsigned;not null" json:"Order"`
 	FilePath       *string    `gorm:"column:FilePath;type:varchar(256)" json:"FilePath"`
 	OrderBy        *string    `gorm:"column:OrderBy;type:varchar(64)" json:"OrderBy"`
 	LastExecTime   *time.Time `gorm:"column:LastExecTime;type:datetime(6)" json:"LastExecTime"`
 	NextExecTime   *time.Time `gorm:"column:NextExecTime;type:datetime(6)" json:"NextExecTime"`
 	PlanExecTime   *time.Time `gorm:"column:PlanExecTime;type:datetime(6)" json:"PlanExecTime"`
-	TaskStatus     int64      `gorm:"column:TaskStatus;type:tinyint unsigned;not null" json:"TaskStatus"`
+	TaskStatus     int64      `gorm:"column:TaskStatus;type:tinyint(3) unsigned;not null" json:"TaskStatus"`
 	TaskParams     *string    `gorm:"column:TaskParams;type:varchar(256)" json:"TaskParams"`
 	Remark         *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID       int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	TenantID       int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
 // TableName Systasklist's table name

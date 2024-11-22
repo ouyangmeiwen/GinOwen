@@ -13,15 +13,15 @@ const TableNameSysconfigbase = "sysconfigbase"
 // Sysconfigbase mapped from table <sysconfigbase>
 type Sysconfigbase struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
-	CreationTime         *time.Time `gorm:"column:CreationTime;type:datetime(6)" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	TerminalID           *string    `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	ConfigType           *string    `gorm:"column:ConfigType;type:varchar(128)" json:"ConfigType"`
 	Content              *string    `gorm:"column:Content;type:longtext" json:"Content"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 }
 
 // TableName Sysconfigbase's table name
