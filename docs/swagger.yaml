@@ -440,6 +440,54 @@ paths:
       summary: 修改LMS审计日志
       tags:
       - Sysauditlmslog
+  /api/services/app/file/DownloadFile:
+    get:
+      consumes:
+      - application/json
+      description: 根据文件路径下载文件
+      parameters:
+      - description: 文件路径
+        in: query
+        name: filePath
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: 文件下载成功
+          schema:
+            type: file
+        "400":
+          description: 无效的请求
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "404":
+          description: 文件未找到
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "500":
+          description: 服务器内部错误
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 下载文件
+      tags:
+      - File
   /api/services/app/file/UploadFile:
     post:
       consumes:

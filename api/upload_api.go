@@ -5,8 +5,10 @@ import (
 	"GINOWEN/models/request"
 	"GINOWEN/utils"
 	"fmt"
+	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -89,4 +91,57 @@ func (b *UploadfileApi) UploadFile(c *gin.Context) {
 		return
 	}
 	utils.OkWithDetailed(resp, "上传成功", c)
+}
+
+// DownloadFileHandler 文件下载接口
+// @Tags File
+// @Summary 下载文件
+// @Description 根据文件路径下载文件
+// @Accept json
+// @Produce application/octet-stream
+// @Param filePath query string true "文件路径"
+// @Success 200 {file} file "文件下载成功"
+// @Failure 400 {object} utils.Response{msg=string} "无效的请求"
+// @Failure 404 {object} utils.Response{msg=string} "文件未找到"
+// @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
+// @Router /api/services/app/file/DownloadFile [get]
+func (b *UploadfileApi) DownloadFile(c *gin.Context) {
+	// 获取请求参数中的文件路径
+	filePath := c.Query("filePath")
+	if filePath == "" {
+		utils.FailWithMessage("文件路径不能为空", c)
+		return
+	}
+
+	// 确保文件存在
+	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		utils.FailWithMessage("文件未找到", c)
+		return
+	} else if err != nil {
+		utils.FailWithMessage("文件状态检查失败: "+err.Error(), c)
+		return
+	}
+
+	// 打开文件
+	file, err := os.Open(filePath)
+	if err != nil {
+		utils.FailWithMessage("无法打开文件: "+err.Error(), c)
+		return
+	}
+	defer file.Close()
+
+	// 获取文件名
+	fileName := filepath.Base(filePath)
+
+	// 对文件名进行编码，确保支持中文或特殊字符
+	encodedFileName := url.QueryEscape(fileName)                    // 对文件名进行 URL 编码
+	encodedFileName = strings.ReplaceAll(encodedFileName, "+", " ") // 替换 URL 编码中的 `+` 为 `%20`
+
+	// 设置文件下载头
+	c.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", encodedFileName))
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Transfer-Encoding", "binary")
+
+	// 将文件内容写入响应
+	c.File(filePath)
 }
