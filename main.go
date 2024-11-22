@@ -19,6 +19,9 @@ import (
 // @name Authorization
 // @description JWT Authorization header (Bearer token)
 func main() {
+
+	//test.CreateAutoMigration()
+
 	// 加载配置文件
 	global.OWEN_CONFIG = config.LoadConfig()
 	// 初始化日志
