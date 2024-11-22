@@ -106,7 +106,7 @@ func generateAutoMigrateFile(outputFile string, structNames []string) error {
 import (
 	"log"
 	"gorm.io/gorm"
-	"your_project_path/model"
+	"GINOWEN/model"
 )
 
 func AutoMigrate(DB *gorm.DB) {
