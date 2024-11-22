@@ -1,10 +1,10 @@
 package main
 
 import (
-	"GINOWEN/config"
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
 	"GINOWEN/routers"
+	"GINOWEN/serviceinit"
 	"GINOWEN/utils"
 
 	"github.com/gin-gonic/gin"
@@ -23,21 +23,21 @@ func main() {
 	//test.CreateAutoMigration()
 
 	// 加载配置文件
-	global.OWEN_CONFIG = config.LoadConfig()
+	global.OWEN_CONFIG = serviceinit.LoadConfig()
 	// 初始化日志
 	utils.InitLogger()
 	defer utils.Sync()
 
 	//global.OWEN_LOG.Debug("开始程序！")
 
-	global.OWEN_DB = config.InitDB()
+	global.OWEN_DB = serviceinit.InitDB()
 	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
 
-	config.InitRedis() //初始化redis
+	serviceinit.InitRedis() //初始化redis
 
-	config.AutoMigrateDB() //数据库自动迁移
+	serviceinit.AutoMigrateDB() //数据库自动迁移
 
-	config.InitMongoDB() //mongodb
+	serviceinit.InitMongoDB() //mongodb
 
 	// 创建 Gin 引擎
 	r := gin.New()

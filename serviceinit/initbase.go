@@ -1,4 +1,4 @@
-package config
+package serviceinit
 
 import (
 	"GINOWEN/global"

@@ -54,21 +54,3 @@ var (
 	OWEN_LOCK   sync.RWMutex
 	OWEN_LOG    *zap.Logger
 )
-
-// GetGlobalDBByDBName 通过名称获取db list中的db
-func GetGlobalDBByDBName(dbname string) *gorm.DB {
-	OWEN_LOCK.RLock()
-	defer OWEN_LOCK.RUnlock()
-	return OWEN_DBList[dbname]
-}
-
-// MustGetGlobalDBByDBName 通过名称获取db 如果不存在则panic
-func MustGetGlobalDBByDBName(dbname string) *gorm.DB {
-	OWEN_LOCK.RLock()
-	defer OWEN_LOCK.RUnlock()
-	db, ok := OWEN_DBList[dbname]
-	if !ok || db == nil {
-		panic("db no init")
-	}
-	return db
-}
