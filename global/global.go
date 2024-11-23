@@ -54,6 +54,11 @@ type YarmConfig struct {
 		Username string `yaml:"username"`
 		Password string `yaml:"password"`
 	} `yaml:"mongodb"`
+
+	RabbitMQ struct {
+		URL       string `yaml:"url"`
+		QueueName string `yaml:"queue_name"`
+	} `mapstructure:"rabbitmq"`
 }
 
 var (

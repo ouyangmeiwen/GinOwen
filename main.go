@@ -40,6 +40,7 @@ func main() {
 
 	serviceinit.InitMongoDB() //mongodb
 
+	serviceinit.InitRabbiMQ() //rabbitmq
 	// 创建 Gin 引擎
 	r := gin.New()
 	// r.Use(cors.Default())

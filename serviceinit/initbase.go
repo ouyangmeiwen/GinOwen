@@ -3,6 +3,7 @@ package serviceinit
 import (
 	"GINOWEN/global"
 	"GINOWEN/models"
+	"GINOWEN/rabbitmq"
 	"context"
 	"errors"
 	"fmt"
@@ -386,4 +387,47 @@ func InitMongoDB() (*mongo.Client, error) {
 	fmt.Println("Connected to MongoDB!")
 	global.OWEN_MONGO = client
 	return client, nil
+}
+
+func InitRabbiMQ() {
+	if len(global.OWEN_CONFIG.RabbitMQ.URL) <= 0 {
+		return
+	}
+	// 初始化全局 RabbitMQ 实例
+	err := rabbitmq.InitRabbitMQ(global.OWEN_CONFIG.RabbitMQ.URL, global.OWEN_CONFIG.RabbitMQ.QueueName)
+	if err != nil {
+		log.Fatalf("Error initializing RabbitMQ: %v", err)
+	}
+	defer func() {
+		// 使用 Close 方法来关闭连接和通道
+		if err := rabbitmq.Instance.Close(); err != nil {
+			log.Fatalf("Error closing RabbitMQ: %v", err)
+		}
+	}()
+
+	// 启动消息监听
+	go func() {
+		rabbitmq.Instance.ListenForData()
+	}()
+
+	//test
+	// 发送文本消息
+	textMsg := rabbitmq.Data{
+		DataType: rabbitmq.TextMessageType,
+		Body:     `{"content": "Hello, RabbitMQ!"}`,
+	}
+	err = rabbitmq.Instance.SendData(textMsg)
+	if err != nil {
+		log.Fatalf("Error publishing message: %v", err)
+	}
+
+	// 发送图像消息
+	imageMsg := rabbitmq.Data{
+		DataType: rabbitmq.ImageMessageType,
+		Body:     `{"image_url": "http://example.com/image.jpg", "alt_text": "A sample image"}`,
+	}
+	err = rabbitmq.Instance.SendData(imageMsg)
+	if err != nil {
+		log.Fatalf("Error publishing message: %v", err)
+	}
 }
