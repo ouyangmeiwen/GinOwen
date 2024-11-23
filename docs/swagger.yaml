@@ -804,41 +804,6 @@ paths:
       summary: 上传文件
       tags:
       - File
-  /auth/DebugIn:
-    get:
-      consumes:
-      - application/json
-      description: 本地调试写入token
-      parameters:
-      - in: query
-        name: token
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: token input success
-          schema:
-            type: string
-      summary: 本地调试写入token
-      tags:
-      - Debug
-  /auth/DebugOut:
-    get:
-      consumes:
-      - application/json
-      description: 本地调试注销token
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: token clear success
-          schema:
-            type: string
-      summary: 本地调试注销token
-      tags:
-      - Debug
   /auth/Login:
     post:
       consumes:
