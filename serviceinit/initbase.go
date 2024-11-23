@@ -398,13 +398,6 @@ func InitRabbiMQ() {
 	if err != nil {
 		log.Fatalf("Error initializing RabbitMQ: %v", err)
 	}
-	defer func() {
-		// 使用 Close 方法来关闭连接和通道
-		if err := rabbitmq.Instance.Close(); err != nil {
-			log.Fatalf("Error closing RabbitMQ: %v", err)
-		}
-	}()
-
 	// 启动消息监听
 	go func() {
 		rabbitmq.Instance.ListenForData()

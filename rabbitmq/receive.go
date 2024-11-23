@@ -55,7 +55,7 @@ func (r *RabbitMQ) ListenForData() {
 		case ImageMessageType:
 			r.handleImageMessage(data.Body)
 		default:
-			log.Printf("Unknown data type: %d", data.DataType)
+			r.handleDefaultMessage(data.Body)
 		}
 	}
 }
@@ -80,4 +80,9 @@ func (r *RabbitMQ) handleImageMessage(body string) {
 		return
 	}
 	log.Printf("Received image message: URL=%s, AltText=%s", imageMsg.ImageURL, imageMsg.AltText)
+}
+
+// 处理图像消息
+func (r *RabbitMQ) handleDefaultMessage(body string) {
+	log.Printf("Received image message: body=%s", body)
 }

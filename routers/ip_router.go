@@ -16,4 +16,9 @@ func RegisterIPRoutes(r *gin.Engine) {
 		api.POST("UnLockIp", ApiGroup.ipApi.UnLockIp)
 		api.GET("GetBlackList", ApiGroup.ipApi.GetBlackList)
 	}
+
+	mq := r.Group("MQ").Use(middlewares.AuditLogMiddleware()).Use(middlewares.AuthMiddleware("admin"))
+	{
+		mq.POST("SendRabbitMQMsg", ApiGroup.ipApi.SendRabbitMQMsg)
+	}
 }

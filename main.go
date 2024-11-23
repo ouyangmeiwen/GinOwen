@@ -3,9 +3,11 @@ package main
 import (
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
+	"GINOWEN/rabbitmq"
 	"GINOWEN/routers"
 	"GINOWEN/serviceinit"
 	"GINOWEN/utils"
+	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -41,6 +43,15 @@ func main() {
 	serviceinit.InitMongoDB() //mongodb
 
 	serviceinit.InitRabbiMQ() //rabbitmq
+	defer func() {
+		if rabbitmq.Instance != nil {
+			// 使用 Close 方法来关闭连接和通道
+			if err := rabbitmq.Instance.Close(); err != nil {
+				log.Fatalf("Error closing RabbitMQ: %v", err)
+			}
+		}
+	}()
+
 	// 创建 Gin 引擎
 	r := gin.New()
 	// r.Use(cors.Default())

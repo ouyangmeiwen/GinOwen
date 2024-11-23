@@ -146,6 +146,55 @@ const docTemplate = `{
                 }
             }
         },
+        "/MQ/SendRabbitMQMsg": {
+            "post": {
+                "description": "发送RabbitMQ消息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IP"
+                ],
+                "summary": "发送RabbitMQ消息",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SendMqMsgInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返参",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.SendMqMsgDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/Sysauditlmslog/CreateLmsLog": {
             "post": {
                 "produces": [
@@ -1174,6 +1223,19 @@ const docTemplate = `{
                 }
             }
         },
+        "request.SendMqMsgInput": {
+            "type": "object",
+            "properties": {
+                "datatype": {
+                    "description": "消息类型 0则不转换json 其他类型则必须保证jsonbody 是个合法的json 对象",
+                    "type": "integer"
+                },
+                "jsonbody": {
+                    "description": "消息体",
+                    "type": "string"
+                }
+            }
+        },
         "request.UnLockIpInput": {
             "type": "object",
             "properties": {
@@ -1312,6 +1374,9 @@ const docTemplate = `{
                     "type": "integer"
                 }
             }
+        },
+        "response.SendMqMsgDto": {
+            "type": "object"
         },
         "response.ShowBlackListDto": {
             "type": "object",

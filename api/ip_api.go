@@ -5,6 +5,7 @@ import (
 	"GINOWEN/middlewares"
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
+	"GINOWEN/rabbitmq"
 	"GINOWEN/utils"
 	"fmt"
 
@@ -89,4 +90,36 @@ func (IPApi) GetBlackList(c *gin.Context) {
 	dto.Items = middlewares.LoadBlacklist()
 	utils.OkWithDetailed(dto, "获取成功", c)
 
+}
+
+// SendRabbitMQMsg 发送RabbitMQ消息
+// @Summary 发送RabbitMQ消息
+// @Description 发送RabbitMQ消息
+// @Tags IP
+// @Accept json
+// @Produce json
+// @Param request body request.SendMqMsgInput true "入参"
+// @Success 200 {object} utils.Response{data=response.SendMqMsgDto,msg=string} "返参"
+// @Router /MQ/SendRabbitMQMsg [post]
+func (IPApi) SendRabbitMQMsg(c *gin.Context) {
+	var request request.SendMqMsgInput
+	// 绑定请求数据
+	if err := c.ShouldBindJSON(&request); err != nil {
+		utils.FailWithMessage("Invalid request", c)
+		return
+	}
+	if rabbitmq.Instance == nil {
+		utils.FailWithMessage("rabbitmq invalid", c)
+		return
+	}
+
+	var data rabbitmq.Data
+	data.DataType = request.DataType
+	data.Body = request.JsonBody
+	err := rabbitmq.Instance.SendData(data)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(response.SendMqMsgDto{}, "发送成功！", c)
 }

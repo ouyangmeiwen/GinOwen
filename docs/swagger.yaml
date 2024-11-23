@@ -197,6 +197,15 @@ definitions:
     - role_id
     - username
     type: object
+  request.SendMqMsgInput:
+    properties:
+      datatype:
+        description: 消息类型 0则不转换json 其他类型则必须保证jsonbody 是个合法的json 对象
+        type: integer
+      jsonbody:
+        description: 消息体
+        type: string
+    type: object
   request.UnLockIpInput:
     properties:
       ip:
@@ -288,6 +297,8 @@ definitions:
         type: integer
       UserId:
         type: integer
+    type: object
+  response.SendMqMsgDto:
     type: object
   response.ShowBlackListDto:
     properties:
@@ -398,6 +409,35 @@ paths:
           schema:
             type: string
       summary: 解除IP限制
+      tags:
+      - IP
+  /MQ/SendRabbitMQMsg:
+    post:
+      consumes:
+      - application/json
+      description: 发送RabbitMQ消息
+      parameters:
+      - description: 入参
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.SendMqMsgInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返参
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.SendMqMsgDto'
+                msg:
+                  type: string
+              type: object
+      summary: 发送RabbitMQ消息
       tags:
       - IP
   /api/services/app/Sysauditlmslog/CreateLmsLog:
