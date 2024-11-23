@@ -156,7 +156,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "IP"
+                    "MQ"
                 ],
                 "summary": "发送RabbitMQ消息",
                 "parameters": [

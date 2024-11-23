@@ -439,7 +439,7 @@ paths:
               type: object
       summary: 发送RabbitMQ消息
       tags:
-      - IP
+      - MQ
   /api/services/app/Sysauditlmslog/CreateLmsLog:
     post:
       parameters:

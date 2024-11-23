@@ -95,7 +95,7 @@ func (IPApi) GetBlackList(c *gin.Context) {
 // SendRabbitMQMsg 发送RabbitMQ消息
 // @Summary 发送RabbitMQ消息
 // @Description 发送RabbitMQ消息
-// @Tags IP
+// @Tags MQ
 // @Accept json
 // @Produce json
 // @Param request body request.SendMqMsgInput true "入参"
