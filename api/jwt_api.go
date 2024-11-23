@@ -75,6 +75,7 @@ func (JWTAPI) Login(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {string} string "User logout successfully"
+// @Security BearerAuth
 // @Router /auth/LoginOut [post]
 func (JWTAPI) LoginOut(ctx *gin.Context) {
 	// 从请求头中获取特定的 header 值，比如 "Authorization"
@@ -92,38 +93,6 @@ func (JWTAPI) LoginOut(ctx *gin.Context) {
 		global.OWEN_REDIS.Set(back, tokenStr, "", -1)
 	}
 	utils.OkWithMessage("logout success", ctx)
-}
-
-// DebugIn 本地调试登入接口
-// @Summary 本地调试写入token
-// @Description 本地调试写入token
-// @Tags Debug
-// @Accept json
-// @Produce json
-// @Param req query request.LocalLoginRequest true "指明token"
-// @Success 200 {string} string "token input success"
-// @Router /auth/DebugIn [get]
-func (JWTAPI) DebugIn(ctx *gin.Context) {
-	var req request.LocalLoginRequest
-	if err := ctx.ShouldBindQuery(&req); err != nil {
-		utils.FailWithMessage("Invalid token", ctx)
-		return
-	}
-	utils.SetToken(ctx, req.Token, 60*60) //1小时有效
-	utils.OkWithMessage("token input success", ctx)
-}
-
-// DebugOut 本地调试登出接口
-// @Summary 本地调试注销token
-// @Description 本地调试注销token
-// @Tags Debug
-// @Accept json
-// @Produce json
-// @Success 200 {string} string "token clear success"
-// @Router /auth/DebugOut [get]
-func (JWTAPI) DebugOut(ctx *gin.Context) {
-	utils.ClearToken(ctx) //10分钟失效
-	utils.OkWithMessage("token clear success", ctx)
 }
 
 // Register 注册接口
@@ -176,3 +145,35 @@ func (JWTAPI) Register(ctx *gin.Context) {
 	// 注册成功，返回成功消息
 	utils.OkWithMessage("User registered successfully", ctx)
 }
+
+// // DebugIn 本地调试登入接口
+// // @Summary 本地调试写入token
+// // @Description 本地调试写入token
+// // @Tags Debug
+// // @Accept json
+// // @Produce json
+// // @Param req query request.LocalLoginRequest true "指明token"
+// // @Success 200 {string} string "token input success"
+// // @Router /auth/DebugIn [get]
+// func (JWTAPI) DebugIn(ctx *gin.Context) {
+// 	var req request.LocalLoginRequest
+// 	if err := ctx.ShouldBindQuery(&req); err != nil {
+// 		utils.FailWithMessage("Invalid token", ctx)
+// 		return
+// 	}
+// 	utils.SetToken(ctx, req.Token, 60*60) //1小时有效
+// 	utils.OkWithMessage("token input success", ctx)
+// }
+
+// // DebugOut 本地调试登出接口
+// // @Summary 本地调试注销token
+// // @Description 本地调试注销token
+// // @Tags Debug
+// // @Accept json
+// // @Produce json
+// // @Success 200 {string} string "token clear success"
+// // @Router /auth/DebugOut [get]
+// func (JWTAPI) DebugOut(ctx *gin.Context) {
+// 	utils.ClearToken(ctx) //10分钟失效
+// 	utils.OkWithMessage("token clear success", ctx)
+// }

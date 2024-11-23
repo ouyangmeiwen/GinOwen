@@ -31,6 +31,7 @@ type UploadfileApi struct {
 // @Success 200 {object} utils.Response{data=response.UploadResponse,msg=string} "上传成功"
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
+// @Security BearerAuth
 // @Router /api/services/app/file/UploadFile [post]
 func (b *UploadfileApi) UploadFile(c *gin.Context) {
 	var req request.UploadRequest
@@ -104,6 +105,7 @@ func (b *UploadfileApi) UploadFile(c *gin.Context) {
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 404 {object} utils.Response{msg=string} "文件未找到"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
+// @Security BearerAuth
 // @Router /api/services/app/file/DownloadFile [get]
 func (b *UploadfileApi) DownloadFile(c *gin.Context) {
 	// 获取请求参数中的文件路径

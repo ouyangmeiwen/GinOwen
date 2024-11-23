@@ -16,7 +16,7 @@ func RegisterJWTRoutes(r *gin.Engine) {
 		api.POST("Login", ApiGroup.jwtApi.Login)
 		api.POST("Register", middlewares.AuthMiddleware(), ApiGroup.jwtApi.Register)
 		api.POST("LoginOut", middlewares.AuthMiddleware(), ApiGroup.jwtApi.LoginOut)
-		api.GET("DebugIn", ApiGroup.jwtApi.DebugIn)
-		api.GET("DebugOut", ApiGroup.jwtApi.DebugOut)
+		//api.GET("DebugIn", ApiGroup.jwtApi.DebugIn)
+		//api.GET("DebugOut", ApiGroup.jwtApi.DebugOut)
 	}
 }

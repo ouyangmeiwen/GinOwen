@@ -13,10 +13,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title Swagger Example API
+// @title 示例 API
 // @version 1.0
-// @description This is a sample API using Gin and Swagger.
-// @termsOfService https://example.com/terms
+// @description 这是一个全局启用了安全验证的 API。
 // @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization

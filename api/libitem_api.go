@@ -22,6 +22,7 @@ type LibItemApi struct {
 // @Success 200 {object} utils.Response{data=response.ImportExcelDto,msg=string} "导入成功，返回导入的数据"
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
+// @Security BearerAuth
 // @Router /api/services/app/Libitems/ImportExcelByName [post]
 func (b *LibItemApi) ImportExcelByName(ctx *gin.Context) {
 	var req request.ImportExcelByNameInput
@@ -49,6 +50,7 @@ func (b *LibItemApi) ImportExcelByName(ctx *gin.Context) {
 // @Success 200 {object} utils.Response{data=response.ImportExcelDto,msg=string} "导入成功，返回导入的数据"
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
+// @Security BearerAuth
 // @Router /api/services/app/Libitems/ImportExcelByIndex [post]
 func (b *LibItemApi) ImportExcelByIndex(ctx *gin.Context) {
 	var req request.ImportExcelByIndexInput

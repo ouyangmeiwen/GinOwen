@@ -21,17 +21,17 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 		fmt.Println("Request Headers:", c.Request.Header)
 		// 获取 Authorization 头
 		tokenStr := c.GetHeader("Authorization")
-		if tokenStr == "" {
-			if global.OWEN_CONFIG.System.EnableDebug {
-				tokenStr = utils.GetToken(c)
-				if tokenStr == "" {
-					// 如果没有提供 Authorization 头，返回错误信息
-					c.JSON(http.StatusUnauthorized, gin.H{"error": "missing token"})
-					c.Abort()
-					return
-				}
-			}
-		}
+		// if tokenStr == "" {
+		// 	if global.OWEN_CONFIG.System.EnableDebug {
+		// 		tokenStr = utils.GetToken(c)
+		// 		if tokenStr == "" {
+		// 			// 如果没有提供 Authorization 头，返回错误信息
+		// 			c.JSON(http.StatusUnauthorized, gin.H{"error": "missing token"})
+		// 			c.Abort()
+		// 			return
+		// 		}
+		// 	}
+		// }
 		// 移除 Bearer 前缀
 		tokenStr = strings.TrimPrefix(tokenStr, "Bearer ")
 		if tokenStr == "" {

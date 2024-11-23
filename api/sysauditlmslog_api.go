@@ -19,6 +19,7 @@ type SysauditlmslogApi struct {
 // @Produce   application/json
 // @Param    data  query     request.QueryLmsInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.QueryLmsDto,msg=string}  "返回清单"
+// @Security BearerAuth
 // @Router   /api/services/app/Sysauditlmslog/QueryLmsLog [get]
 func (b *SysauditlmslogApi) QueryLmsLog(c *gin.Context) {
 
@@ -70,6 +71,7 @@ func (b *SysauditlmslogApi) QueryLmsLog(c *gin.Context) {
 // @Produce   application/json
 // @Param    data  body     request.CreateLmsLogInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.CreateLmsLogDto,msg=string}  "返回"
+// @Security BearerAuth
 // @Router   /api/services/app/Sysauditlmslog/CreateLmsLog [post]
 func (b *SysauditlmslogApi) CreateLmsLog(c *gin.Context) {
 	var req request.CreateLmsLogInput
@@ -112,6 +114,7 @@ func (b *SysauditlmslogApi) CreateLmsLog(c *gin.Context) {
 // @Produce   application/json
 // @Param    data  body     request.UpdateLmsLogInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.UpdateLmsLogDto,msg=string}  "返回"
+// @Security BearerAuth
 // @Router   /api/services/app/Sysauditlmslog/UpdateLmsLog [put]
 func (b *SysauditlmslogApi) UpdateLmsLog(c *gin.Context) {
 	var req request.UpdateLmsLogInput
@@ -135,6 +138,7 @@ func (b *SysauditlmslogApi) UpdateLmsLog(c *gin.Context) {
 // @Produce   application/json
 // @Param    data  query     request.DeleteLmsLogInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.DeleteLmsLogDto,msg=string}  "返回清单"
+// @Security BearerAuth
 // @Router   /api/services/app/Sysauditlmslog/DeleteLmsLog [delete]
 func (b *SysauditlmslogApi) DeleteLmsLog(c *gin.Context) {
 

@@ -25,6 +25,7 @@ type IPApi struct {
 // @Success 200 {string} string "OK"
 // @Failure 400 {string} string "Invalid request"
 // @Failure 404 {string} string "IP not found in the blacklist"
+// @Security BearerAuth
 // @Router /IP/UnLockIp [post]
 func (IPApi) UnLockIp(c *gin.Context) {
 	var request request.UnLockIpInput
@@ -84,6 +85,7 @@ func (IPApi) AddBlackList(c *gin.Context) {
 // @Produce json
 // @Success 200 {object} utils.Response{data=response.ShowBlackListDto,msg=string} "返回清单"
 // @Failure 400 {string} string "Invalid request"
+// @Security BearerAuth
 // @Router /IP/GetBlackList [get]
 func (IPApi) GetBlackList(c *gin.Context) {
 	var dto response.ShowBlackListDto
@@ -100,6 +102,7 @@ func (IPApi) GetBlackList(c *gin.Context) {
 // @Produce json
 // @Param request body request.SendMqMsgInput true "入参"
 // @Success 200 {object} utils.Response{data=response.SendMqMsgDto,msg=string} "返参"
+// @Security BearerAuth
 // @Router /MQ/SendRabbitMQMsg [post]
 func (IPApi) SendRabbitMQMsg(c *gin.Context) {
 	var request request.SendMqMsgInput

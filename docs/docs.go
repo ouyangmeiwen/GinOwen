@@ -9,7 +9,6 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "https://example.com/terms",
         "contact": {},
         "version": "{{.Version}}"
     },
@@ -58,6 +57,11 @@ const docTemplate = `{
         },
         "/IP/GetBlackList": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "获取当前IP黑名单的详细信息",
                 "consumes": [
                     "application/json"
@@ -102,6 +106,11 @@ const docTemplate = `{
         },
         "/IP/UnLockIp": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "解除IP限制",
                 "consumes": [
                     "application/json"
@@ -148,6 +157,11 @@ const docTemplate = `{
         },
         "/MQ/SendRabbitMQMsg": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "发送RabbitMQ消息",
                 "consumes": [
                     "application/json"
@@ -197,6 +211,11 @@ const docTemplate = `{
         },
         "/api/services/app/Libitems/ImportExcelByIndex": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "通过提供的Excel文件导入图书信息",
                 "consumes": [
                     "application/json"
@@ -282,6 +301,11 @@ const docTemplate = `{
         },
         "/api/services/app/Libitems/ImportExcelByName": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "通过提供的Excel文件导入图书信息",
                 "consumes": [
                     "application/json"
@@ -367,6 +391,11 @@ const docTemplate = `{
         },
         "/api/services/app/Sysauditlmslog/CreateLmsLog": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -415,6 +444,11 @@ const docTemplate = `{
         },
         "/api/services/app/Sysauditlmslog/DeleteLmsLog": {
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -460,6 +494,11 @@ const docTemplate = `{
         },
         "/api/services/app/Sysauditlmslog/QueryLmsLog": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -553,6 +592,11 @@ const docTemplate = `{
         },
         "/api/services/app/Sysauditlmslog/UpdateLmsLog": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -601,6 +645,11 @@ const docTemplate = `{
         },
         "/api/services/app/file/DownloadFile": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "根据文件路径下载文件",
                 "consumes": [
                     "application/json"
@@ -687,6 +736,11 @@ const docTemplate = `{
         },
         "/api/services/app/file/UploadFile": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "接收一个文件和对象信息",
                 "consumes": [
                     "multipart/form-data"
@@ -889,6 +943,11 @@ const docTemplate = `{
         },
         "/auth/LoginOut": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "注销token",
                 "consumes": [
                     "application/json"
@@ -1429,8 +1488,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample API using Gin and Swagger.",
+	Title:            "示例 API",
+	Description:      "这是一个全局启用了安全验证的 API。",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
