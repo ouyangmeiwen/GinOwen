@@ -8,6 +8,9 @@ go mod vendor // 如果你的项目需要使用 vendor 目录作为依赖项的�
 重新生成swagger
 
 Swag init
+如果为生成的对应接口的swaggerUI
+1.格式错误
+2.清除浏览器缓存
 
 
 

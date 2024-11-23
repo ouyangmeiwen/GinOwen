@@ -289,6 +289,13 @@ definitions:
       UserId:
         type: integer
     type: object
+  response.ShowBlackListDto:
+    properties:
+      items:
+        additionalProperties:
+          type: string
+        type: object
+    type: object
   response.UpdateLmsLogDto:
     type: object
   response.UploadResponse:
@@ -335,6 +342,32 @@ paths:
           schema:
             type: string
       summary: 增加IP限制
+      tags:
+      - IP
+  /IP/GetBlackList:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前IP黑名单的详细信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回清单
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ShowBlackListDto'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: Invalid request
+          schema:
+            type: string
+      summary: 获取IP黑名单列表
       tags:
       - IP
   /IP/UnLockIp:

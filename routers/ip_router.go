@@ -14,5 +14,6 @@ func RegisterIPRoutes(r *gin.Engine) {
 	{
 		api.POST("AddBlackList", ApiGroup.ipApi.AddBlackList)
 		api.POST("UnLockIp", ApiGroup.ipApi.UnLockIp)
+		api.GET("GetBlackList", ApiGroup.ipApi.GetBlackList)
 	}
 }

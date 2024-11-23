@@ -4,6 +4,7 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
 	"GINOWEN/models/request"
+	"GINOWEN/models/response"
 	"GINOWEN/utils"
 	"fmt"
 
@@ -56,6 +57,10 @@ func (IPApi) AddBlackList(c *gin.Context) {
 		utils.FailWithMessage("Invalid request", c)
 		return
 	}
+	if request.IP == "::1" || request.IP == "localhost" || request.IP == "127.0.0.1" {
+		utils.FailWithMessage("IP Invalid", c)
+		return
+	}
 	unlockTime, err := utils.FormatLocalTime(request.Unlock)
 	if err != nil {
 		utils.FailWithMessage("Invalid time", c)
@@ -68,4 +73,20 @@ func (IPApi) AddBlackList(c *gin.Context) {
 	middlewares.SaveToBlacklist(request.IP, unlockTime)
 
 	utils.OkWithMessage(fmt.Sprintf("IP %s has been added to the blacklist until %s", request.IP, unlockTime), c)
+}
+
+// GetBlackList 获取IP黑名单列表
+// @Summary 获取IP黑名单列表
+// @Description 获取当前IP黑名单的详细信息
+// @Tags IP
+// @Accept json
+// @Produce json
+// @Success 200 {object} utils.Response{data=response.ShowBlackListDto,msg=string} "返回清单"
+// @Failure 400 {string} string "Invalid request"
+// @Router /IP/GetBlackList [get]
+func (IPApi) GetBlackList(c *gin.Context) {
+	var dto response.ShowBlackListDto
+	dto.Items = middlewares.LoadBlacklist()
+	utils.OkWithDetailed(dto, "获取成功", c)
+
 }

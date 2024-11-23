@@ -56,6 +56,50 @@ const docTemplate = `{
                 }
             }
         },
+        "/IP/GetBlackList": {
+            "get": {
+                "description": "获取当前IP黑名单的详细信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IP"
+                ],
+                "summary": "获取IP黑名单列表",
+                "responses": {
+                    "200": {
+                        "description": "返回清单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.ShowBlackListDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/IP/UnLockIp": {
             "post": {
                 "description": "解除IP限制",
@@ -1266,6 +1310,17 @@ const docTemplate = `{
                 },
                 "UserId": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.ShowBlackListDto": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 }
             }
         },
