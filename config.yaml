@@ -2,7 +2,7 @@ system:
   port: 6789
   routerpre: api/services/app/
   tokenexpire: 24 #hour
-  token: owentoken
+  token: Token
   enabledebug: true
   blacklistpre: owen_
   enableblacklist: true
