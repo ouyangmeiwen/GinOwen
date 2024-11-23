@@ -440,6 +440,100 @@ paths:
       summary: 发送RabbitMQ消息
       tags:
       - MQ
+  /api/services/app/Libitems/ImportExcelByIndex:
+    post:
+      consumes:
+      - application/json
+      description: 通过提供的Excel文件导入图书信息
+      parameters:
+      - description: 导入参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ImportExcelByIndexInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 导入成功，返回导入的数据
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ImportExcelDto'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 无效的请求
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "500":
+          description: 服务器内部错误
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 导入图书信息
+      tags:
+      - Libitems
+  /api/services/app/Libitems/ImportExcelByName:
+    post:
+      consumes:
+      - application/json
+      description: 通过提供的Excel文件导入图书信息
+      parameters:
+      - description: 导入参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.ImportExcelByNameInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 导入成功，返回导入的数据
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ImportExcelDto'
+                msg:
+                  type: string
+              type: object
+        "400":
+          description: 无效的请求
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+        "500":
+          description: 服务器内部错误
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      summary: 导入图书信息
+      tags:
+      - Libitems
   /api/services/app/Sysauditlmslog/CreateLmsLog:
     post:
       parameters:
@@ -689,100 +783,6 @@ paths:
       summary: 上传文件
       tags:
       - File
-  /api/services/app/libitem/ImportExcelByIndex:
-    post:
-      consumes:
-      - application/json
-      description: 通过提供的Excel文件导入图书信息
-      parameters:
-      - description: 导入参数
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.ImportExcelByIndexInput'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 导入成功，返回导入的数据
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/response.ImportExcelDto'
-                msg:
-                  type: string
-              type: object
-        "400":
-          description: 无效的请求
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-        "500":
-          description: 服务器内部错误
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      summary: 导入图书信息
-      tags:
-      - libitems
-  /api/services/app/libitem/ImportExcelByName:
-    post:
-      consumes:
-      - application/json
-      description: 通过提供的Excel文件导入图书信息
-      parameters:
-      - description: 导入参数
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/request.ImportExcelByNameInput'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 导入成功，返回导入的数据
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                data:
-                  $ref: '#/definitions/response.ImportExcelDto'
-                msg:
-                  type: string
-              type: object
-        "400":
-          description: 无效的请求
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-        "500":
-          description: 服务器内部错误
-          schema:
-            allOf:
-            - $ref: '#/definitions/utils.Response'
-            - properties:
-                msg:
-                  type: string
-              type: object
-      summary: 导入图书信息
-      tags:
-      - libitems
   /auth/DebugIn:
     get:
       consumes:

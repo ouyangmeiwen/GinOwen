@@ -15,14 +15,14 @@ type LibItemApi struct {
 // ImportExcelByName 导入图书信息
 // @Summary 导入图书信息
 // @Description 通过提供的Excel文件导入图书信息
-// @Tags libitems
+// @Tags Libitems
 // @Accept  json
 // @Produce  json
 // @Param data body request.ImportExcelByNameInput true "导入参数"
 // @Success 200 {object} utils.Response{data=response.ImportExcelDto,msg=string} "导入成功，返回导入的数据"
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
-// @Router /api/services/app/libitem/ImportExcelByName [post]
+// @Router /api/services/app/Libitems/ImportExcelByName [post]
 func (b *LibItemApi) ImportExcelByName(ctx *gin.Context) {
 	var req request.ImportExcelByNameInput
 	err := ctx.ShouldBindJSON(&req)
@@ -42,14 +42,14 @@ func (b *LibItemApi) ImportExcelByName(ctx *gin.Context) {
 // ImportExcel 导入图书信息
 // @Summary 导入图书信息
 // @Description 通过提供的Excel文件导入图书信息
-// @Tags libitems
+// @Tags Libitems
 // @Accept  json
 // @Produce  json
 // @Param data body request.ImportExcelByIndexInput true "导入参数"
 // @Success 200 {object} utils.Response{data=response.ImportExcelDto,msg=string} "导入成功，返回导入的数据"
 // @Failure 400 {object} utils.Response{msg=string} "无效的请求"
 // @Failure 500 {object} utils.Response{msg=string} "服务器内部错误"
-// @Router /api/services/app/libitem/ImportExcelByIndex [post]
+// @Router /api/services/app/Libitems/ImportExcelByIndex [post]
 func (b *LibItemApi) ImportExcelByIndex(ctx *gin.Context) {
 	var req request.ImportExcelByIndexInput
 	err := ctx.ShouldBindJSON(&req)
