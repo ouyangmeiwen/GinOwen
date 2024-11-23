@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"GINOWEN/global"
+	"GINOWEN/utils"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -79,8 +80,12 @@ func SaveToBlacklist(ip string, unlockTime time.Time) {
 func IPBlacklistMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ip := c.ClientIP()
+		if utils.HashContain(global.OWEN_CONFIG.System.IPWhitelist, ip) {
+			// IP 白名单直接过
+			c.Next()
+			return
+		}
 		key := fmt.Sprintf(global.OWEN_CONFIG.System.Blacklistpre+"blacklist:%s", ip)
-
 		// 检查 IP 是否在 Redis 中
 		val, err := global.OWEN_REDIS.Get(ctx, key).Result()
 		if err == redis.Nil {

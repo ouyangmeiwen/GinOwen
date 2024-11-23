@@ -22,7 +22,7 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 		// 获取 Authorization 头
 		tokenStr := c.GetHeader("Authorization")
 		if tokenStr == "" {
-			if global.OWEN_CONFIG.System.Debug {
+			if global.OWEN_CONFIG.System.EnableDebug {
 				tokenStr = utils.GetToken(c)
 				if tokenStr == "" {
 					// 如果没有提供 Authorization 头，返回错误信息

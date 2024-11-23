@@ -59,7 +59,7 @@ func main() {
 	r.Use(middlewares.Cors())
 
 	//middlewares.LoadBlacklist()
-	if global.OWEN_CONFIG.System.Blacklist {
+	if global.OWEN_CONFIG.System.EnableBlacklist {
 		r.Use(middlewares.IPBlacklistMiddleware())
 	}
 	if global.OWEN_CONFIG.System.CircuitBreaker.MaxRequests > 0 && global.OWEN_CONFIG.System.CircuitBreaker.Second > 0 {

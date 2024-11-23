@@ -12,15 +12,16 @@ import (
 
 type YarmConfig struct {
 	System struct {
-		Port           int    `yaml:"port"`
-		Pre            string `yaml:"pre"`
-		TokenExpire    int    `yaml:"tokenexpire"`  //
-		Token          string `yaml:"token"`        //
-		Debug          bool   `yaml:"debug"`        //
-		Blacklistpre   string `yaml:"blacklistpre"` //
-		Blacklist      bool   `yaml:"blacklist"`    //
-		Swaggerui      bool   `yaml:"swaggerui"`    // 是否开启 Swagger UI
-		CircuitBreaker struct {
+		Port            int    `yaml:"port"`
+		RouterPre       string `yaml:"routerpre"`
+		TokenExpire     int    `yaml:"tokenexpire"`     //
+		Token           string `yaml:"token"`           //
+		EnableDebug     bool   `yaml:"enabledebug"`     //
+		Blacklistpre    string `yaml:"blacklistpre"`    //
+		EnableBlacklist bool   `yaml:"enableblacklist"` //
+		IPWhitelist     string `yaml:"ipwhitelist"`     //
+		Swaggerui       bool   `yaml:"swaggerui"`       // 是否开启 Swagger UI
+		CircuitBreaker  struct {
 			MaxRequests         int `yaml:"maxrequests"`         // 最大请求数
 			Second              int `yaml:"second"`              // 监控时间窗口（秒）
 			AddBlackListMinutes int `yaml:"addblacklistminutes"` // 阈值后等待时间

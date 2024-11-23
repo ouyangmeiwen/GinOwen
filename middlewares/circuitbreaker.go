@@ -36,7 +36,7 @@ func CircuitBreaker(maxRequests uint32, timeout time.Duration) gin.HandlerFunc {
 		})
 
 		if err != nil {
-			if global.OWEN_CONFIG.System.CircuitBreaker.AddBlackListMinutes > 0 && global.OWEN_CONFIG.System.Blacklist {
+			if global.OWEN_CONFIG.System.CircuitBreaker.AddBlackListMinutes > 0 && global.OWEN_CONFIG.System.EnableBlacklist {
 				ip := c.ClientIP()
 				// 保存黑名单
 				SaveToBlacklist(ip, time.Now().Add(time.Duration(global.OWEN_CONFIG.System.CircuitBreaker.AddBlackListMinutes)*time.Minute))
