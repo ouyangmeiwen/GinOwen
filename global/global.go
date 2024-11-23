@@ -21,12 +21,14 @@ type YarmConfig struct {
 		Blacklist      bool   `yaml:"blacklist"`    //
 		Swaggerui      bool   `yaml:"swaggerui"`    // 是否开启 Swagger UI
 		CircuitBreaker struct {
-			MaxRequests int `yaml:"maxrequests"` // 最大请求数
-			Second      int `yaml:"second"`      // 监控时间窗口（秒）
+			MaxRequests         int `yaml:"maxrequests"`         // 最大请求数
+			Second              int `yaml:"second"`              // 监控时间窗口（秒）
+			AddBlackListMinutes int `yaml:"addblacklistminutes"` // 阈值后等待时间
 		} `yaml:"circuitbreaker"`
 		RateLimiter struct {
-			RateLimit float64 `yaml:"ratelimit"` // 每秒请求数量
-			Burst     int     `yaml:"burst"`     // 最大并发数
+			RateLimit           float64 `yaml:"ratelimit"`           // 每秒请求数量
+			Burst               int     `yaml:"burst"`               // 最大并发数
+			AddBlackListMinutes int     `yaml:"addblacklistminutes"` // 阈值后等待时间
 		} `yaml:"ratelimiter"`
 	} `yaml:"system"`
 

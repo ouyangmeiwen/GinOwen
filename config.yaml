@@ -10,9 +10,11 @@ system:
   circuitbreaker:
     maxrequests: 20 #20个请求 最大请求数
     second: 10 #10秒  监控时间窗口（秒）
+    addblacklistminutes : 10 #超过这个阈值增加到黑名单中 分钟
   ratelimiter:
     ratelimit: 10 #每秒多少个请求 每秒请求数量
     burst: 20 #并发 最大并发数
+    addblacklistminutes : 10 #超过这个阈值增加到黑名单中 分钟
 redis:
   addr: 127.0.0.1:6379
   password:
