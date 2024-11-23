@@ -45,7 +45,7 @@ func main() {
 	r.Use(gin.Recovery())
 	r.Use(middlewares.Cors())
 
-	middlewares.LoadBlacklist()
+	//middlewares.LoadBlacklist()
 	r.Use(middlewares.IPBlacklistMiddleware())
 	//r.Use(cors.Default())
 	routers.InitSwag(r)      //生成swagger文档 Swag init
