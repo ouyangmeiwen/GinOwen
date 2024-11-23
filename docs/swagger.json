@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "这是一个全局启用了安全验证的 API。",
-        "title": "示例 API",
+        "title": "GinOwen API",
         "contact": {},
         "version": "1.0"
     },
@@ -909,6 +909,11 @@
         },
         "/auth/Register": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "用户提交注册信息，注册成功后返回成功消息。",
                 "consumes": [
                     "application/json"

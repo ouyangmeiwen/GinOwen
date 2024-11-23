@@ -325,7 +325,7 @@ definitions:
 info:
   contact: {}
   description: 这是一个全局启用了安全验证的 API。
-  title: 示例 API
+  title: GinOwen API
   version: "1.0"
 paths:
   /IP/AddBlackList:
@@ -878,6 +878,8 @@ paths:
           description: Username already exists
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: 用户注册
       tags:
       - Auth

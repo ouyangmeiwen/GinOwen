@@ -917,6 +917,11 @@ const docTemplate = `{
         },
         "/auth/Register": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "用户提交注册信息，注册成功后返回成功消息。",
                 "consumes": [
                     "application/json"
@@ -1434,7 +1439,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "示例 API",
+	Title:            "GinOwen API",
 	Description:      "这是一个全局启用了安全验证的 API。",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

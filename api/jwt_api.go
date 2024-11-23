@@ -105,6 +105,7 @@ func (JWTAPI) LoginOut(ctx *gin.Context) {
 // @Success 200 {string} string "User registered successfully"
 // @Failure 400 {string} string "Invalid input"
 // @Failure 409 {string} string "Username already exists"
+// @Security BearerAuth
 // @Router /auth/Register [post]
 func (JWTAPI) Register(ctx *gin.Context) {
 	var registerReq request.RegisterRequest

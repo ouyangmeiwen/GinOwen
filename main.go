@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @title 示例 API
+// @title GinOwen API
 // @version 1.0
 // @description 这是一个全局启用了安全验证的 API。
 // @securityDefinitions.apikey BearerAuth
