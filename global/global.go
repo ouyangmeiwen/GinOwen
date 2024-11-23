@@ -12,12 +12,22 @@ import (
 
 type YarmConfig struct {
 	System struct {
-		Port         int    `yaml:"port"`
-		Pre          string `yaml:"pre"`
-		TokenExpire  int    `yaml:"tokenexpire"`  //token
-		Token        string `yaml:"token"`        //debug
-		Debug        bool   `yaml:"debug"`        //debug
-		Blacklistpre string `yaml:"blacklistpre"` //debug
+		Port           int    `yaml:"port"`
+		Pre            string `yaml:"pre"`
+		TokenExpire    int    `yaml:"tokenexpire"`  //
+		Token          string `yaml:"token"`        //
+		Debug          bool   `yaml:"debug"`        //
+		Blacklistpre   string `yaml:"blacklistpre"` //
+		Blacklist      bool   `yaml:"blacklist"`    //
+		Swaggerui      bool   `yaml:"swaggerui"`    // 是否开启 Swagger UI
+		CircuitBreaker struct {
+			MaxRequests int `yaml:"maxrequests"` // 最大请求数
+			Second      int `yaml:"second"`      // 监控时间窗口（秒）
+		} `yaml:"circuitbreaker"`
+		RateLimiter struct {
+			RateLimit float64 `yaml:"ratelimit"` // 每秒请求数量
+			Burst     int     `yaml:"burst"`     // 最大并发数
+		} `yaml:"ratelimiter"`
 	} `yaml:"system"`
 
 	DB struct {

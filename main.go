@@ -6,6 +6,7 @@ import (
 	"GINOWEN/routers"
 	"GINOWEN/serviceinit"
 	"GINOWEN/utils"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -46,11 +47,19 @@ func main() {
 	r.Use(middlewares.Cors())
 
 	//middlewares.LoadBlacklist()
-	r.Use(middlewares.IPBlacklistMiddleware())
-	r.Use(middlewares.CircuitBreaker(20, 10)) //10 秒最多20个请求 主要用于检测和隔离异常服务，防止因为后端服务的故障导致请求堆积或服务雪崩。
-	r.Use(middlewares.RateLimiter(10, 20))    //10个请求 20个并发 主要用于限制请求速率，防止服务因为流量过大而超载。
+	if global.OWEN_CONFIG.System.Blacklist {
+		r.Use(middlewares.IPBlacklistMiddleware())
+	}
+	if global.OWEN_CONFIG.System.CircuitBreaker.MaxRequests > 0 && global.OWEN_CONFIG.System.CircuitBreaker.Second > 0 {
+		r.Use(middlewares.CircuitBreaker(uint32(global.OWEN_CONFIG.System.CircuitBreaker.MaxRequests), time.Duration(global.OWEN_CONFIG.System.CircuitBreaker.Second))) //10 秒最多20个请求 主要用于检测和隔离异常服务，防止因为后端服务的故障导致请求堆积或服务雪崩。
+	}
+	if global.OWEN_CONFIG.System.RateLimiter.Burst > 0 && global.OWEN_CONFIG.System.RateLimiter.RateLimit > 0 {
+		r.Use(middlewares.RateLimiter(global.OWEN_CONFIG.System.RateLimiter.RateLimit, global.OWEN_CONFIG.System.RateLimiter.Burst)) //10个请求 20个并发 主要用于限制请求速率，防止服务因为流量过大而超载。
+	}
 	//r.Use(cors.Default())
-	routers.InitSwag(r)      //生成swagger文档 Swag init
+	if global.OWEN_CONFIG.System.Swaggerui {
+		routers.InitSwag(r) //生成swagger文档 Swag init
+	}
 	routers.InitAllRouter(r) //注册所有路由
 	routers.RunAsServer(r)   //启动服务
 }
