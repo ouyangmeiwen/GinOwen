@@ -413,6 +413,10 @@ func InitRabbiMQ() {
 	if err != nil {
 		log.Fatalf("Error publishing message: %v", err)
 	}
+	err = rabbitmq.Instance.PublishData(textMsg.DataType, rabbitmq.TextMessage{Content: "Hello, RabbitMQ!"})
+	if err != nil {
+		log.Fatalf("Error publishing message: %v", err)
+	}
 
 	// 发送图像消息
 	imageMsg := rabbitmq.Data{
@@ -420,6 +424,11 @@ func InitRabbiMQ() {
 		Body:     `{"image_url": "http://example.com/image.jpg", "alt_text": "A sample image"}`,
 	}
 	err = rabbitmq.Instance.SendData(imageMsg)
+	if err != nil {
+		log.Fatalf("Error publishing message: %v", err)
+	}
+
+	err = rabbitmq.Instance.PublishData(imageMsg.DataType, rabbitmq.ImageMessage{ImageURL: "http://example.com/image.jpg", AltText: "A sample image"})
 	if err != nil {
 		log.Fatalf("Error publishing message: %v", err)
 	}
