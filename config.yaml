@@ -36,5 +36,5 @@ db:
   connmaxlifetime: 30
 
 rabbitmq:
-  url: "amqp://guest@localhost:5672/"     #"amqp://guest:guest@localhost:5672/"
+  url: "amqp://guest:guest@localhost:5672/"
   queue_name: "OwenQueue"
