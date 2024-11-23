@@ -4,6 +4,7 @@ system:
   tokenexpire: 24 #hour
   token: owentoken
   debug: true
+  blacklistpre: owen_
 redis:
   addr: 127.0.0.1:6379
   password:

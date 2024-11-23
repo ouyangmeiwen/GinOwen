@@ -20,7 +20,7 @@ func LoadBlacklist() map[string]time.Time {
 	blacklist := make(map[string]time.Time)
 
 	// 获取所有黑名单的键
-	keys, err := global.OWEN_REDIS.Keys(ctx, "blacklist:*").Result()
+	keys, err := global.OWEN_REDIS.Keys(ctx, global.OWEN_CONFIG.System.Blacklistpre+"blacklist:*").Result()
 	if err != nil {
 		fmt.Println("Error loading blacklist keys from Redis:", err)
 		return blacklist
@@ -39,7 +39,7 @@ func LoadBlacklist() map[string]time.Time {
 			fmt.Printf("Error parsing value for key %s: %v\n", key, err)
 			continue
 		}
-		ip := key[len("blacklist:"):] // 从键名中提取 IP 地址
+		ip := key[len(global.OWEN_CONFIG.System.Blacklistpre+"blacklist:"):] // 从键名中提取 IP 地址
 		blacklist[ip] = unlockTime
 	}
 
@@ -48,7 +48,7 @@ func LoadBlacklist() map[string]time.Time {
 
 // 移除黑名单（Redis 版本）
 func RemoveFromBlacklist(ip string) {
-	key := fmt.Sprintf("blacklist:%s", ip)
+	key := fmt.Sprintf(global.OWEN_CONFIG.System.Blacklistpre+"blacklist:%s", ip)
 
 	// 从 Redis 删除指定的键
 	err := global.OWEN_REDIS.Del(ctx, key).Err()
@@ -61,7 +61,7 @@ func RemoveFromBlacklist(ip string) {
 
 // 保存黑名单（Redis 版本）
 func SaveToBlacklist(ip string, unlockTime time.Time) {
-	key := fmt.Sprintf("blacklist:%s", ip)
+	key := fmt.Sprintf(global.OWEN_CONFIG.System.Blacklistpre+"blacklist:%s", ip)
 	value, err := json.Marshal(unlockTime)
 	if err != nil {
 		fmt.Println("Error marshaling unlock time:", err)
@@ -79,7 +79,7 @@ func SaveToBlacklist(ip string, unlockTime time.Time) {
 func IPBlacklistMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ip := c.ClientIP()
-		key := fmt.Sprintf("blacklist:%s", ip)
+		key := fmt.Sprintf(global.OWEN_CONFIG.System.Blacklistpre+"blacklist:%s", ip)
 
 		// 检查 IP 是否在 Redis 中
 		val, err := global.OWEN_REDIS.Get(ctx, key).Result()

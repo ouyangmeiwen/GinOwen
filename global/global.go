@@ -12,11 +12,12 @@ import (
 
 type YarmConfig struct {
 	System struct {
-		Port        int    `yaml:"port"`
-		Pre         string `yaml:"pre"`
-		TokenExpire int    `yaml:"tokenexpire"` //token
-		Token       string `yaml:"token"`       //debug
-		Debug       bool   `yaml:"debug"`       //debug
+		Port         int    `yaml:"port"`
+		Pre          string `yaml:"pre"`
+		TokenExpire  int    `yaml:"tokenexpire"`  //token
+		Token        string `yaml:"token"`        //debug
+		Debug        bool   `yaml:"debug"`        //debug
+		Blacklistpre string `yaml:"blacklistpre"` //debug
 	} `yaml:"system"`
 
 	DB struct {
