@@ -79,7 +79,7 @@ func (r *RabbitMQ) handleImageMessage(imageMsg ImageMessage) {
 	log.Printf("Received image message: URL=%s, AltText=%s", imageMsg.ImageURL, imageMsg.AltText)
 }
 
-// 处理图像消息
+// 处理默认消息
 func (r *RabbitMQ) handleDefaultMessage(body string) {
 	log.Printf("Received image message: body=%s", body)
 }
