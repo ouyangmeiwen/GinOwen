@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"reflect"
 
 	"github.com/streadway/amqp"
 )
@@ -50,35 +51,31 @@ func (r *RabbitMQ) ListenForData() {
 
 		// 根据 DataType 解析不同类型的消息
 		switch data.DataType {
-		case TextMessageType:
-			r.handleTextMessage(data.Body)
-		case ImageMessageType:
-			r.handleImageMessage(data.Body)
+		case reflect.TypeOf(TextMessage{}).Name():
+			var textMsg TextMessage
+			if err := json.Unmarshal(data.Body, &textMsg); err != nil {
+				log.Fatalf("Error unmarshalling TextMessage: %v", err)
+			}
+			r.handleTextMessage(textMsg)
+		case reflect.TypeOf(ImageMessage{}).Name():
+			var imageMsg ImageMessage
+			if err := json.Unmarshal(data.Body, &imageMsg); err != nil {
+				log.Fatalf("Error unmarshalling ImageMessage: %v", err)
+			}
+			r.handleImageMessage(imageMsg)
 		default:
-			r.handleDefaultMessage(data.Body)
+			r.handleDefaultMessage(string(data.Body))
 		}
 	}
 }
 
 // 处理文本消息
-func (r *RabbitMQ) handleTextMessage(body string) {
-	var textMsg TextMessage
-	err := json.Unmarshal([]byte(body), &textMsg)
-	if err != nil {
-		log.Printf("Error unmarshalling text message: %v", err)
-		return
-	}
-	log.Printf("Received text message: %s", textMsg.Content)
+func (r *RabbitMQ) handleTextMessage(textMsg TextMessage) {
+	log.Printf("Received text message: Content=%s", textMsg.Content)
 }
 
 // 处理图像消息
-func (r *RabbitMQ) handleImageMessage(body string) {
-	var imageMsg ImageMessage
-	err := json.Unmarshal([]byte(body), &imageMsg)
-	if err != nil {
-		log.Printf("Error unmarshalling image message: %v", err)
-		return
-	}
+func (r *RabbitMQ) handleImageMessage(imageMsg ImageMessage) {
 	log.Printf("Received image message: URL=%s, AltText=%s", imageMsg.ImageURL, imageMsg.AltText)
 }
 

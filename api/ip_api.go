@@ -7,6 +7,7 @@ import (
 	"GINOWEN/models/response"
 	"GINOWEN/rabbitmq"
 	"GINOWEN/utils"
+	"encoding/json"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -115,11 +116,15 @@ func (IPApi) SendRabbitMQMsg(c *gin.Context) {
 		utils.FailWithMessage("rabbitmq invalid", c)
 		return
 	}
-
 	var data rabbitmq.Data
 	data.DataType = request.DataType
-	data.Body = request.JsonBody
-	err := rabbitmq.Instance.SendData(data)
+	bodyBytes, err := json.Marshal(request.JsonBody)
+	if err != nil {
+		utils.FailWithMessage("Error marshalling interface", c)
+		return
+	}
+	data.Body = json.RawMessage(bodyBytes)
+	err = rabbitmq.Instance.SendData(data)
 	if err != nil {
 		utils.FailWithMessage(err.Error(), c)
 		return

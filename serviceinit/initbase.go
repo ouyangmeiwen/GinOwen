@@ -5,6 +5,7 @@ import (
 	"GINOWEN/models"
 	"GINOWEN/rabbitmq"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -406,30 +407,22 @@ func InitRabbiMQ() {
 	//test
 	// 发送文本消息
 	textMsg := rabbitmq.Data{
-		DataType: rabbitmq.TextMessageType,
-		Body:     `{"content": "Hello, RabbitMQ!"}`,
+		DataType: "TextMessage",
+		Body:     json.RawMessage(`{"Content": "Hello, RabbitMQ!"}`),
 	}
 	err = rabbitmq.Instance.SendData(textMsg)
-	if err != nil {
-		log.Fatalf("Error publishing message: %v", err)
-	}
-	err = rabbitmq.Instance.PublishData(textMsg.DataType, rabbitmq.TextMessage{Content: "Hello, RabbitMQ!"})
 	if err != nil {
 		log.Fatalf("Error publishing message: %v", err)
 	}
 
 	// 发送图像消息
 	imageMsg := rabbitmq.Data{
-		DataType: rabbitmq.ImageMessageType,
-		Body:     `{"image_url": "http://example.com/image.jpg", "alt_text": "A sample image"}`,
+		DataType: "ImageMessage",
+		Body:     json.RawMessage(`{"ImageURL": "http://example.com/image.jpg", "AltText": "A sample image"}`),
 	}
 	err = rabbitmq.Instance.SendData(imageMsg)
 	if err != nil {
 		log.Fatalf("Error publishing message: %v", err)
 	}
 
-	err = rabbitmq.Instance.PublishData(imageMsg.DataType, rabbitmq.ImageMessage{ImageURL: "http://example.com/image.jpg", AltText: "A sample image"})
-	if err != nil {
-		log.Fatalf("Error publishing message: %v", err)
-	}
 }

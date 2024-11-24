@@ -1237,12 +1237,11 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "datatype": {
-                    "description": "消息类型 0则不转换json 其他类型则必须保证jsonbody 是个合法的json 对象",
-                    "type": "integer"
+                    "description": "消息类型",
+                    "type": "string"
                 },
                 "jsonbody": {
-                    "description": "消息体",
-                    "type": "string"
+                    "description": "消息体"
                 }
             }
         },
