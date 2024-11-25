@@ -21,6 +21,7 @@ type YarmConfig struct {
 		EnableBlacklist bool   `yaml:"enableblacklist"` //
 		IPWhitelist     string `yaml:"ipwhitelist"`     //
 		Swaggerui       bool   `yaml:"swaggerui"`       // 是否开启 Swagger UI
+		EnableWebsocket bool   `yaml:"enablewebsocket"` // 是否开启 websocket
 		CircuitBreaker  struct {
 			MaxRequests         int `yaml:"maxrequests"`         // 最大请求数
 			Second              int `yaml:"second"`              // 监控时间窗口（秒）

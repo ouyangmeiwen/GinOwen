@@ -72,8 +72,9 @@ func main() {
 	if global.OWEN_CONFIG.System.Swaggerui {
 		routers.InitSwag(r) //生成swagger文档 Swag init
 	}
-	websocketextend.RegisterWebsocket(r) //注册websocket
-
+	if global.OWEN_CONFIG.System.EnableWebsocket {
+		websocketextend.RegisterWebsocket(r) //注册websocket
+	}
 	routers.InitAllRouter(r) //注册所有路由
 	routers.RunAsServer(r)   //启动服务
 }
