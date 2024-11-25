@@ -177,8 +177,10 @@ definitions:
   request.LoginRequest:
     properties:
       password:
+        default: "123456"
         type: string
       username:
+        default: admin
         type: string
     required:
     - password

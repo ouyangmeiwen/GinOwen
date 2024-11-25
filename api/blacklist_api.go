@@ -112,7 +112,7 @@ func (IPApi) SendRabbitMQMsg(c *gin.Context) {
 		utils.FailWithMessage("Invalid request", c)
 		return
 	}
-	if rabbitmqextend.Publisher == nil {
+	if rabbitmqextend.InstancePublisher == nil {
 		utils.FailWithMessage("rabbitmq invalid", c)
 		return
 	}
@@ -124,7 +124,7 @@ func (IPApi) SendRabbitMQMsg(c *gin.Context) {
 		return
 	}
 	data.Body = json.RawMessage(bodyBytes)
-	err = rabbitmqextend.Publisher.PublishData(request.RoutingKey, data)
+	err = rabbitmqextend.InstancePublisher.PublishData(request.RoutingKey, data)
 	if err != nil {
 		utils.FailWithMessage(err.Error(), c)
 		return

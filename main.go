@@ -43,11 +43,11 @@ func main() {
 
 	serviceinit.InitRabbiMQ() //rabbitmq
 	defer func() {
-		if rabbitmqextend.Publisher != nil {
-			rabbitmqextend.Publisher.Close()
+		if rabbitmqextend.InstancePublisher != nil {
+			rabbitmqextend.InstancePublisher.Close()
 		}
-		if rabbitmqextend.Consumer != nil {
-			rabbitmqextend.Consumer.Close()
+		if rabbitmqextend.InstanceConsumer != nil {
+			rabbitmqextend.InstanceConsumer.Close()
 		}
 	}()
 

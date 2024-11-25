@@ -406,7 +406,7 @@ func InitRabbiMQ() {
 			global.OWEN_CONFIG.RabbitMQ.ExchangeType)
 
 		// 发布消息
-		err := rabbitmqextend.Publisher.PublishMessage("default_routingKey", []byte("service.is.ok"))
+		err := rabbitmqextend.InstancePublisher.PublishMessage("default_routingKey", []byte("service.is.ok"))
 		if err != nil {
 			log.Fatalf("Failed to publish message: %v", err)
 		}
@@ -416,7 +416,7 @@ func InitRabbiMQ() {
 			DataType: "TextMessage",
 			Body:     json.RawMessage(`{"Content": "Hello, RabbitMQ!"}`),
 		}
-		err = rabbitmqextend.Publisher.PublishData("default_routingKey", textMsg)
+		err = rabbitmqextend.InstancePublisher.PublishData("default_routingKey", textMsg)
 		if err != nil {
 			log.Fatalf("Error publishing message: %v", err)
 		}
@@ -426,7 +426,7 @@ func InitRabbiMQ() {
 			DataType: "ImageMessage",
 			Body:     json.RawMessage(`{"ImageURL": "http://example.com/image.jpg", "AltText": "A sample image"}`),
 		}
-		err = rabbitmqextend.Publisher.PublishData("default_routingKey", imageMsg)
+		err = rabbitmqextend.InstancePublisher.PublishData("default_routingKey", imageMsg)
 		if err != nil {
 			log.Fatalf("Error publishing message: %v", err)
 		}

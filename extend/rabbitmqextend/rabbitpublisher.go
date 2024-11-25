@@ -8,7 +8,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-var Publisher *RabbitMQPublisher
+var InstancePublisher *RabbitMQPublisher
 
 // RabbitMQPublisher 封装发布者的功能
 type RabbitMQPublisher struct {
@@ -89,7 +89,7 @@ func (p *RabbitMQPublisher) Close() {
 func RegisterMQPublisher(url string, exchangeName string, exchangeType string) {
 	// 初始化发布者
 	var err error
-	Publisher, err = NewRabbitMQPublisher(url, exchangeName, exchangeType)
+	InstancePublisher, err = NewRabbitMQPublisher(url, exchangeName, exchangeType)
 	if err != nil {
 		log.Fatalf("Failed to initialize publisher: %v", err)
 	}

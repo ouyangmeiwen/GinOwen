@@ -1207,10 +1207,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "123456"
                 },
                 "username": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "admin"
                 }
             }
         },

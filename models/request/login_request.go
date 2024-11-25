@@ -2,8 +2,8 @@ package request
 
 // LoginRequest 用于接收前端发送的登录请求数据
 type LoginRequest struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	Username string `json:"username" binding:"required" default:"admin"`
+	Password string `json:"password" binding:"required" default:"123456"`
 }
 type LoginOutRequest struct {
 }

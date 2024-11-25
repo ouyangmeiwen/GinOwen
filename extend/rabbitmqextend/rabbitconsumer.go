@@ -8,7 +8,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-var Consumer *RabbitMQConsumer
+var InstanceConsumer *RabbitMQConsumer
 
 // RabbitMQConsumer 封装消费者的功能
 type RabbitMQConsumer struct {
@@ -87,14 +87,14 @@ func (c *RabbitMQConsumer) Close() {
 func RegisterMQConsumer(url, exchangeName, exchangeType, queueName, routingKey string) {
 	var err error
 	// 初始化消费者
-	Consumer, err = NewRabbitMQConsumer(url, exchangeName, exchangeType, queueName, routingKey)
+	InstanceConsumer, err = NewRabbitMQConsumer(url, exchangeName, exchangeType, queueName, routingKey)
 	if err != nil {
 		log.Fatalf("Failed to initialize consumer: %v", err)
 	}
 	// 开始消费消息
 	// 启动一个 goroutine 来异步消费消息
 	go func() {
-		err := Consumer.Consume(messageHandler)
+		err := InstanceConsumer.Consume(messageHandler)
 		if err != nil {
 			log.Fatalf("消费消息失败: %v", err)
 		}
