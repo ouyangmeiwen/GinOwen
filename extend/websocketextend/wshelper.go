@@ -170,7 +170,7 @@ func RegisterWebsocket(router *gin.Engine) {
 	go Instance.Run()
 
 	// WebSocket 路由
-	router.GET("/ws/:clientID", func(c *gin.Context) {
+	router.GET("/websocket/:clientID", func(c *gin.Context) {
 		clientID := c.Param("clientID") // 获取路径参数 clientID
 		serveWS(Instance, c, clientID)
 	})
