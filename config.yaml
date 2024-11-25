@@ -49,4 +49,6 @@ rabbitmqconsumer:
   exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
   exchangetype: topic #direct fanout  headers
   queuename: server_queue
+  #  *是精确匹配单个单词，用于更细粒度的控制。 default_routingKey.one  default_routingKey.two
+  #  # 是更宽松的匹配规则，用于匹配零个或多个单词。  default_routingKey  default_routingKey.one  任何以 default_routingKey 开头的 routingKey 都匹配
   routingkey: default_routingKey.*
