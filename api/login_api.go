@@ -65,7 +65,7 @@ func (LoginAPI) Login(ctx *gin.Context) {
 			global.OWEN_REDIS.Set(back, token, rolestr, time.Duration(TokenExpire)*time.Hour)
 		}
 	}
-	utils.OkWithDetailed(token, "success", ctx)
+	utils.OkWithDetailed("Bearer "+token, "success", ctx)
 }
 
 // LoginOut 登出接口
