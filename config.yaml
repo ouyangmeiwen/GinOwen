@@ -49,4 +49,4 @@ rabbitmqconsumer:
   exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
   exchangetype: topic #direct fanout  headers
   queuename: server_queue
-  routingkey: default_routingKey.*dd
+  routingkey: default_routingKey.*
