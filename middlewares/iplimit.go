@@ -80,7 +80,7 @@ func SaveToBlacklist(ip string, unlockTime time.Time) {
 func IPBlacklistMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ip := c.ClientIP()
-		if utils.HashContain(global.OWEN_CONFIG.System.IPWhitelist, ip) {
+		if utils.StringListContain(global.OWEN_CONFIG.System.IPWhitelist, ip) {
 			// IP 白名单直接过
 			c.Next()
 			return

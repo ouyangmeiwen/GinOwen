@@ -126,7 +126,7 @@ func Capitalize(s string) string {
 	return string(runes)
 }
 
-func HashContain(input string, keyToCheck string) bool {
+func StringListContain(input string, keyToCheck string) bool {
 	// 将字符串以逗号分隔
 	parts := strings.Split(input, ",")
 	// 初始化哈希表
@@ -134,6 +134,15 @@ func HashContain(input string, keyToCheck string) bool {
 	for _, it := range parts {
 		hashMap[it] = it
 	}
+	if value, exists := hashMap[keyToCheck]; exists {
+		fmt.Printf("Key '%s' 存在，值为: %s\n", keyToCheck, value)
+		return true
+	} else {
+		fmt.Printf("Key '%s' 不存在\n", keyToCheck)
+		return false
+	}
+}
+func HashContain(hashMap map[string]string, keyToCheck string) bool {
 	if value, exists := hashMap[keyToCheck]; exists {
 		fmt.Printf("Key '%s' 存在，值为: %s\n", keyToCheck, value)
 		return true
