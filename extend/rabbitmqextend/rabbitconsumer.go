@@ -85,11 +85,6 @@ func (c *RabbitMQConsumer) Close() {
 	c.Conn.Close()
 }
 func RegisterMQConsumer(url, exchangeName, exchangeType, queueName, routingKey string) {
-	// url := "amqp://guest:guest@localhost:5672/"
-	// exchangeName := "topic_exchange"
-	// exchangeType := "topic"
-	// queueName := "user_queue"
-	// routingKey := "user.create"
 	var err error
 	// 初始化消费者
 	Consumer, err = NewRabbitMQConsumer(url, exchangeName, exchangeType, queueName, routingKey)
@@ -136,7 +131,7 @@ func messageHandler(msg amqp.Delivery) {
 	var data Data
 	err := json.Unmarshal(msg.Body, &data)
 	if err != nil {
-		log.Printf("Failed to unmarshal message: %v", err)
+		handleDefaultMessage(string(msg.Body))
 		return
 	}
 
@@ -157,7 +152,7 @@ func messageHandler(msg amqp.Delivery) {
 		}
 		handleImageMessage(imageMsg)
 	default:
-		log.Printf("Unknown message type: %s", data.DataType)
+		handleDefaultMessage(string(msg.Body))
 	}
 }
 
@@ -169,4 +164,7 @@ func handleTextMessage(msg TextMessage) {
 // 处理图像消息
 func handleImageMessage(msg ImageMessage) {
 	log.Printf("Received ImageMessage: URL=%s, AltText=%s", msg.ImageURL, msg.AltText)
+}
+func handleDefaultMessage(msg string) {
+	log.Printf("Received MSG:%s", msg)
 }

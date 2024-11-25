@@ -93,9 +93,4 @@ func RegisterMQPublisher(url string, exchangeName string, exchangeType string) {
 	if err != nil {
 		log.Fatalf("Failed to initialize publisher: %v", err)
 	}
-	// 发布消息
-	err = Publisher.PublishMessage("service.ok", []byte("service.is.ok"))
-	if err != nil {
-		log.Fatalf("Failed to publish message: %v", err)
-	}
 }

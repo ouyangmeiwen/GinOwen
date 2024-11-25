@@ -5,6 +5,7 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/models"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -390,49 +391,46 @@ func InitMongoDB() (*mongo.Client, error) {
 }
 
 func InitRabbiMQ() {
-	if len(global.OWEN_CONFIG.RabbitMQ.URL) <= 0 {
-		return
+
+	if len(global.OWEN_CONFIG.RabbitMQConsumer.URL) > 0 {
+		rabbitmqextend.RegisterMQConsumer(global.OWEN_CONFIG.RabbitMQConsumer.URL,
+			global.OWEN_CONFIG.RabbitMQConsumer.ExchangeName,
+			global.OWEN_CONFIG.RabbitMQConsumer.ExchangeType,
+			global.OWEN_CONFIG.RabbitMQConsumer.QueueName,
+			global.OWEN_CONFIG.RabbitMQConsumer.RoutingKey)
 	}
 
-	rabbitmqextend.RegisterMQPublisher(global.OWEN_CONFIG.RabbitMQ.URL,
-		global.OWEN_CONFIG.RabbitMQ.ExchangeName,
-		global.OWEN_CONFIG.RabbitMQ.ExchangeType)
+	if len(global.OWEN_CONFIG.RabbitMQ.URL) > 0 {
+		rabbitmqextend.RegisterMQPublisher(global.OWEN_CONFIG.RabbitMQ.URL,
+			global.OWEN_CONFIG.RabbitMQ.ExchangeName,
+			global.OWEN_CONFIG.RabbitMQ.ExchangeType)
 
-	rabbitmqextend.RegisterMQConsumer(global.OWEN_CONFIG.RabbitMQConsumer.URL,
-		global.OWEN_CONFIG.RabbitMQConsumer.ExchangeName,
-		global.OWEN_CONFIG.RabbitMQConsumer.ExchangeType,
-		global.OWEN_CONFIG.RabbitMQConsumer.QueueName,
-		global.OWEN_CONFIG.RabbitMQConsumer.RoutingKey)
+		// 发布消息
+		err := rabbitmqextend.Publisher.PublishMessage("default_routingKey", []byte("service.is.ok"))
+		if err != nil {
+			log.Fatalf("Failed to publish message: %v", err)
+		}
+		//test
+		// 发送文本消息
+		textMsg := rabbitmqextend.Data{
+			DataType: "TextMessage",
+			Body:     json.RawMessage(`{"Content": "Hello, RabbitMQ!"}`),
+		}
+		err = rabbitmqextend.Publisher.PublishData("default_routingKey", textMsg)
+		if err != nil {
+			log.Fatalf("Error publishing message: %v", err)
+		}
 
-	// // 初始化全局 RabbitMQ 实例
-	// err := rabbitmq.InitRabbitMQ(global.OWEN_CONFIG.RabbitMQ.URL, global.OWEN_CONFIG.RabbitMQ.QueueName)
-	// if err != nil {
-	// 	log.Fatalf("Error initializing RabbitMQ: %v", err)
-	// }
-	// // 启动消息监听
-	// go func() {
-	// 	rabbitmq.Instance.ListenForData()
-	// }()
+		// 发送图像消息
+		imageMsg := rabbitmqextend.Data{
+			DataType: "ImageMessage",
+			Body:     json.RawMessage(`{"ImageURL": "http://example.com/image.jpg", "AltText": "A sample image"}`),
+		}
+		err = rabbitmqextend.Publisher.PublishData("default_routingKey", imageMsg)
+		if err != nil {
+			log.Fatalf("Error publishing message: %v", err)
+		}
 
-	// //test
-	// // 发送文本消息
-	// textMsg := rabbitmq.Data{
-	// 	DataType: "TextMessage",
-	// 	Body:     json.RawMessage(`{"Content": "Hello, RabbitMQ!"}`),
-	// }
-	// err = rabbitmq.Instance.SendData(textMsg)
-	// if err != nil {
-	// 	log.Fatalf("Error publishing message: %v", err)
-	// }
-
-	// // 发送图像消息
-	// imageMsg := rabbitmq.Data{
-	// 	DataType: "ImageMessage",
-	// 	Body:     json.RawMessage(`{"ImageURL": "http://example.com/image.jpg", "AltText": "A sample image"}`),
-	// }
-	// err = rabbitmq.Instance.SendData(imageMsg)
-	// if err != nil {
-	// 	log.Fatalf("Error publishing message: %v", err)
-	// }
+	}
 
 }

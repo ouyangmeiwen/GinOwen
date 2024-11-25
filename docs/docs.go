@@ -1245,7 +1245,8 @@ const docTemplate = `{
                 },
                 "routingkey": {
                     "description": "路由键",
-                    "type": "string"
+                    "type": "string",
+                    "default": "default_routingKey"
                 }
             }
         },
