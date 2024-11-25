@@ -1,4 +1,4 @@
-package extend
+package websocketextend
 
 import (
 	"encoding/json"
@@ -18,6 +18,8 @@ var upgrader = websocket.Upgrader{
 		return true
 	},
 }
+
+var Instance *ClientManager
 
 // 定义客户端结构体
 type Client struct {
@@ -144,16 +146,15 @@ func (client *Client) Write() {
 }
 
 // WebSocket 路由处理
-func serveWS(manager *ClientManager, c *gin.Context) {
+func serveWS(manager *ClientManager, c *gin.Context, clientID string) {
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		fmt.Printf("Error upgrading connection: %v\n", err)
 		return
 	}
 
-	clientID := c.ClientIP() // 可以改为更合适的唯一标识
 	client := &Client{
-		ID:   clientID,
+		ID:   clientID, // 使用从 URL 中获取的 clientID
 		Conn: conn,
 		Send: make(chan []byte),
 	}
@@ -165,12 +166,13 @@ func serveWS(manager *ClientManager, c *gin.Context) {
 }
 
 func RegisterWebsocket(router *gin.Engine) {
-	manager := NewClientManager()
-	go manager.Run()
+	Instance = NewClientManager()
+	go Instance.Run()
 
 	// WebSocket 路由
-	router.GET("/ws", func(c *gin.Context) {
-		serveWS(manager, c)
+	router.GET("/ws/:clientID", func(c *gin.Context) {
+		clientID := c.Param("clientID") // 获取路径参数 clientID
+		serveWS(Instance, c, clientID)
 	})
 	// 测试主动发送消息接口
 	router.POST("/websocket_send", func(c *gin.Context) {
@@ -179,10 +181,10 @@ func RegisterWebsocket(router *gin.Engine) {
 
 		if clientID == "" {
 			// 广播消息
-			manager.Broadcast <- []byte(message)
+			Instance.Broadcast <- []byte(message)
 		} else {
 			// 发送给特定客户端
-			manager.SendToClient(clientID, []byte(message))
+			Instance.SendToClient(clientID, []byte(message))
 		}
 		c.JSON(http.StatusOK, gin.H{"status": "message sent"})
 	})

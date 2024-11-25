@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GINOWEN/extend/websocketextend"
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
 	"GINOWEN/rabbitmq"
@@ -71,6 +72,8 @@ func main() {
 	if global.OWEN_CONFIG.System.Swaggerui {
 		routers.InitSwag(r) //生成swagger文档 Swag init
 	}
+	websocketextend.RegisterWebsocket(r) //注册websocket
+
 	routers.InitAllRouter(r) //注册所有路由
 	routers.RunAsServer(r)   //启动服务
 }
