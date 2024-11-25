@@ -205,7 +205,7 @@ definitions:
       jsonbody:
         description: 消息体
       routingkey:
-        default: default_routingKey
+        default: default_routingKey.
         description: 路由键
         type: string
     type: object

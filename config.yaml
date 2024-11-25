@@ -50,5 +50,5 @@ rabbitmqconsumer:
   exchangename: topic_exchange
   exchangetype: topic
   queuename: server_queue
-  routingkey: default_routingKey
+  routingkey: default_routingKey.*
 
