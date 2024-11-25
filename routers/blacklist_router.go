@@ -6,19 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type IPRouter struct {
-}
-
 func RegisterIPRoutes(r *gin.Engine) {
 	api := r.Group("IP").Use(middlewares.AuditLogMiddleware()).Use(middlewares.AuthMiddleware("admin"))
 	{
-		api.POST("AddBlackList", ApiGroup.ipApi.AddBlackList)
-		api.POST("UnLockIp", ApiGroup.ipApi.UnLockIp)
-		api.GET("GetBlackList", ApiGroup.ipApi.GetBlackList)
+		api.POST("AddBlackList", ApiGroup.blacklistApi.AddBlackList)
+		api.POST("UnLockIp", ApiGroup.blacklistApi.UnLockIp)
+		api.GET("GetBlackList", ApiGroup.blacklistApi.GetBlackList)
 	}
 
 	mq := r.Group("MQ").Use(middlewares.AuditLogMiddleware()).Use(middlewares.AuthMiddleware("admin"))
 	{
-		mq.POST("SendRabbitMQMsg", ApiGroup.ipApi.SendRabbitMQMsg)
+		mq.POST("SendRabbitMQMsg", ApiGroup.blacklistApi.SendRabbitMQMsg)
 	}
 }

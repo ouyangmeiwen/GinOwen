@@ -41,14 +41,12 @@ db:
 
 rabbitmq:
   url: amqp://guest:guest@localhost:5672/
-  exchangename: topic_exchange
-  exchangetype: topic
-
+  exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
+  exchangetype: topic #direct fanout  headers
 
 rabbitmqconsumer:
   url: amqp://guest:guest@localhost:5672/
-  exchangename: topic_exchange
-  exchangetype: topic
+  exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
+  exchangetype: topic #direct fanout  headers
   queuename: server_queue
-  routingkey: default_routingKey.*
-
+  routingkey: default_routingKey.*dd

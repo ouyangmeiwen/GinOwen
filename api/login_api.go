@@ -16,7 +16,7 @@ import (
 
 var back = context.Background()
 
-type JWTAPI struct {
+type LoginAPI struct {
 }
 
 // JWT 登录接口
@@ -31,7 +31,7 @@ type JWTAPI struct {
 // @Failure 400 {string} string "Invalid input"
 // @Failure 401 {string} string "Invalid username or password"
 // @Router /auth/Login [post]
-func (JWTAPI) Login(ctx *gin.Context) {
+func (LoginAPI) Login(ctx *gin.Context) {
 	var loginReq request.LoginRequest
 	if err := ctx.ShouldBindJSON(&loginReq); err != nil {
 		utils.FailWithMessage("Invalid input", ctx)
@@ -77,7 +77,7 @@ func (JWTAPI) Login(ctx *gin.Context) {
 // @Success 200 {string} string "User logout successfully"
 // @Security BearerAuth
 // @Router /auth/LoginOut [post]
-func (JWTAPI) LoginOut(ctx *gin.Context) {
+func (LoginAPI) LoginOut(ctx *gin.Context) {
 	// 从请求头中获取特定的 header 值，比如 "Authorization"
 	authHeader := ctx.GetHeader("Authorization")
 	if len(authHeader) <= 0 {
@@ -107,7 +107,7 @@ func (JWTAPI) LoginOut(ctx *gin.Context) {
 // @Failure 409 {string} string "Username already exists"
 // @Security BearerAuth
 // @Router /auth/Register [post]
-func (JWTAPI) Register(ctx *gin.Context) {
+func (LoginAPI) Register(ctx *gin.Context) {
 	var registerReq request.RegisterRequest
 	if err := ctx.ShouldBindJSON(&registerReq); err != nil {
 		utils.FailWithMessage("Invalid input", ctx)

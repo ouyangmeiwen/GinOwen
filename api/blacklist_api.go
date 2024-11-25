@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type IPApi struct {
+type BlackListApi struct {
 }
 
 // UnLockIp 解除IP限制
@@ -28,7 +28,7 @@ type IPApi struct {
 // @Failure 404 {string} string "IP not found in the blacklist"
 // @Security BearerAuth
 // @Router /IP/UnLockIp [post]
-func (IPApi) UnLockIp(c *gin.Context) {
+func (BlackListApi) UnLockIp(c *gin.Context) {
 	var request request.UnLockIpInput
 	// 绑定请求数据
 	if err := c.ShouldBindJSON(&request); err != nil {
@@ -53,7 +53,7 @@ func (IPApi) UnLockIp(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Failure 400 {string} string "Invalid unlock time format"
 // @Router /IP/AddBlackList [post]
-func (IPApi) AddBlackList(c *gin.Context) {
+func (BlackListApi) AddBlackList(c *gin.Context) {
 	var request request.AddBlackListInput
 	// 绑定请求数据
 	if err := c.ShouldBindJSON(&request); err != nil {
@@ -88,7 +88,7 @@ func (IPApi) AddBlackList(c *gin.Context) {
 // @Failure 400 {string} string "Invalid request"
 // @Security BearerAuth
 // @Router /IP/GetBlackList [get]
-func (IPApi) GetBlackList(c *gin.Context) {
+func (BlackListApi) GetBlackList(c *gin.Context) {
 	var dto response.ShowBlackListDto
 	dto.Items = middlewares.LoadBlacklist()
 	utils.OkWithDetailed(dto, "获取成功", c)
@@ -105,7 +105,7 @@ func (IPApi) GetBlackList(c *gin.Context) {
 // @Success 200 {object} utils.Response{data=response.SendMqMsgDto,msg=string} "返参"
 // @Security BearerAuth
 // @Router /MQ/SendRabbitMQMsg [post]
-func (IPApi) SendRabbitMQMsg(c *gin.Context) {
+func (BlackListApi) SendRabbitMQMsg(c *gin.Context) {
 	var request request.SendMqMsgInput
 	// 绑定请求数据
 	if err := c.ShouldBindJSON(&request); err != nil {
