@@ -1,14 +1,13 @@
 package main
 
 import (
+	"GINOWEN/extend/rabbitmqextend"
 	"GINOWEN/extend/websocketextend"
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
-	"GINOWEN/rabbitmq"
 	"GINOWEN/routers"
 	"GINOWEN/serviceinit"
 	"GINOWEN/utils"
-	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -44,11 +43,11 @@ func main() {
 
 	serviceinit.InitRabbiMQ() //rabbitmq
 	defer func() {
-		if rabbitmq.Instance != nil {
-			// 使用 Close 方法来关闭连接和通道
-			if err := rabbitmq.Instance.Close(); err != nil {
-				log.Fatalf("Error closing RabbitMQ: %v", err)
-			}
+		if rabbitmqextend.Publisher != nil {
+			rabbitmqextend.Publisher.Close()
+		}
+		if rabbitmqextend.Consumer != nil {
+			rabbitmqextend.Consumer.Close()
 		}
 	}()
 

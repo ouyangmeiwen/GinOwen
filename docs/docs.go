@@ -1242,6 +1242,10 @@ const docTemplate = `{
                 },
                 "jsonbody": {
                     "description": "消息体"
+                },
+                "routingkey": {
+                    "description": "路由键",
+                    "type": "string"
                 }
             }
         },

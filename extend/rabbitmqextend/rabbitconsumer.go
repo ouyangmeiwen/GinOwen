@@ -1,11 +1,14 @@
 package rabbitmqextend
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
 	"github.com/streadway/amqp"
 )
+
+var Consumer *RabbitMQConsumer
 
 // RabbitMQConsumer 封装消费者的功能
 type RabbitMQConsumer struct {
@@ -76,7 +79,34 @@ func NewRabbitMQConsumer(url, exchangeName, exchangeType, queueName, routingKey 
 	}, nil
 }
 
-// Consume 开始消费消息
+// Close 关闭消费者的连接
+func (c *RabbitMQConsumer) Close() {
+	c.Channel.Close()
+	c.Conn.Close()
+}
+func RegisterMQConsumer(url, exchangeName, exchangeType, queueName, routingKey string) {
+	// url := "amqp://guest:guest@localhost:5672/"
+	// exchangeName := "topic_exchange"
+	// exchangeType := "topic"
+	// queueName := "user_queue"
+	// routingKey := "user.create"
+	var err error
+	// 初始化消费者
+	Consumer, err = NewRabbitMQConsumer(url, exchangeName, exchangeType, queueName, routingKey)
+	if err != nil {
+		log.Fatalf("Failed to initialize consumer: %v", err)
+	}
+	// 开始消费消息
+	// 启动一个 goroutine 来异步消费消息
+	go func() {
+		err := Consumer.Consume(messageHandler)
+		if err != nil {
+			log.Fatalf("消费消息失败: %v", err)
+		}
+	}()
+}
+
+// 消费消息并处理不同类型的消息
 func (c *RabbitMQConsumer) Consume(handler func(msg amqp.Delivery)) error {
 	// 注册消费者
 	messages, err := c.Channel.Consume(
@@ -95,35 +125,48 @@ func (c *RabbitMQConsumer) Consume(handler func(msg amqp.Delivery)) error {
 	// 消费消息
 	log.Printf("Waiting for messages on queue [%s]...", c.Queue)
 	for msg := range messages {
-		handler(msg) // 调用用户定义的消息处理函数
+		// 调用用户定义的消息处理函数
+		handler(msg)
 	}
 	return nil
 }
 
-// Close 关闭消费者的连接
-func (c *RabbitMQConsumer) Close() {
-	c.Channel.Close()
-	c.Conn.Close()
+// 消息处理函数
+func messageHandler(msg amqp.Delivery) {
+	var data Data
+	err := json.Unmarshal(msg.Body, &data)
+	if err != nil {
+		log.Printf("Failed to unmarshal message: %v", err)
+		return
+	}
+
+	// 根据 DataType 解析不同类型的消息
+	switch data.DataType {
+	case "TextMessage":
+		var textMsg TextMessage
+		if err := json.Unmarshal(data.Body, &textMsg); err != nil {
+			log.Printf("Error unmarshalling TextMessage: %v", err)
+			return
+		}
+		handleTextMessage(textMsg)
+	case "ImageMessage":
+		var imageMsg ImageMessage
+		if err := json.Unmarshal(data.Body, &imageMsg); err != nil {
+			log.Printf("Error unmarshalling ImageMessage: %v", err)
+			return
+		}
+		handleImageMessage(imageMsg)
+	default:
+		log.Printf("Unknown message type: %s", data.DataType)
+	}
 }
-func TestConsumer() {
-	url := "amqp://guest:guest@localhost:5672/"
-	exchangeName := "topic_exchange"
-	exchangeType := "topic"
-	queueName := "user_queue"
-	routingKey := "user.create"
 
-	// 初始化消费者
-	consumer, err := NewRabbitMQConsumer(url, exchangeName, exchangeType, queueName, routingKey)
-	if err != nil {
-		log.Fatalf("Failed to initialize consumer: %v", err)
-	}
-	defer consumer.Close()
+// 处理文本消息
+func handleTextMessage(msg TextMessage) {
+	log.Printf("Received TextMessage: %s", msg.Content)
+}
 
-	// 开始消费消息
-	err = consumer.Consume(func(msg amqp.Delivery) {
-		log.Printf("Received message: %s", string(msg.Body))
-	})
-	if err != nil {
-		log.Fatalf("Failed to consume messages: %v", err)
-	}
+// 处理图像消息
+func handleImageMessage(msg ImageMessage) {
+	log.Printf("Received ImageMessage: URL=%s, AltText=%s", msg.ImageURL, msg.AltText)
 }

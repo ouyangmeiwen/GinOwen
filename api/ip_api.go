@@ -1,11 +1,11 @@
 package api
 
 import (
+	"GINOWEN/extend/rabbitmqextend"
 	"GINOWEN/global"
 	"GINOWEN/middlewares"
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
-	"GINOWEN/rabbitmq"
 	"GINOWEN/utils"
 	"encoding/json"
 	"fmt"
@@ -112,11 +112,11 @@ func (IPApi) SendRabbitMQMsg(c *gin.Context) {
 		utils.FailWithMessage("Invalid request", c)
 		return
 	}
-	if rabbitmq.Instance == nil {
+	if rabbitmqextend.Publisher == nil {
 		utils.FailWithMessage("rabbitmq invalid", c)
 		return
 	}
-	var data rabbitmq.Data
+	var data rabbitmqextend.Data
 	data.DataType = request.DataType
 	bodyBytes, err := json.Marshal(request.JsonBody)
 	if err != nil {
@@ -124,7 +124,7 @@ func (IPApi) SendRabbitMQMsg(c *gin.Context) {
 		return
 	}
 	data.Body = json.RawMessage(bodyBytes)
-	err = rabbitmq.Instance.SendData(data)
+	err = rabbitmqextend.Publisher.PublishData(request.RoutingKey, data)
 	if err != nil {
 		utils.FailWithMessage(err.Error(), c)
 		return

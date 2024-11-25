@@ -40,5 +40,15 @@ db:
   connmaxlifetime: 30
 
 rabbitmq:
-  url: "amqp://guest:guest@localhost:5672/"
-  queue_name: "OwenQueue"
+  url: amqp://guest:guest@localhost:5672/
+  exchangename: topic_exchange
+  exchangetype: topic
+
+
+rabbitmqconsumer:
+  url: amqp://guest:guest@localhost:5672/
+  exchangename: topic_exchange
+  exchangetype: topic
+  queuename: server_queue
+  routingkey: server.*
+

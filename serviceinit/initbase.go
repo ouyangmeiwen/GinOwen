@@ -1,11 +1,10 @@
 package serviceinit
 
 import (
+	"GINOWEN/extend/rabbitmqextend"
 	"GINOWEN/global"
 	"GINOWEN/models"
-	"GINOWEN/rabbitmq"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -394,35 +393,46 @@ func InitRabbiMQ() {
 	if len(global.OWEN_CONFIG.RabbitMQ.URL) <= 0 {
 		return
 	}
-	// 初始化全局 RabbitMQ 实例
-	err := rabbitmq.InitRabbitMQ(global.OWEN_CONFIG.RabbitMQ.URL, global.OWEN_CONFIG.RabbitMQ.QueueName)
-	if err != nil {
-		log.Fatalf("Error initializing RabbitMQ: %v", err)
-	}
-	// 启动消息监听
-	go func() {
-		rabbitmq.Instance.ListenForData()
-	}()
 
-	//test
-	// 发送文本消息
-	textMsg := rabbitmq.Data{
-		DataType: "TextMessage",
-		Body:     json.RawMessage(`{"Content": "Hello, RabbitMQ!"}`),
-	}
-	err = rabbitmq.Instance.SendData(textMsg)
-	if err != nil {
-		log.Fatalf("Error publishing message: %v", err)
-	}
+	rabbitmqextend.RegisterMQPublisher(global.OWEN_CONFIG.RabbitMQ.URL,
+		global.OWEN_CONFIG.RabbitMQ.ExchangeName,
+		global.OWEN_CONFIG.RabbitMQ.ExchangeType)
 
-	// 发送图像消息
-	imageMsg := rabbitmq.Data{
-		DataType: "ImageMessage",
-		Body:     json.RawMessage(`{"ImageURL": "http://example.com/image.jpg", "AltText": "A sample image"}`),
-	}
-	err = rabbitmq.Instance.SendData(imageMsg)
-	if err != nil {
-		log.Fatalf("Error publishing message: %v", err)
-	}
+	rabbitmqextend.RegisterMQConsumer(global.OWEN_CONFIG.RabbitMQConsumer.URL,
+		global.OWEN_CONFIG.RabbitMQConsumer.ExchangeName,
+		global.OWEN_CONFIG.RabbitMQConsumer.ExchangeType,
+		global.OWEN_CONFIG.RabbitMQConsumer.QueueName,
+		global.OWEN_CONFIG.RabbitMQConsumer.RoutingKey)
+
+	// // 初始化全局 RabbitMQ 实例
+	// err := rabbitmq.InitRabbitMQ(global.OWEN_CONFIG.RabbitMQ.URL, global.OWEN_CONFIG.RabbitMQ.QueueName)
+	// if err != nil {
+	// 	log.Fatalf("Error initializing RabbitMQ: %v", err)
+	// }
+	// // 启动消息监听
+	// go func() {
+	// 	rabbitmq.Instance.ListenForData()
+	// }()
+
+	// //test
+	// // 发送文本消息
+	// textMsg := rabbitmq.Data{
+	// 	DataType: "TextMessage",
+	// 	Body:     json.RawMessage(`{"Content": "Hello, RabbitMQ!"}`),
+	// }
+	// err = rabbitmq.Instance.SendData(textMsg)
+	// if err != nil {
+	// 	log.Fatalf("Error publishing message: %v", err)
+	// }
+
+	// // 发送图像消息
+	// imageMsg := rabbitmq.Data{
+	// 	DataType: "ImageMessage",
+	// 	Body:     json.RawMessage(`{"ImageURL": "http://example.com/image.jpg", "AltText": "A sample image"}`),
+	// }
+	// err = rabbitmq.Instance.SendData(imageMsg)
+	// if err != nil {
+	// 	log.Fatalf("Error publishing message: %v", err)
+	// }
 
 }

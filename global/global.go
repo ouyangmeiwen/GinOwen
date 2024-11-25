@@ -60,9 +60,18 @@ type YarmConfig struct {
 	} `yaml:"mongodb"`
 
 	RabbitMQ struct {
-		URL       string `yaml:"url"`
-		QueueName string `yaml:"queue_name"`
+		URL          string `yaml:"url"`
+		ExchangeName string `yaml:"exchangename"`
+		ExchangeType string `yaml:"exchangetype"`
 	} `mapstructure:"rabbitmq"`
+
+	RabbitMQConsumer struct {
+		URL          string `yaml:"url"`
+		ExchangeName string `yaml:"exchangename"`
+		ExchangeType string `yaml:"exchangetype"`
+		QueueName    string `yaml:"queuename"`
+		RoutingKey   string `yaml:"routingkey"`
+	} `mapstructure:"rabbitmqconsumer"`
 }
 
 var (
