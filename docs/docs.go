@@ -35,7 +35,7 @@ const docTemplate = `{
                 "summary": "GPI接口",
                 "parameters": [
                     {
-                        "description": "入参",
+                        "description": "消息入参 receivetype标记管道,receivedata标记管道参数{}",
                         "name": "req",
                         "in": "body",
                         "required": true,

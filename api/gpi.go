@@ -22,7 +22,7 @@ type GPIApi struct {
 // @Tags GPI
 // @Accept json
 // @Produce json
-// @Param req body request.GPIReceiveInput true "入参"
+// @Param req body request.GPIReceiveInput true "消息入参 receivetype标记管道,receivedata标记管道参数{}"
 // @Success 200 {object} utils.Response{data=interface{},msg=string} "返参"
 // @Security BearerAuth
 // @Router /GPI/GPIReceive [post]
