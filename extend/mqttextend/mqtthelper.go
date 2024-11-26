@@ -7,6 +7,8 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
+var Instance *MQTTClient
+
 // MQTTClient 是一个封装的结构体，包含客户端和连接选项
 type MQTTClient struct {
 	client  mqtt.Client
@@ -67,9 +69,9 @@ func defaultMessageHandler(client mqtt.Client, msg mqtt.Message) {
 	fmt.Printf("Received message on topic: %s\nMessage: %s\n", msg.Topic(), msg.Payload())
 }
 
-func TestMQTT() {
+func RegisterMQTT() {
 	// 创建 MQTT 客户端
-	client := NewMQTTClient(
+	Instance = NewMQTTClient(
 		"tcp://broker.emqx.io:1883", // 替换为你的 MQTT Broker 地址
 		"testClientID",
 		"",
@@ -77,15 +79,15 @@ func TestMQTT() {
 	)
 
 	// 连接到 MQTT Broker
-	err := client.Connect()
+	err := Instance.Connect()
 	if err != nil {
 		fmt.Printf("Failed to connect to MQTT broker: %v\n", err)
 		return
 	}
-	defer client.Disconnect()
+	defer Instance.Disconnect() // 放main 函数
 
 	// 订阅主题
-	err = client.Subscribe("test/topic", 1, func(client mqtt.Client, msg mqtt.Message) {
+	err = Instance.Subscribe("test/topic", 1, func(client mqtt.Client, msg mqtt.Message) {
 		fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
 	})
 	if err != nil {
@@ -94,12 +96,12 @@ func TestMQTT() {
 	}
 
 	// 发布消息
-	err = client.Publish("test/topic", 1, false, "Hello, MQTT!")
+	err = Instance.Publish("test/topic", 1, false, "Hello, MQTT!")
 	if err != nil {
 		fmt.Printf("Failed to publish message: %v\n", err)
 		return
 	}
 
 	// 等待消息到来
-	select {}
+	//select {} //不需要服务自动
 }

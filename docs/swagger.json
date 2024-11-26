@@ -7,8 +7,67 @@
         "version": "1.0"
     },
     "paths": {
+        "/GPI/GPIReceive": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "GPI接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GPI"
+                ],
+                "summary": "GPI接口",
+                "parameters": [
+                    {
+                        "description": "消息入参 receivetype标记管道,receivedata标记管道参数{}",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GPIReceiveInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返参",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/IP/AddBlackList": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "增加IP限制",
                 "consumes": [
                     "application/json"
@@ -1022,6 +1081,18 @@
                 },
                 "UserId": {
                     "type": "integer"
+                }
+            }
+        },
+        "request.GPIReceiveInput": {
+            "type": "object",
+            "properties": {
+                "receivedata": {
+                    "description": "消息体"
+                },
+                "receivetype": {
+                    "description": "消息类型",
+                    "type": "string"
                 }
             }
         },

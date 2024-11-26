@@ -8,6 +8,7 @@ type RouterApis struct {
 	sysauditlmslogApi api.SysauditlmslogApi
 	loginApi          api.LoginAPI
 	blacklistApi      api.BlackListApi
+	gpiApi            api.GPIApi
 }
 
 var ApiGroup = new(RouterApis)

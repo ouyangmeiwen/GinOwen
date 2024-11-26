@@ -26,6 +26,7 @@ func InitAllRouter(r *gin.Engine) {
 		})
 	})
 	// 注册路由
+	RegisterGPIRoutes(r)
 	RegisterLibitemRoutes(r)
 	RegisterUploadfileRoutes(r)
 	RegisterSysauditlmslogRoutes(r)

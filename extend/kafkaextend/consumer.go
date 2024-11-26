@@ -7,6 +7,8 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
+var InstanceConsumer *KafkaConsumer
+
 // KafkaConsumer 用于封装 Kafka 消费者
 type KafkaConsumer struct {
 	reader *kafka.Reader
@@ -39,16 +41,17 @@ func (kc *KafkaConsumer) ConsumeMessages() {
 func (kc *KafkaConsumer) Close() {
 	kc.reader.Close()
 }
-func TestConsumer() {
+func RegisterConsumer() {
 	// 配置 Kafka 信息
 	broker := "localhost:9092" // Kafka地址
 	topic := "example-topic"   // Kafka 主题
 	groupID := "example-group" // 消费者组ID
 
 	// 创建消费者实例
-	consumer := NewKafkaConsumer(broker, topic, groupID)
-	defer consumer.Close()
-
-	// 开始消费消息
-	consumer.ConsumeMessages()
+	InstanceConsumer = NewKafkaConsumer(broker, topic, groupID)
+	defer InstanceConsumer.Close() //需要放到mian函数
+	go func() {
+		// 开始消费消息
+		InstanceConsumer.ConsumeMessages()
+	}()
 }
