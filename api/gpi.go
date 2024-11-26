@@ -69,6 +69,25 @@ func (gpi GPIApi) GPIReceive(ctx *gin.Context) {
 		var dto response.ShowBlackListDto
 		dto.Items = middlewares.LoadBlacklist()
 		utils.OkWithDetailed(dto, "查询成功", ctx)
+
+	case "Sysauditlmslog.QueryLmsLog":
+		receiveBytes, err := json.Marshal(req.ReceiveData)
+		if err != nil {
+			utils.FailWithMessage("Error Marshal ReceiveData", ctx)
+			return
+		}
+		var input request.QueryLmsInput
+		err = json.Unmarshal(receiveBytes, &input)
+		if err != nil {
+			utils.FailWithMessage("Error Unmarshal QueryLmsInput", ctx)
+			return
+		}
+		list, err := ServicesGroup.sysauditlmslogService.QueryLmsLog(input)
+		if err != nil {
+			utils.FailWithMessage("获取失败!"+err.Error(), ctx)
+			return
+		}
+		utils.OkWithDetailed(list, "获取成功", ctx)
 	default:
 		utils.FailWithMessage("ReceiveType不支持", ctx)
 	}
