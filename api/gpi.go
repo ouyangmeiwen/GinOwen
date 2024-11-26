@@ -23,7 +23,7 @@ type GPIApi struct {
 // @Accept json
 // @Produce json
 // @Param req body request.GPIReceiveInput true "入参"
-// @Success 200 {object} utils.Response{data=response.GPIReceiveDto,msg=string} "返参"
+// @Success 200 {object} utils.Response{data=interface{},msg=string} "返参"
 // @Security BearerAuth
 // @Router /GPI/GPIReceive [post]
 func (gpi GPIApi) GPIReceive(ctx *gin.Context) {
@@ -68,7 +68,7 @@ func (gpi GPIApi) GPIReceive(ctx *gin.Context) {
 	case "GetBlackList":
 		var dto response.ShowBlackListDto
 		dto.Items = middlewares.LoadBlacklist()
-		utils.OkWithDetailed(response.GPIReceiveDto{Result: dto}, "查询成功", ctx)
+		utils.OkWithDetailed(dto, "查询成功", ctx)
 	default:
 		utils.FailWithMessage("ReceiveType不支持", ctx)
 	}

@@ -263,11 +263,6 @@ definitions:
     type: object
   response.DeleteLmsLogDto:
     type: object
-  response.GPIReceiveDto:
-    properties:
-      result:
-        description: 返回消息体
-    type: object
   response.ImportExcelDto:
     type: object
   response.QueryLmsDto:
@@ -368,7 +363,7 @@ paths:
             - $ref: '#/definitions/utils.Response'
             - properties:
                 data:
-                  $ref: '#/definitions/response.GPIReceiveDto'
+                  type: object
                 msg:
                   type: string
               type: object

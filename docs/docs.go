@@ -56,7 +56,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/response.GPIReceiveDto"
+                                            "type": "object"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -1384,14 +1384,6 @@ const docTemplate = `{
         },
         "response.DeleteLmsLogDto": {
             "type": "object"
-        },
-        "response.GPIReceiveDto": {
-            "type": "object",
-            "properties": {
-                "result": {
-                    "description": "返回消息体"
-                }
-            }
         },
         "response.ImportExcelDto": {
             "type": "object"
