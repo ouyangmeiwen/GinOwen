@@ -42,6 +42,14 @@ definitions:
       UserId:
         type: integer
     type: object
+  request.GPIReceiveInput:
+    properties:
+      receivedata:
+        description: 消息体
+      receivetype:
+        description: 消息类型
+        type: string
+    type: object
   request.ImportExcelByIndexInput:
     properties:
       author:
@@ -255,6 +263,11 @@ definitions:
     type: object
   response.DeleteLmsLogDto:
     type: object
+  response.GPIReceiveDto:
+    properties:
+      result:
+        description: 返回消息体
+    type: object
   response.ImportExcelDto:
     type: object
   response.QueryLmsDto:
@@ -333,6 +346,37 @@ info:
   title: GinOwen API
   version: "1.0"
 paths:
+  /GPI/GPIReceive:
+    post:
+      consumes:
+      - application/json
+      description: GPI接口
+      parameters:
+      - description: 入参
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.GPIReceiveInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返参
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GPIReceiveDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: GPI接口
+      tags:
+      - GPI
   /IP/AddBlackList:
     post:
       consumes:

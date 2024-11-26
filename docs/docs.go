@@ -15,6 +15,60 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/GPI/GPIReceive": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "GPI接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GPI"
+                ],
+                "summary": "GPI接口",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GPIReceiveInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返参",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GPIReceiveDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/IP/AddBlackList": {
             "post": {
                 "description": "增加IP限制",
@@ -1033,6 +1087,18 @@ const docTemplate = `{
                 }
             }
         },
+        "request.GPIReceiveInput": {
+            "type": "object",
+            "properties": {
+                "receivedata": {
+                    "description": "消息体"
+                },
+                "receivetype": {
+                    "description": "消息类型",
+                    "type": "string"
+                }
+            }
+        },
         "request.ImportExcelByIndexInput": {
             "type": "object",
             "required": [
@@ -1318,6 +1384,14 @@ const docTemplate = `{
         },
         "response.DeleteLmsLogDto": {
             "type": "object"
+        },
+        "response.GPIReceiveDto": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "description": "返回消息体"
+                }
+            }
         },
         "response.ImportExcelDto": {
             "type": "object"
