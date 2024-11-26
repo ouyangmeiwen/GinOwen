@@ -52,6 +52,7 @@ func (BlackListApi) UnLockIp(c *gin.Context) {
 // @Success 200 {string} string "OK"
 // @Failure 400 {string} string "Invalid request"
 // @Failure 400 {string} string "Invalid unlock time format"
+// @Security BearerAuth
 // @Router /IP/AddBlackList [post]
 func (BlackListApi) AddBlackList(c *gin.Context) {
 	var request request.AddBlackListInput

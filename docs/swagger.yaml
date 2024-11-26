@@ -395,6 +395,8 @@ paths:
           description: Invalid unlock time format
           schema:
             type: string
+      security:
+      - BearerAuth: []
       summary: 增加IP限制
       tags:
       - IP

@@ -71,6 +71,11 @@ const docTemplate = `{
         },
         "/IP/AddBlackList": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "增加IP限制",
                 "consumes": [
                     "application/json"
