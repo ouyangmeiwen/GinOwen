@@ -34,7 +34,7 @@ func (gpi GPIApi) GPIReceive(ctx *gin.Context) {
 		return
 	}
 	switch req.ReceiveType {
-	case "rabbitmq.send":
+	case "RabbitMQ.Send":
 		receiveBytes, err := json.Marshal(req.ReceiveData)
 		if err != nil {
 			utils.FailWithMessage("Error Marshal ReceiveData", ctx)
@@ -56,7 +56,7 @@ func (gpi GPIApi) GPIReceive(ctx *gin.Context) {
 		data.Body = json.RawMessage(bodyBytes)
 		rabbitmqextend.InstancePublisher.PublishData(input.RoutingKey, data)
 		utils.OkWithMessage("执行完成", ctx)
-	case "websocket.send":
+	case "WebSocket.Send":
 		data, ok := req.ReceiveData.(string)
 		if !ok {
 			utils.FailWithMessage("ReceiveData is not a string", ctx)
@@ -65,7 +65,7 @@ func (gpi GPIApi) GPIReceive(ctx *gin.Context) {
 		parts := strings.SplitN(data, ":", 2) //限制分割为2个字符串
 		websocketextend.Instance.SendToClient(parts[0], []byte(parts[1]))
 		utils.OkWithMessage("执行完成", ctx)
-	case "GetBlackList":
+	case "IP.GetBlackList":
 		var dto response.ShowBlackListDto
 		dto.Items = middlewares.LoadBlacklist()
 		utils.OkWithDetailed(dto, "查询成功", ctx)
