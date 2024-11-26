@@ -26,69 +26,69 @@ type GPIApi struct {
 // @Success 200 {object} utils.Response{data=interface{},msg=string} "返参"
 // @Security BearerAuth
 // @Router /GPI/GPIReceive [post]
-func (gpi GPIApi) GPIReceive(ctx *gin.Context) {
+func (gpi GPIApi) GPIReceive(c *gin.Context) {
 	var req request.GPIReceiveInput
-	err := ctx.ShouldBindJSON(&req)
+	err := c.ShouldBindJSON(&req)
 	if err != nil {
-		utils.FailWithMessage("参数无效", ctx)
+		utils.FailWithMessage("参数无效", c)
 		return
 	}
 	switch req.ReceiveType {
 	case "RabbitMQ.Send":
 		receiveBytes, err := json.Marshal(req.ReceiveData)
 		if err != nil {
-			utils.FailWithMessage("Error Marshal ReceiveData", ctx)
+			utils.FailWithMessage("Error Marshal ReceiveData", c)
 			return
 		}
 		var input request.SendMqMsgInput
 		err = json.Unmarshal(receiveBytes, &input)
 		if err != nil {
-			utils.FailWithMessage("Error Unmarshal SendMqMsgInput", ctx)
+			utils.FailWithMessage("Error Unmarshal SendMqMsgInput", c)
 			return
 		}
 		var data rabbitmqextend.Data
 		data.DataType = input.DataType
 		bodyBytes, err := json.Marshal(input.JsonBody)
 		if err != nil {
-			utils.FailWithMessage("Error Marshal JsonBody", ctx)
+			utils.FailWithMessage("Error Marshal JsonBody", c)
 			return
 		}
 		data.Body = json.RawMessage(bodyBytes)
 		rabbitmqextend.InstancePublisher.PublishData(input.RoutingKey, data)
-		utils.OkWithMessage("执行完成", ctx)
+		utils.OkWithMessage("执行完成", c)
 	case "WebSocket.Send":
 		data, ok := req.ReceiveData.(string)
 		if !ok {
-			utils.FailWithMessage("ReceiveData is not a string", ctx)
+			utils.FailWithMessage("ReceiveData is not a string", c)
 			return
 		}
 		parts := strings.SplitN(data, ":", 2) //限制分割为2个字符串
 		websocketextend.Instance.SendToClient(parts[0], []byte(parts[1]))
-		utils.OkWithMessage("执行完成", ctx)
+		utils.OkWithMessage("执行完成", c)
 	case "IP.GetBlackList":
 		var dto response.ShowBlackListDto
 		dto.Items = middlewares.LoadBlacklist()
-		utils.OkWithDetailed(dto, "查询成功", ctx)
+		utils.OkWithDetailed(dto, "查询成功", c)
 
 	case "Sysauditlmslog.QueryLmsLog":
 		receiveBytes, err := json.Marshal(req.ReceiveData)
 		if err != nil {
-			utils.FailWithMessage("Error Marshal ReceiveData", ctx)
+			utils.FailWithMessage("Error Marshal ReceiveData", c)
 			return
 		}
 		var input request.QueryLmsInput
 		err = json.Unmarshal(receiveBytes, &input)
 		if err != nil {
-			utils.FailWithMessage("Error Unmarshal QueryLmsInput", ctx)
+			utils.FailWithMessage("Error Unmarshal QueryLmsInput", c)
 			return
 		}
 		list, err := ServicesGroup.sysauditlmslogService.QueryLmsLog(input)
 		if err != nil {
-			utils.FailWithMessage("获取失败!"+err.Error(), ctx)
+			utils.FailWithMessage("获取失败!"+err.Error(), c)
 			return
 		}
-		utils.OkWithDetailed(list, "获取成功", ctx)
+		utils.OkWithDetailed(list, "获取成功", c)
 	default:
-		utils.FailWithMessage("ReceiveType不支持", ctx)
+		utils.FailWithMessage("ReceiveType不支持", c)
 	}
 }
