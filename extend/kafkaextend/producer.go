@@ -8,6 +8,8 @@ import (
 	"github.com/segmentio/kafka-go"
 )
 
+var InstancePublisher *KafkaProducer
+
 // KafkaProducer 用于封装 Kafka 生产者
 type KafkaProducer struct {
 	writer *kafka.Writer
@@ -44,19 +46,19 @@ func (kp *KafkaProducer) SendMessage(key string, value string) error {
 func (kp *KafkaProducer) Close() {
 	kp.writer.Close()
 }
-func TestPublisher() {
+func RegisterPublisher() {
 	// 配置 Kafka 信息
 	broker := "localhost:9092" // Kafka地址
 	topic := "example-topic"   // Kafka 主题
 
 	// 创建生产者实例
-	producer := NewKafkaProducer(broker, topic)
-	defer producer.Close()
+	InstancePublisher = NewKafkaProducer(broker, topic)
+	defer InstancePublisher.Close() //需要放到mian函数
 
 	// 发送5条消息
 	for i := 0; i < 5; i++ {
 		message := fmt.Sprintf("Message %d", i+1)
-		err := producer.SendMessage(fmt.Sprintf("Key-%d", i+1), message)
+		err := InstancePublisher.SendMessage(fmt.Sprintf("Key-%d", i+1), message)
 		if err != nil {
 			log.Fatal("Failed to send message:", err)
 		}

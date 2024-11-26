@@ -38,7 +38,7 @@ type ClientManager struct {
 }
 type Message struct {
 	Type    string `json:"type"`
-	Content string `json:"content"`
+	Content string `json:"content"` // targetID:message
 }
 
 // 初始化客户端管理器
@@ -108,14 +108,16 @@ func (client *Client) Read(manager *ClientManager) {
 		switch msg.Type {
 		case "broadcast":
 			manager.Broadcast <- []byte(msg.Content)
-		case "private":
+		case "sendtoprivate":
 			// 假设内容格式是 "targetID:message"
-			parts := strings.SplitN(msg.Content, ":", 2)
+			parts := strings.SplitN(msg.Content, ":", 2) //限制分割为2个字符串
 			if len(parts) == 2 {
 				targetID := parts[0]
 				message := parts[1]
 				manager.SendToClient(targetID, []byte(message))
 			}
+		case "self":
+			fmt.Printf("self: %s\n", msg.Content)
 		default:
 			fmt.Printf("Unknown message type: %s\n", msg.Type)
 		}
