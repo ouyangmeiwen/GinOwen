@@ -6,7 +6,3 @@ type PageResult struct {
 	Page     int         `json:"page"`
 	PageSize int         `json:"pageSize"`
 }
-
-type GPIReceiveDto struct {
-	Result interface{} `json:"result" form:"result"` //返回消息体
-}
