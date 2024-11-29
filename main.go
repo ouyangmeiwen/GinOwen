@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GINOWEN/extend"
 	"GINOWEN/extend/rabbitmqextend"
 	"GINOWEN/extend/websocketextend"
 	"GINOWEN/global"
@@ -22,7 +23,7 @@ import (
 // @description JWT Authorization header (Bearer token)
 func main() {
 
-	//test.CreateAutoMigration()
+	//extend.CreateAutoMigration()
 
 	// 加载配置文件
 	global.OWEN_CONFIG = serviceinit.LoadConfig()
@@ -33,6 +34,9 @@ func main() {
 	//global.OWEN_LOG.Debug("开始程序！")
 
 	global.OWEN_DB = serviceinit.InitDB()
+
+	extend.CreateDBModles(global.OWEN_DB)
+
 	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
 
 	serviceinit.InitRedis() //初始化redis
