@@ -29,17 +29,36 @@ mongodb:
   password: "your_password"
 
 db:
-  type: mysql
-  #mysql: "root:qyisno1forever@world@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
-  mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
-  mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
-  oracle: "user/password@localhost:1521/service_name"
-  postgres: "user=postgres password=secret dbname=mydb host=127.0.0.1 port=5432 sslmode=disable"
-  sqlite: "invengo.db"
-  maxopenconns: 100
-  maxidleconns: 10
-  connmaxlifetime: 30
-
+  default:
+    type: mysql
+    mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
+    oracle: "user/password@localhost:1521/service_name"
+    postgres: "user=postgres password=secret dbname=mydb host=127.0.0.1 port=5432 sslmode=disable"
+    sqlite: "invengo.db"
+    maxopenconns: 100
+    maxidleconns: 10
+    connmaxlifetime: 30
+  from:
+    type: 
+    mysql: "root:qyisno1forever@world@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
+    oracle: "user/password@localhost:1521/service_name"
+    postgres: "user=postgres password=secret dbname=mydb host=127.0.0.1 port=5432 sslmode=disable"
+    sqlite: "invengo.db"
+    maxopenconns: 100
+    maxidleconns: 10
+    connmaxlifetime: 30
+  to:
+    type: 
+    mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
+    oracle: "user/password@localhost:1521/service_name"
+    postgres: "user=postgres password=secret dbname=mydb host=127.0.0.1 port=5432 sslmode=disable"
+    sqlite: "invengo.db"
+    maxopenconns: 100
+    maxidleconns: 10
+    connmaxlifetime: 30
 rabbitmq:
   url: amqp://guest:guest@localhost:5672/
   exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange

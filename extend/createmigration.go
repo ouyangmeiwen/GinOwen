@@ -112,7 +112,7 @@ import (
 	"GINOWEN/extenddb/model"
 )
 
-func AutoMigrate(DB *gorm.DB) {
+func CusAutoMigrate(DB *gorm.DB) {
 	var err error
 `)
 	if err != nil {
@@ -230,7 +230,6 @@ func CreateDBModles(db *gorm.DB) {
 	g.ApplyBasic(allModel...)
 	g.Execute()
 	CreateAutoMigrationFile()
-	select {}
 }
 
 func Test() {

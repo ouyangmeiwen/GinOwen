@@ -27,8 +27,6 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-var DB *gorm.DB
-
 func LoadConfig() global.YarmConfig {
 	configFile, err := os.Open("config.yaml")
 	if err != nil {
@@ -44,10 +42,10 @@ func LoadConfig() global.YarmConfig {
 	return config
 }
 
-func InitDB() *gorm.DB {
-	config := global.OWEN_CONFIG
+func InitDB() {
+	//config := global.OWEN_CONFIG
+	dbMap := global.OWEN_CONFIG.DB
 	var dbErr error
-
 	// 配置 Gorm 日志
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io.Writer 输出日志
@@ -57,41 +55,51 @@ func InitDB() *gorm.DB {
 			Colorful:      true,        // 彩色打印
 		},
 	)
+	for key, dbCfg := range dbMap {
+		if len(dbCfg.Type) <= 0 {
+			continue
+		}
+		var DB *gorm.DB
+		switch dbCfg.Type {
+		case "mysql":
+			DB, dbErr = gorm.Open(mysql.Open(dbCfg.MySQL), &gorm.Config{Logger: newLogger})
+		case "postgres":
+			DB, dbErr = gorm.Open(postgres.Open(dbCfg.Postgres), &gorm.Config{Logger: newLogger})
+		case "sqlite":
+			DB, dbErr = gorm.Open(sqlite.Open(dbCfg.SQLite), &gorm.Config{Logger: newLogger})
+		case "mssql":
+			DB, dbErr = gorm.Open(sqlserver.Open(dbCfg.MSSQL), &gorm.Config{Logger: newLogger})
+		case "oracle":
+			// oracleConfig := oracle.Config{
+			// 	DSN:               dbCfg.Oracle, // DSN data source name
+			// 	DefaultStringSize: 191,              // string 类型字段的默认长度
+			// }
+			// DB, dbErr = gorm.Open(oracle.New(oracleConfig), &gorm.Config{Logger: newLogger})
+		default:
+			log.Fatalf("Unsupported database type: %s", dbCfg.Type)
+		}
 
-	switch config.DB.Type {
-	case "mysql":
-		DB, dbErr = gorm.Open(mysql.Open(config.DB.Mysql), &gorm.Config{Logger: newLogger})
-	case "postgres":
-		DB, dbErr = gorm.Open(postgres.Open(config.DB.Postgres), &gorm.Config{Logger: newLogger})
-	case "sqlite":
-		DB, dbErr = gorm.Open(sqlite.Open(config.DB.Sqlite), &gorm.Config{Logger: newLogger})
-	case "mssql":
-		DB, dbErr = gorm.Open(sqlserver.Open(config.DB.Mssql), &gorm.Config{Logger: newLogger})
-	case "oracle":
-		// oracleConfig := oracle.Config{
-		// 	DSN:               config.DB.Oracle, // DSN data source name
-		// 	DefaultStringSize: 191,              // string 类型字段的默认长度
-		// }
-		// DB, dbErr = gorm.Open(oracle.New(oracleConfig), &gorm.Config{Logger: newLogger})
-	default:
-		log.Fatalf("Unsupported database type: %s", config.DB.Type)
+		if dbErr != nil {
+			log.Fatalf("Failed to connect to the database: %v", dbErr)
+		}
+
+		// 配置数据库连接池
+		sqlDB, err := DB.DB()
+		if err != nil {
+			log.Fatalf("Failed to get database instance: %v", err)
+		}
+
+		sqlDB.SetMaxOpenConns(dbCfg.MaxOpenConns)                                      // 最大连接数
+		sqlDB.SetMaxIdleConns(dbCfg.MaxIdleConns)                                      // 最大空闲连接数
+		sqlDB.SetConnMaxLifetime((time.Duration(dbCfg.ConnMaxLifetime)) * time.Minute) // 连接的最大生命周期
+		if key == "default" {
+			global.OWEN_DB = DB
+		}
+		if global.OWEN_DBList == nil {
+			global.OWEN_DBList = make(map[string]*gorm.DB)
+		}
+		global.OWEN_DBList[key] = DB
 	}
-
-	if dbErr != nil {
-		log.Fatalf("Failed to connect to the database: %v", dbErr)
-	}
-
-	// 配置数据库连接池
-	sqlDB, err := DB.DB()
-	if err != nil {
-		log.Fatalf("Failed to get database instance: %v", err)
-	}
-
-	sqlDB.SetMaxOpenConns(config.DB.MaxOpenConns)                                      // 最大连接数
-	sqlDB.SetMaxIdleConns(config.DB.MaxIdleConns)                                      // 最大空闲连接数
-	sqlDB.SetConnMaxLifetime((time.Duration(config.DB.ConnMaxLifetime)) * time.Minute) // 连接的最大生命周期
-
-	return DB
 }
 func InitRedis() {
 	redisCfg := global.OWEN_CONFIG.Redis
@@ -112,7 +120,7 @@ func InitRedis() {
 	}
 }
 
-func AutoMigrateDB() {
+func AutoMigrateDB(DB *gorm.DB) {
 	// 自动迁移数据库结构
 	var err error
 	err = DB.AutoMigrate(&models.OwenUser{})
@@ -120,13 +128,15 @@ func AutoMigrateDB() {
 	err = DB.AutoMigrate(&models.OwenAuditLog{})
 
 	//是否需要初始化model
-	//AutoMigrate(DB)
+	if _, ok := global.OWEN_DBList["to"]; ok {
+		CusAutoMigrate(global.OWEN_DBList["to"])
+	}
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)
 	}
-	addDefaultData()
+	addDefaultData(DB)
 }
-func addDefaultData() {
+func addDefaultData(DB *gorm.DB) {
 
 	// 检查并添加默认角色数据
 	if err := DB.First(&models.OwenRole{}).Error; errors.Is(err, gorm.ErrRecordNotFound) {

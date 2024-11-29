@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func AutoMigrate(DB *gorm.DB) {
+func CusAutoMigrate(DB *gorm.DB) {
 	var err error
 	//err = DB.AutoMigrate(&model.Efmigrationshistory{})
 	err = DB.AutoMigrate(&model.Abpauditlog{})

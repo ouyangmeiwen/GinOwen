@@ -87,13 +87,12 @@ func RunAsServer(r *gin.Engine) {
 	}
 
 	// 确保数据库连接关闭
-	if global.OWEN_DB != nil {
-		sqlDB, err := global.OWEN_DB.DB()
+	for _, DB := range global.OWEN_DBList {
+		sqlDB, err := DB.DB()
 		if err == nil {
 			sqlDB.Close()
 			log.Println("Database connection closed.")
 		}
 	}
-
 	log.Println("Server exiting.")
 }

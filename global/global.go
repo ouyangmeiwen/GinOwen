@@ -10,68 +10,84 @@ import (
 	"gorm.io/gorm"
 )
 
+// SystemConfig 系统配置
+type SystemConfig struct {
+	Port            int    `yaml:"port"`
+	RouterPre       string `yaml:"routerpre"`
+	TokenExpire     int    `yaml:"tokenexpire"`
+	Token           string `yaml:"token"`
+	EnableDebug     bool   `yaml:"enabledebug"`
+	Blacklistpre    string `yaml:"blacklistpre"`
+	EnableBlacklist bool   `yaml:"enableblacklist"`
+	IPWhitelist     string `yaml:"ipwhitelist"`
+	Swaggerui       bool   `yaml:"swaggerui"`
+	EnableWebsocket bool   `yaml:"enablewebsocket"`
+
+	CircuitBreaker struct {
+		MaxRequests         int `yaml:"maxrequests"`
+		Second              int `yaml:"second"`
+		AddBlackListMinutes int `yaml:"addblacklistminutes"`
+	} `yaml:"circuitbreaker"`
+
+	RateLimiter struct {
+		RateLimit           float64 `yaml:"ratelimit"`
+		Burst               int     `yaml:"burst"`
+		AddBlackListMinutes int     `yaml:"addblacklistminutes"`
+	} `yaml:"ratelimiter"`
+}
+
+// DBConfig 数据库配置
+type DBConfig struct {
+	Type            string `yaml:"type"`
+	MySQL           string `yaml:"mysql"`
+	MSSQL           string `yaml:"mssql"`
+	Oracle          string `yaml:"oracle"`
+	Postgres        string `yaml:"postgres"`
+	SQLite          string `yaml:"sqlite"`
+	MaxOpenConns    int    `yaml:"maxopenconns"`
+	MaxIdleConns    int    `yaml:"maxidleconns"`
+	ConnMaxLifetime int    `yaml:"connmaxlifetime"`
+}
+
+// RedisConfig Redis 配置
+type RedisConfig struct {
+	Addr     string `yaml:"addr"`
+	Password string `yaml:"password"`
+	DB       int    `yaml:"db"`
+}
+
+// MongoDBConfig MongoDB 配置
+type MongoDBConfig struct {
+	URI      string `yaml:"uri"`
+	Database string `yaml:"database"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+}
+
+// RabbitMQConfig RabbitMQ 配置
+type RabbitMQConfig struct {
+	URL          string `yaml:"url"`
+	ExchangeName string `yaml:"exchangename"`
+	ExchangeType string `yaml:"exchangetype"`
+}
+
+// RabbitMQConsumerConfig RabbitMQ Consumer 配置
+type RabbitMQConsumerConfig struct {
+	URL          string `yaml:"url"`
+	ExchangeName string `yaml:"exchangename"`
+	ExchangeType string `yaml:"exchangetype"`
+	QueueName    string `yaml:"queuename"`
+	RoutingKey   string `yaml:"routingkey"`
+}
+
+// YarmConfig 总配置
 type YarmConfig struct {
-	System struct {
-		Port            int    `yaml:"port"`
-		RouterPre       string `yaml:"routerpre"`
-		TokenExpire     int    `yaml:"tokenexpire"`     //
-		Token           string `yaml:"token"`           //
-		EnableDebug     bool   `yaml:"enabledebug"`     //
-		Blacklistpre    string `yaml:"blacklistpre"`    //
-		EnableBlacklist bool   `yaml:"enableblacklist"` //
-		IPWhitelist     string `yaml:"ipwhitelist"`     //
-		Swaggerui       bool   `yaml:"swaggerui"`       // 是否开启 Swagger UI
-		EnableWebsocket bool   `yaml:"enablewebsocket"` // 是否开启 websocket
-		CircuitBreaker  struct {
-			MaxRequests         int `yaml:"maxrequests"`         // 最大请求数
-			Second              int `yaml:"second"`              // 监控时间窗口（秒）
-			AddBlackListMinutes int `yaml:"addblacklistminutes"` // 阈值后等待时间
-		} `yaml:"circuitbreaker"`
-		RateLimiter struct {
-			RateLimit           float64 `yaml:"ratelimit"`           // 每秒请求数量
-			Burst               int     `yaml:"burst"`               // 最大并发数
-			AddBlackListMinutes int     `yaml:"addblacklistminutes"` // 阈值后等待时间
-		} `yaml:"ratelimiter"`
-	} `yaml:"system"`
-
-	DB struct {
-		Type            string `yaml:"type"`
-		Mysql           string `yaml:"mysql"`
-		Mssql           string `yaml:"mssql"`
-		Oracle          string `yaml:"oracle"`
-		Postgres        string `yaml:"postgres"`
-		Sqlite          string `yaml:"sqlite"`
-		MaxOpenConns    int    `yaml:"maxopenconns"`
-		MaxIdleConns    int    `yaml:"maxidleconns"`
-		ConnMaxLifetime int    `yaml:"connmaxlifetime"`
-	} `yaml:"db"`
-
-	Redis struct {
-		Addr     string `yaml:"addr"`
-		Password string `yaml:"password"`
-		DB       int    `yaml:"db"`
-	} `yaml:"redis"`
-
-	MongoDB struct {
-		URI      string `yaml:"uri"`
-		Database string `yaml:"database"`
-		Username string `yaml:"username"`
-		Password string `yaml:"password"`
-	} `yaml:"mongodb"`
-
-	RabbitMQ struct {
-		URL          string `yaml:"url"`
-		ExchangeName string `yaml:"exchangename"`
-		ExchangeType string `yaml:"exchangetype"`
-	} `mapstructure:"rabbitmq"`
-
-	RabbitMQConsumer struct {
-		URL          string `yaml:"url"`
-		ExchangeName string `yaml:"exchangename"`
-		ExchangeType string `yaml:"exchangetype"`
-		QueueName    string `yaml:"queuename"`
-		RoutingKey   string `yaml:"routingkey"`
-	} `mapstructure:"rabbitmqconsumer"`
+	System           SystemConfig           `yaml:"system"`
+	DB               map[string]DBConfig    `yaml:"db"` // 使用 map 来处理多个数据库配置（如 one, two）
+	Redis            RedisConfig            `yaml:"redis"`
+	MongoDB          MongoDBConfig          `yaml:"mongodb"`
+	RabbitMQ         RabbitMQConfig         `yaml:"rabbitmq"`
+	RabbitMQConsumer RabbitMQConsumerConfig `yaml:"rabbitmqconsumer"`
 }
 
 var (
