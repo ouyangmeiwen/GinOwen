@@ -135,8 +135,6 @@ func AutoMigrate(DB *gorm.DB) {
 	}
 }
 `)
-
-	select {}
 	return err
 }
 
@@ -230,9 +228,8 @@ func CreateDBModles(db *gorm.DB) {
 	//g.ApplyBasic(User, Address)
 
 	g.ApplyBasic(allModel...)
-
 	g.Execute()
-
+	CreateAutoMigrationFile()
 	select {}
 }
 
