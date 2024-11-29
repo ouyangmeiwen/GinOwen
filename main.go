@@ -23,19 +23,16 @@ import (
 // @description JWT Authorization header (Bearer token)
 func main() {
 
-	//extend.CreateAutoMigration()
-
 	// 加载配置文件
 	global.OWEN_CONFIG = serviceinit.LoadConfig()
 	// 初始化日志
 	utils.InitLogger()
 	defer utils.Sync()
-
-	//global.OWEN_LOG.Debug("开始程序！")
-
 	global.OWEN_DB = serviceinit.InitDB()
+	extend.Test() //占位置
 
-	extend.CreateDBModles(global.OWEN_DB)
+	//extend.CreateDBModles(global.OWEN_DB) //生成数据库结构根据数据库配置
+	//extend.CreateAutoMigrationFile() //将上面生成的配置生成file
 
 	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
 

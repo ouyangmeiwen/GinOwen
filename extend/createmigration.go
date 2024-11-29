@@ -14,10 +14,10 @@ import (
 	"gorm.io/gorm"
 )
 
-func CreateAutoMigration() {
+func CreateAutoMigrationFile() {
 	// 指定 model 文件夹路径
-	modelDir := "./model"
-	outputFile := "./auto_migrate.go"
+	modelDir := "./extenddb/model"
+	outputFile := "./serviceinit/auto_migrate.go"
 
 	// 获取 model 文件夹下所有的 Go 文件
 	goFiles, err := getGoFilesInDir(modelDir)
@@ -104,12 +104,12 @@ func generateAutoMigrateFile(outputFile string, structNames []string) error {
 	defer file.Close()
 
 	// 写入文件头
-	_, err = file.WriteString(`package main
+	_, err = file.WriteString(`package serviceinit
 
 import (
 	"log"
 	"gorm.io/gorm"
-	"GINOWEN/model"
+	"GINOWEN/extenddb/model"
 )
 
 func AutoMigrate(DB *gorm.DB) {
@@ -135,25 +135,12 @@ func AutoMigrate(DB *gorm.DB) {
 	}
 }
 `)
+
+	select {}
 	return err
 }
 
 func CreateDBModles(db *gorm.DB) {
-
-	//MySQLDSN := "root:abc%40123@(localhost:3306)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local"
-	// username := "root"
-	// password := `qyisno1forever@world`
-	// host := "127.0.0.1"
-	// port := "29010"
-	// dbname := "invengodbv41"
-
-	// MySQLDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", username, password, host, port, dbname)
-	// // 连接数据库
-	// db, err := gorm.Open(mysql.Open(MySQLDSN))
-	// if err != nil {
-	// 	panic(fmt.Errorf("cannot establish db connection: %w", err))
-	// }
-
 	// 生成实例
 	g := gen.NewGenerator(gen.Config{
 		// 相对执行`go run`时的路径, 会自动创建目录
@@ -245,4 +232,10 @@ func CreateDBModles(db *gorm.DB) {
 	g.ApplyBasic(allModel...)
 
 	g.Execute()
+
+	select {}
+}
+
+func Test() {
+
 }
