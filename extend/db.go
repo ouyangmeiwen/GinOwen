@@ -95,6 +95,9 @@ func DeleteUser1(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	//强制删除
+	DB.Unscoped().Delete(&user, id)
+
 	c.JSON(http.StatusOK, gin.H{"data": "User deleted successfully"})
 }
 
@@ -121,6 +124,18 @@ func GetLatestUser(c *gin.Context) {
 // 批量更新：将所有 email 为空的用户的 email 设置为 "unknown@example.com"
 func UpdateUsersEmail(c *gin.Context) {
 	result := DB.Model(&TestUser{}).Where("email = ?", "").Update("email", "unknown@example.com")
+	// 使用 map 来批量更新
+	result = DB.Model(&TestUser{}).Where("email = ?", "").Updates(map[string]interface{}{
+		"email": "unknown@example.com",
+	})
+	// 假设我们想将用户 ID 为 1 的 email 更新为 "new_email@example.com"
+	//它不会触发钩子函数，也不会更新时间戳字段。
+	result = DB.Model(&TestUser{}).Where("id = ?", 1).UpdateColumn("email", "new_email@example.com")
+	result = DB.Model(&TestUser{}).Where("id = ?", 1).UpdateColumns(map[string]interface{}{
+		"email": "new_email@example.com",
+		"name":  "New Name",
+	})
+
 	c.JSON(http.StatusOK, gin.H{"rows_affected": result.RowsAffected})
 }
 
