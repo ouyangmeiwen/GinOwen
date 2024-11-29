@@ -9,7 +9,7 @@ import (
 
 func CusAutoMigrate(DB *gorm.DB) {
 	var err error
-	//err = DB.AutoMigrate(&model.Efmigrationshistory{})
+	err = DB.AutoMigrate(&model.Efmigrationshistory{})
 	err = DB.AutoMigrate(&model.Abpauditlog{})
 	err = DB.AutoMigrate(&model.Abpbackgroundjob{})
 	err = DB.AutoMigrate(&model.Abpedition{})
