@@ -71,7 +71,7 @@ func (LibItemService) ImportExcelByName(req request.ImportExcelByNameInput) (res
 		println(row[0])
 		if len(req.Title) > 0 {
 			if value, ok := dic[req.Title]; ok && (len(row) > value) {
-				rowval := utils.ConvertToUTF8(row[value])
+				rowval := (row[value])
 				utf8_str := utils.SafeSubstring(rowval, 0, 100)
 				obj.Title = utils.TrimSpaces(utf8_str)
 			}
@@ -81,7 +81,7 @@ func (LibItemService) ImportExcelByName(req request.ImportExcelByNameInput) (res
 		}
 		if len(req.Author) > 0 {
 			if value, ok := dic[req.Author]; ok && (len(row) > value) {
-				rowval := utils.ConvertToUTF8(row[value])
+				rowval := (row[value])
 				utf8_str := utils.SafeSubstring(rowval, 0, 100)
 				utf8_str = utils.TrimSpaces(utf8_str)
 				obj.Author = &utf8_str
@@ -114,7 +114,7 @@ func (LibItemService) ImportExcelByName(req request.ImportExcelByNameInput) (res
 		obj.LocationID = nil
 		if len(req.Locationname) > 0 {
 			if value, ok := dic[req.Locationname]; ok && (len(row) > value) {
-				rowval := utils.ConvertToUTF8(row[value])
+				rowval := (row[value])
 				utf8_str := utils.TrimSpaces(rowval)
 				obj.LocationName = &utf8_str
 			}
@@ -128,7 +128,7 @@ func (LibItemService) ImportExcelByName(req request.ImportExcelByNameInput) (res
 		obj.PubNo = nil
 		if len(req.Publisher) > 0 { //如果最后一位没有是不会初始化数组的
 			if value, ok := dic[req.Publisher]; ok && (len(row) > value) {
-				rowval := utils.ConvertToUTF8(row[value])
+				rowval := (row[value])
 				utf8_str := utils.SafeSubstring(rowval, 0, 200)
 				utf8_str = utils.TrimSpaces(utf8_str)
 				obj.Publisher = &utf8_str
@@ -214,7 +214,7 @@ func (LibItemService) ImportExcelByIndex(req request.ImportExcelByIndexInput) (r
 		obj.InfoID = nil
 		println(row[0])
 		if len(row) > req.Title && req.Title >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.Title])
+			rowval := (row[req.Title])
 			utf8_str := utils.SafeSubstring(rowval, 0, 100)
 			obj.Title = utils.TrimSpaces(utf8_str)
 		}
@@ -222,14 +222,14 @@ func (LibItemService) ImportExcelByIndex(req request.ImportExcelByIndexInput) (r
 			obj.Title = ""
 		}
 		if len(row) > req.Author && req.Author >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.Author])
+			rowval := (row[req.Author])
 			utf8_str := utils.SafeSubstring(rowval, 0, 100)
 			utf8_str = utils.TrimSpaces(utf8_str)
 			obj.Author = &utf8_str
 
 		}
 		if len(row) > req.Barcode && req.Barcode >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.Barcode])
+			rowval := (row[req.Barcode])
 			utf8_str := utils.SafeSubstring(rowval, 0, 30)
 			obj.Barcode = utils.RemoveBrackets(utils.TrimSpaces(utf8_str))
 		}
@@ -239,13 +239,13 @@ func (LibItemService) ImportExcelByIndex(req request.ImportExcelByIndexInput) (r
 		}
 		obj.IsEnable = []uint8{1}
 		if len(row) > req.CallNo && req.CallNo >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.CallNo])
+			rowval := (row[req.CallNo])
 			utf8_str := utils.TrimSpaces(rowval)
 			obj.CallNo = &utf8_str
 		}
 		obj.PreCallNo = nil
 		if len(row) > req.CatalogCode && req.CatalogCode >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.CatalogCode])
+			rowval := (row[req.CatalogCode])
 			utf8_str := utils.TrimSpaces(rowval)
 			obj.CatalogCode = &utf8_str
 		}
@@ -254,38 +254,38 @@ func (LibItemService) ImportExcelByIndex(req request.ImportExcelByIndexInput) (r
 		obj.PressmarkName = nil
 		obj.LocationID = nil
 		if len(row) > req.Locationname && req.Locationname >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.Locationname])
+			rowval := (row[req.Locationname])
 			utf8_str := utils.TrimSpaces(rowval)
 			obj.LocationName = &utf8_str
 		}
 
 		obj.BookBarcode = nil
 		if len(row) > req.ISBN && req.ISBN >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.ISBN])
+			rowval := (row[req.ISBN])
 			utf8_str := utils.TrimSpaces(rowval)
 			obj.ISBN = &utf8_str
 		}
 
 		obj.PubNo = nil
 		if len(row) > req.Publisher && req.Publisher >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.Publisher])
+			rowval := (row[req.Publisher])
 			utf8_str := utils.SafeSubstring(rowval, 0, 200)
 			utf8_str = utils.TrimSpaces(rowval)
 			obj.Publisher = &utf8_str
 		}
 		if len(row) > req.PubDate && req.PubDate >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.PubDate])
+			rowval := (row[req.PubDate])
 			utf8_str := utils.TrimSpaces(rowval)
 			obj.PubDate = &utf8_str
 		}
 
 		if len(row) > req.Price && req.Price >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.Price])
+			rowval := (row[req.Price])
 			utf8_str := utils.TrimSpaces(rowval)
 			obj.Price = &utf8_str
 		}
 		if len(row) > req.Pages && req.Pages >= 0 {
-			rowval := utils.ConvertToUTF8(row[req.Pages])
+			rowval := (row[req.Pages])
 			utf8_str := utils.TrimSpaces(rowval)
 			obj.Pages = &utf8_str
 		}

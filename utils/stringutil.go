@@ -27,10 +27,6 @@ func TrimSpaces(s string) string {
 	return strings.TrimSpace(s)
 }
 
-func ConvertToUTF8(str string) string {
-	return str
-}
-
 // substring 返回字符串 str 从 start 到 end 的子串
 func SafeSubstring(str string, start int, length int) string {
 	runes := []rune(str)
