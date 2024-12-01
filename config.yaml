@@ -9,7 +9,7 @@ system:
   ipwhitelist: ::1,localhost,127.0.0.1
   swaggerui: true #是否开启swagger
   enablewebsocket: true
-  taskinterval: 60 #任务检查时间 单位秒
+  taskinterval: 0 #任务检查时间 单位秒
 
   circuitbreaker:
     maxrequests: 20 #20个请求 最大请求数
