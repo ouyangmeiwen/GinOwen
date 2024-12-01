@@ -5,6 +5,7 @@ import (
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
 	"GINOWEN/utils"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -28,6 +29,15 @@ func (ScheduledTaskApi) AddTask(c *gin.Context) {
 		utils.FailWithMessage(err.Error(), c)
 		return
 	}
+	if req.IntervalSeconds == nil || *req.IntervalSeconds <= 0 {
+		zero := 0
+		req.IntervalSeconds = &zero
+	}
+	if time.Now().After(req.ScheduleTime) {
+		utils.FailWithMessage("任务执行时间必须在今天之后！", c)
+		return
+	}
+
 	var resp response.AddScheduledTaskDto
 	resp, err = ServicesGroup.TaskService.AddScheduledTask(req)
 	if err != nil {
