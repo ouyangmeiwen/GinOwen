@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GINOWEN/api"
 	"GINOWEN/extend"
 	"GINOWEN/extend/rabbitmqextend"
 	"GINOWEN/extend/websocketextend"
@@ -8,7 +9,10 @@ import (
 	"GINOWEN/middlewares"
 	"GINOWEN/routers"
 	"GINOWEN/serviceinit"
+	"GINOWEN/services"
 	"GINOWEN/utils"
+	"log"
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -74,6 +78,30 @@ func main() {
 	if global.OWEN_CONFIG.System.EnableWebsocket {
 		websocketextend.RegisterWebsocket(r) //注册websocket
 	}
-	routers.InitAllRouter(r) //注册所有路由
-	routers.RunAsServer(r)   //启动服务
+	routers.InitAllRouter(r)
+	if global.OWEN_CONFIG.System.TaskInterval > 0 {
+		go startScheduledTaskService(&api.ServicesGroup.TaskService, global.OWEN_CONFIG.System.TaskInterval) //任务调度
+	} //注册所有路由
+	routers.RunAsServer(r) //启动服务
+}
+
+var mu_task sync.Mutex // 用于保护共享资源的锁
+// 定时任务服务
+func startScheduledTaskService(taskService *services.ScheduledTaskService, interval int) {
+	// 定期检查计划任务并执行
+	ticker := time.NewTicker(time.Duration(interval) * time.Second)
+	defer ticker.Stop()
+
+	// 使用 for range 代替 select{}
+	for range ticker.C {
+		mu_task.Lock() // 加锁，确保对共享资源的访问是安全的
+		// 处理任务
+		err := taskService.ProcessTasks()
+		if err != nil {
+			log.Printf("Error processing tasks: %v", err)
+		} else {
+			log.Println("Tasks processed successfully")
+		}
+		mu_task.Unlock() // 解锁
+	}
 }

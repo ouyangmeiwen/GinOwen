@@ -127,7 +127,7 @@ func AutoMigrateDB(DB *gorm.DB) {
 	err = DB.AutoMigrate(&models.OwenUser{})
 	err = DB.AutoMigrate(&models.OwenRole{})
 	err = DB.AutoMigrate(&models.OwenAuditLog{})
-
+	err = DB.AutoMigrate(&models.ScheduledTask{})
 	//是否需要初始化model
 	if _, ok := global.OWEN_DBList["to"]; ok {
 		CusAutoMigrate(global.OWEN_DBList["to"])

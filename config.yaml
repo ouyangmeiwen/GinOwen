@@ -9,6 +9,8 @@ system:
   ipwhitelist: ::1,localhost,127.0.0.1
   swaggerui: true #是否开启swagger
   enablewebsocket: true
+  taskinterval: 60 #任务检查时间 单位秒
+
   circuitbreaker:
     maxrequests: 20 #20个请求 最大请求数
     second: 10 #10秒  监控时间窗口（秒）
@@ -40,7 +42,7 @@ db:
     maxidleconns: 10
     connmaxlifetime: 30
   from:
-    type: 
+    type:
     mysql: "root:qyisno1forever@world@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
     oracle: "user/password@localhost:1521/service_name"
@@ -50,7 +52,7 @@ db:
     maxidleconns: 10
     connmaxlifetime: 30
   to:
-    type: 
+    type:
     mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
     oracle: "user/password@localhost:1521/service_name"
