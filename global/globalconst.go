@@ -1,6 +1,7 @@
 package global
 
 import (
+	"context"
 	"sync"
 
 	"github.com/redis/go-redis/v9"
@@ -17,4 +18,5 @@ var (
 	OWEN_CONFIG YarmConfig
 	OWEN_LOCK   sync.RWMutex
 	OWEN_LOG    *zap.Logger
+	Ctx         = context.Background()
 )

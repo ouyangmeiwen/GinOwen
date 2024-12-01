@@ -3,7 +3,6 @@ package middlewares
 import (
 	"GINOWEN/global"
 	"GINOWEN/utils"
-	"context"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -12,16 +11,12 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-var (
-	ctx = context.Background()
-)
-
 // 加载黑名单（Redis 版本）
 func LoadBlacklist() map[string]time.Time {
 	blacklist := make(map[string]time.Time)
 
 	// 获取所有黑名单的键
-	keys, err := global.OWEN_REDIS.Keys(ctx, global.OWEN_CONFIG.System.Blacklistpre+"blacklist:*").Result()
+	keys, err := global.OWEN_REDIS.Keys(global.Ctx, global.OWEN_CONFIG.System.Blacklistpre+"blacklist:*").Result()
 	if err != nil {
 		fmt.Println("Error loading blacklist keys from Redis:", err)
 		return blacklist
@@ -29,7 +24,7 @@ func LoadBlacklist() map[string]time.Time {
 
 	// 遍历键并获取每个 IP 的解锁时间
 	for _, key := range keys {
-		val, err := global.OWEN_REDIS.Get(ctx, key).Result()
+		val, err := global.OWEN_REDIS.Get(global.Ctx, key).Result()
 		if err != nil {
 			fmt.Printf("Error retrieving value for key %s: %v\n", key, err)
 			continue
@@ -52,7 +47,7 @@ func RemoveFromBlacklist(ip string) {
 	key := fmt.Sprintf(global.OWEN_CONFIG.System.Blacklistpre+"blacklist:%s", ip)
 
 	// 从 Redis 删除指定的键
-	err := global.OWEN_REDIS.Del(ctx, key).Err()
+	err := global.OWEN_REDIS.Del(global.Ctx, key).Err()
 	if err != nil {
 		fmt.Printf("Error removing blacklist IP %s from Redis: %v\n", ip, err)
 	} else {
@@ -70,7 +65,7 @@ func SaveToBlacklist(ip string, unlockTime time.Time) {
 	}
 
 	// 设置 Redis 键值对，使用解锁时间作为过期时间
-	err = global.OWEN_REDIS.Set(ctx, key, value, time.Until(unlockTime)).Err()
+	err = global.OWEN_REDIS.Set(global.Ctx, key, value, time.Until(unlockTime)).Err()
 	if err != nil {
 		fmt.Printf("Error saving blacklist IP %s to Redis: %v\n", ip, err)
 	}
@@ -87,7 +82,7 @@ func IPBlacklistMiddleware() gin.HandlerFunc {
 		}
 		key := fmt.Sprintf(global.OWEN_CONFIG.System.Blacklistpre+"blacklist:%s", ip)
 		// 检查 IP 是否在 Redis 中
-		val, err := global.OWEN_REDIS.Get(ctx, key).Result()
+		val, err := global.OWEN_REDIS.Get(global.Ctx, key).Result()
 		if err == redis.Nil {
 			// IP 不在黑名单中
 			c.Next()

@@ -5,7 +5,6 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/models"
 	"GINOWEN/utils"
-	"context"
 
 	"fmt"
 	"net/http"
@@ -54,8 +53,7 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 		var role models.OwenRole
 
 		if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
-			var back = context.Background()
-			rolestr, err := global.OWEN_REDIS.Get(back, tokenStr).Result()
+			rolestr, err := global.OWEN_REDIS.Get(global.Ctx, tokenStr).Result()
 			if err != nil {
 				// 如果解析失败，返回错误信息
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "token expire"})

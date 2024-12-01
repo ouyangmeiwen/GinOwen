@@ -13,6 +13,7 @@ type SystemConfig struct {
 	Swaggerui       bool   `yaml:"swaggerui"`
 	EnableWebsocket bool   `yaml:"enablewebsocket"`
 	TaskInterval    int    `yaml:"taskinterval"`
+	TaskDB          string `yaml:"taskdb"`
 
 	CircuitBreaker struct {
 		MaxRequests         int `yaml:"maxrequests"`

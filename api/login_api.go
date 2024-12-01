@@ -6,15 +6,12 @@ import (
 	"GINOWEN/models"
 	"GINOWEN/models/request"
 	"GINOWEN/utils"
-	"context"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
-
-var back = context.Background()
 
 type LoginAPI struct {
 }
@@ -62,7 +59,7 @@ func (LoginAPI) Login(ctx *gin.Context) {
 	if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
 		rolestr, err := utils.ToJSON(user.User.Role)
 		if err == nil {
-			global.OWEN_REDIS.Set(back, token, rolestr, time.Duration(TokenExpire)*time.Hour)
+			global.OWEN_REDIS.Set(global.Ctx, token, rolestr, time.Duration(TokenExpire)*time.Hour)
 		}
 	}
 	utils.OkWithDetailed("Bearer "+token, "success", ctx)
@@ -90,7 +87,7 @@ func (LoginAPI) LoginOut(ctx *gin.Context) {
 		return
 	}
 	if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
-		global.OWEN_REDIS.Set(back, tokenStr, "", -1)
+		global.OWEN_REDIS.Set(global.Ctx, tokenStr, "", -1)
 	}
 	utils.OkWithMessage("logout success", ctx)
 }
