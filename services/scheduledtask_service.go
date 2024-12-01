@@ -18,30 +18,46 @@ type ScheduledTaskService struct {
 func (ScheduledTaskService) getScheduledTasks() (takss []models.ScheduledTask, err error) {
 	if global.OWEN_CONFIG.System.TaskDB == "redis" {
 		var tasks []models.ScheduledTask
-		keys, err := global.OWEN_REDIS.Keys(global.Ctx, "task:*").Result() // 获取所有任务的键
-		if err != nil {
-			return nil, fmt.Errorf("error getting task keys from Redis: %v", err)
-		}
-
-		for _, key := range keys {
-			taskData, err := global.OWEN_REDIS.HGetAll(global.Ctx, key).Result()
+		cursor := uint64(0)
+		batchSize := 1000 // 每次扫描的键数量
+		// 使用 SCAN 命令进行增量扫描
+		for {
+			// 获取下一批符合 "task:*" 模式的键
+			keys, newCursor, err := global.OWEN_REDIS.Scan(global.Ctx, cursor, "task:*", int64(batchSize)).Result()
 			if err != nil {
-				log.Printf("Error fetching task data for %s: %v", key, err)
-				continue
+				return nil, fmt.Errorf("error scanning task keys from Redis: %v", err)
 			}
+			// 批量获取任务的详细信息
+			for _, key := range keys {
+				// 使用 HMGet 获取需要的字段
+				taskData, err := global.OWEN_REDIS.HMGet(global.Ctx, key, "taskName", "status", "nextRunTime", "intervalSeconds").Result()
+				if err != nil {
+					log.Printf("Error fetching task data for %s: %v", key, err)
+					continue
+				}
+				// 解析任务数据
+				var task models.ScheduledTask
+				task.ID, _ = strconv.Atoi(strings.TrimPrefix(key, "task:"))
+				task.TaskName = taskData[0].(string)
+				task.Status = taskData[1].(string)
+				task.NextRunTime, _ = time.Parse(time.RFC3339, taskData[2].(string))
 
-			var task models.ScheduledTask
-			// 假设 Redis 存储的数据结构是正确的，可以直接映射
-			task.ID, _ = strconv.Atoi(strings.TrimPrefix(key, "task:"))
-			task.TaskName = taskData["taskName"]
-			task.Status = taskData["status"]
-			task.NextRunTime, _ = time.Parse(time.RFC3339, taskData["nextRunTime"])
-			intervalSeconds, _ := strconv.Atoi(taskData["intervalSeconds"])
-			task.IntervalSeconds = &intervalSeconds
-			if task.Status == "pending" || task.Status == "running" {
-				tasks = append(tasks, task)
+				if intervalSecondsStr, ok := taskData[3].(string); ok && intervalSecondsStr != "" {
+					intervalSeconds, _ := strconv.Atoi(intervalSecondsStr)
+					task.IntervalSeconds = &intervalSeconds
+				}
+				// 只选择 "pending" 或 "running" 状态的任务
+				if task.Status == "pending" || task.Status == "running" {
+					tasks = append(tasks, task)
+				}
 			}
+			// 如果游标为 0，说明扫描完成
+			if newCursor == 0 {
+				break
+			}
+			cursor = newCursor
 		}
+
 		return tasks, nil
 	} else {
 		var ts []models.ScheduledTask
@@ -56,7 +72,12 @@ func (ScheduledTaskService) getScheduledTasks() (takss []models.ScheduledTask, e
 
 func (ScheduledTaskService) updateTaskStatus(taskID int, status string) error {
 	if global.OWEN_CONFIG.System.TaskDB == "redis" {
-		return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "status", status).Err()
+		if status == "completed" {
+			//redis 任务直接移除完成的任务
+			return global.OWEN_REDIS.Del(global.Ctx, fmt.Sprintf("task:%d", taskID)).Err()
+		} else {
+			return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "status", status).Err()
+		}
 	} else {
 		return global.OWEN_DB.Model(&models.ScheduledTask{}).Where("ID=?", taskID).Updates(map[string]interface{}{
 			"status": status,
