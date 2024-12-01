@@ -141,6 +141,14 @@ func (s ScheduledTaskService) AddScheduledTask(req request.AddScheduledTaskInput
 		if err != nil {
 			return resp, fmt.Errorf("failed to add task to Redis: %v", err)
 		}
+		if task.IntervalSeconds == nil && *task.IntervalSeconds <= 0 {
+			// 设置键的有效期，单位为秒 执行1个月后过期
+			expireDuration := time.Until(task.ScheduleTime) + time.Hour*24*30
+			err = global.OWEN_REDIS.Expire(global.Ctx, taskKey, expireDuration).Err()
+			if err != nil {
+				return resp, fmt.Errorf("failed to set expiration for task: %v", err)
+			}
+		}
 		fmt.Printf("Task '%s' added successfully\n", task.TaskName)
 		return resp, nil
 	} else {
