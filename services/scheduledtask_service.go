@@ -72,12 +72,13 @@ func (ScheduledTaskService) getScheduledTasks() (takss []models.ScheduledTask, e
 
 func (ScheduledTaskService) updateTaskStatus(taskID int, status string) error {
 	if global.OWEN_CONFIG.System.TaskDB == "redis" {
-		if status == "completed" {
-			//redis 任务直接移除完成的任务
-			return global.OWEN_REDIS.Del(global.Ctx, fmt.Sprintf("task:%d", taskID)).Err()
-		} else {
-			return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "status", status).Err()
-		}
+		// if status == "completed" {
+		// 	//redis 任务直接移除完成的任务
+		// 	return global.OWEN_REDIS.Del(global.Ctx, fmt.Sprintf("task:%d", taskID)).Err()
+		// } else {
+		// 	return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "status", status).Err()
+		// }
+		return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "status", status).Err()
 	} else {
 		return global.OWEN_DB.Model(&models.ScheduledTask{}).Where("ID=?", taskID).Updates(map[string]interface{}{
 			"status": status,
