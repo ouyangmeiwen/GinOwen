@@ -268,6 +268,65 @@ const docTemplate = `{
                 }
             }
         },
+        "/Task/AddTask": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Task"
+                ],
+                "summary": "添加任务",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "name": "IntervalSeconds",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "计划执行时间，非空 2024-12-01T17:10:45+08:00",
+                        "name": "ScheduleTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "任务名称，非空，类型为 varchar(255)",
+                        "name": "TaskName",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.AddScheduledTaskDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/Libitems/ImportExcelByIndex": {
             "post": {
                 "security": [
@@ -1383,6 +1442,9 @@ const docTemplate = `{
                     "type": "integer"
                 }
             }
+        },
+        "response.AddScheduledTaskDto": {
+            "type": "object"
         },
         "response.CreateLmsLogDto": {
             "type": "object"

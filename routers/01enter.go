@@ -9,6 +9,7 @@ type RouterApis struct {
 	loginApi          api.LoginAPI
 	blacklistApi      api.BlackListApi
 	gpiApi            api.GPIApi
+	taskApi           api.ScheduledTaskApi
 }
 
 var ApiGroup = new(RouterApis)

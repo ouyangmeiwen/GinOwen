@@ -3,6 +3,8 @@ package services
 import (
 	"GINOWEN/global"
 	"GINOWEN/models"
+	"GINOWEN/models/request"
+	"GINOWEN/models/response"
 	"fmt"
 	"log"
 	"time"
@@ -36,14 +38,21 @@ func (ScheduledTaskService) executeTask(task models.ScheduledTask) {
 }
 
 // 添加新任务
-func (ScheduledTaskService) AddScheduledTask(task models.ScheduledTask) error {
+func (ScheduledTaskService) AddScheduledTask(req request.AddScheduledTaskInput) (resp response.AddScheduledTaskDto, err error) {
+
+	var task models.ScheduledTask
+	task.TaskName = req.TaskName
+	task.ScheduleTime = req.ScheduleTime
+	task.IntervalSeconds = req.IntervalSeconds
+	task.NextRunTime = req.ScheduleTime
+	task.Status = "pending"
 	// 将任务插入数据库
-	err := global.OWEN_DB.Create(&task).Error
+	err = global.OWEN_DB.Create(&task).Error
 	if err != nil {
-		return fmt.Errorf("failed to add task: %v", err)
+		return resp, fmt.Errorf("failed to add task: %v", err)
 	}
 	fmt.Printf("Task '%s' added successfully\n", task.TaskName)
-	return nil
+	return resp, err
 }
 
 // ProcessTasks 处理并执行所有到期的任务
@@ -70,7 +79,7 @@ func (s *ScheduledTaskService) ProcessTasks() error {
 			}
 
 			// 如果任务是周期性的，重新设置下次执行时间
-			if task.IntervalSeconds != nil {
+			if task.IntervalSeconds != nil && *task.IntervalSeconds > 0 {
 				nextRunTime := time.Now().Add(time.Duration(*task.IntervalSeconds) * time.Second)
 				if err := s.updateTaskInternal(task.ID, nextRunTime); err != nil {
 					log.Printf("Error updating task %d next run time: %v", task.ID, err)
