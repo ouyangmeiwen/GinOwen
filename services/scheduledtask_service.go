@@ -28,6 +28,7 @@ func (ScheduledTaskService) updateTaskStatus(taskID int, status string) error {
 func (ScheduledTaskService) updateTaskInternal(taskID int, nexttime time.Time) error {
 	return global.OWEN_DB.Model(&models.ScheduledTask{}).Where("ID=?", taskID).Updates(map[string]interface{}{
 		"next_run_time": nexttime,
+		"status":        "pending",
 	}).Error
 }
 func (ScheduledTaskService) executeTask(task models.ScheduledTask) {
