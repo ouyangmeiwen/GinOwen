@@ -248,11 +248,40 @@ func CusSyncDatabase() error {
 	return err
 }
 
+// 遍历目录并重命名以_开头的文件
+func renameFilesInDir(dir string) error {
+	// 遍历目录
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// 只处理文件，不处理子目录
+		if !info.IsDir() && strings.HasPrefix(info.Name(), "_") {
+			// 新文件名去掉前缀_
+			newName := strings.TrimPrefix(info.Name(), "_")
+			newPath := filepath.Join(filepath.Dir(path), newName)
+
+			// 重命名文件
+			err := os.Rename(path, newPath)
+			if err != nil {
+				return fmt.Errorf("无法重命名文件 %s: %v", path, err)
+			}
+			fmt.Printf("文件 %s 已重命名为 %s\n", path, newPath)
+		}
+
+		return nil
+	})
+
+	return err
+}
+
 func CreateDBModles(db *gorm.DB) {
 	// 生成实例
+	outpath := "extenddb/dbgen"
 	g := gen.NewGenerator(gen.Config{
 		// 相对执行`go run`时的路径, 会自动创建目录
-		OutPath: "extenddb/dbgen",
+		OutPath: outpath,
 
 		// WithDefaultQuery 生成默认查询结构体(作为全局变量使用), 即`Q`结构体和其字段(各表模型)
 		// WithoutContext 生成没有context调用限制的代码供查询
@@ -339,7 +368,7 @@ func CreateDBModles(db *gorm.DB) {
 	g.ApplyBasic(allModel...)
 	g.Execute()
 	log.Printf("生成from数据库表结构")
-
+	renameFilesInDir(outpath)
 }
 
 func Test() {
