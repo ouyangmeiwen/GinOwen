@@ -123,6 +123,11 @@ func CusAutoMigrate(DB *gorm.DB) {
 	// 写入每个结构体的迁移代码
 	for _, structName := range structNames {
 		line := fmt.Sprintf("\terr = DB.AutoMigrate(&model.%s{})\n", structName)
+		line += fmt.Sprintf(`
+	if err != nil {
+		log.Printf("Failed to migrate table: %s")
+	}
+`, structName)
 		_, err = file.WriteString(line)
 		if err != nil {
 			return err
@@ -183,7 +188,6 @@ func generateAutoSyncFile(outputFile string, structNames []string) error {
 
 import (
 	"log"
-	"gorm.io/gorm"
 	"GINOWEN/extenddb/model"
 	"GINOWEN/global"
 )
@@ -208,7 +212,8 @@ func CusSyncDatabase() error {
 			var %sData []model.%s
 			// 分页查询数据，不依赖排序字段
 			if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&%sData).Error; err != nil {
-				//return err
+				log.Printf("Failed to query table: %s")
+				return err
 			}
 
 			// 如果没有更多数据，退出循环
@@ -221,10 +226,11 @@ func CusSyncDatabase() error {
 
 			// 将数据插入到 db2
 			if err := global.OWEN_DBList["to"].CreateInBatches(%sData, batchSize).Error; err != nil {
-				//return err
+				log.Printf("Failed to insert table: %s")
+				return err
 			}
 		}
-		`, structName, structName, structName, structName, structName, structName)
+		`, structName, structName, structName, structName, structName, structName, structName, structName)
 		_, err = file.WriteString(line)
 		if err != nil {
 			return err
@@ -330,7 +336,7 @@ func CreateDBModles(db *gorm.DB) {
 	//g.ApplyBasic(User, Address)
 
 	g.ApplyBasic(allModel...)
-	g.Execute()
+	//g.Execute()
 	log.Printf("生成from数据库表结构")
 	if _, ok := global.OWEN_DBList["from"]; ok {
 		if global.OWEN_CONFIG.DB["from"].CanAutoMigration {
