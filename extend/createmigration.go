@@ -259,7 +259,7 @@ func renameFilesInDir(dir string) error {
 		// 只处理文件，不处理子目录
 		if !info.IsDir() && strings.HasPrefix(info.Name(), "_") {
 			// 新文件名去掉前缀_
-			newName := strings.TrimPrefix(info.Name(), "_")
+			newName := strings.TrimLeft(info.Name(), "_")
 			newPath := filepath.Join(filepath.Dir(path), newName)
 
 			// 重命名文件
@@ -368,7 +368,7 @@ func CreateDBModles(db *gorm.DB) {
 	g.ApplyBasic(allModel...)
 	g.Execute()
 	log.Printf("生成from数据库表结构")
-	renameFilesInDir(outpath)
+	renameFilesInDir("extenddb")
 }
 
 func Test() {
