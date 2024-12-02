@@ -40,11 +40,10 @@ func main() {
 		}
 		if global.OWEN_CONFIG.DB["from"].CanAutoMigration {
 			extend.CreateAutoMigrationFile()
-			log.Printf("生成from数据库表结构文件")
+
 		}
 		if global.OWEN_CONFIG.DB["from"].CanAutoSynData {
 			extend.CreateAutoSyncFile()
-			log.Printf("生成from数据库表数据文件")
 		}
 	} //占位置
 	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
