@@ -189,7 +189,9 @@ import (
 )
 
 func CusSyncDatabase() error {
-	var err error
+	batchSize := 1000 // 每批次同步的数据量
+	var offset int // 用于分页
+
 `)
 
 	if err != nil {
@@ -198,18 +200,31 @@ func CusSyncDatabase() error {
 
 	// 写入每个结构体的同步代码
 	for _, structName := range structNames {
+		// 生成每个结构体同步的分页代码
 		line := fmt.Sprintf(`
-	// Syncing %s model data
-	var %sData []model.%s
-	if err := global.OWEN_DBList["from"].Find(&%sData).Error; err != nil {
-		//return err
-	}
-	for _, record := range %sData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
-			//return err
+		// Syncing %s model data
+
+		for {
+			var %sData []model.%s
+			// 分页查询数据，不依赖排序字段
+			if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&%sData).Error; err != nil {
+				//return err
+			}
+
+			// 如果没有更多数据，退出循环
+			if len(%sData) == 0 {
+				break
+			}
+
+			// 更新 offset
+			offset += batchSize
+
+			// 将数据插入到 db2
+			if err := global.OWEN_DBList["to"].CreateInBatches(%sData, batchSize).Error; err != nil {
+				//return err
+			}
 		}
-	}
-	`, structName, structName, structName, structName, structName)
+		`, structName, structName, structName, structName, structName, structName)
 		_, err = file.WriteString(line)
 		if err != nil {
 			return err

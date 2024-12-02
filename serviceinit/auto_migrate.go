@@ -1,10 +1,9 @@
 package serviceinit
 
 import (
-	"GINOWEN/extenddb/model"
 	"log"
-
 	"gorm.io/gorm"
+	"GINOWEN/extenddb/model"
 )
 
 func CusAutoMigrate(DB *gorm.DB) {

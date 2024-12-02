@@ -6,2169 +6,4535 @@ import (
 )
 
 func CusSyncDatabase() error {
+	batchSize := 1000 // 每批次同步的数据量
+	var offset int    // 用于分页
 	// Syncing Abpauditlog model data
-	var AbpauditlogData []model.Abpauditlog
-	if err := global.OWEN_DBList["from"].Find(&AbpauditlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpauditlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpauditlogData []model.Abpauditlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpauditlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpauditlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpauditlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpbackgroundjob model data
-	var AbpbackgroundjobData []model.Abpbackgroundjob
-	if err := global.OWEN_DBList["from"].Find(&AbpbackgroundjobData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpbackgroundjobData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpbackgroundjobData []model.Abpbackgroundjob
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpbackgroundjobData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpbackgroundjobData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpbackgroundjobData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpedition model data
-	var AbpeditionData []model.Abpedition
-	if err := global.OWEN_DBList["from"].Find(&AbpeditionData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpeditionData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpeditionData []model.Abpedition
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpeditionData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpeditionData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpeditionData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpentitychange model data
-	var AbpentitychangeData []model.Abpentitychange
-	if err := global.OWEN_DBList["from"].Find(&AbpentitychangeData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpentitychangeData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpentitychangeData []model.Abpentitychange
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpentitychangeData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpentitychangeData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpentitychangeData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpentitychangeset model data
-	var AbpentitychangesetData []model.Abpentitychangeset
-	if err := global.OWEN_DBList["from"].Find(&AbpentitychangesetData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpentitychangesetData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpentitychangesetData []model.Abpentitychangeset
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpentitychangesetData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpentitychangesetData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpentitychangesetData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpentitypropertychange model data
-	var AbpentitypropertychangeData []model.Abpentitypropertychange
-	if err := global.OWEN_DBList["from"].Find(&AbpentitypropertychangeData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpentitypropertychangeData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpentitypropertychangeData []model.Abpentitypropertychange
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpentitypropertychangeData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpentitypropertychangeData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpentitypropertychangeData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpfeature model data
-	var AbpfeatureData []model.Abpfeature
-	if err := global.OWEN_DBList["from"].Find(&AbpfeatureData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpfeatureData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpfeatureData []model.Abpfeature
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpfeatureData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpfeatureData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpfeatureData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abplanguage model data
-	var AbplanguageData []model.Abplanguage
-	if err := global.OWEN_DBList["from"].Find(&AbplanguageData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbplanguageData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbplanguageData []model.Abplanguage
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbplanguageData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbplanguageData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbplanguageData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abplanguagetext model data
-	var AbplanguagetextData []model.Abplanguagetext
-	if err := global.OWEN_DBList["from"].Find(&AbplanguagetextData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbplanguagetextData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbplanguagetextData []model.Abplanguagetext
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbplanguagetextData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbplanguagetextData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbplanguagetextData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpnotification model data
-	var AbpnotificationData []model.Abpnotification
-	if err := global.OWEN_DBList["from"].Find(&AbpnotificationData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpnotificationData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpnotificationData []model.Abpnotification
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpnotificationData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpnotificationData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpnotificationData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpnotificationsubscription model data
-	var AbpnotificationsubscriptionData []model.Abpnotificationsubscription
-	if err := global.OWEN_DBList["from"].Find(&AbpnotificationsubscriptionData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpnotificationsubscriptionData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpnotificationsubscriptionData []model.Abpnotificationsubscription
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpnotificationsubscriptionData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpnotificationsubscriptionData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpnotificationsubscriptionData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abporganizationunitrole model data
-	var AbporganizationunitroleData []model.Abporganizationunitrole
-	if err := global.OWEN_DBList["from"].Find(&AbporganizationunitroleData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbporganizationunitroleData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbporganizationunitroleData []model.Abporganizationunitrole
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbporganizationunitroleData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbporganizationunitroleData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbporganizationunitroleData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abporganizationunit model data
-	var AbporganizationunitData []model.Abporganizationunit
-	if err := global.OWEN_DBList["from"].Find(&AbporganizationunitData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbporganizationunitData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbporganizationunitData []model.Abporganizationunit
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbporganizationunitData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbporganizationunitData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbporganizationunitData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abppermission model data
-	var AbppermissionData []model.Abppermission
-	if err := global.OWEN_DBList["from"].Find(&AbppermissionData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbppermissionData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbppermissionData []model.Abppermission
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbppermissionData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbppermissionData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbppermissionData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abppersistedgrant model data
-	var AbppersistedgrantData []model.Abppersistedgrant
-	if err := global.OWEN_DBList["from"].Find(&AbppersistedgrantData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbppersistedgrantData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbppersistedgrantData []model.Abppersistedgrant
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbppersistedgrantData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbppersistedgrantData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbppersistedgrantData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abproleclaim model data
-	var AbproleclaimData []model.Abproleclaim
-	if err := global.OWEN_DBList["from"].Find(&AbproleclaimData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbproleclaimData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbproleclaimData []model.Abproleclaim
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbproleclaimData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbproleclaimData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbproleclaimData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abprole model data
-	var AbproleData []model.Abprole
-	if err := global.OWEN_DBList["from"].Find(&AbproleData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbproleData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbproleData []model.Abprole
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbproleData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbproleData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbproleData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpsetting model data
-	var AbpsettingData []model.Abpsetting
-	if err := global.OWEN_DBList["from"].Find(&AbpsettingData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpsettingData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpsettingData []model.Abpsetting
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpsettingData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpsettingData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpsettingData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abptenantnotification model data
-	var AbptenantnotificationData []model.Abptenantnotification
-	if err := global.OWEN_DBList["from"].Find(&AbptenantnotificationData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbptenantnotificationData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbptenantnotificationData []model.Abptenantnotification
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbptenantnotificationData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbptenantnotificationData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbptenantnotificationData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abptenant model data
-	var AbptenantData []model.Abptenant
-	if err := global.OWEN_DBList["from"].Find(&AbptenantData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbptenantData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbptenantData []model.Abptenant
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbptenantData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbptenantData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbptenantData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpuseraccount model data
-	var AbpuseraccountData []model.Abpuseraccount
-	if err := global.OWEN_DBList["from"].Find(&AbpuseraccountData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpuseraccountData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpuseraccountData []model.Abpuseraccount
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpuseraccountData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpuseraccountData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpuseraccountData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpuserclaim model data
-	var AbpuserclaimData []model.Abpuserclaim
-	if err := global.OWEN_DBList["from"].Find(&AbpuserclaimData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpuserclaimData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpuserclaimData []model.Abpuserclaim
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpuserclaimData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpuserclaimData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpuserclaimData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpuserloginattempt model data
-	var AbpuserloginattemptData []model.Abpuserloginattempt
-	if err := global.OWEN_DBList["from"].Find(&AbpuserloginattemptData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpuserloginattemptData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpuserloginattemptData []model.Abpuserloginattempt
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpuserloginattemptData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpuserloginattemptData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpuserloginattemptData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpuserlogin model data
-	var AbpuserloginData []model.Abpuserlogin
-	if err := global.OWEN_DBList["from"].Find(&AbpuserloginData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpuserloginData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpuserloginData []model.Abpuserlogin
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpuserloginData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpuserloginData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpuserloginData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpusernotification model data
-	var AbpusernotificationData []model.Abpusernotification
-	if err := global.OWEN_DBList["from"].Find(&AbpusernotificationData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpusernotificationData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpusernotificationData []model.Abpusernotification
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpusernotificationData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpusernotificationData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpusernotificationData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpuserorganizationunit model data
-	var AbpuserorganizationunitData []model.Abpuserorganizationunit
-	if err := global.OWEN_DBList["from"].Find(&AbpuserorganizationunitData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpuserorganizationunitData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpuserorganizationunitData []model.Abpuserorganizationunit
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpuserorganizationunitData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpuserorganizationunitData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpuserorganizationunitData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpuserrole model data
-	var AbpuserroleData []model.Abpuserrole
-	if err := global.OWEN_DBList["from"].Find(&AbpuserroleData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpuserroleData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpuserroleData []model.Abpuserrole
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpuserroleData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpuserroleData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpuserroleData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpuser model data
-	var AbpuserData []model.Abpuser
-	if err := global.OWEN_DBList["from"].Find(&AbpuserData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpuserData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpuserData []model.Abpuser
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpuserData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpuserData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpuserData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Abpusertoken model data
-	var AbpusertokenData []model.Abpusertoken
-	if err := global.OWEN_DBList["from"].Find(&AbpusertokenData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AbpusertokenData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AbpusertokenData []model.Abpusertoken
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AbpusertokenData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AbpusertokenData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AbpusertokenData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appaliuser model data
-	var AppaliuserData []model.Appaliuser
-	if err := global.OWEN_DBList["from"].Find(&AppaliuserData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppaliuserData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppaliuserData []model.Appaliuser
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppaliuserData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppaliuserData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppaliuserData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appapprovalinfo model data
-	var AppapprovalinfoData []model.Appapprovalinfo
-	if err := global.OWEN_DBList["from"].Find(&AppapprovalinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppapprovalinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppapprovalinfoData []model.Appapprovalinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppapprovalinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppapprovalinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppapprovalinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appapprovaltemplate model data
-	var AppapprovaltemplateData []model.Appapprovaltemplate
-	if err := global.OWEN_DBList["from"].Find(&AppapprovaltemplateData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppapprovaltemplateData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppapprovaltemplateData []model.Appapprovaltemplate
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppapprovaltemplateData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppapprovaltemplateData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppapprovaltemplateData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appbinaryobject model data
-	var AppbinaryobjectData []model.Appbinaryobject
-	if err := global.OWEN_DBList["from"].Find(&AppbinaryobjectData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppbinaryobjectData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppbinaryobjectData []model.Appbinaryobject
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppbinaryobjectData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppbinaryobjectData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppbinaryobjectData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appbookorder model data
-	var AppbookorderData []model.Appbookorder
-	if err := global.OWEN_DBList["from"].Find(&AppbookorderData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppbookorderData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppbookorderData []model.Appbookorder
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppbookorderData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppbookorderData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppbookorderData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appchatmessage model data
-	var AppchatmessageData []model.Appchatmessage
-	if err := global.OWEN_DBList["from"].Find(&AppchatmessageData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppchatmessageData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppchatmessageData []model.Appchatmessage
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppchatmessageData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppchatmessageData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppchatmessageData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appcreditloginorder model data
-	var AppcreditloginorderData []model.Appcreditloginorder
-	if err := global.OWEN_DBList["from"].Find(&AppcreditloginorderData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppcreditloginorderData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppcreditloginorderData []model.Appcreditloginorder
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppcreditloginorderData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppcreditloginorderData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppcreditloginorderData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appfriendship model data
-	var AppfriendshipData []model.Appfriendship
-	if err := global.OWEN_DBList["from"].Find(&AppfriendshipData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppfriendshipData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppfriendshipData []model.Appfriendship
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppfriendshipData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppfriendshipData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppfriendshipData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appinvoice model data
-	var AppinvoiceData []model.Appinvoice
-	if err := global.OWEN_DBList["from"].Find(&AppinvoiceData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppinvoiceData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppinvoiceData []model.Appinvoice
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppinvoiceData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppinvoiceData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppinvoiceData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appitemlocked model data
-	var AppitemlockedData []model.Appitemlocked
-	if err := global.OWEN_DBList["from"].Find(&AppitemlockedData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppitemlockedData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppitemlockedData []model.Appitemlocked
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppitemlockedData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppitemlockedData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppitemlockedData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appmessageboard model data
-	var AppmessageboardData []model.Appmessageboard
-	if err := global.OWEN_DBList["from"].Find(&AppmessageboardData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppmessageboardData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppmessageboardData []model.Appmessageboard
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppmessageboardData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppmessageboardData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppmessageboardData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appnotificationlog model data
-	var AppnotificationlogData []model.Appnotificationlog
-	if err := global.OWEN_DBList["from"].Find(&AppnotificationlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppnotificationlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppnotificationlogData []model.Appnotificationlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppnotificationlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppnotificationlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppnotificationlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Apppayorder model data
-	var ApppayorderData []model.Apppayorder
-	if err := global.OWEN_DBList["from"].Find(&ApppayorderData).Error; err != nil {
-		//return err
-	}
-	for _, record := range ApppayorderData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var ApppayorderData []model.Apppayorder
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&ApppayorderData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(ApppayorderData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(ApppayorderData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Apppickupcode model data
-	var ApppickupcodeData []model.Apppickupcode
-	if err := global.OWEN_DBList["from"].Find(&ApppickupcodeData).Error; err != nil {
-		//return err
-	}
-	for _, record := range ApppickupcodeData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var ApppickupcodeData []model.Apppickupcode
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&ApppickupcodeData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(ApppickupcodeData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(ApppickupcodeData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appqrcode model data
-	var AppqrcodeData []model.Appqrcode
-	if err := global.OWEN_DBList["from"].Find(&AppqrcodeData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppqrcodeData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppqrcodeData []model.Appqrcode
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppqrcodeData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppqrcodeData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppqrcodeData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Apprecommendinfo model data
-	var ApprecommendinfoData []model.Apprecommendinfo
-	if err := global.OWEN_DBList["from"].Find(&ApprecommendinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range ApprecommendinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var ApprecommendinfoData []model.Apprecommendinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&ApprecommendinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(ApprecommendinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(ApprecommendinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appsubbookinfo model data
-	var AppsubbookinfoData []model.Appsubbookinfo
-	if err := global.OWEN_DBList["from"].Find(&AppsubbookinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppsubbookinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppsubbookinfoData []model.Appsubbookinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppsubbookinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppsubbookinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppsubbookinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appsubscriptionpayment model data
-	var AppsubscriptionpaymentData []model.Appsubscriptionpayment
-	if err := global.OWEN_DBList["from"].Find(&AppsubscriptionpaymentData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppsubscriptionpaymentData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppsubscriptionpaymentData []model.Appsubscriptionpayment
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppsubscriptionpaymentData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppsubscriptionpaymentData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppsubscriptionpaymentData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appusercard model data
-	var AppusercardData []model.Appusercard
-	if err := global.OWEN_DBList["from"].Find(&AppusercardData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppusercardData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppusercardData []model.Appusercard
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppusercardData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppusercardData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppusercardData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Appweuser model data
-	var AppweuserData []model.Appweuser
-	if err := global.OWEN_DBList["from"].Find(&AppweuserData).Error; err != nil {
-		//return err
-	}
-	for _, record := range AppweuserData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var AppweuserData []model.Appweuser
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&AppweuserData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(AppweuserData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(AppweuserData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dasbusinesscount model data
-	var DasbusinesscountData []model.Dasbusinesscount
-	if err := global.OWEN_DBList["from"].Find(&DasbusinesscountData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DasbusinesscountData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DasbusinesscountData []model.Dasbusinesscount
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DasbusinesscountData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DasbusinesscountData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DasbusinesscountData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dascirculatecount model data
-	var DascirculatecountData []model.Dascirculatecount
-	if err := global.OWEN_DBList["from"].Find(&DascirculatecountData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DascirculatecountData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DascirculatecountData []model.Dascirculatecount
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DascirculatecountData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DascirculatecountData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DascirculatecountData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dasdatabaselink model data
-	var DasdatabaselinkData []model.Dasdatabaselink
-	if err := global.OWEN_DBList["from"].Find(&DasdatabaselinkData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DasdatabaselinkData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DasdatabaselinkData []model.Dasdatabaselink
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DasdatabaselinkData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DasdatabaselinkData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DasdatabaselinkData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dasdatasource model data
-	var DasdatasourceData []model.Dasdatasource
-	if err := global.OWEN_DBList["from"].Find(&DasdatasourceData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DasdatasourceData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DasdatasourceData []model.Dasdatasource
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DasdatasourceData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DasdatasourceData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DasdatasourceData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dasfeecount model data
-	var DasfeecountData []model.Dasfeecount
-	if err := global.OWEN_DBList["from"].Find(&DasfeecountData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DasfeecountData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DasfeecountData []model.Dasfeecount
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DasfeecountData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DasfeecountData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DasfeecountData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Daspatronlogcount model data
-	var DaspatronlogcountData []model.Daspatronlogcount
-	if err := global.OWEN_DBList["from"].Find(&DaspatronlogcountData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DaspatronlogcountData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DaspatronlogcountData []model.Daspatronlogcount
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DaspatronlogcountData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DaspatronlogcountData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DaspatronlogcountData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dasperformance model data
-	var DasperformanceData []model.Dasperformance
-	if err := global.OWEN_DBList["from"].Find(&DasperformanceData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DasperformanceData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DasperformanceData []model.Dasperformance
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DasperformanceData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DasperformanceData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DasperformanceData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dassecuritygatecount model data
-	var DassecuritygatecountData []model.Dassecuritygatecount
-	if err := global.OWEN_DBList["from"].Find(&DassecuritygatecountData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DassecuritygatecountData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DassecuritygatecountData []model.Dassecuritygatecount
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DassecuritygatecountData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DassecuritygatecountData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DassecuritygatecountData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dasvisitpage model data
-	var DasvisitpageData []model.Dasvisitpage
-	if err := global.OWEN_DBList["from"].Find(&DasvisitpageData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DasvisitpageData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DasvisitpageData []model.Dasvisitpage
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DasvisitpageData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DasvisitpageData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DasvisitpageData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Dasvisittrend model data
-	var DasvisittrendData []model.Dasvisittrend
-	if err := global.OWEN_DBList["from"].Find(&DasvisittrendData).Error; err != nil {
-		//return err
-	}
-	for _, record := range DasvisittrendData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var DasvisittrendData []model.Dasvisittrend
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&DasvisittrendData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(DasvisittrendData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(DasvisittrendData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Efmigrationshistory model data
-	var EfmigrationshistoryData []model.Efmigrationshistory
-	if err := global.OWEN_DBList["from"].Find(&EfmigrationshistoryData).Error; err != nil {
-		//return err
-	}
-	for _, record := range EfmigrationshistoryData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var EfmigrationshistoryData []model.Efmigrationshistory
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&EfmigrationshistoryData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(EfmigrationshistoryData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(EfmigrationshistoryData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfireaggregatedcounter model data
-	var HangfireaggregatedcounterData []model.Hangfireaggregatedcounter
-	if err := global.OWEN_DBList["from"].Find(&HangfireaggregatedcounterData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfireaggregatedcounterData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfireaggregatedcounterData []model.Hangfireaggregatedcounter
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfireaggregatedcounterData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfireaggregatedcounterData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfireaggregatedcounterData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirecounter model data
-	var HangfirecounterData []model.Hangfirecounter
-	if err := global.OWEN_DBList["from"].Find(&HangfirecounterData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirecounterData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirecounterData []model.Hangfirecounter
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirecounterData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirecounterData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirecounterData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfiredistributedlock model data
-	var HangfiredistributedlockData []model.Hangfiredistributedlock
-	if err := global.OWEN_DBList["from"].Find(&HangfiredistributedlockData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfiredistributedlockData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfiredistributedlockData []model.Hangfiredistributedlock
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfiredistributedlockData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfiredistributedlockData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfiredistributedlockData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirehash model data
-	var HangfirehashData []model.Hangfirehash
-	if err := global.OWEN_DBList["from"].Find(&HangfirehashData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirehashData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirehashData []model.Hangfirehash
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirehashData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirehashData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirehashData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirejob model data
-	var HangfirejobData []model.Hangfirejob
-	if err := global.OWEN_DBList["from"].Find(&HangfirejobData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirejobData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirejobData []model.Hangfirejob
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirejobData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirejobData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirejobData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirejobparameter model data
-	var HangfirejobparameterData []model.Hangfirejobparameter
-	if err := global.OWEN_DBList["from"].Find(&HangfirejobparameterData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirejobparameterData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirejobparameterData []model.Hangfirejobparameter
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirejobparameterData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirejobparameterData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirejobparameterData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirejobqueue model data
-	var HangfirejobqueueData []model.Hangfirejobqueue
-	if err := global.OWEN_DBList["from"].Find(&HangfirejobqueueData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirejobqueueData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirejobqueueData []model.Hangfirejobqueue
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirejobqueueData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirejobqueueData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirejobqueueData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirejobstate model data
-	var HangfirejobstateData []model.Hangfirejobstate
-	if err := global.OWEN_DBList["from"].Find(&HangfirejobstateData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirejobstateData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirejobstateData []model.Hangfirejobstate
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirejobstateData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirejobstateData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirejobstateData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirelist model data
-	var HangfirelistData []model.Hangfirelist
-	if err := global.OWEN_DBList["from"].Find(&HangfirelistData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirelistData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirelistData []model.Hangfirelist
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirelistData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirelistData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirelistData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfireserver model data
-	var HangfireserverData []model.Hangfireserver
-	if err := global.OWEN_DBList["from"].Find(&HangfireserverData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfireserverData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfireserverData []model.Hangfireserver
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfireserverData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfireserverData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfireserverData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfireset model data
-	var HangfiresetData []model.Hangfireset
-	if err := global.OWEN_DBList["from"].Find(&HangfiresetData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfiresetData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfiresetData []model.Hangfireset
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfiresetData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfiresetData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfiresetData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Hangfirestate model data
-	var HangfirestateData []model.Hangfirestate
-	if err := global.OWEN_DBList["from"].Find(&HangfirestateData).Error; err != nil {
-		//return err
-	}
-	for _, record := range HangfirestateData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var HangfirestateData []model.Hangfirestate
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&HangfirestateData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(HangfirestateData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(HangfirestateData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpcommandlog model data
-	var LcpcommandlogData []model.Lcpcommandlog
-	if err := global.OWEN_DBList["from"].Find(&LcpcommandlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpcommandlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpcommandlogData []model.Lcpcommandlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpcommandlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpcommandlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpcommandlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpconfig model data
-	var LcpconfigData []model.Lcpconfig
-	if err := global.OWEN_DBList["from"].Find(&LcpconfigData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpconfigData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpconfigData []model.Lcpconfig
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpconfigData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpconfigData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpconfigData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpmaintainlog model data
-	var LcpmaintainlogData []model.Lcpmaintainlog
-	if err := global.OWEN_DBList["from"].Find(&LcpmaintainlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpmaintainlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpmaintainlogData []model.Lcpmaintainlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpmaintainlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpmaintainlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpmaintainlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpproduct model data
-	var LcpproductData []model.Lcpproduct
-	if err := global.OWEN_DBList["from"].Find(&LcpproductData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpproductData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpproductData []model.Lcpproduct
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpproductData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpproductData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpproductData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcprfidantenna model data
-	var LcprfidantennaData []model.Lcprfidantenna
-	if err := global.OWEN_DBList["from"].Find(&LcprfidantennaData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcprfidantennaData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcprfidantennaData []model.Lcprfidantenna
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcprfidantennaData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcprfidantennaData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcprfidantennaData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcprfidreader model data
-	var LcprfidreaderData []model.Lcprfidreader
-	if err := global.OWEN_DBList["from"].Find(&LcprfidreaderData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcprfidreaderData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcprfidreaderData []model.Lcprfidreader
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcprfidreaderData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcprfidreaderData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcprfidreaderData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpsecuritygatebookaccesslog model data
-	var LcpsecuritygatebookaccesslogData []model.Lcpsecuritygatebookaccesslog
-	if err := global.OWEN_DBList["from"].Find(&LcpsecuritygatebookaccesslogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpsecuritygatebookaccesslogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpsecuritygatebookaccesslogData []model.Lcpsecuritygatebookaccesslog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpsecuritygatebookaccesslogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpsecuritygatebookaccesslogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpsecuritygatebookaccesslogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpsecuritygatebookdailyaccess model data
-	var LcpsecuritygatebookdailyaccessData []model.Lcpsecuritygatebookdailyaccess
-	if err := global.OWEN_DBList["from"].Find(&LcpsecuritygatebookdailyaccessData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpsecuritygatebookdailyaccessData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpsecuritygatebookdailyaccessData []model.Lcpsecuritygatebookdailyaccess
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpsecuritygatebookdailyaccessData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpsecuritygatebookdailyaccessData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpsecuritygatebookdailyaccessData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpsecuritygateitemlog model data
-	var LcpsecuritygateitemlogData []model.Lcpsecuritygateitemlog
-	if err := global.OWEN_DBList["from"].Find(&LcpsecuritygateitemlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpsecuritygateitemlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpsecuritygateitemlogData []model.Lcpsecuritygateitemlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpsecuritygateitemlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpsecuritygateitemlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpsecuritygateitemlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpsecuritygatepatronlog model data
-	var LcpsecuritygatepatronlogData []model.Lcpsecuritygatepatronlog
-	if err := global.OWEN_DBList["from"].Find(&LcpsecuritygatepatronlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpsecuritygatepatronlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpsecuritygatepatronlogData []model.Lcpsecuritygatepatronlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpsecuritygatepatronlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpsecuritygatepatronlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpsecuritygatepatronlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpserialport model data
-	var LcpserialportData []model.Lcpserialport
-	if err := global.OWEN_DBList["from"].Find(&LcpserialportData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpserialportData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpserialportData []model.Lcpserialport
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpserialportData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpserialportData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpserialportData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpserialportext model data
-	var LcpserialportextData []model.Lcpserialportext
-	if err := global.OWEN_DBList["from"].Find(&LcpserialportextData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpserialportextData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpserialportextData []model.Lcpserialportext
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpserialportextData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpserialportextData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpserialportextData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpservice model data
-	var LcpserviceData []model.Lcpservice
-	if err := global.OWEN_DBList["from"].Find(&LcpserviceData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpserviceData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpserviceData []model.Lcpservice
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpserviceData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpserviceData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpserviceData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminal model data
-	var LcpterminalData []model.Lcpterminal
-	if err := global.OWEN_DBList["from"].Find(&LcpterminalData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminalData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminalData []model.Lcpterminal
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminalData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminalData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminalData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminaladvertisement model data
-	var LcpterminaladvertisementData []model.Lcpterminaladvertisement
-	if err := global.OWEN_DBList["from"].Find(&LcpterminaladvertisementData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminaladvertisementData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminaladvertisementData []model.Lcpterminaladvertisement
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminaladvertisementData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminaladvertisementData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminaladvertisementData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminalbox model data
-	var LcpterminalboxData []model.Lcpterminalbox
-	if err := global.OWEN_DBList["from"].Find(&LcpterminalboxData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminalboxData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminalboxData []model.Lcpterminalbox
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminalboxData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminalboxData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminalboxData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminalboxitem model data
-	var LcpterminalboxitemData []model.Lcpterminalboxitem
-	if err := global.OWEN_DBList["from"].Find(&LcpterminalboxitemData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminalboxitemData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminalboxitemData []model.Lcpterminalboxitem
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminalboxitemData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminalboxitemData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminalboxitemData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminaldevice model data
-	var LcpterminaldeviceData []model.Lcpterminaldevice
-	if err := global.OWEN_DBList["from"].Find(&LcpterminaldeviceData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminaldeviceData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminaldeviceData []model.Lcpterminaldevice
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminaldeviceData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminaldeviceData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminaldeviceData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminaldevicelog model data
-	var LcpterminaldevicelogData []model.Lcpterminaldevicelog
-	if err := global.OWEN_DBList["from"].Find(&LcpterminaldevicelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminaldevicelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminaldevicelogData []model.Lcpterminaldevicelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminaldevicelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminaldevicelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminaldevicelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminallog model data
-	var LcpterminallogData []model.Lcpterminallog
-	if err := global.OWEN_DBList["from"].Find(&LcpterminallogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminallogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminallogData []model.Lcpterminallog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminallogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminallogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminallogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminalpermission model data
-	var LcpterminalpermissionData []model.Lcpterminalpermission
-	if err := global.OWEN_DBList["from"].Find(&LcpterminalpermissionData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminalpermissionData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminalpermissionData []model.Lcpterminalpermission
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminalpermissionData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminalpermissionData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminalpermissionData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminalshelf model data
-	var LcpterminalshelfData []model.Lcpterminalshelf
-	if err := global.OWEN_DBList["from"].Find(&LcpterminalshelfData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminalshelfData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminalshelfData []model.Lcpterminalshelf
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminalshelfData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminalshelfData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminalshelfData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminalshelfitem model data
-	var LcpterminalshelfitemData []model.Lcpterminalshelfitem
-	if err := global.OWEN_DBList["from"].Find(&LcpterminalshelfitemData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminalshelfitemData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminalshelfitemData []model.Lcpterminalshelfitem
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminalshelfitemData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminalshelfitemData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminalshelfitemData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpterminalshelflog model data
-	var LcpterminalshelflogData []model.Lcpterminalshelflog
-	if err := global.OWEN_DBList["from"].Find(&LcpterminalshelflogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpterminalshelflogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpterminalshelflogData []model.Lcpterminalshelflog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpterminalshelflogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpterminalshelflogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpterminalshelflogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpupgradelog model data
-	var LcpupgradelogData []model.Lcpupgradelog
-	if err := global.OWEN_DBList["from"].Find(&LcpupgradelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpupgradelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpupgradelogData []model.Lcpupgradelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpupgradelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpupgradelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpupgradelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Lcpversion model data
-	var LcpversionData []model.Lcpversion
-	if err := global.OWEN_DBList["from"].Find(&LcpversionData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LcpversionData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LcpversionData []model.Lcpversion
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LcpversionData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LcpversionData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LcpversionData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libailibrarainbaseinfo model data
-	var LibailibrarainbaseinfoData []model.Libailibrarainbaseinfo
-	if err := global.OWEN_DBList["from"].Find(&LibailibrarainbaseinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibailibrarainbaseinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibailibrarainbaseinfoData []model.Libailibrarainbaseinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibailibrarainbaseinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibailibrarainbaseinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibailibrarainbaseinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libailibrarainbaseinfoitem model data
-	var LibailibrarainbaseinfoitemData []model.Libailibrarainbaseinfoitem
-	if err := global.OWEN_DBList["from"].Find(&LibailibrarainbaseinfoitemData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibailibrarainbaseinfoitemData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibailibrarainbaseinfoitemData []model.Libailibrarainbaseinfoitem
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibailibrarainbaseinfoitemData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibailibrarainbaseinfoitemData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibailibrarainbaseinfoitemData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libailibrarainbaseinfoprofile model data
-	var LibailibrarainbaseinfoprofileData []model.Libailibrarainbaseinfoprofile
-	if err := global.OWEN_DBList["from"].Find(&LibailibrarainbaseinfoprofileData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibailibrarainbaseinfoprofileData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibailibrarainbaseinfoprofileData []model.Libailibrarainbaseinfoprofile
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibailibrarainbaseinfoprofileData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibailibrarainbaseinfoprofileData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibailibrarainbaseinfoprofileData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libailibrarainknowledgefileinfo model data
-	var LibailibrarainknowledgefileinfoData []model.Libailibrarainknowledgefileinfo
-	if err := global.OWEN_DBList["from"].Find(&LibailibrarainknowledgefileinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibailibrarainknowledgefileinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibailibrarainknowledgefileinfoData []model.Libailibrarainknowledgefileinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibailibrarainknowledgefileinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibailibrarainknowledgefileinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibailibrarainknowledgefileinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libailibrarainquestionmetric model data
-	var LibailibrarainquestionmetricData []model.Libailibrarainquestionmetric
-	if err := global.OWEN_DBList["from"].Find(&LibailibrarainquestionmetricData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibailibrarainquestionmetricData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibailibrarainquestionmetricData []model.Libailibrarainquestionmetric
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibailibrarainquestionmetricData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibailibrarainquestionmetricData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibailibrarainquestionmetricData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libailibrarainsessionmetric model data
-	var LibailibrarainsessionmetricData []model.Libailibrarainsessionmetric
-	if err := global.OWEN_DBList["from"].Find(&LibailibrarainsessionmetricData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibailibrarainsessionmetricData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibailibrarainsessionmetricData []model.Libailibrarainsessionmetric
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibailibrarainsessionmetricData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibailibrarainsessionmetricData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibailibrarainsessionmetricData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libainirobotinfo model data
-	var LibainirobotinfoData []model.Libainirobotinfo
-	if err := global.OWEN_DBList["from"].Find(&LibainirobotinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibainirobotinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibainirobotinfoData []model.Libainirobotinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibainirobotinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibainirobotinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibainirobotinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libbatchinfo model data
-	var LibbatchinfoData []model.Libbatchinfo
-	if err := global.OWEN_DBList["from"].Find(&LibbatchinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibbatchinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibbatchinfoData []model.Libbatchinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibbatchinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibbatchinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibbatchinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libbatchoperateindex model data
-	var LibbatchoperateindexData []model.Libbatchoperateindex
-	if err := global.OWEN_DBList["from"].Find(&LibbatchoperateindexData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibbatchoperateindexData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibbatchoperateindexData []model.Libbatchoperateindex
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibbatchoperateindexData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibbatchoperateindexData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibbatchoperateindexData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libbatchoperatelog model data
-	var LibbatchoperatelogData []model.Libbatchoperatelog
-	if err := global.OWEN_DBList["from"].Find(&LibbatchoperatelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibbatchoperatelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibbatchoperatelogData []model.Libbatchoperatelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibbatchoperatelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibbatchoperatelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibbatchoperatelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libbookinfo model data
-	var LibbookinfoData []model.Libbookinfo
-	if err := global.OWEN_DBList["from"].Find(&LibbookinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibbookinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibbookinfoData []model.Libbookinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibbookinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibbookinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibbookinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libcirculatelog model data
-	var LibcirculatelogData []model.Libcirculatelog
-	if err := global.OWEN_DBList["from"].Find(&LibcirculatelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibcirculatelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibcirculatelogData []model.Libcirculatelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibcirculatelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibcirculatelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibcirculatelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing LibcirculatelogBak model data
-	var LibcirculatelogBakData []model.LibcirculatelogBak
-	if err := global.OWEN_DBList["from"].Find(&LibcirculatelogBakData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibcirculatelogBakData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibcirculatelogBakData []model.LibcirculatelogBak
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibcirculatelogBakData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibcirculatelogBakData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibcirculatelogBakData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libfeedback model data
-	var LibfeedbackData []model.Libfeedback
-	if err := global.OWEN_DBList["from"].Find(&LibfeedbackData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibfeedbackData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibfeedbackData []model.Libfeedback
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibfeedbackData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibfeedbackData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibfeedbackData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libfeelog model data
-	var LibfeelogData []model.Libfeelog
-	if err := global.OWEN_DBList["from"].Find(&LibfeelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibfeelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibfeelogData []model.Libfeelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibfeelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibfeelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibfeelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libinventorystat model data
-	var LibinventorystatData []model.Libinventorystat
-	if err := global.OWEN_DBList["from"].Find(&LibinventorystatData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibinventorystatData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibinventorystatData []model.Libinventorystat
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibinventorystatData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibinventorystatData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibinventorystatData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libinventorytask model data
-	var LibinventorytaskData []model.Libinventorytask
-	if err := global.OWEN_DBList["from"].Find(&LibinventorytaskData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibinventorytaskData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibinventorytaskData []model.Libinventorytask
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibinventorytaskData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibinventorytaskData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibinventorytaskData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libinventorywork model data
-	var LibinventoryworkData []model.Libinventorywork
-	if err := global.OWEN_DBList["from"].Find(&LibinventoryworkData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibinventoryworkData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibinventoryworkData []model.Libinventorywork
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibinventoryworkData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibinventoryworkData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibinventoryworkData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libinventoryworkdetail model data
-	var LibinventoryworkdetailData []model.Libinventoryworkdetail
-	if err := global.OWEN_DBList["from"].Find(&LibinventoryworkdetailData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibinventoryworkdetailData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibinventoryworkdetailData []model.Libinventoryworkdetail
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibinventoryworkdetailData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibinventoryworkdetailData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibinventoryworkdetailData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libinventoryworklog model data
-	var LibinventoryworklogData []model.Libinventoryworklog
-	if err := global.OWEN_DBList["from"].Find(&LibinventoryworklogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibinventoryworklogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibinventoryworklogData []model.Libinventoryworklog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibinventoryworklogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibinventoryworklogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibinventoryworklogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libitem model data
-	var LibitemData []model.Libitem
-	if err := global.OWEN_DBList["from"].Find(&LibitemData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibitemData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibitemData []model.Libitem
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibitemData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibitemData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibitemData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing LibitemCopy model data
-	var LibitemCopyData []model.LibitemCopy
-	if err := global.OWEN_DBList["from"].Find(&LibitemCopyData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibitemCopyData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibitemCopyData []model.LibitemCopy
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibitemCopyData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibitemCopyData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibitemCopyData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libiteminventoryinfo model data
-	var LibiteminventoryinfoData []model.Libiteminventoryinfo
-	if err := global.OWEN_DBList["from"].Find(&LibiteminventoryinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibiteminventoryinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibiteminventoryinfoData []model.Libiteminventoryinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibiteminventoryinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibiteminventoryinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibiteminventoryinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libiteminventorylog model data
-	var LibiteminventorylogData []model.Libiteminventorylog
-	if err := global.OWEN_DBList["from"].Find(&LibiteminventorylogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibiteminventorylogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibiteminventorylogData []model.Libiteminventorylog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibiteminventorylogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibiteminventorylogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibiteminventorylogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libitemlocinfo model data
-	var LibitemlocinfoData []model.Libitemlocinfo
-	if err := global.OWEN_DBList["from"].Find(&LibitemlocinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibitemlocinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibitemlocinfoData []model.Libitemlocinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibitemlocinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibitemlocinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibitemlocinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libitemoperateindexlog model data
-	var LibitemoperateindexlogData []model.Libitemoperateindexlog
-	if err := global.OWEN_DBList["from"].Find(&LibitemoperateindexlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibitemoperateindexlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibitemoperateindexlogData []model.Libitemoperateindexlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibitemoperateindexlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibitemoperateindexlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibitemoperateindexlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libitemoperatelog model data
-	var LibitemoperatelogData []model.Libitemoperatelog
-	if err := global.OWEN_DBList["from"].Find(&LibitemoperatelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibitemoperatelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibitemoperatelogData []model.Libitemoperatelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibitemoperatelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibitemoperatelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibitemoperatelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libjournalinfo model data
-	var LibjournalinfoData []model.Libjournalinfo
-	if err := global.OWEN_DBList["from"].Find(&LibjournalinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibjournalinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibjournalinfoData []model.Libjournalinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibjournalinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibjournalinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibjournalinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Liblabel model data
-	var LiblabelData []model.Liblabel
-	if err := global.OWEN_DBList["from"].Find(&LiblabelData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LiblabelData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LiblabelData []model.Liblabel
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LiblabelData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LiblabelData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LiblabelData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Liblabeloperatelog model data
-	var LiblabeloperatelogData []model.Liblabeloperatelog
-	if err := global.OWEN_DBList["from"].Find(&LiblabeloperatelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LiblabeloperatelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LiblabeloperatelogData []model.Liblabeloperatelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LiblabeloperatelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LiblabeloperatelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LiblabeloperatelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Liblayer model data
-	var LiblayerData []model.Liblayer
-	if err := global.OWEN_DBList["from"].Find(&LiblayerData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LiblayerData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LiblayerData []model.Liblayer
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LiblayerData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LiblayerData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LiblayerData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Liblayerindexupdatelog model data
-	var LiblayerindexupdatelogData []model.Liblayerindexupdatelog
-	if err := global.OWEN_DBList["from"].Find(&LiblayerindexupdatelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LiblayerindexupdatelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LiblayerindexupdatelogData []model.Liblayerindexupdatelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LiblayerindexupdatelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LiblayerindexupdatelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LiblayerindexupdatelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libnotificationlog model data
-	var LibnotificationlogData []model.Libnotificationlog
-	if err := global.OWEN_DBList["from"].Find(&LibnotificationlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibnotificationlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibnotificationlogData []model.Libnotificationlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibnotificationlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibnotificationlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibnotificationlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libpartonreservation model data
-	var LibpartonreservationData []model.Libpartonreservation
-	if err := global.OWEN_DBList["from"].Find(&LibpartonreservationData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibpartonreservationData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibpartonreservationData []model.Libpartonreservation
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibpartonreservationData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibpartonreservationData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibpartonreservationData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libpatron model data
-	var LibpatronData []model.Libpatron
-	if err := global.OWEN_DBList["from"].Find(&LibpatronData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibpatronData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibpatronData []model.Libpatron
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibpatronData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibpatronData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibpatronData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libpatronitem model data
-	var LibpatronitemData []model.Libpatronitem
-	if err := global.OWEN_DBList["from"].Find(&LibpatronitemData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibpatronitemData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibpatronitemData []model.Libpatronitem
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibpatronitemData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibpatronitemData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibpatronitemData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libpatronlog model data
-	var LibpatronlogData []model.Libpatronlog
-	if err := global.OWEN_DBList["from"].Find(&LibpatronlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibpatronlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibpatronlogData []model.Libpatronlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibpatronlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibpatronlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibpatronlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libpointsclearing model data
-	var LibpointsclearingData []model.Libpointsclearing
-	if err := global.OWEN_DBList["from"].Find(&LibpointsclearingData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibpointsclearingData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibpointsclearingData []model.Libpointsclearing
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibpointsclearingData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibpointsclearingData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibpointsclearingData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libpointslog model data
-	var LibpointslogData []model.Libpointslog
-	if err := global.OWEN_DBList["from"].Find(&LibpointslogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibpointslogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibpointslogData []model.Libpointslog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibpointslogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibpointslogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibpointslogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Librfidantlayer model data
-	var LibrfidantlayerData []model.Librfidantlayer
-	if err := global.OWEN_DBList["from"].Find(&LibrfidantlayerData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibrfidantlayerData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibrfidantlayerData []model.Librfidantlayer
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibrfidantlayerData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibrfidantlayerData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibrfidantlayerData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Librfidscandetaillog model data
-	var LibrfidscandetaillogData []model.Librfidscandetaillog
-	if err := global.OWEN_DBList["from"].Find(&LibrfidscandetaillogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibrfidscandetaillogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibrfidscandetaillogData []model.Librfidscandetaillog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibrfidscandetaillogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibrfidscandetaillogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibrfidscandetaillogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Librfidscanlog model data
-	var LibrfidscanlogData []model.Librfidscanlog
-	if err := global.OWEN_DBList["from"].Find(&LibrfidscanlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibrfidscanlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibrfidscanlogData []model.Librfidscanlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibrfidscanlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibrfidscanlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibrfidscanlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Librow model data
-	var LibrowData []model.Librow
-	if err := global.OWEN_DBList["from"].Find(&LibrowData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibrowData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibrowData []model.Librow
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibrowData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibrowData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibrowData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Librowcatalog model data
-	var LibrowcatalogData []model.Librowcatalog
-	if err := global.OWEN_DBList["from"].Find(&LibrowcatalogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibrowcatalogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibrowcatalogData []model.Librowcatalog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibrowcatalogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibrowcatalogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibrowcatalogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libscanitemlog model data
-	var LibscanitemlogData []model.Libscanitemlog
-	if err := global.OWEN_DBList["from"].Find(&LibscanitemlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibscanitemlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibscanitemlogData []model.Libscanitemlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibscanitemlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibscanitemlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibscanitemlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libshelf model data
-	var LibshelfData []model.Libshelf
-	if err := global.OWEN_DBList["from"].Find(&LibshelfData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibshelfData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibshelfData []model.Libshelf
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibshelfData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibshelfData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibshelfData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libstruct model data
-	var LibstructData []model.Libstruct
-	if err := global.OWEN_DBList["from"].Find(&LibstructData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibstructData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibstructData []model.Libstruct
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibstructData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibstructData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibstructData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libtagtobarcodelog model data
-	var LibtagtobarcodelogData []model.Libtagtobarcodelog
-	if err := global.OWEN_DBList["from"].Find(&LibtagtobarcodelogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibtagtobarcodelogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibtagtobarcodelogData []model.Libtagtobarcodelog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibtagtobarcodelogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibtagtobarcodelogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibtagtobarcodelogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libtaskitem model data
-	var LibtaskitemData []model.Libtaskitem
-	if err := global.OWEN_DBList["from"].Find(&LibtaskitemData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibtaskitemData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibtaskitemData []model.Libtaskitem
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibtaskitemData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibtaskitemData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibtaskitemData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libtaskpackage model data
-	var LibtaskpackageData []model.Libtaskpackage
-	if err := global.OWEN_DBList["from"].Find(&LibtaskpackageData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibtaskpackageData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibtaskpackageData []model.Libtaskpackage
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibtaskpackageData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibtaskpackageData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibtaskpackageData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Libupdatefirstbooklog model data
-	var LibupdatefirstbooklogData []model.Libupdatefirstbooklog
-	if err := global.OWEN_DBList["from"].Find(&LibupdatefirstbooklogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range LibupdatefirstbooklogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var LibupdatefirstbooklogData []model.Libupdatefirstbooklog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&LibupdatefirstbooklogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(LibupdatefirstbooklogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(LibupdatefirstbooklogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Misactivity model data
-	var MisactivityData []model.Misactivity
-	if err := global.OWEN_DBList["from"].Find(&MisactivityData).Error; err != nil {
-		//return err
-	}
-	for _, record := range MisactivityData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var MisactivityData []model.Misactivity
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&MisactivityData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(MisactivityData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(MisactivityData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Mismediainfo model data
-	var MismediainfoData []model.Mismediainfo
-	if err := global.OWEN_DBList["from"].Find(&MismediainfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range MismediainfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var MismediainfoData []model.Mismediainfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&MismediainfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(MismediainfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(MismediainfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Misnews model data
-	var MisnewsData []model.Misnews
-	if err := global.OWEN_DBList["from"].Find(&MisnewsData).Error; err != nil {
-		//return err
-	}
-	for _, record := range MisnewsData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var MisnewsData []model.Misnews
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&MisnewsData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(MisnewsData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(MisnewsData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Mistemplate model data
-	var MistemplateData []model.Mistemplate
-	if err := global.OWEN_DBList["from"].Find(&MistemplateData).Error; err != nil {
-		//return err
-	}
-	for _, record := range MistemplateData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var MistemplateData []model.Mistemplate
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&MistemplateData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(MistemplateData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(MistemplateData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Rescatalog model data
-	var RescatalogData []model.Rescatalog
-	if err := global.OWEN_DBList["from"].Find(&RescatalogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range RescatalogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var RescatalogData []model.Rescatalog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&RescatalogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(RescatalogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(RescatalogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Rescipinfo model data
-	var RescipinfoData []model.Rescipinfo
-	if err := global.OWEN_DBList["from"].Find(&RescipinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range RescipinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var RescipinfoData []model.Rescipinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&RescipinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(RescipinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(RescipinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Resfourcorner model data
-	var ResfourcornerData []model.Resfourcorner
-	if err := global.OWEN_DBList["from"].Find(&ResfourcornerData).Error; err != nil {
-		//return err
-	}
-	for _, record := range ResfourcornerData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var ResfourcornerData []model.Resfourcorner
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&ResfourcornerData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(ResfourcornerData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(ResfourcornerData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Resjournalinfo model data
-	var ResjournalinfoData []model.Resjournalinfo
-	if err := global.OWEN_DBList["from"].Find(&ResjournalinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range ResjournalinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var ResjournalinfoData []model.Resjournalinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&ResjournalinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(ResjournalinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(ResjournalinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Resnotfound model data
-	var ResnotfoundData []model.Resnotfound
-	if err := global.OWEN_DBList["from"].Find(&ResnotfoundData).Error; err != nil {
-		//return err
-	}
-	for _, record := range ResnotfoundData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var ResnotfoundData []model.Resnotfound
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&ResnotfoundData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(ResnotfoundData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(ResnotfoundData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Respublisherinfo model data
-	var RespublisherinfoData []model.Respublisherinfo
-	if err := global.OWEN_DBList["from"].Find(&RespublisherinfoData).Error; err != nil {
-		//return err
-	}
-	for _, record := range RespublisherinfoData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var RespublisherinfoData []model.Respublisherinfo
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&RespublisherinfoData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(RespublisherinfoData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(RespublisherinfoData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Ssbackgroundjob model data
-	var SsbackgroundjobData []model.Ssbackgroundjob
-	if err := global.OWEN_DBList["from"].Find(&SsbackgroundjobData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SsbackgroundjobData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SsbackgroundjobData []model.Ssbackgroundjob
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SsbackgroundjobData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SsbackgroundjobData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SsbackgroundjobData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysattachment model data
-	var SysattachmentData []model.Sysattachment
-	if err := global.OWEN_DBList["from"].Find(&SysattachmentData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysattachmentData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysattachmentData []model.Sysattachment
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysattachmentData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysattachmentData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysattachmentData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysauditacslog model data
-	var SysauditacslogData []model.Sysauditacslog
-	if err := global.OWEN_DBList["from"].Find(&SysauditacslogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysauditacslogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysauditacslogData []model.Sysauditacslog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysauditacslogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysauditacslogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysauditacslogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysauditapilog model data
-	var SysauditapilogData []model.Sysauditapilog
-	if err := global.OWEN_DBList["from"].Find(&SysauditapilogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysauditapilogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysauditapilogData []model.Sysauditapilog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysauditapilogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysauditapilogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysauditapilogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysauditapplog model data
-	var SysauditapplogData []model.Sysauditapplog
-	if err := global.OWEN_DBList["from"].Find(&SysauditapplogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysauditapplogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysauditapplogData []model.Sysauditapplog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysauditapplogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysauditapplogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysauditapplogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysauditlinklog model data
-	var SysauditlinklogData []model.Sysauditlinklog
-	if err := global.OWEN_DBList["from"].Find(&SysauditlinklogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysauditlinklogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysauditlinklogData []model.Sysauditlinklog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysauditlinklogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysauditlinklogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysauditlinklogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysauditlmslog model data
-	var SysauditlmslogData []model.Sysauditlmslog
-	if err := global.OWEN_DBList["from"].Find(&SysauditlmslogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysauditlmslogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysauditlmslogData []model.Sysauditlmslog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysauditlmslogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysauditlmslogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysauditlmslogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysauditsslog model data
-	var SysauditsslogData []model.Sysauditsslog
-	if err := global.OWEN_DBList["from"].Find(&SysauditsslogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysauditsslogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysauditsslogData []model.Sysauditsslog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysauditsslogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysauditsslogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysauditsslogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysblocklist model data
-	var SysblocklistData []model.Sysblocklist
-	if err := global.OWEN_DBList["from"].Find(&SysblocklistData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysblocklistData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysblocklistData []model.Sysblocklist
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysblocklistData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysblocklistData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysblocklistData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysbookblocklist model data
-	var SysbookblocklistData []model.Sysbookblocklist
-	if err := global.OWEN_DBList["from"].Find(&SysbookblocklistData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysbookblocklistData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysbookblocklistData []model.Sysbookblocklist
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysbookblocklistData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysbookblocklistData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysbookblocklistData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysbooknumlib model data
-	var SysbooknumlibData []model.Sysbooknumlib
-	if err := global.OWEN_DBList["from"].Find(&SysbooknumlibData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysbooknumlibData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysbooknumlibData []model.Sysbooknumlib
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysbooknumlibData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysbooknumlibData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysbooknumlibData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysbooknumset model data
-	var SysbooknumsetData []model.Sysbooknumset
-	if err := global.OWEN_DBList["from"].Find(&SysbooknumsetData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysbooknumsetData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysbooknumsetData []model.Sysbooknumset
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysbooknumsetData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysbooknumsetData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysbooknumsetData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syscardconfig model data
-	var SyscardconfigData []model.Syscardconfig
-	if err := global.OWEN_DBList["from"].Find(&SyscardconfigData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyscardconfigData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyscardconfigData []model.Syscardconfig
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyscardconfigData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyscardconfigData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyscardconfigData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syscarddevdtl model data
-	var SyscarddevdtlData []model.Syscarddevdtl
-	if err := global.OWEN_DBList["from"].Find(&SyscarddevdtlData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyscarddevdtlData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyscarddevdtlData []model.Syscarddevdtl
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyscarddevdtlData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyscarddevdtlData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyscarddevdtlData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syscardtype model data
-	var SyscardtypeData []model.Syscardtype
-	if err := global.OWEN_DBList["from"].Find(&SyscardtypeData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyscardtypeData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyscardtypeData []model.Syscardtype
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyscardtypeData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyscardtypeData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyscardtypeData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syscoderule model data
-	var SyscoderuleData []model.Syscoderule
-	if err := global.OWEN_DBList["from"].Find(&SyscoderuleData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyscoderuleData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyscoderuleData []model.Syscoderule
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyscoderuleData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyscoderuleData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyscoderuleData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syscoderuleseed model data
-	var SyscoderuleseedData []model.Syscoderuleseed
-	if err := global.OWEN_DBList["from"].Find(&SyscoderuleseedData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyscoderuleseedData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyscoderuleseedData []model.Syscoderuleseed
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyscoderuleseedData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyscoderuleseedData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyscoderuleseedData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysconfigbase model data
-	var SysconfigbaseData []model.Sysconfigbase
-	if err := global.OWEN_DBList["from"].Find(&SysconfigbaseData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysconfigbaseData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysconfigbaseData []model.Sysconfigbase
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysconfigbaseData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysconfigbaseData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysconfigbaseData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysconfiglog model data
-	var SysconfiglogData []model.Sysconfiglog
-	if err := global.OWEN_DBList["from"].Find(&SysconfiglogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysconfiglogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysconfiglogData []model.Sysconfiglog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysconfiglogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysconfiglogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysconfiglogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysdataitem model data
-	var SysdataitemData []model.Sysdataitem
-	if err := global.OWEN_DBList["from"].Find(&SysdataitemData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysdataitemData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysdataitemData []model.Sysdataitem
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysdataitemData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysdataitemData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysdataitemData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysdataitemdetail model data
-	var SysdataitemdetailData []model.Sysdataitemdetail
-	if err := global.OWEN_DBList["from"].Find(&SysdataitemdetailData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysdataitemdetailData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysdataitemdetailData []model.Sysdataitemdetail
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysdataitemdetailData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysdataitemdetailData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysdataitemdetailData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysdatalog model data
-	var SysdatalogData []model.Sysdatalog
-	if err := global.OWEN_DBList["from"].Find(&SysdatalogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysdatalogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysdatalogData []model.Sysdatalog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysdatalogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysdatalogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysdatalogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysdepartment model data
-	var SysdepartmentData []model.Sysdepartment
-	if err := global.OWEN_DBList["from"].Find(&SysdepartmentData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysdepartmentData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysdepartmentData []model.Sysdepartment
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysdepartmentData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysdepartmentData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysdepartmentData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysenumfield model data
-	var SysenumfieldData []model.Sysenumfield
-	if err := global.OWEN_DBList["from"].Find(&SysenumfieldData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysenumfieldData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysenumfieldData []model.Sysenumfield
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysenumfieldData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysenumfieldData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysenumfieldData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysenumvalue model data
-	var SysenumvalueData []model.Sysenumvalue
-	if err := global.OWEN_DBList["from"].Find(&SysenumvalueData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysenumvalueData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysenumvalueData []model.Sysenumvalue
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysenumvalueData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysenumvalueData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysenumvalueData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysenumvalue2 model data
-	var Sysenumvalue2Data []model.Sysenumvalue2
-	if err := global.OWEN_DBList["from"].Find(&Sysenumvalue2Data).Error; err != nil {
-		//return err
-	}
-	for _, record := range Sysenumvalue2Data {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var Sysenumvalue2Data []model.Sysenumvalue2
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&Sysenumvalue2Data).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(Sysenumvalue2Data) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(Sysenumvalue2Data, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysfaceoffineoperationlog model data
-	var SysfaceoffineoperationlogData []model.Sysfaceoffineoperationlog
-	if err := global.OWEN_DBList["from"].Find(&SysfaceoffineoperationlogData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysfaceoffineoperationlogData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysfaceoffineoperationlogData []model.Sysfaceoffineoperationlog
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysfaceoffineoperationlogData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysfaceoffineoperationlogData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysfaceoffineoperationlogData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysfaceofflinefeature model data
-	var SysfaceofflinefeatureData []model.Sysfaceofflinefeature
-	if err := global.OWEN_DBList["from"].Find(&SysfaceofflinefeatureData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysfaceofflinefeatureData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysfaceofflinefeatureData []model.Sysfaceofflinefeature
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysfaceofflinefeatureData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysfaceofflinefeatureData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysfaceofflinefeatureData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysfaceofflinegroup model data
-	var SysfaceofflinegroupData []model.Sysfaceofflinegroup
-	if err := global.OWEN_DBList["from"].Find(&SysfaceofflinegroupData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysfaceofflinegroupData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysfaceofflinegroupData []model.Sysfaceofflinegroup
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysfaceofflinegroupData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysfaceofflinegroupData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysfaceofflinegroupData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysfaceofflineuser model data
-	var SysfaceofflineuserData []model.Sysfaceofflineuser
-	if err := global.OWEN_DBList["from"].Find(&SysfaceofflineuserData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysfaceofflineuserData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysfaceofflineuserData []model.Sysfaceofflineuser
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysfaceofflineuserData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysfaceofflineuserData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysfaceofflineuserData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syslanguage model data
-	var SyslanguageData []model.Syslanguage
-	if err := global.OWEN_DBList["from"].Find(&SyslanguageData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyslanguageData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyslanguageData []model.Syslanguage
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyslanguageData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyslanguageData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyslanguageData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syslayertran model data
-	var SyslayertranData []model.Syslayertran
-	if err := global.OWEN_DBList["from"].Find(&SyslayertranData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyslayertranData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyslayertranData []model.Syslayertran
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyslayertranData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyslayertranData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyslayertranData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Syslocation model data
-	var SyslocationData []model.Syslocation
-	if err := global.OWEN_DBList["from"].Find(&SyslocationData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SyslocationData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SyslocationData []model.Syslocation
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SyslocationData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SyslocationData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SyslocationData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Sysmenu model data
-	var SysmenuData []model.Sysmenu
-	if err := global.OWEN_DBList["from"].Find(&SysmenuData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysmenuData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysmenuData []model.Sysmenu
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysmenuData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysmenuData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysmenuData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing SysmenuCopy model data
-	var SysmenuCopyData []model.SysmenuCopy
-	if err := global.OWEN_DBList["from"].Find(&SysmenuCopyData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SysmenuCopyData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SysmenuCopyData []model.SysmenuCopy
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SysmenuCopyData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SysmenuCopyData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SysmenuCopyData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Systasklist model data
-	var SystasklistData []model.Systasklist
-	if err := global.OWEN_DBList["from"].Find(&SystasklistData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SystasklistData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SystasklistData []model.Systasklist
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SystasklistData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SystasklistData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SystasklistData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Systenantconfig model data
-	var SystenantconfigData []model.Systenantconfig
-	if err := global.OWEN_DBList["from"].Find(&SystenantconfigData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SystenantconfigData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SystenantconfigData []model.Systenantconfig
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SystenantconfigData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SystenantconfigData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SystenantconfigData, batchSize).Error; err != nil {
 			//return err
 		}
 	}
 
 	// Syncing Systenantextend model data
-	var SystenantextendData []model.Systenantextend
-	if err := global.OWEN_DBList["from"].Find(&SystenantextendData).Error; err != nil {
-		//return err
-	}
-	for _, record := range SystenantextendData {
-		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+
+	for {
+		var SystenantextendData []model.Systenantextend
+		// 分页查询数据，不依赖排序字段
+		if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&SystenantextendData).Error; err != nil {
+			//return err
+		}
+
+		// 如果没有更多数据，退出循环
+		if len(SystenantextendData) == 0 {
+			break
+		}
+
+		// 更新 offset
+		offset += batchSize
+
+		// 将数据插入到 db2
+		if err := global.OWEN_DBList["to"].CreateInBatches(SystenantextendData, batchSize).Error; err != nil {
 			//return err
 		}
 	}

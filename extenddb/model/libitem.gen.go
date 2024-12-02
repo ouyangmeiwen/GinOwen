@@ -28,7 +28,7 @@ type Libitem struct {
 	CallNo               *string    `gorm:"column:CallNo;type:varchar(64)" json:"CallNo"`
 	PreCallNo            *string    `gorm:"column:PreCallNo;type:varchar(64)" json:"PreCallNo"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
-	ItemState            int64      `gorm:"column:ItemState;type:tinyint(3) unsigned;not null" json:"ItemState"`
+	ItemState            int64      `gorm:"column:ItemState;type:tinyint(3);not null" json:"ItemState"`
 	PressmarkID          *string    `gorm:"column:PressmarkId;type:varchar(32)" json:"PressmarkId"`
 	PressmarkName        *string    `gorm:"column:PressmarkName;type:varchar(64)" json:"PressmarkName"`
 	LocationID           *string    `gorm:"column:LocationId;type:varchar(32)" json:"LocationId"`
@@ -41,10 +41,10 @@ type Libitem struct {
 	Price                *string    `gorm:"column:Price;type:varchar(32)" json:"Price"`
 	Pages                *string    `gorm:"column:Pages;type:varchar(32)" json:"Pages"`
 	Summary              *string    `gorm:"column:Summary;type:longtext" json:"Summary"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) unsigned;not null" json:"ItemType"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
-	CreateType           int64      `gorm:"column:CreateType;type:tinyint(3) unsigned;not null" json:"CreateType"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
+	CreateType           int64      `gorm:"column:CreateType;type:tinyint(3) ;not null" json:"CreateType"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 
