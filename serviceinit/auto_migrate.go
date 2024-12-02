@@ -69,6 +69,7 @@ func CusAutoMigrate(DB *gorm.DB) {
 	err = DB.AutoMigrate(&model.Dassecuritygatecount{})
 	err = DB.AutoMigrate(&model.Dasvisitpage{})
 	err = DB.AutoMigrate(&model.Dasvisittrend{})
+	err = DB.AutoMigrate(&model.Efmigrationshistory{})
 	err = DB.AutoMigrate(&model.Hangfireaggregatedcounter{})
 	err = DB.AutoMigrate(&model.Hangfirecounter{})
 	err = DB.AutoMigrate(&model.Hangfiredistributedlock{})
@@ -208,6 +209,6 @@ func CusAutoMigrate(DB *gorm.DB) {
 	err = DB.AutoMigrate(&model.Systenantextend{})
 
 	if err != nil {
-		log.Fatalf("Failed to migrate database: %v", err)
+		log.Printf("Failed to migrate database: %v", err)
 	}
 }

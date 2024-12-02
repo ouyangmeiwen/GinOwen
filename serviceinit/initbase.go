@@ -100,6 +100,7 @@ func InitDB() {
 			global.OWEN_DBList = make(map[string]*gorm.DB)
 		}
 		global.OWEN_DBList[key] = DB
+		log.Printf("初始化数据库%s", dbCfg.Type)
 	}
 }
 func InitRedis() {
@@ -130,7 +131,14 @@ func AutoMigrateDB(DB *gorm.DB) {
 	err = DB.AutoMigrate(&models.ScheduledTask{})
 	//是否需要初始化model
 	if _, ok := global.OWEN_DBList["to"]; ok {
-		CusAutoMigrate(global.OWEN_DBList["to"])
+		if global.OWEN_CONFIG.DB["to"].CanAutoMigration {
+			CusAutoMigrate(global.OWEN_DBList["to"])
+			log.Printf("生成to数据库表结构")
+		}
+		if global.OWEN_CONFIG.DB["to"].CanAutoSynData {
+			CusSyncDatabase()
+			log.Printf("生成to数据库表结构数据")
+		}
 	}
 	if err != nil {
 		log.Fatalf("Failed to migrate the database: %v", err)

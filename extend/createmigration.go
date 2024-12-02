@@ -1,6 +1,7 @@
 package extend
 
 import (
+	"GINOWEN/global"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -131,10 +132,96 @@ func CusAutoMigrate(DB *gorm.DB) {
 	// 写入文件尾
 	_, err = file.WriteString(`
 	if err != nil {
-		log.Fatalf("Failed to migrate database: %v", err)
+		log.Printf("Failed to migrate database: %v", err)
 	}
 }
 `)
+	return err
+}
+
+func CreateAutoSyncFile() {
+	// 指定 model 文件夹路径
+	modelDir := "./extenddb/model"
+	outputFile := "./serviceinit/auto_sync.go"
+
+	// 获取 model 文件夹下所有的 Go 文件
+	goFiles, err := getGoFilesInDir(modelDir)
+	if err != nil {
+		log.Fatalf("Failed to list Go files: %v", err)
+	}
+
+	// 提取所有结构体类型名
+	var structNames []string
+	for _, file := range goFiles {
+		names, err := getStructNamesFromFile(file)
+		if err != nil {
+			log.Printf("Failed to parse file %s: %v", file, err)
+			continue
+		}
+		structNames = append(structNames, names...)
+	}
+
+	// 生成 SyncDatabase 文件
+	err = generateAutoSyncFile(outputFile, structNames)
+	if err != nil {
+		log.Fatalf("Failed to generate auto-sync file: %v", err)
+	}
+
+	log.Printf("Auto-sync file generated at %s", outputFile)
+}
+
+// 生成包含 SyncDatabase 代码的文件
+func generateAutoSyncFile(outputFile string, structNames []string) error {
+	file, err := os.Create(outputFile)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	// 写入文件头
+	_, err = file.WriteString(`package serviceinit
+
+import (
+	"log"
+	"gorm.io/gorm"
+	"GINOWEN/extenddb/model"
+	"GINOWEN/global"
+)
+
+func CusSyncDatabase() error {
+	var err error
+`)
+
+	if err != nil {
+		return err
+	}
+
+	// 写入每个结构体的同步代码
+	for _, structName := range structNames {
+		line := fmt.Sprintf(`
+	// Syncing %s model data
+	var %sData []model.%s
+	if err := global.OWEN_DBList["from"].Find(&%sData).Error; err != nil {
+		//return err
+	}
+	for _, record := range %sData {
+		if err := global.OWEN_DBList["to"].Create(&record).Error; err != nil {
+			//return err
+		}
+	}
+	`, structName, structName, structName, structName, structName)
+		_, err = file.WriteString(line)
+		if err != nil {
+			return err
+		}
+	}
+
+	// 写入文件尾
+	_, err = file.WriteString(`
+	return nil
+}
+`)
+
 	return err
 }
 
@@ -229,7 +316,17 @@ func CreateDBModles(db *gorm.DB) {
 
 	g.ApplyBasic(allModel...)
 	g.Execute()
-	CreateAutoMigrationFile()
+	log.Printf("生成from数据库表结构")
+	if _, ok := global.OWEN_DBList["from"]; ok {
+		if global.OWEN_CONFIG.DB["from"].CanAutoMigration {
+			CreateAutoMigrationFile()
+			log.Printf("生成from数据库表结构文件")
+		}
+		if global.OWEN_CONFIG.DB["from"].CanAutoSynData {
+			CreateAutoSyncFile()
+			log.Printf("生成from数据库表数据文件")
+		}
+	}
 }
 
 func Test() {

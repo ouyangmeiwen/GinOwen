@@ -35,7 +35,9 @@ func main() {
 
 	extend.Test()
 	if _, ok := global.OWEN_DBList["from"]; ok {
-		extend.CreateDBModles(global.OWEN_DBList["from"]) //生成数据库结构根据数据库配置
+		if global.OWEN_CONFIG.DB["from"].CanAutoMigration {
+			extend.CreateDBModles(global.OWEN_DBList["from"]) //生成数据库结构根据数据库配置
+		}
 	} //占位置
 	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
 

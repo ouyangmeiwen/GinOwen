@@ -31,15 +31,17 @@ type SystemConfig struct {
 
 // DBConfig 数据库配置
 type DBConfig struct {
-	Type            string `yaml:"type"`
-	MySQL           string `yaml:"mysql"`
-	MSSQL           string `yaml:"mssql"`
-	Oracle          string `yaml:"oracle"`
-	Postgres        string `yaml:"postgres"`
-	SQLite          string `yaml:"sqlite"`
-	MaxOpenConns    int    `yaml:"maxopenconns"`
-	MaxIdleConns    int    `yaml:"maxidleconns"`
-	ConnMaxLifetime int    `yaml:"connmaxlifetime"`
+	Type             string `yaml:"type"`
+	CanAutoMigration bool   `yaml:"canautomigration"`
+	CanAutoSynData   bool   `yaml:"canautosyndata"`
+	MySQL            string `yaml:"mysql"`
+	MSSQL            string `yaml:"mssql"`
+	Oracle           string `yaml:"oracle"`
+	Postgres         string `yaml:"postgres"`
+	SQLite           string `yaml:"sqlite"`
+	MaxOpenConns     int    `yaml:"maxopenconns"`
+	MaxIdleConns     int    `yaml:"maxidleconns"`
+	ConnMaxLifetime  int    `yaml:"connmaxlifetime"`
 }
 
 // RedisConfig Redis 配置
