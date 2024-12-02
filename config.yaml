@@ -49,8 +49,8 @@ db:
   from:
     type: mysql #空则数据库不初始化
     cancreatemodel: false #是否允许from 数据库生成model文件
-    canautomigration: true #是否允许from 数据库生成migration文件
-    canautosyndata: true #是否允许from 数据库生成syncdata文件
+    canautomigration: false #是否允许from 数据库生成migration文件
+    canautosyndata: false #是否允许from 数据库生成syncdata文件
     mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
     oracle: "user/password@localhost:1521/service_name"
