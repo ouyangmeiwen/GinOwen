@@ -209,7 +209,7 @@ func CusSyncDatabase() error {
 		// 生成每个结构体同步的分页代码
 		line := fmt.Sprintf(`
 		// Syncing %s model data
-
+		offset = 0
 		for {
 			var %sData []model.%s
 			// 分页查询数据，不依赖排序字段
