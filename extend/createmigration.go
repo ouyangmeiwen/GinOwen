@@ -1,7 +1,6 @@
 package extend
 
 import (
-	"GINOWEN/global"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -336,20 +335,10 @@ func CreateDBModles(db *gorm.DB) {
 
 	// 创建模型的方法,生成文件在 query 目录; 先创建结果不会被后创建的覆盖
 	//g.ApplyBasic(User, Address)
-
 	g.ApplyBasic(allModel...)
-	//g.Execute()
+	g.Execute()
 	log.Printf("生成from数据库表结构")
-	if _, ok := global.OWEN_DBList["from"]; ok {
-		if global.OWEN_CONFIG.DB["from"].CanAutoMigration {
-			CreateAutoMigrationFile()
-			log.Printf("生成from数据库表结构文件")
-		}
-		if global.OWEN_CONFIG.DB["from"].CanAutoSynData {
-			CreateAutoSyncFile()
-			log.Printf("生成from数据库表数据文件")
-		}
-	}
+
 }
 
 func Test() {

@@ -32,6 +32,7 @@ type SystemConfig struct {
 // DBConfig 数据库配置
 type DBConfig struct {
 	Type             string `yaml:"type"`
+	CanCreateModel   bool   `yaml:"cancreatemodel"`
 	CanAutoMigration bool   `yaml:"canautomigration"`
 	CanAutoSynData   bool   `yaml:"canautosyndata"`
 	MySQL            string `yaml:"mysql"`

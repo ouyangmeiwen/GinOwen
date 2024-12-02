@@ -35,8 +35,16 @@ func main() {
 
 	extend.Test()
 	if _, ok := global.OWEN_DBList["from"]; ok {
-		if global.OWEN_CONFIG.DB["from"].CanAutoMigration {
+		if global.OWEN_CONFIG.DB["from"].CanCreateModel {
 			extend.CreateDBModles(global.OWEN_DBList["from"]) //生成数据库结构根据数据库配置
+		}
+		if global.OWEN_CONFIG.DB["from"].CanAutoMigration {
+			extend.CreateAutoMigrationFile()
+			log.Printf("生成from数据库表结构文件")
+		}
+		if global.OWEN_CONFIG.DB["from"].CanAutoSynData {
+			extend.CreateAutoSyncFile()
+			log.Printf("生成from数据库表数据文件")
 		}
 	} //占位置
 	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
