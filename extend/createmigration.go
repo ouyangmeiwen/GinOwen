@@ -43,6 +43,7 @@ func CreateAutoMigrationFile() {
 	}
 
 	log.Printf("Auto-migrate file generated at %s", outputFile)
+	log.Printf("生成from数据库表结构文件")
 }
 
 // 获取指定目录中的所有 Go 文件
@@ -172,8 +173,8 @@ func CreateAutoSyncFile() {
 	if err != nil {
 		log.Fatalf("Failed to generate auto-sync file: %v", err)
 	}
-
 	log.Printf("Auto-sync file generated at %s", outputFile)
+	log.Printf("生成from数据库表数据文件")
 }
 
 // 生成包含 SyncDatabase 代码的文件
