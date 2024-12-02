@@ -126,6 +126,7 @@ func CusAutoMigrate(DB *gorm.DB) {
 		line += fmt.Sprintf(`
 	if err != nil {
 		log.Printf("Failed to migrate table: %s")
+		return
 	}
 `, structName)
 		_, err = file.WriteString(line)
@@ -138,6 +139,7 @@ func CusAutoMigrate(DB *gorm.DB) {
 	_, err = file.WriteString(`
 	if err != nil {
 		log.Printf("Failed to migrate database: %v", err)
+		return
 	}
 }
 `)
