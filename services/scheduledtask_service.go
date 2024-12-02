@@ -23,7 +23,7 @@ func (ScheduledTaskService) getScheduledTasks() (takss []models.ScheduledTask, e
 		// 使用 SCAN 命令进行增量扫描
 		for {
 			// 获取下一批符合 "task:*" 模式的键
-			keys, newCursor, err := global.OWEN_REDIS.Scan(global.Ctx, cursor, "task:*", int64(batchSize)).Result()
+			keys, newCursor, err := global.OWEN_REDIS.Scan(global.Ctx, cursor, global.OWEN_CONFIG.System.Taskpre+"task:*", int64(batchSize)).Result()
 			if err != nil {
 				return nil, fmt.Errorf("error scanning task keys from Redis: %v", err)
 			}
@@ -37,7 +37,7 @@ func (ScheduledTaskService) getScheduledTasks() (takss []models.ScheduledTask, e
 				}
 				// 解析任务数据
 				var task models.ScheduledTask
-				task.ID, _ = strconv.Atoi(strings.TrimPrefix(key, "task:"))
+				task.ID, _ = strconv.Atoi(strings.TrimPrefix(key, global.OWEN_CONFIG.System.Taskpre+"task:"))
 				task.TaskName = taskData[0].(string)
 				task.Status = taskData[1].(string)
 				task.NextRunTime, _ = time.Parse(time.RFC3339, taskData[2].(string))
@@ -78,7 +78,7 @@ func (ScheduledTaskService) updateTaskStatus(taskID int, status string) error {
 		// } else {
 		// 	return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "status", status).Err()
 		// }
-		return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "status", status).Err()
+		return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf(global.OWEN_CONFIG.System.Taskpre+"task:%d", taskID), "status", status).Err()
 	} else {
 		return global.OWEN_DB.Model(&models.ScheduledTask{}).Where("ID=?", taskID).Updates(map[string]interface{}{
 			"status": status,
@@ -88,7 +88,7 @@ func (ScheduledTaskService) updateTaskStatus(taskID int, status string) error {
 }
 func (ScheduledTaskService) updateTaskInternal(taskID int, nexttime time.Time) error {
 	if global.OWEN_CONFIG.System.TaskDB == "redis" {
-		return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf("task:%d", taskID), "nextRunTime", nexttime.Format(time.RFC3339), "status", "pending").Err()
+		return global.OWEN_REDIS.HSet(global.Ctx, fmt.Sprintf(global.OWEN_CONFIG.System.Taskpre+"task:%d", taskID), "nextRunTime", nexttime.Format(time.RFC3339), "status", "pending").Err()
 	} else {
 		return global.OWEN_DB.Model(&models.ScheduledTask{}).Where("ID=?", taskID).Updates(map[string]interface{}{
 			"next_run_time": nexttime,
@@ -130,7 +130,7 @@ func (s ScheduledTaskService) AddScheduledTask(req request.AddScheduledTaskInput
 			Status:          "pending",
 		}
 		// 将任务添加到 Redis 中
-		taskKey := fmt.Sprintf("task:%d", taskID)
+		taskKey := fmt.Sprintf(global.OWEN_CONFIG.System.Taskpre+"task:%d", taskID)
 		err = global.OWEN_REDIS.HMSet(global.Ctx, taskKey, map[string]interface{}{
 			"taskName":        task.TaskName,
 			"status":          task.Status,
