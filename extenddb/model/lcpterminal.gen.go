@@ -40,7 +40,7 @@ type Lcpterminal struct {
 	LocationName         *string    `gorm:"column:LocationName;type:varchar(128)" json:"LocationName"`
 	Password             *string    `gorm:"column:Password;type:varchar(16)" json:"Password"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	MachineCode          *string    `gorm:"column:MachineCode;type:varchar(32)" json:"MachineCode"`
 }

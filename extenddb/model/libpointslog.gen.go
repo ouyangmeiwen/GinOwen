@@ -21,7 +21,7 @@ type Libpointslog struct {
 	ItemID          *string   `gorm:"column:ItemId;type:varchar(32)" json:"ItemId"`
 	ItemBarcode     *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle       *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
-	PointsRuleType  int64     `gorm:"column:PointsRuleType;type:tinyint(3) unsigned;not null" json:"PointsRuleType"`
+	PointsRuleType  int64     `gorm:"column:PointsRuleType;type:tinyint(3) ;not null" json:"PointsRuleType"`
 	Points          int64     `gorm:"column:Points;type:int(11);not null" json:"Points"`
 	TaskPackageID   *string   `gorm:"column:TaskPackageId;type:varchar(32)" json:"TaskPackageId"`
 	TaskPackageName *string   `gorm:"column:TaskPackageName;type:varchar(32)" json:"TaskPackageName"`

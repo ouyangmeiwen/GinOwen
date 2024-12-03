@@ -23,12 +23,12 @@ type Libpatronlog struct {
 	PatronBarcode *string   `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	CardTypeID    *string   `gorm:"column:CardTypeId;type:varchar(32)" json:"CardTypeId"`
 	CardTypeName  *string   `gorm:"column:CardTypeName;type:varchar(128)" json:"CardTypeName"`
-	PatronLogType int64     `gorm:"column:PatronLogType;type:tinyint(3) unsigned;not null" json:"PatronLogType"`
+	PatronLogType int64     `gorm:"column:PatronLogType;type:tinyint(3) ;not null" json:"PatronLogType"`
 	PatronLogMode int64     `gorm:"column:PatronLogMode;type:smallint(6);not null" json:"PatronLogMode"`
-	Result        int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result        int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	ErrorMessage  *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	Remark        *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType    int64     `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType    int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 

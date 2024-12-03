@@ -19,7 +19,7 @@ type Lcpterminaldevicelog struct {
 	TerminalCode       string    `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
 	TerminalName       string    `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
 	TerminalDeviceID   string    `gorm:"column:TerminalDeviceId;type:varchar(32);not null" json:"TerminalDeviceId"`
-	TerminalDeviceType int64     `gorm:"column:TerminalDeviceType;type:tinyint(3) unsigned;not null" json:"TerminalDeviceType"`
+	TerminalDeviceType int64     `gorm:"column:TerminalDeviceType;type:tinyint(3) ;not null" json:"TerminalDeviceType"`
 	IsError            []uint8   `gorm:"column:IsError;type:bit(1);not null" json:"IsError"`
 	ErrorMessage       *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	Brand              string    `gorm:"column:Brand;type:varchar(64);not null" json:"Brand"`

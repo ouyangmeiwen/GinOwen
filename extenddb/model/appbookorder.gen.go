@@ -23,7 +23,7 @@ type Appbookorder struct {
 	SubBookInfoID        *string    `gorm:"column:SubBookInfoId;type:varchar(32)" json:"SubBookInfoId"`
 	SubBookInfoISBN      *string    `gorm:"column:SubBookInfoISBN;type:varchar(32)" json:"SubBookInfoISBN"`
 	SubBookInfoTitle     *string    `gorm:"column:SubBookInfoTitle;type:varchar(256)" json:"SubBookInfoTitle"`
-	BookOrderStatus      int64      `gorm:"column:BookOrderStatus;type:tinyint(3) unsigned;not null" json:"BookOrderStatus"`
+	BookOrderStatus      int64      `gorm:"column:BookOrderStatus;type:tinyint(3) ;not null" json:"BookOrderStatus"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }

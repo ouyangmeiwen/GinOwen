@@ -20,7 +20,7 @@ type Lcpservice struct {
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
 	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	ServiceType          int64      `gorm:"column:ServiceType;type:tinyint(3) unsigned;not null" json:"ServiceType"`
+	ServiceType          int64      `gorm:"column:ServiceType;type:tinyint(3) ;not null" json:"ServiceType"`
 	Name                 string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	IsError              []uint8    `gorm:"column:IsError;type:bit(1);not null" json:"IsError"`

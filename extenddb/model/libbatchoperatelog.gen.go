@@ -20,8 +20,8 @@ type Libbatchoperatelog struct {
 	Tid              *string   `gorm:"column:Tid;type:varchar(32)" json:"Tid"`
 	LayerID          string    `gorm:"column:LayerId;type:varchar(32);not null" json:"LayerId"`
 	LayerName        *string   `gorm:"column:LayerName;type:varchar(32)" json:"LayerName"`
-	BatchOperateType int64     `gorm:"column:BatchOperateType;type:tinyint(3) unsigned;not null" json:"BatchOperateType"`
-	ItemState        *int64    `gorm:"column:ItemState;type:tinyint(3) unsigned" json:"ItemState"`
+	BatchOperateType int64     `gorm:"column:BatchOperateType;type:tinyint(3) ;not null" json:"BatchOperateType"`
+	ItemState        *int64    `gorm:"column:ItemState;type:tinyint(3) " json:"ItemState"`
 	ItemBarcode      *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle        *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
 	ItemCallNo       *string   `gorm:"column:ItemCallNo;type:varchar(64)" json:"ItemCallNo"`
@@ -32,7 +32,7 @@ type Libbatchoperatelog struct {
 	CreatorUserName  *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 	ErrorMessage     *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	LayerCode        *string   `gorm:"column:LayerCode;type:varchar(32)" json:"LayerCode"`
-	Result           int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result           int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 }
 
 // TableName Libbatchoperatelog's table name

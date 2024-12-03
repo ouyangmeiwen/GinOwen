@@ -24,12 +24,12 @@ type Appapprovalinfo struct {
 	SpCreatorUserID      string     `gorm:"column:SpCreatorUserId;type:varchar(32);not null" json:"SpCreatorUserId"`
 	SpCreatorUserName    string     `gorm:"column:SpCreatorUserName;type:varchar(32);not null" json:"SpCreatorUserName"`
 	SpTemplateID         string     `gorm:"column:SpTemplateId;type:varchar(64);not null" json:"SpTemplateId"`
-	SpStatus             int64      `gorm:"column:SpStatus;type:tinyint(3) unsigned;not null" json:"SpStatus"`
+	SpStatus             int64      `gorm:"column:SpStatus;type:tinyint(3) ;not null" json:"SpStatus"`
 	UseTemplateApprover  []uint8    `gorm:"column:UseTemplateApprover;type:bit(1);not null" json:"UseTemplateApprover"`
 	ChooseDepartment     int64      `gorm:"column:ChooseDepartment;type:bigint(20);not null" json:"ChooseDepartment"`
 	Approver             string     `gorm:"column:Approver;type:varchar(512);not null" json:"Approver"`
 	Notifyer             *string    `gorm:"column:Notifyer;type:varchar(256)" json:"Notifyer"`
-	NotifyType           int64      `gorm:"column:NotifyType;type:tinyint(3) unsigned;not null" json:"NotifyType"`
+	NotifyType           int64      `gorm:"column:NotifyType;type:tinyint(3) ;not null" json:"NotifyType"`
 	ApplyData            string     `gorm:"column:ApplyData;type:longtext;not null" json:"ApplyData"`
 	SummaryList          string     `gorm:"column:SummaryList;type:varchar(2000);not null" json:"SummaryList"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

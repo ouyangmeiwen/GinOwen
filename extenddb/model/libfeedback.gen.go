@@ -21,13 +21,13 @@ type Libfeedback struct {
 	PatronID      *string   `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
 	PatronName    *string   `gorm:"column:PatronName;type:varchar(64)" json:"PatronName"`
 	PatronBarcode *string   `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
-	FeedbackType  int64     `gorm:"column:FeedbackType;type:tinyint(3) unsigned;not null" json:"FeedbackType"`
-	Grade         int64     `gorm:"column:Grade;type:tinyint(3) unsigned;not null" json:"Grade"`
+	FeedbackType  int64     `gorm:"column:FeedbackType;type:tinyint(3) ;not null" json:"FeedbackType"`
+	Grade         int64     `gorm:"column:Grade;type:tinyint(3) ;not null" json:"Grade"`
 	MessageCode   int64     `gorm:"column:MessageCode;type:int(11);not null" json:"MessageCode"`
 	Message       *string   `gorm:"column:Message;type:varchar(256)" json:"Message"`
 	Contact       *string   `gorm:"column:Contact;type:varchar(128)" json:"Contact"`
 	Remark        *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType    int64     `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType    int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 

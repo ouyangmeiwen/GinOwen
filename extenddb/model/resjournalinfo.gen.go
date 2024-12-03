@@ -25,7 +25,7 @@ type Resjournalinfo struct {
 	SubUnitPrice     *string `gorm:"column:SubUnitPrice;type:varchar(16)" json:"SubUnitPrice"`
 	MonthlyPrice     *string `gorm:"column:MonthlyPrice;type:varchar(16)" json:"MonthlyPrice"`
 	AnnualPrice      *string `gorm:"column:AnnualPrice;type:varchar(16)" json:"AnnualPrice"`
-	JournalType      int64   `gorm:"column:JournalType;type:tinyint(3) unsigned;not null" json:"JournalType"`
+	JournalType      int64   `gorm:"column:JournalType;type:tinyint(3) ;not null" json:"JournalType"`
 	Summary          *string `gorm:"column:Summary;type:varchar(2000)" json:"Summary"`
 	Remark           *string `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	Tags             *string `gorm:"column:Tags;type:varchar(64)" json:"Tags"`

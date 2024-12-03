@@ -24,7 +24,7 @@ type Libpatron struct {
 	IDCard               *string    `gorm:"column:IdCard;type:varchar(32)" json:"IdCard"`
 	Barcode              string     `gorm:"column:Barcode;type:varchar(64);not null" json:"Barcode"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
-	Sex                  int64      `gorm:"column:Sex;type:tinyint(3) unsigned;not null" json:"Sex"`
+	Sex                  int64      `gorm:"column:Sex;type:tinyint(3) ;not null" json:"Sex"`
 	Birthday             *time.Time `gorm:"column:Birthday;type:datetime(6)" json:"Birthday"`
 	Password             *string    `gorm:"column:Password;type:varchar(128)" json:"Password"`
 	CardTypeID           *string    `gorm:"column:CardTypeId;type:varchar(32)" json:"CardTypeId"`
@@ -41,8 +41,8 @@ type Libpatron struct {
 	DepartmentName       *string    `gorm:"column:DepartmentName;type:varchar(256)" json:"DepartmentName"`
 	ExpireTime           *time.Time `gorm:"column:ExpireTime;type:datetime(6)" json:"ExpireTime"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
-	CreateType           int64      `gorm:"column:CreateType;type:tinyint(3) unsigned;not null" json:"CreateType"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
+	CreateType           int64      `gorm:"column:CreateType;type:tinyint(3) ;not null" json:"CreateType"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 

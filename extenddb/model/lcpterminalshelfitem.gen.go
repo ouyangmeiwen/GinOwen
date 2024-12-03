@@ -27,7 +27,7 @@ type Lcpterminalshelfitem struct {
 	ItemISBN             *string    `gorm:"column:ItemISBN;type:varchar(32)" json:"ItemISBN"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
 	IsReserve            []uint8    `gorm:"column:IsReserve;type:bit(1);not null" json:"IsReserve"`
-	ReserveType          *int64     `gorm:"column:ReserveType;type:tinyint(3) unsigned" json:"ReserveType"`
+	ReserveType          *int64     `gorm:"column:ReserveType;type:tinyint(3) " json:"ReserveType"`
 	PatronBarcode        *string    `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	ReserveDate          *time.Time `gorm:"column:ReserveDate;type:datetime(6)" json:"ReserveDate"`
 	DisableReason        *string    `gorm:"column:DisableReason;type:varchar(256)" json:"DisableReason"`

@@ -15,11 +15,11 @@ type Sysfaceoffineoperationlog struct {
 	ID               string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime     time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
 	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
-	OperationType    int64     `gorm:"column:OperationType;type:tinyint(3) unsigned;not null" json:"OperationType"`
-	OperationItem    int64     `gorm:"column:OperationItem;type:tinyint(3) unsigned;not null" json:"OperationItem"`
+	OperationType    int64     `gorm:"column:OperationType;type:tinyint(3) ;not null" json:"OperationType"`
+	OperationItem    int64     `gorm:"column:OperationItem;type:tinyint(3) ;not null" json:"OperationItem"`
 	GroupID          *string   `gorm:"column:GroupId;type:varchar(32)" json:"GroupId"`
 	UserID           *string   `gorm:"column:UserId;type:varchar(32)" json:"UserId"`
-	Result           int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result           int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	ErrorMessage     *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	OperationMessage *string   `gorm:"column:OperationMessage;type:longtext" json:"OperationMessage"`
 	Remark           *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`

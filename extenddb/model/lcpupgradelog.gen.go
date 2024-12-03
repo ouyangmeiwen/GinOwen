@@ -25,7 +25,7 @@ type Lcpupgradelog struct {
 	TargetCode         *string   `gorm:"column:TargetCode;type:varchar(32)" json:"TargetCode"`
 	TargetName         *string   `gorm:"column:TargetName;type:varchar(128)" json:"TargetName"`
 	Remark             *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	Result             int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result             int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	ErrorMessage       *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	TenantID           int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }

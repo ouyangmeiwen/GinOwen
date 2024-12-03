@@ -33,7 +33,7 @@ type Lcpterminalshelf struct {
 	IsInterference       []uint8    `gorm:"column:IsInterference;type:bit(1);not null" json:"IsInterference"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	IsReserve            []uint8    `gorm:"column:IsReserve;type:bit(1);not null" json:"IsReserve"`
-	ReserveType          int64      `gorm:"column:ReserveType;type:tinyint(3) unsigned;not null" json:"ReserveType"`
+	ReserveType          int64      `gorm:"column:ReserveType;type:tinyint(3) ;not null" json:"ReserveType"`
 	PatronBarcode        *string    `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	DisableReason        *string    `gorm:"column:DisableReason;type:varchar(256)" json:"DisableReason"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

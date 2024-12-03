@@ -22,8 +22,8 @@ type Appusercard struct {
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	OpenID               string     `gorm:"column:OpenId;type:varchar(255);not null" json:"OpenId"`
 	CardNo               string     `gorm:"column:CardNo;type:varchar(255);not null" json:"CardNo"`
-	AppType              int64      `gorm:"column:AppType;type:tinyint(3) unsigned;not null" json:"AppType"`
-	RoleType             int64      `gorm:"column:RoleType;type:tinyint(3) unsigned;not null" json:"RoleType"`
+	AppType              int64      `gorm:"column:AppType;type:tinyint(3) ;not null" json:"AppType"`
+	RoleType             int64      `gorm:"column:RoleType;type:tinyint(3) ;not null" json:"RoleType"`
 	IsEnabled            []uint8    `gorm:"column:IsEnabled;type:bit(1);not null" json:"IsEnabled"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	Password             *string    `gorm:"column:Password;type:varchar(512)" json:"Password"`

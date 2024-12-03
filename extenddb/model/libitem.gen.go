@@ -28,7 +28,7 @@ type Libitem struct {
 	CallNo               *string    `gorm:"column:CallNo;type:varchar(64)" json:"CallNo"`
 	PreCallNo            *string    `gorm:"column:PreCallNo;type:varchar(64)" json:"PreCallNo"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
-	ItemState            int64      `gorm:"column:ItemState;type:tinyint(3);not null" json:"ItemState"`
+	ItemState            int64      `gorm:"column:ItemState;type:tinyint(3) ;not null" json:"ItemState"`
 	PressmarkID          *string    `gorm:"column:PressmarkId;type:varchar(32)" json:"PressmarkId"`
 	PressmarkName        *string    `gorm:"column:PressmarkName;type:varchar(64)" json:"PressmarkName"`
 	LocationID           *string    `gorm:"column:LocationId;type:varchar(32)" json:"LocationId"`

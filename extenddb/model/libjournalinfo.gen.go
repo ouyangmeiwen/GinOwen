@@ -27,13 +27,13 @@ type Libjournalinfo struct {
 	Title                string     `gorm:"column:Title;type:varchar(256);not null" json:"Title"`
 	Publisher            *string    `gorm:"column:Publisher;type:varchar(64)" json:"Publisher"`
 	Language             *string    `gorm:"column:Language;type:varchar(32)" json:"Language"`
-	JournalType          int64      `gorm:"column:JournalType;type:tinyint(3) unsigned;not null" json:"JournalType"`
+	JournalType          int64      `gorm:"column:JournalType;type:tinyint(3) ;not null" json:"JournalType"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
 	Frequency            string     `gorm:"column:Frequency;type:varchar(32);not null" json:"Frequency"`
 	UnitPrice            *string    `gorm:"column:UnitPrice;type:varchar(32)" json:"UnitPrice"`
 	AnnualPrice          *string    `gorm:"column:AnnualPrice;type:varchar(32)" json:"AnnualPrice"`
 	SubscriptionPrice    *string    `gorm:"column:SubscriptionPrice;type:varchar(32)" json:"SubscriptionPrice"`
-	SubscriptionType     int64      `gorm:"column:SubscriptionType;type:tinyint(3) unsigned;not null" json:"SubscriptionType"`
+	SubscriptionType     int64      `gorm:"column:SubscriptionType;type:tinyint(3) ;not null" json:"SubscriptionType"`
 	SubscriptionNPer     int64      `gorm:"column:SubscriptionNPer;type:int(11);not null" json:"SubscriptionNPer"`
 	SubscriptionNum      int64      `gorm:"column:SubscriptionNum;type:int(11);not null" json:"SubscriptionNum"`
 	Tags                 *string    `gorm:"column:Tags;type:varchar(256)" json:"Tags"`

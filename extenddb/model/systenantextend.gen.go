@@ -18,8 +18,8 @@ type Systenantextend struct {
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
 	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	LibraryCode          *string    `gorm:"column:LibraryCode;type:varchar(16)" json:"LibraryCode"`
-	TenantType           int64      `gorm:"column:TenantType;type:tinyint(3) unsigned;not null" json:"TenantType"`
-	Level                int64      `gorm:"column:Level;type:tinyint(3) unsigned;not null" json:"Level"`
+	TenantType           int64      `gorm:"column:TenantType;type:tinyint(3) ;not null" json:"TenantType"`
+	Level                int64      `gorm:"column:Level;type:tinyint(3) ;not null" json:"Level"`
 	Custom               *string    `gorm:"column:Custom;type:varchar(2000)" json:"Custom"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

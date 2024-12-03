@@ -36,7 +36,7 @@ type Libshelf struct {
 	StructID             *string    `gorm:"column:StructId;type:varchar(255)" json:"StructId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	IsBosseyed           []uint8    `gorm:"column:IsBosseyed;type:bit(1);not null;default:b'0'" json:"IsBosseyed"`
+	IsBosseyed           []uint8    `gorm:"column:IsBosseyed;type:bit(1);not null;default:0" json:"IsBosseyed"`
 }
 
 // TableName Libshelf's table name

@@ -23,12 +23,12 @@ type Lcpterminalshelflog struct {
 	ItemID               *string   `gorm:"column:ItemId;type:varchar(32)" json:"ItemId"`
 	ItemTitle            *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
 	ItemBarcode          *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
-	TerminalShelfLogType int64     `gorm:"column:TerminalShelfLogType;type:tinyint(3) unsigned;not null" json:"TerminalShelfLogType"`
+	TerminalShelfLogType int64     `gorm:"column:TerminalShelfLogType;type:tinyint(3) ;not null" json:"TerminalShelfLogType"`
 	IsAdmin              []uint8   `gorm:"column:IsAdmin;type:bit(1);not null" json:"IsAdmin"`
 	OperatorID           *string   `gorm:"column:OperatorId;type:varchar(32)" json:"OperatorId"`
 	OperatorName         *string   `gorm:"column:OperatorName;type:varchar(64)" json:"OperatorName"`
 	OperatorAccount      *string   `gorm:"column:OperatorAccount;type:varchar(256)" json:"OperatorAccount"`
-	Result               int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result               int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	Remark               *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	ErrorMessage         *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	TenantID             int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

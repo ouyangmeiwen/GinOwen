@@ -21,12 +21,12 @@ type Libinventoryworklog struct {
 	WrongNum          int64     `gorm:"column:WrongNum;type:int(11);not null" json:"WrongNum"`
 	BorrowedNum       int64     `gorm:"column:BorrowedNum;type:int(11);not null" json:"BorrowedNum"`
 	NotOnNum          int64     `gorm:"column:NotOnNum;type:int(11);not null" json:"NotOnNum"`
-	InventoryWorkType int64     `gorm:"column:InventoryWorkType;type:tinyint(3) unsigned;not null" json:"InventoryWorkType"`
+	InventoryWorkType int64     `gorm:"column:InventoryWorkType;type:tinyint(3) ;not null" json:"InventoryWorkType"`
 	Remark            *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID          int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	CreatorUserName   *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 	LayerCode         *string   `gorm:"column:LayerCode;type:varchar(32)" json:"LayerCode"`
-	OriginType        *int64    `gorm:"column:OriginType;type:tinyint(3) unsigned" json:"OriginType"`
+	OriginType        *int64    `gorm:"column:OriginType;type:tinyint(3) " json:"OriginType"`
 }
 
 // TableName Libinventoryworklog's table name

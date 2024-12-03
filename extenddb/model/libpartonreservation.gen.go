@@ -29,7 +29,7 @@ type Libpartonreservation struct {
 	ItemAuthor           *string    `gorm:"column:ItemAuthor;type:varchar(256)" json:"ItemAuthor"`
 	ItemISBN             *string    `gorm:"column:ItemISBN;type:varchar(32)" json:"ItemISBN"`
 	ItemPublisher        *string    `gorm:"column:ItemPublisher;type:varchar(512)" json:"ItemPublisher"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) unsigned;not null" json:"ItemType"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
 	ReserveItemType      int64      `gorm:"column:ReserveItemType;type:int(11);not null" json:"ReserveItemType"`
 	OverdueTime          time.Time  `gorm:"column:OverdueTime;type:datetime(6);not null" json:"OverdueTime"`
 	TernimalID           *string    `gorm:"column:TernimalID;type:varchar(32)" json:"TernimalID"`

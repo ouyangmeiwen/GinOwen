@@ -18,17 +18,17 @@ type Appnotificationlog struct {
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
 	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	TemplateID           *string    `gorm:"column:TemplateId;type:varchar(64)" json:"TemplateId"`
-	TemplateSourceType   int64      `gorm:"column:TemplateSourceType;type:tinyint(3) unsigned;not null" json:"TemplateSourceType"`
+	TemplateSourceType   int64      `gorm:"column:TemplateSourceType;type:tinyint(3) ;not null" json:"TemplateSourceType"`
 	Title                *string    `gorm:"column:Title;type:varchar(256)" json:"Title"`
 	MessageContent       *string    `gorm:"column:MessageContent;type:varchar(2000)" json:"MessageContent"`
-	NotificationType     int64      `gorm:"column:NotificationType;type:tinyint(3) unsigned;not null" json:"NotificationType"`
-	TemplateMessageType  int64      `gorm:"column:TemplateMessageType;type:tinyint(3) unsigned;not null" json:"TemplateMessageType"`
+	NotificationType     int64      `gorm:"column:NotificationType;type:tinyint(3) ;not null" json:"NotificationType"`
+	TemplateMessageType  int64      `gorm:"column:TemplateMessageType;type:tinyint(3) ;not null" json:"TemplateMessageType"`
 	SendTo               string     `gorm:"column:SendTo;type:varchar(64);not null" json:"SendTo"`
 	MessageID            *string    `gorm:"column:MessageId;type:varchar(64)" json:"MessageId"`
 	Code                 *string    `gorm:"column:Code;type:varchar(64)" json:"Code"`
-	Result               int64      `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result               int64      `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	IsRead               []uint8    `gorm:"column:IsRead;type:bit(1);not null" json:"IsRead"`
 	ErrorMessage         *string    `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

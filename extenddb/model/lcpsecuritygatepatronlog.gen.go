@@ -24,7 +24,7 @@ type Lcpsecuritygatepatronlog struct {
 	EndTime              time.Time  `gorm:"column:EndTime;type:datetime(6);not null" json:"EndTime"`
 	TotalInCount         int64      `gorm:"column:TotalInCount;type:int(11);not null" json:"TotalInCount"`
 	TotalOutCount        int64      `gorm:"column:TotalOutCount;type:int(11);not null" json:"TotalOutCount"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 

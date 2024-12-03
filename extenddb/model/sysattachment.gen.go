@@ -18,9 +18,9 @@ type Sysattachment struct {
 	Name                string    `gorm:"column:Name;type:varchar(256);not null" json:"Name"`
 	Length              int64     `gorm:"column:Length;type:bigint(20);not null" json:"Length"`
 	Extension           string    `gorm:"column:Extension;type:varchar(128);not null" json:"Extension"`
-	AttachmentApplyType int64     `gorm:"column:AttachmentApplyType;type:tinyint(3) unsigned;not null" json:"AttachmentApplyType"`
+	AttachmentApplyType int64     `gorm:"column:AttachmentApplyType;type:tinyint(3) ;not null" json:"AttachmentApplyType"`
 	TenantID            *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
-	StorageMode         int64     `gorm:"column:StorageMode;type:tinyint(3) unsigned;not null;default:1" json:"StorageMode"`
+	StorageMode         int64     `gorm:"column:StorageMode;type:tinyint(3) ;not null;default:1" json:"StorageMode"`
 }
 
 // TableName Sysattachment's table name

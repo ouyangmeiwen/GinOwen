@@ -22,13 +22,13 @@ type Lcpversion struct {
 	Name                 string     `gorm:"column:Name;type:varchar(32);not null" json:"Name"`
 	AttachmentID         *string    `gorm:"column:AttachmentId;type:varchar(32)" json:"AttachmentId"`
 	Description          *string    `gorm:"column:Description;type:varchar(2000)" json:"Description"`
-	VersionType          int64      `gorm:"column:VersionType;type:tinyint(3) unsigned;not null" json:"VersionType"`
-	PackageType          int64      `gorm:"column:PackageType;type:tinyint(3) unsigned;not null;default:1" json:"PackageType"`
-	StorageMode          int64      `gorm:"column:StorageMode;type:tinyint(3) unsigned;not null;default:1" json:"StorageMode"`
+	VersionType          int64      `gorm:"column:VersionType;type:tinyint(3) ;not null" json:"VersionType"`
+	PackageType          int64      `gorm:"column:PackageType;type:tinyint(3) ;not null;default:1" json:"PackageType"`
+	StorageMode          int64      `gorm:"column:StorageMode;type:tinyint(3) ;not null;default:1" json:"StorageMode"`
 	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null;default:b'0'" json:"IsDeleted"`
+	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null;default:0" json:"IsDeleted"`
 	ProductID            *string    `gorm:"column:ProductId;type:varchar(32)" json:"ProductId"`
 	URL                  *string    `gorm:"column:Url;type:varchar(512)" json:"Url"`
 }

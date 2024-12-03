@@ -26,11 +26,11 @@ type Misactivity struct {
 	Address              string     `gorm:"column:Address;type:varchar(128);not null" json:"Address"`
 	Crowd                string     `gorm:"column:Crowd;type:varchar(128);not null" json:"Crowd"`
 	SortCode             int64      `gorm:"column:SortCode;type:int(11);not null" json:"SortCode"`
-	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint(3) unsigned;not null" json:"InformationStatus"`
+	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint(3) ;not null" json:"InformationStatus"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 	AttachmentID         *string    `gorm:"column:AttachmentId;type:varchar(32)" json:"AttachmentId"`
-	MediaType            *int64     `gorm:"column:MediaType;type:tinyint(3) unsigned" json:"MediaType"`
+	MediaType            *int64     `gorm:"column:MediaType;type:tinyint(3) " json:"MediaType"`
 }
 
 // TableName Misactivity's table name

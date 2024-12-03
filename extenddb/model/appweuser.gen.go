@@ -19,7 +19,7 @@ type Appweuser struct {
 	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	OpenID               string     `gorm:"column:OpenId;type:varchar(32);not null" json:"OpenId"`
 	NickName             *string    `gorm:"column:NickName;type:varchar(128)" json:"NickName"`
-	Sex                  int64      `gorm:"column:Sex;type:tinyint(3) unsigned;not null" json:"Sex"`
+	Sex                  int64      `gorm:"column:Sex;type:tinyint(3) ;not null" json:"Sex"`
 	Language             *string    `gorm:"column:Language;type:varchar(64)" json:"Language"`
 	City                 *string    `gorm:"column:City;type:varchar(64)" json:"City"`
 	Province             *string    `gorm:"column:Province;type:varchar(64)" json:"Province"`
@@ -29,7 +29,7 @@ type Appweuser struct {
 	SubscribeTime        *time.Time `gorm:"column:SubscribeTime;type:datetime(6)" json:"SubscribeTime"`
 	UnionID              *string    `gorm:"column:UnionId;type:varchar(64)" json:"UnionId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	WeUserType           int64      `gorm:"column:WeUserType;type:tinyint(3) unsigned;not null" json:"WeUserType"`
+	WeUserType           int64      `gorm:"column:WeUserType;type:tinyint(3) ;not null" json:"WeUserType"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 

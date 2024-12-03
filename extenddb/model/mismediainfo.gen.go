@@ -21,10 +21,10 @@ type Mismediainfo struct {
 	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	Name                 string     `gorm:"column:Name;type:varchar(256);not null" json:"Name"`
-	MediaType            int64      `gorm:"column:MediaType;type:tinyint(3) unsigned;not null" json:"MediaType"`
+	MediaType            int64      `gorm:"column:MediaType;type:tinyint(3) ;not null" json:"MediaType"`
 	AttachmentID         *string    `gorm:"column:AttachmentId;type:varchar(32)" json:"AttachmentId"`
 	SortCode             int64      `gorm:"column:SortCode;type:int(11);not null" json:"SortCode"`
-	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint(3) unsigned;not null" json:"InformationStatus"`
+	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint(3) ;not null" json:"InformationStatus"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 }

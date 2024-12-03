@@ -34,7 +34,7 @@ type SysmenuCopy struct {
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	ParentID             *string    `gorm:"column:ParentId;type:varchar(32)" json:"ParentId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	SystemType           int64      `gorm:"column:SystemType;type:tinyint(3) unsigned;not null" json:"SystemType"`
+	SystemType           int64      `gorm:"column:SystemType;type:tinyint(3) ;not null" json:"SystemType"`
 	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
 }
 

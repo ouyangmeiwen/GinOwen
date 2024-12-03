@@ -26,12 +26,12 @@ type Libitemoperatelog struct {
 	SrcLayerName        *string   `gorm:"column:SrcLayerName;type:varchar(32)" json:"SrcLayerName"`
 	DesLayerID          *string   `gorm:"column:DesLayerId;type:varchar(32)" json:"DesLayerId"`
 	DesLayerName        *string   `gorm:"column:DesLayerName;type:varchar(32)" json:"DesLayerName"`
-	ItemOperateType     int64     `gorm:"column:ItemOperateType;type:tinyint(3) unsigned;not null" json:"ItemOperateType"`
+	ItemOperateType     int64     `gorm:"column:ItemOperateType;type:tinyint(3) ;not null" json:"ItemOperateType"`
 	Remark              *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID            int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	CreatorUserName     *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 	DesLayerCode        *string   `gorm:"column:DesLayerCode;type:varchar(32)" json:"DesLayerCode"`
-	ItemOperateModeType int64     `gorm:"column:ItemOperateModeType;type:tinyint(3) unsigned;not null" json:"ItemOperateModeType"`
+	ItemOperateModeType int64     `gorm:"column:ItemOperateModeType;type:tinyint(3) ;not null" json:"ItemOperateModeType"`
 	SrcLayerCode        *string   `gorm:"column:SrcLayerCode;type:varchar(32)" json:"SrcLayerCode"`
 }
 

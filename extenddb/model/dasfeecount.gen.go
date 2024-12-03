@@ -20,11 +20,11 @@ type Dasfeecount struct {
 	TerminalName  *string   `gorm:"column:TerminalName;type:varchar(128)" json:"TerminalName"`
 	StartTime     time.Time `gorm:"column:StartTime;type:datetime(6);not null" json:"StartTime"`
 	EndTime       time.Time `gorm:"column:EndTime;type:datetime(6);not null" json:"EndTime"`
-	FeeType       int64     `gorm:"column:FeeType;type:tinyint(3) unsigned;not null" json:"FeeType"`
-	PaymentType   int64     `gorm:"column:PaymentType;type:tinyint(3) unsigned;not null" json:"PaymentType"`
+	FeeType       int64     `gorm:"column:FeeType;type:tinyint(3) ;not null" json:"FeeType"`
+	PaymentType   int64     `gorm:"column:PaymentType;type:tinyint(3) ;not null" json:"PaymentType"`
 	Amount        int64     `gorm:"column:Amount;type:int(11);not null" json:"Amount"`
 	Count         int64     `gorm:"column:Count;type:int(11);not null" json:"Count"`
-	Result        int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result        int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }
 

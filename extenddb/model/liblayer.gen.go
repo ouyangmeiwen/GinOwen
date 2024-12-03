@@ -25,7 +25,7 @@ type Liblayer struct {
 	Name                 string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	Tid                  *string    `gorm:"column:Tid;type:varchar(32)" json:"Tid"`
 	Side                 string     `gorm:"column:Side;type:varchar(32);not null" json:"Side"`
-	LayerNo              int64      `gorm:"column:LayerNo;type:tinyint(3) unsigned;not null" json:"LayerNo"`
+	LayerNo              int64      `gorm:"column:LayerNo;type:tinyint(3) ;not null" json:"LayerNo"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
@@ -33,7 +33,7 @@ type Liblayer struct {
 	ItemCallNo           *string    `gorm:"column:ItemCallNo;type:varchar(64)" json:"ItemCallNo"`
 	PreCallNo            *string    `gorm:"column:PreCallNo;type:varchar(64)" json:"PreCallNo"`
 	Barcode              *string    `gorm:"column:Barcode;type:varchar(32)" json:"Barcode"`
-	OriginType           *int64     `gorm:"column:OriginType;type:tinyint(3) unsigned" json:"OriginType"`
+	OriginType           *int64     `gorm:"column:OriginType;type:tinyint(3) " json:"OriginType"`
 }
 
 // TableName Liblayer's table name

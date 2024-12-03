@@ -21,7 +21,7 @@ type Libtaskpackage struct {
 	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	Name                 string     `gorm:"column:Name;type:varchar(32);not null" json:"Name"`
-	TaskPackageStatus    int64      `gorm:"column:TaskPackageStatus;type:tinyint(3) unsigned;not null" json:"TaskPackageStatus"`
+	TaskPackageStatus    int64      `gorm:"column:TaskPackageStatus;type:tinyint(3) ;not null" json:"TaskPackageStatus"`
 	PatronID             *string    `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
 	PatronBarcode        *string    `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	PatronName           *string    `gorm:"column:PatronName;type:varchar(64)" json:"PatronName"`

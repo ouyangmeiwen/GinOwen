@@ -21,7 +21,7 @@ type Libtaskitem struct {
 	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	TaskPackageID        *string    `gorm:"column:TaskPackageId;type:varchar(32)" json:"TaskPackageId"`
-	TaskItemStatus       int64      `gorm:"column:TaskItemStatus;type:tinyint(3) unsigned;not null" json:"TaskItemStatus"`
+	TaskItemStatus       int64      `gorm:"column:TaskItemStatus;type:tinyint(3) ;not null" json:"TaskItemStatus"`
 	ItemID               string     `gorm:"column:ItemId;type:varchar(32);not null" json:"ItemId"`
 	ItemTid              *string    `gorm:"column:ItemTid;type:varchar(32)" json:"ItemTid"`
 	ItemBarcode          string     `gorm:"column:ItemBarcode;type:varchar(32);not null" json:"ItemBarcode"`

@@ -23,9 +23,9 @@ type Lcpserialport struct {
 	TerminalID           *string    `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	PortName             string     `gorm:"column:PortName;type:varchar(32);not null" json:"PortName"`
 	BaudRate             int64      `gorm:"column:BaudRate;type:int(11);not null" json:"BaudRate"`
-	DataBits             int64      `gorm:"column:DataBits;type:tinyint(3) unsigned;not null" json:"DataBits"`
-	StopBits             int64      `gorm:"column:StopBits;type:tinyint(3) unsigned;not null" json:"StopBits"`
-	Parity               int64      `gorm:"column:Parity;type:tinyint(3) unsigned;not null" json:"Parity"`
+	DataBits             int64      `gorm:"column:DataBits;type:tinyint(3) ;not null" json:"DataBits"`
+	StopBits             int64      `gorm:"column:StopBits;type:tinyint(3) ;not null" json:"StopBits"`
+	Parity               int64      `gorm:"column:Parity;type:tinyint(3) ;not null" json:"Parity"`
 	ReadTimeout          int64      `gorm:"column:ReadTimeout;type:int(11);not null" json:"ReadTimeout"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

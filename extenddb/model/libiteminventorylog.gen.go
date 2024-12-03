@@ -18,8 +18,8 @@ type Libiteminventorylog struct {
 	LayerID           *string    `gorm:"column:LayerId;type:varchar(32)" json:"LayerId"`
 	LayerName         *string    `gorm:"column:LayerName;type:varchar(32)" json:"LayerName"`
 	ItemBarcode       string     `gorm:"column:ItemBarcode;type:varchar(32);not null" json:"ItemBarcode"`
-	InventoryWorkType int64      `gorm:"column:InventoryWorkType;type:tinyint(3) unsigned;not null" json:"InventoryWorkType"`
-	InventoryState    int64      `gorm:"column:InventoryState;type:tinyint(3) unsigned;not null" json:"InventoryState"`
+	InventoryWorkType int64      `gorm:"column:InventoryWorkType;type:tinyint(3) ;not null" json:"InventoryWorkType"`
+	InventoryState    int64      `gorm:"column:InventoryState;type:tinyint(3) ;not null" json:"InventoryState"`
 	OffShelfTime      *time.Time `gorm:"column:OffShelfTime;type:datetime(6)" json:"OffShelfTime"`
 	Remark            *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID          int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
@@ -37,7 +37,7 @@ type Libiteminventorylog struct {
 	ItemAuthor        *string    `gorm:"column:ItemAuthor;type:varchar(256)" json:"ItemAuthor"`
 	ItemISBN          *string    `gorm:"column:ItemISBN;type:varchar(32)" json:"ItemISBN"`
 	ItemPublisher     *string    `gorm:"column:ItemPublisher;type:varchar(512)" json:"ItemPublisher"`
-	OriginType        *int64     `gorm:"column:OriginType;type:tinyint(3) unsigned" json:"OriginType"`
+	OriginType        *int64     `gorm:"column:OriginType;type:tinyint(3) " json:"OriginType"`
 }
 
 // TableName Libiteminventorylog's table name

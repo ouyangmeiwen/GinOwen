@@ -22,7 +22,7 @@ type Abptenantnotification struct {
 	EntityTypeName                  *string   `gorm:"column:EntityTypeName;type:varchar(250)" json:"EntityTypeName"`
 	EntityTypeAssemblyQualifiedName *string   `gorm:"column:EntityTypeAssemblyQualifiedName;type:varchar(512)" json:"EntityTypeAssemblyQualifiedName"`
 	EntityID                        *string   `gorm:"column:EntityId;type:varchar(96)" json:"EntityId"`
-	Severity                        int64     `gorm:"column:Severity;type:tinyint(3) unsigned;not null" json:"Severity"`
+	Severity                        int64     `gorm:"column:Severity;type:tinyint(3) ;not null" json:"Severity"`
 	Discriminator                   string    `gorm:"column:Discriminator;type:varchar(24);not null;default:ext" json:"Discriminator"`
 	MessageName                     *string   `gorm:"column:MessageName;type:varchar(96)" json:"MessageName"`
 }

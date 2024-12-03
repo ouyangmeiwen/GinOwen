@@ -22,9 +22,9 @@ type Daspatronlogcount struct {
 	EndTime       time.Time `gorm:"column:EndTime;type:datetime(6);not null" json:"EndTime"`
 	CardTypeID    *string   `gorm:"column:CardTypeId;type:varchar(32)" json:"CardTypeId"`
 	CardTypeName  *string   `gorm:"column:CardTypeName;type:varchar(128)" json:"CardTypeName"`
-	PatronLogType int64     `gorm:"column:PatronLogType;type:tinyint(3) unsigned;not null" json:"PatronLogType"`
+	PatronLogType int64     `gorm:"column:PatronLogType;type:tinyint(3) ;not null" json:"PatronLogType"`
 	PatronLogMode int64     `gorm:"column:PatronLogMode;type:smallint(6);not null" json:"PatronLogMode"`
-	Result        int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result        int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	Count         int64     `gorm:"column:Count;type:int(11);not null" json:"Count"`
 	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 }

@@ -22,7 +22,7 @@ type Lcpsecuritygatebookaccesslog struct {
 	ItemTid       string    `gorm:"column:ItemTid;type:varchar(32);not null" json:"ItemTid"`
 	ItemBarcode   *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle     *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
-	BookStatus    int64     `gorm:"column:BookStatus;type:tinyint(3) unsigned;not null" json:"BookStatus"`
+	BookStatus    int64     `gorm:"column:BookStatus;type:tinyint(3) ;not null" json:"BookStatus"`
 	Remark        *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	Direction     int64     `gorm:"column:Direction;type:int(11);not null" json:"Direction"`

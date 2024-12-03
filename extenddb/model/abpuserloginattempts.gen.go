@@ -20,7 +20,7 @@ type Abpuserloginattempt struct {
 	ClientIPAddress        *string   `gorm:"column:ClientIpAddress;type:varchar(64)" json:"ClientIpAddress"`
 	ClientName             *string   `gorm:"column:ClientName;type:varchar(128)" json:"ClientName"`
 	BrowserInfo            *string   `gorm:"column:BrowserInfo;type:varchar(512)" json:"BrowserInfo"`
-	Result                 int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result                 int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	CreationTime           time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
 }
 

@@ -16,7 +16,7 @@ type Libbatchoperateindex struct {
 	CreationTime     time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
 	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
 	BatchNo          *string   `gorm:"column:BatchNo;type:varchar(32)" json:"BatchNo"`
-	BatchOperateType int64     `gorm:"column:BatchOperateType;type:tinyint(3) unsigned;not null" json:"BatchOperateType"`
+	BatchOperateType int64     `gorm:"column:BatchOperateType;type:tinyint(3) ;not null" json:"BatchOperateType"`
 	Remark           *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID         int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	CreatorUserName  *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`

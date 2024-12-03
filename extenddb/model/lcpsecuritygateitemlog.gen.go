@@ -21,10 +21,10 @@ type Lcpsecuritygateitemlog struct {
 	ItemTid       string    `gorm:"column:ItemTid;type:varchar(32);not null" json:"ItemTid"`
 	ItemBarcode   *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle     *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
-	Result        int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	Result        int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	ErrorMessage  *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	Remark        *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType    int64     `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType    int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	AttachmentIds *string   `gorm:"column:AttachmentIds;type:varchar(256)" json:"AttachmentIds"`
 }

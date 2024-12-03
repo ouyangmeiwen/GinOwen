@@ -21,7 +21,7 @@ type Lcpterminaldevice struct {
 	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	TerminalID           string     `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
-	TerminalDeviceType   int64      `gorm:"column:TerminalDeviceType;type:tinyint(3) unsigned;not null" json:"TerminalDeviceType"`
+	TerminalDeviceType   int64      `gorm:"column:TerminalDeviceType;type:tinyint(3) ;not null" json:"TerminalDeviceType"`
 	Name                 string     `gorm:"column:Name;type:varchar(64);not null" json:"Name"`
 	IsError              []uint8    `gorm:"column:IsError;type:bit(1);not null" json:"IsError"`
 	ErrorMessage         *string    `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`

@@ -27,10 +27,10 @@ type Libitemlocinfo struct {
 	IsPreFlag            []uint8    `gorm:"column:IsPreFlag;type:bit(1);not null" json:"IsPreFlag"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	IsForceSort          []uint8    `gorm:"column:IsForceSort;type:bit(1);not null;default:b'0'" json:"IsForceSort"`
+	IsForceSort          []uint8    `gorm:"column:IsForceSort;type:bit(1);not null;default:0" json:"IsForceSort"`
 	LayerCode            *string    `gorm:"column:LayerCode;type:varchar(32)" json:"LayerCode"`
 	OCRItemTitle         *string    `gorm:"column:OCRItemTitle;type:varchar(256)" json:"OCRItemTitle"`
-	OriginType           *int64     `gorm:"column:OriginType;type:tinyint(3) unsigned" json:"OriginType"`
+	OriginType           *int64     `gorm:"column:OriginType;type:tinyint(3) " json:"OriginType"`
 }
 
 // TableName Libitemlocinfo's table name

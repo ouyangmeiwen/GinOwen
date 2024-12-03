@@ -21,7 +21,7 @@ type Lcpmaintainlog struct {
 	UserID               int64     `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
 	Name                 string    `gorm:"column:Name;type:varchar(64);not null" json:"Name"`
 	UserName             string    `gorm:"column:UserName;type:varchar(256);not null" json:"UserName"`
-	MaintainLogType      int64     `gorm:"column:MaintainLogType;type:tinyint(3) unsigned;not null" json:"MaintainLogType"`
+	MaintainLogType      int64     `gorm:"column:MaintainLogType;type:tinyint(3) ;not null" json:"MaintainLogType"`
 	MaintainAmount       *int64    `gorm:"column:MaintainAmount;type:int(11)" json:"MaintainAmount"`
 	MaintainAmountDetail *string   `gorm:"column:MaintainAmountDetail;type:varchar(64)" json:"MaintainAmountDetail"`
 	WithDrawAmount       *int64    `gorm:"column:WithDrawAmount;type:int(11)" json:"WithDrawAmount"`

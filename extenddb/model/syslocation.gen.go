@@ -24,7 +24,7 @@ type Syslocation struct {
 	Name                 string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	IsDefault            []uint8    `gorm:"column:IsDefault;type:bit(1);not null" json:"IsDefault"`
-	LocationType         int64      `gorm:"column:LocationType;type:tinyint(3) unsigned;not null" json:"LocationType"`
+	LocationType         int64      `gorm:"column:LocationType;type:tinyint(3) ;not null" json:"LocationType"`
 	ParentID             *string    `gorm:"column:ParentId;type:varchar(32)" json:"ParentId"`
 	Longitude            float64    `gorm:"column:Longitude;type:decimal(10,6);not null" json:"Longitude"`
 	Latitude             float64    `gorm:"column:Latitude;type:decimal(10,6);not null" json:"Latitude"`
@@ -35,7 +35,7 @@ type Syslocation struct {
 	Address              *string    `gorm:"column:Address;type:varchar(128)" json:"Address"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	IsForceSort          []uint8    `gorm:"column:IsForceSort;type:bit(1);not null;default:b'0'" json:"IsForceSort"`
+	IsForceSort          []uint8    `gorm:"column:IsForceSort;type:bit(1);not null;default:0" json:"IsForceSort"`
 	CatalogSort          *string    `gorm:"column:CatalogSort;type:varchar(256)" json:"CatalogSort"`
 	SortCode             *int64     `gorm:"column:SortCode;type:int(11)" json:"SortCode"`
 }

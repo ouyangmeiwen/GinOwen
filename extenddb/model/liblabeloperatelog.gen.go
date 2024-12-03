@@ -19,8 +19,8 @@ type Liblabeloperatelog struct {
 	Code             string    `gorm:"column:Code;type:varchar(32);not null" json:"Code"`
 	Description      *string   `gorm:"column:Description;type:varchar(256)" json:"Description"`
 	OldTid           *string   `gorm:"column:OldTid;type:varchar(32)" json:"OldTid"`
-	LabelType        int64     `gorm:"column:LabelType;type:tinyint(3) unsigned;not null" json:"LabelType"`
-	LabelOperateType int64     `gorm:"column:LabelOperateType;type:tinyint(3) unsigned;not null" json:"LabelOperateType"`
+	LabelType        int64     `gorm:"column:LabelType;type:tinyint(3) ;not null" json:"LabelType"`
+	LabelOperateType int64     `gorm:"column:LabelOperateType;type:tinyint(3) ;not null" json:"LabelOperateType"`
 	Remark           *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID         int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	CreatorUserName  *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`

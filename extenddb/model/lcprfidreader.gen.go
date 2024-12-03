@@ -24,8 +24,8 @@ type Lcprfidreader struct {
 	Name                 *string    `gorm:"column:Name;type:varchar(32)" json:"Name"`
 	IP                   string     `gorm:"column:IP;type:varchar(32);not null" json:"IP"`
 	ConnectionString     string     `gorm:"column:ConnectionString;type:varchar(32);not null" json:"ConnectionString"`
-	PortType             int64      `gorm:"column:PortType;type:tinyint(3) unsigned;not null" json:"PortType"`
-	MemoryBankType       int64      `gorm:"column:MemoryBankType;type:tinyint(3) unsigned;not null" json:"MemoryBankType"`
+	PortType             int64      `gorm:"column:PortType;type:tinyint(3) ;not null" json:"PortType"`
+	MemoryBankType       int64      `gorm:"column:MemoryBankType;type:tinyint(3) ;not null" json:"MemoryBankType"`
 	Duration             int64      `gorm:"column:Duration;type:int(11);not null" json:"Duration"`
 	Interval             int64      `gorm:"column:Interval;type:int(11);not null" json:"Interval"`
 	LoopCount            int64      `gorm:"column:LoopCount;type:int(11);not null" json:"LoopCount"`

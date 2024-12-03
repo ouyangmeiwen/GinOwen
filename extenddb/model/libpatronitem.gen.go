@@ -24,8 +24,8 @@ type Libpatronitem struct {
 	ItemBarcode          string     `gorm:"column:ItemBarcode;type:varchar(32);not null" json:"ItemBarcode"`
 	ItemTitle            string     `gorm:"column:ItemTitle;type:varchar(256);not null" json:"ItemTitle"`
 	ItemAuthor           *string    `gorm:"column:ItemAuthor;type:varchar(256)" json:"ItemAuthor"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) unsigned;not null" json:"ItemType"`
-	PatronItemType       int64      `gorm:"column:PatronItemType;type:tinyint(3) unsigned;not null" json:"PatronItemType"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
+	PatronItemType       int64      `gorm:"column:PatronItemType;type:tinyint(3) ;not null" json:"PatronItemType"`
 	RenewNum             int64      `gorm:"column:RenewNum;type:int(11);not null" json:"RenewNum"`
 	OverdueTime          time.Time  `gorm:"column:OverdueTime;type:datetime(6);not null" json:"OverdueTime"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

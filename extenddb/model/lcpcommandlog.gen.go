@@ -18,8 +18,8 @@ type Lcpcommandlog struct {
 	TargetID       string    `gorm:"column:TargetId;type:varchar(32);not null" json:"TargetId"`
 	TargetCode     *string   `gorm:"column:TargetCode;type:varchar(32)" json:"TargetCode"`
 	TargetName     *string   `gorm:"column:TargetName;type:varchar(128)" json:"TargetName"`
-	Command        int64     `gorm:"column:Command;type:tinyint(3) unsigned;not null" json:"Command"`
-	CommandLogType int64     `gorm:"column:CommandLogType;type:tinyint(3) unsigned;not null" json:"CommandLogType"`
+	Command        int64     `gorm:"column:Command;type:tinyint(3) ;not null" json:"Command"`
+	CommandLogType int64     `gorm:"column:CommandLogType;type:tinyint(3) ;not null" json:"CommandLogType"`
 	CommandData    *string   `gorm:"column:CommandData;type:longtext" json:"CommandData"`
 	ErrorMessage   *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	Remark         *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`

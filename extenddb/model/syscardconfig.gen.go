@@ -18,7 +18,7 @@ type Syscardconfig struct {
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
 	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
 	CardTypeID           string     `gorm:"column:CardTypeId;type:varchar(32);not null" json:"CardTypeId"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) unsigned;not null" json:"ItemType"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
 	CheckoutDays         int64      `gorm:"column:CheckoutDays;type:smallint(6);not null" json:"CheckoutDays"`
 	MaxCheckout          int64      `gorm:"column:MaxCheckout;type:smallint(6);not null" json:"MaxCheckout"`
 	MaxOverdue           int64      `gorm:"column:MaxOverdue;type:smallint(6);not null" json:"MaxOverdue"`

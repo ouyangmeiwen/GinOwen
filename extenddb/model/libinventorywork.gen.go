@@ -33,7 +33,7 @@ type Libinventorywork struct {
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	ExceptionMsg         *string    `gorm:"column:ExceptionMsg;type:varchar(256)" json:"ExceptionMsg"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 }
 
 // TableName Libinventorywork's table name

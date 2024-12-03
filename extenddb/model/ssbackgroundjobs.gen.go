@@ -21,7 +21,7 @@ type Ssbackgroundjob struct {
 	NextTryTime   time.Time  `gorm:"column:NextTryTime;type:datetime(6);not null" json:"NextTryTime"`
 	LastTryTime   *time.Time `gorm:"column:LastTryTime;type:datetime(6)" json:"LastTryTime"`
 	IsAbandoned   []uint8    `gorm:"column:IsAbandoned;type:bit(1);not null" json:"IsAbandoned"`
-	Priority      int64      `gorm:"column:Priority;type:tinyint(3) unsigned;not null" json:"Priority"`
+	Priority      int64      `gorm:"column:Priority;type:tinyint(3) ;not null" json:"Priority"`
 }
 
 // TableName Ssbackgroundjob's table name

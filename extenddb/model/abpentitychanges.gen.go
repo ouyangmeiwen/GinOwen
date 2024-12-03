@@ -14,7 +14,7 @@ const TableNameAbpentitychange = "abpentitychanges"
 type Abpentitychange struct {
 	ID                 int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
 	ChangeTime         time.Time `gorm:"column:ChangeTime;type:datetime(6);not null" json:"ChangeTime"`
-	ChangeType         int64     `gorm:"column:ChangeType;type:tinyint(3) unsigned;not null" json:"ChangeType"`
+	ChangeType         int64     `gorm:"column:ChangeType;type:tinyint(3) ;not null" json:"ChangeType"`
 	EntityChangeSetID  int64     `gorm:"column:EntityChangeSetId;type:bigint(20);not null" json:"EntityChangeSetId"`
 	EntityID           *string   `gorm:"column:EntityId;type:varchar(48)" json:"EntityId"`
 	EntityTypeFullName *string   `gorm:"column:EntityTypeFullName;type:varchar(192)" json:"EntityTypeFullName"`

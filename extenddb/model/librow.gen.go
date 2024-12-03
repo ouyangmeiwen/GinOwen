@@ -24,8 +24,8 @@ type Librow struct {
 	Name                 *string    `gorm:"column:Name;type:varchar(128)" json:"Name"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
 	RowNo                int64      `gorm:"column:RowNo;type:int(11);not null" json:"RowNo"`
-	RowType              int64      `gorm:"column:RowType;type:tinyint(3) unsigned;not null" json:"RowType"`
-	RowUsageType         int64      `gorm:"column:RowUsageType;type:tinyint(3) unsigned;not null" json:"RowUsageType"`
+	RowType              int64      `gorm:"column:RowType;type:tinyint(3) ;not null" json:"RowType"`
+	RowUsageType         int64      `gorm:"column:RowUsageType;type:tinyint(3) ;not null" json:"RowUsageType"`
 	LocationID           *string    `gorm:"column:LocationId;type:varchar(32)" json:"LocationId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

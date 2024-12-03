@@ -19,9 +19,9 @@ type Apppayorder struct {
 	AppOrderNo    *string   `gorm:"column:AppOrderNo;type:varchar(32)" json:"AppOrderNo"`
 	AppID         string    `gorm:"column:AppId;type:varchar(32);not null" json:"AppId"`
 	PayerID       *string   `gorm:"column:PayerId;type:varchar(32)" json:"PayerId"`
-	PaymentStatus int64     `gorm:"column:PaymentStatus;type:tinyint(3) unsigned;not null" json:"PaymentStatus"`
+	PaymentStatus int64     `gorm:"column:PaymentStatus;type:tinyint(3) ;not null" json:"PaymentStatus"`
 	PayMoney      int64     `gorm:"column:PayMoney;type:int(11);not null" json:"PayMoney"`
-	PaymentType   int64     `gorm:"column:PaymentType;type:tinyint(3) unsigned;not null" json:"PaymentType"`
+	PaymentType   int64     `gorm:"column:PaymentType;type:tinyint(3) ;not null" json:"PaymentType"`
 	DeviceInfo    *string   `gorm:"column:DeviceInfo;type:varchar(128)" json:"DeviceInfo"`
 	BodyInfo      *string   `gorm:"column:BodyInfo;type:varchar(128)" json:"BodyInfo"`
 	DetailInfo    *string   `gorm:"column:DetailInfo;type:varchar(256)" json:"DetailInfo"`

@@ -25,17 +25,17 @@ type Libcirculatelog struct {
 	ItemTitle         *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
 	ItemBarcode       *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemISBN          *string   `gorm:"column:ItemISBN;type:varchar(32)" json:"ItemISBN"`
-	ItemType          int64     `gorm:"column:ItemType;type:tinyint(3) unsigned;not null" json:"ItemType"`
+	ItemType          int64     `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
 	ItemCallNo        *string   `gorm:"column:ItemCallNo;type:varchar(64)" json:"ItemCallNo"`
 	PatronID          *string   `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
 	PatronName        *string   `gorm:"column:PatronName;type:varchar(64)" json:"PatronName"`
 	PatronBarcode     *string   `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	CardTypeID        *string   `gorm:"column:CardTypeId;type:varchar(32)" json:"CardTypeId"`
 	CardTypeName      *string   `gorm:"column:CardTypeName;type:varchar(128)" json:"CardTypeName"`
-	CirculateType     int64     `gorm:"column:CirculateType;type:tinyint(3) unsigned;not null" json:"CirculateType"`
-	Result            int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	CirculateType     int64     `gorm:"column:CirculateType;type:tinyint(3) ;not null" json:"CirculateType"`
+	Result            int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	Remark            *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType        int64     `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType        int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	ErrorMessage      *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	ErrorCode         *string   `gorm:"column:ErrorCode;type:varchar(32)" json:"ErrorCode"`
 	TenantID          int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`

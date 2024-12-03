@@ -25,11 +25,11 @@ type Libfeelog struct {
 	CardTypeName    *string   `gorm:"column:CardTypeName;type:varchar(128)" json:"CardTypeName"`
 	Amount          int64     `gorm:"column:Amount;type:int(11);not null" json:"Amount"`
 	AmountDetail    *string   `gorm:"column:AmountDetail;type:varchar(128)" json:"AmountDetail"`
-	PaymentType     int64     `gorm:"column:PaymentType;type:tinyint(3) unsigned;not null" json:"PaymentType"`
-	FeeLogType      int64     `gorm:"column:FeeLogType;type:tinyint(3) unsigned;not null" json:"FeeLogType"`
-	Result          int64     `gorm:"column:Result;type:tinyint(3) unsigned;not null" json:"Result"`
+	PaymentType     int64     `gorm:"column:PaymentType;type:tinyint(3) ;not null" json:"PaymentType"`
+	FeeLogType      int64     `gorm:"column:FeeLogType;type:tinyint(3) ;not null" json:"FeeLogType"`
+	Result          int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
 	Remark          *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType      int64     `gorm:"column:OriginType;type:tinyint(3) unsigned;not null" json:"OriginType"`
+	OriginType      int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
 	ErrorMessage    *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	TenantID        int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
 	OperateTenantID *int64    `gorm:"column:OperateTenantId;type:int(11)" json:"OperateTenantId"`
