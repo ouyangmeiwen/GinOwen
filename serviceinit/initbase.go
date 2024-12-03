@@ -131,12 +131,13 @@ func AutoMigrateDB(DB *gorm.DB) {
 	err = DB.AutoMigrate(&models.ScheduledTask{})
 	//是否需要初始化model
 	if _, ok := global.OWEN_DBList["to"]; ok {
+		s1 := AutoService{}
 		if global.OWEN_CONFIG.DB["to"].CanAutoMigration {
-			CusAutoMigrate()
+			callCusAutoMigrateIfExists(s1)
 			log.Printf("生成to数据库表结构")
 		}
 		if global.OWEN_CONFIG.DB["to"].CanAutoSynData {
-			CusSyncDatabase()
+			callCusSyncDatabaseIfExists(s1)
 			log.Printf("生成to数据库表结构数据")
 		}
 	}

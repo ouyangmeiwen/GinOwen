@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func CusAutoMigrate() {
+func (s AutoService) CusAutoMigrate() {
 	DB := global.OWEN_DBList["to"]
 	var err error
 	err = DB.AutoMigrate(&model.Abpauditlog{})

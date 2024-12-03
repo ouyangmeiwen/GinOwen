@@ -113,7 +113,7 @@ import (
 	"log"
 )
 
-func CusAutoMigrate() {
+func(s AutoService) CusAutoMigrate() {
 	DB := global.OWEN_DBList["to"]
 	var err error
 `)
@@ -195,7 +195,7 @@ import (
 	"GINOWEN/global"
 )
 
-func CusSyncDatabase() error {
+func(s AutoService) CusSyncDatabase() error {
 	batchSize := 500 // 每批次同步的数据量
 	var offset int // 用于分页
 
