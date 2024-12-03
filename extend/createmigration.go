@@ -30,7 +30,7 @@ func CreateAutoMigrationFile() {
 	for _, file := range goFiles {
 		names, err := getStructNamesFromFile(file)
 		if err != nil {
-			log.Printf("Failed to parse file %s: %v", file, err)
+			log.Fatalf("Failed to parse file %s: %v", file, err)
 			continue
 		}
 		structNames = append(structNames, names...)
@@ -108,12 +108,13 @@ func generateAutoMigrateFile(outputFile string, structNames []string) error {
 	_, err = file.WriteString(`package serviceinit
 
 import (
-	"log"
-	"gorm.io/gorm"
 	"GINOWEN/extenddb/model"
+	"GINOWEN/global"
+	"log"
 )
 
-func CusAutoMigrate(DB *gorm.DB) {
+func CusAutoMigrate() {
+	DB := global.OWEN_DBList["to"]
 	var err error
 `)
 	if err != nil {
@@ -125,7 +126,7 @@ func CusAutoMigrate(DB *gorm.DB) {
 		line := fmt.Sprintf("\terr = DB.AutoMigrate(&model.%s{})\n", structName)
 		line += fmt.Sprintf(`
 	if err != nil {
-		log.Printf("Failed to migrate table: %s")
+		log.Fatalf("Failed to migrate table: %s")
 		return
 	}
 `, structName)
@@ -138,7 +139,7 @@ func CusAutoMigrate(DB *gorm.DB) {
 	// 写入文件尾
 	_, err = file.WriteString(`
 	if err != nil {
-		log.Printf("Failed to migrate database: %v", err)
+		log.Fatalf("Failed to migrate database: %v", err)
 		return
 	}
 }
@@ -162,7 +163,7 @@ func CreateAutoSyncFile() {
 	for _, file := range goFiles {
 		names, err := getStructNamesFromFile(file)
 		if err != nil {
-			log.Printf("Failed to parse file %s: %v", file, err)
+			log.Fatalf("Failed to parse file %s: %v", file, err)
 			continue
 		}
 		structNames = append(structNames, names...)
@@ -195,7 +196,7 @@ import (
 )
 
 func CusSyncDatabase() error {
-	batchSize := 1000 // 每批次同步的数据量
+	batchSize := 500 // 每批次同步的数据量
 	var offset int // 用于分页
 
 `)
@@ -214,7 +215,7 @@ func CusSyncDatabase() error {
 			var %sData []model.%s
 			// 分页查询数据，不依赖排序字段
 			if err := global.OWEN_DBList["from"].Offset(offset).Limit(batchSize).Find(&%sData).Error; err != nil {
-				log.Printf("Failed to query table: %s")
+				log.Fatalf("Failed to query table: %s")
 				return err
 			}
 
@@ -228,7 +229,7 @@ func CusSyncDatabase() error {
 
 			// 将数据插入到 db2
 			if err := global.OWEN_DBList["to"].CreateInBatches(%sData, batchSize).Error; err != nil {
-				log.Printf("Failed to insert table: %s")
+				log.Fatalf("Failed to insert table: %s")
 				return err
 			}
 		}
