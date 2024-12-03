@@ -28,6 +28,6 @@ func callCusSyncDatabaseIfExists(service interface{}) {
 	if m, ok := service.(SysData_interface); ok {
 		m.CusSyncDatabase() // 调用方法
 	} else {
-		log.Fatalf("CusAutoMigrate method does not exist")
+		log.Fatalf("CusSyncDatabase method does not exist")
 	}
 }
