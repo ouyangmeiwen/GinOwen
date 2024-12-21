@@ -8,6 +8,7 @@ func GetCurrentTime() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
 
+// "yyyy-mm-dd hh:mm:ss" 使用该格式
 func FormatLocalTime(timestr string) (ts time.Time, err error) {
 	// 解析时间
 	// 获取当前时区（本地时区）
