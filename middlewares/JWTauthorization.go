@@ -53,6 +53,22 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 		var role models.OwenRole
 
 		if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
+			if global.OWEN_CONFIG.System.SSO {
+				token_val, err := global.OWEN_REDIS.Get(global.Ctx, fmt.Sprintf("%d", claims.UserID)).Result()
+				if err != nil {
+					// 如果解析失败，返回错误信息
+					c.JSON(http.StatusUnauthorized, gin.H{"error": "SSO invalid"})
+					c.Abort()
+					return
+				}
+				if token_val != tokenStr {
+					// 如果解析失败，返回错误信息
+					c.JSON(http.StatusUnauthorized, gin.H{"error": "SSO invalid you must refresh token!"})
+					c.Abort()
+					return
+				}
+			}
+
 			rolestr, err := global.OWEN_REDIS.Get(global.Ctx, tokenStr).Result()
 			if err != nil {
 				// 如果解析失败，返回错误信息

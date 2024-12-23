@@ -12,6 +12,7 @@ system:
   taskinterval: 60 #任务检查时间 单位秒
   taskdb: redis #默认使用数据库
   taskpre: owen_ #redis前缀
+  sso: true #单点登录
 
   circuitbreaker:
     maxrequests: 20 #20个请求 最大请求数

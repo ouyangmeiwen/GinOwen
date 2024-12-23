@@ -6,6 +6,7 @@ import (
 	"GINOWEN/models"
 	"GINOWEN/models/request"
 	"GINOWEN/utils"
+	"fmt"
 	"strings"
 	"time"
 
@@ -61,6 +62,9 @@ func (LoginAPI) Login(ctx *gin.Context) {
 		if err == nil {
 			global.OWEN_REDIS.Set(global.Ctx, token, rolestr, time.Duration(TokenExpire)*time.Hour)
 		}
+		if global.OWEN_CONFIG.System.SSO {
+			global.OWEN_REDIS.Set(global.Ctx, fmt.Sprintf("%d", user.User.ID), token, time.Duration(TokenExpire)*time.Hour)
+		}
 	}
 	utils.OkWithDetailed("Bearer "+token, "success", ctx)
 }
@@ -88,6 +92,7 @@ func (LoginAPI) LoginOut(ctx *gin.Context) {
 	}
 	if len(global.OWEN_CONFIG.Redis.Addr) > 0 {
 		global.OWEN_REDIS.Set(global.Ctx, tokenStr, "", -1)
+
 	}
 	utils.OkWithMessage("logout success", ctx)
 }
