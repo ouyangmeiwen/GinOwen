@@ -6,9 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type GpiRouter struct {
-}
-
 func RegisterGPIRoutes(r *gin.Engine) {
 	api := r.Group("GPI").Use(middlewares.AuthMiddleware("gpi"))
 	{
