@@ -61,10 +61,10 @@ db:
     maxidleconns: 10
     connmaxlifetime: 30
   to:
-    type: postgres #空则数据库不初始化
+    type:  #空则数据库不初始化
     cancreatemodel: false #无效占位
-    canautomigration: true #是否根据from migration文件 生成表结构
-    canautosyndata: true #是否通过from syncdata文件 生成表结构数据
+    canautomigration: false #是否根据from migration文件 生成表结构
+    canautosyndata: false #是否通过from syncdata文件 生成表结构数据
     mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
     oracle: "user/password@localhost:1521/service_name"
