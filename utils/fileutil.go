@@ -4,7 +4,6 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"io"
-	"io/ioutil"
 	"mime/multipart"
 	"os"
 	"path/filepath"
@@ -45,7 +44,7 @@ func DeleteDirectory(directory string) error {
 
 // 清空目录内容
 func ClearDirectory(directory string) error {
-	files, err := ioutil.ReadDir(directory)
+	files, err := os.ReadDir(directory)
 	if err != nil {
 		return err
 	}
@@ -111,7 +110,7 @@ func GetFileSize(filepath string) (int64, error) {
 
 // 读取文件内容
 func ReadFile(filepath string) (string, error) {
-	data, err := ioutil.ReadFile(filepath)
+	data, err := os.ReadFile(filepath)
 	if err != nil {
 		return "", err
 	}
@@ -120,7 +119,7 @@ func ReadFile(filepath string) (string, error) {
 
 // 写入文件（覆盖）
 func WriteFile(filepath string, content string) error {
-	return ioutil.WriteFile(filepath, []byte(content), os.ModePerm)
+	return os.WriteFile(filepath, []byte(content), os.ModePerm)
 }
 
 // 写入文件（追加）
@@ -195,10 +194,41 @@ func IsSymlink(filepath string) (bool, error) {
 }
 
 // 验证文件类型
-func IsValidFileType(file *multipart.FileHeader, allowedExtensions []string, allowedTypes []string) bool {
-	ext := GetFileExtension(file.Filename)
+// 检查文件类型
+// 检查文件类型
+func IsValidFileType(file *multipart.FileHeader) bool {
+	// allowedTypes := []string{"image/jpeg", "image/png", "application/pdf"} // 允许的文件类型
+	// ext := strings.ToLower(filepath.Ext(file.Filename))
+	// allowedExtensions := []string{".jpg", ".jpeg", ".png", ".pdf"} // 允许的文件扩展名
+
+	allowedTypes := []string{
+		"application/msword", // .doc
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+		"application/vnd.ms-excel", // .xls
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+		"application/pdf", // .pdf
+		"text/plain",      // .txt
+		"application/zip", // .zip
+	} // 允许的文件类型
+
+	ext := strings.ToLower(filepath.Ext(file.Filename))
+	allowedExtensions := []string{
+		".doc",
+		".docx",
+		".xls",
+		".xlsx",
+		".pdf",
+		".txt",
+		".zip",
+	} // 允许的文件扩展名
+
+	// 检查扩展名
+	if !Contains(allowedExtensions, ext) {
+		return false
+	}
+	// 检查 MIME 类型
 	fileType := file.Header.Get("Content-Type")
-	return Contains(allowedExtensions, ext) && Contains(allowedTypes, fileType)
+	return Contains(allowedTypes, fileType)
 }
 
 // 判断切片中是否包含某字符串
