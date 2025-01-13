@@ -42,7 +42,7 @@ db:
     mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
     oracle: "user/password@localhost:1521/service_name"
-    postgres: "user=postgres password=secret dbname=mydb host=127.0.0.1 port=5432 sslmode=disable"
+    postgres: "user=postgres password=password123 dbname=mydb host=127.0.0.1 port=5432 sslmode=disable"
     sqlite: "invengo.db"
     maxopenconns: 100
     maxidleconns: 10
@@ -55,20 +55,20 @@ db:
     mysql: "root:qyisno1forever@world@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
     oracle: "user/password@localhost:1521/service_name"
-    postgres: "user=postgres password=password123 dbname=postgres host=127.0.0.1 port=5432 sslmode=disable"
+    postgres: "user=postgres password=password123 dbname=invengodbv4 host=127.0.0.1 port=5432 sslmode=disable"
     sqlite: "invengo.db"
     maxopenconns: 100
     maxidleconns: 10
     connmaxlifetime: 30
   to:
-    type: #空则数据库不初始化
+    type:  #空则数据库不初始化
     cancreatemodel: false #无效占位
     canautomigration: false #是否根据from migration文件 生成表结构
     canautosyndata: false #是否通过from syncdata文件 生成表结构数据
     mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.8.75,1433;user id=sa;password=123456;database=testDB"
     oracle: "user/password@localhost:1521/service_name"
-    postgres: "user=postgres password=password123 dbname=postgres host=127.0.0.1 port=5432 sslmode=disable"
+    postgres: "user=postgres password=password123 dbname=invengodbv4 host=127.0.0.1 port=5432 sslmode=disable"
     sqlite: "invengo.db"
     maxopenconns: 100
     maxidleconns: 10
