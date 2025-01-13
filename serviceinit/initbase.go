@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"time"
 
 	//"github.com/dzwvip/oracle"
@@ -29,7 +30,14 @@ import (
 )
 
 func LoadConfig() global.YarmConfig {
-	configFile, err := os.Open("config.yaml")
+
+	configfile := "config.yaml"
+	switch runtime.GOOS {
+	case "linux":
+		configfile = "config_linux.yaml"
+	}
+
+	configFile, err := os.Open(configfile)
 	if err != nil {
 		log.Fatalf("Error opening config file: %v", err)
 	}

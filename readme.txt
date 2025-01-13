@@ -21,31 +21,3 @@ go 打包
         SET GOOS=windows
         SET GOARCH=amd64
         go build -o ginowen.exe    然后依赖文件过去比如config.yaml
-
-    linux:
-        docker build -t ginowen-app .
-        docker run --rm -p 8080:8080 ginowen-app
-    
-    linux:
-        SET GOOS=linux
-        SET GOARCH=amd64
-        go build -o ginowen main.go
-        chmod +x ginowen
-
-
-
-        在 Windows 上为 Linux 打包 64 位程序：
-        SET GOOS=linux
-        SET GOARCH=amd64
-        go build -o ginowen main.go
-
-        在 Windows 上为 Linux 打包 32 位程序：
-        SET GOOS=linux
-        SET GOARCH=386
-        go build -o ginowen main.go
-
-        在 Windows 上为 ARM 平台的 Linux 打包：
-        SET GOOS=linux
-        SET GOARCH=arm
-        SET GOARM=7
-        go build -o ginowen main.go
