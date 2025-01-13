@@ -1,32 +1,87 @@
+
 sudo snap install go --channel=1.23/stable --classic
 
+go mod tidy
 
 sudo apt purge golang-go   #完全卸载
-
 sudo snap refresh go --channel=1.23/stable --classic
 
 
 source ~/.bashrc  # 或者 source ~/.zshrc
 
 
-release:
+release:发布
 GOOS=linux GOARCH=amd64 go build -o GinOwen
 GOOS=windows GOARCH=amd64 go build -o GinOwen.exe
 GOOS=darwin GOARCH=amd64 go build -o GinOwen
 
+#后台发布
+nohup ./GinOwen > ginowen.log 2>&1 &
+
+
+参考
+部署 systemd  
+ctrl+x
+
+sudo nano /etc/systemd/system/GinOwen.service
+
+
+[Unit]
+Description=GinOwen Server
+After=network.target
+
+[Service]
+ExecStart=/home/owen/GinOwen/GinOwen
+Restart=always
+RestartSec=5s
+User=owen
+Group=owen
+WorkingDirectory=/home/owen/GinOwen
+StandardOutput=file:/home/owen/GinOwen/logs/output.log
+StandardError=file:/home/owen/GinOwen/logs/error.log
+
+[Install]
+WantedBy=multi-user.target
 
 
 
-debug:
+chmod +x /home/owen/GinOwen/GinOwen
+
+sudo systemctl daemon-reload
+
+sudo systemctl start GinOwen.service
+
+sudo systemctl enable GinOwen.service
+
+sudo systemctl status GinOwen.service
+
+sudo systemctl stop GinOwen.service
+
+sudo systemctl disable GinOwen.service
+
+sudo rm /etc/systemd/system/GinOwen.service
+sudo systemctl daemon-reload
+
+
+
+
+
+
+
+debug:调试
 go build -gcflags="all=-N -l" -o GinOwen
 
+gdb:
+gdbserver :1234 ./GinOwen
+#打开main.go F5即可
 
+
+#高版本不支持暂时不用
 go get -u github.com/go-delve/delve/cmd/dlv
 dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient
 dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient --check-go-version=false
 
 
-gdb:
-gdbserver :1234 ./GinOwen
+
 
 
