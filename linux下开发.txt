@@ -63,7 +63,10 @@ sudo rm /etc/systemd/system/GinOwen.service
 sudo systemctl daemon-reload
 
 
-
+df -h
+如果删除不必要的文件后仍然空间不足，您可以考虑扩展根分区。您可以使用 lvextend 命令扩展 LVM 分区的大小：
+sudo lvextend -L +5G /dev/mapper/ubuntu--vg-ubuntu--lv
+sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
 
 
 
