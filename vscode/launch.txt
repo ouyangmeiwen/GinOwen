@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Remote Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "remote",
+            "remotePath": "/home/owen/GinOwen",  // 远程服务器上的项目路径
+            "port": 2345,  // Delve 监听的端口
+            "host": "localhost",
+            "program": "${workspaceFolder}",
+            "env": {},
+            "buildFlags": "-gcflags=all=-N -l"
+        }
+    ]
+}

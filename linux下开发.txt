@@ -1,0 +1,32 @@
+sudo snap install go --channel=1.23/stable --classic
+
+
+sudo apt purge golang-go   #完全卸载
+
+sudo snap refresh go --channel=1.23/stable --classic
+
+
+source ~/.bashrc  # 或者 source ~/.zshrc
+
+
+release:
+GOOS=linux GOARCH=amd64 go build -o GinOwen
+GOOS=windows GOARCH=amd64 go build -o GinOwen.exe
+GOOS=darwin GOARCH=amd64 go build -o GinOwen
+
+
+
+
+debug:
+go build -gcflags="all=-N -l" -o GinOwen
+
+
+go get -u github.com/go-delve/delve/cmd/dlv
+dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient
+dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient --check-go-version=false
+
+
+gdb:
+gdbserver :1234 ./GinOwen
+
+
