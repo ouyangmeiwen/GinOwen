@@ -33,36 +33,12 @@ gdb:
 
 release:发布
 GOOS=linux GOARCH=amd64 go build -o GinOwen
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o GinOwen    #独立运行
 GOOS=windows GOARCH=amd64 go build -o GinOwen.exe
 GOOS=darwin GOARCH=amd64 go build -o GinOwen
 
 #后台发布
 nohup ./GinOwen > ginowen.log 2>&1 &
-
-
-chmod +x start.sh
-./start.sh
-
-
-
-#!/bin/bash
-
-while true; do
-    # 启动应用
-   nohup ./GinOwen > ginowen.log 2>&1 &
-
-    # 检查进程退出码，如果非零则重启
-    if [ $? -ne 0 ]; then
-        echo "Application crashed. Restarting..."
-        sleep 5  # 延迟 5 秒后重启
-    fi
-done
-
-
-
-
-
-
 
 
 参考
@@ -119,6 +95,11 @@ docker rm -f $(docker ps -aq)
 docker rmi -f $(docker images -q)
 
 docker build -t ginowen:latest . -f Dockerfile
+
+#直接通过运行包需要特殊打法
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o GinOwen     
+docker build -t ginowen:latest . -f DockerfileRelease
+
 docker run -d -p 6789:6789 --restart=always --name ginowen  ginowen:latest
 
 http://localhost:6789/swagger-ui/index.html
