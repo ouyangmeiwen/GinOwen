@@ -88,3 +88,31 @@ dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient --check
 
 
 
+docker 部署
+
+#删除docker
+docker rm -f $(docker ps -aq)
+docker rmi -f $(docker images -q)
+
+docker build -t ginowen:latest . -f Dockerfile
+docker run -d -p 6789:6789 --restart=always --name ginowen  ginowen:latest
+
+http://localhost:6789/swagger-ui/index.html
+
+
+docker save -o ./golang:1.23.1_owen.tar imageid
+docker save -o ./alpine:latest_owen.tar imageid
+
+upload
+docker load < golang:1.23.1_owen.tar
+docker tag imageid golang:1.23.1_owen #可以重命名
+命名完然后就可以直接使用Dockfile
+
+docker load < alpine:latest_owen.tar
+docker tag imageid alpine:latest_owen #可以重命名
+
+# 使用 Python 官方基础镜像
+FROM golang:1.23.1_owen as builder
+...
+
+FROM alpine:latest_owen
