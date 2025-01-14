@@ -1,4 +1,5 @@
 
+#环境安装
 sudo snap install go --channel=1.23/stable --classic
 
 go mod tidy
@@ -8,6 +9,26 @@ sudo snap refresh go --channel=1.23/stable --classic
 
 
 source ~/.bashrc  # 或者 source ~/.zshrc
+
+
+
+
+
+df -h
+如果删除不必要的文件后仍然空间不足，您可以考虑扩展根分区。您可以使用 lvextend 命令扩展 LVM 分区的大小：
+sudo lvextend -L +5G /dev/mapper/ubuntu--vg-ubuntu--lv
+sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+
+
+
+debug:调试
+    go build -gcflags="all=-N -l" -o GinOwen
+
+gdb:
+    gdbserver :1234 ./GinOwen
+    #打开main.go F5即可
+
+
 
 
 release:发布
@@ -61,28 +82,6 @@ sudo systemctl disable GinOwen.service
 
 sudo rm /etc/systemd/system/GinOwen.service
 sudo systemctl daemon-reload
-
-
-df -h
-如果删除不必要的文件后仍然空间不足，您可以考虑扩展根分区。您可以使用 lvextend 命令扩展 LVM 分区的大小：
-sudo lvextend -L +5G /dev/mapper/ubuntu--vg-ubuntu--lv
-sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
-
-
-
-
-debug:调试
-go build -gcflags="all=-N -l" -o GinOwen
-
-gdb:
-gdbserver :1234 ./GinOwen
-#打开main.go F5即可
-
-
-#高版本不支持暂时不用
-go get -u github.com/go-delve/delve/cmd/dlv
-dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient
-dlv debug --headless --listen=:2345 --api-version=2 --accept-multiclient --check-go-version=false
 
 
 
