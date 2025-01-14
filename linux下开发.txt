@@ -40,6 +40,31 @@ GOOS=darwin GOARCH=amd64 go build -o GinOwen
 nohup ./GinOwen > ginowen.log 2>&1 &
 
 
+chmod +x start.sh
+./start.sh
+
+
+
+#!/bin/bash
+
+while true; do
+    # 启动应用
+   nohup ./GinOwen > ginowen.log 2>&1 &
+
+    # 检查进程退出码，如果非零则重启
+    if [ $? -ne 0 ]; then
+        echo "Application crashed. Restarting..."
+        sleep 5  # 延迟 5 秒后重启
+    fi
+done
+
+
+
+
+
+
+
+
 参考
 部署 systemd  
 ctrl+x
