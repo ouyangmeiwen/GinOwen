@@ -2,6 +2,11 @@
 #环境安装
 sudo snap install go --channel=1.23/stable --classic
 
+export GOPROXY=https://goproxy.cn,direct
+
+                #echo 'export GOPROXY=https://goproxy.cn,direct' >> ~/.bashrc
+source ~/.bashrc
+
 go mod tidy
 
 sudo apt purge golang-go   #完全卸载
@@ -90,6 +95,10 @@ sudo systemctl daemon-reload
 
 docker 部署
 
+
+
+
+
 #删除docker
 docker rm -f $(docker ps -aq)
 docker rmi -f $(docker images -q)
@@ -97,7 +106,7 @@ docker rmi -f $(docker images -q)
 docker build -t ginowen:latest . -f Dockerfile
 
 #直接通过运行包需要特殊打法
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o GinOwen     
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o GinOwenRelease     
 docker build -t ginowen:latest . -f DockerfileRelease
 
 docker run -d -p 6789:6789 --restart=always --name ginowen  ginowen:latest
