@@ -24,7 +24,7 @@ system:
     addblacklistminutes: 0 #超过这个阈值增加到黑名单中 分钟 0则不生效
 redis:
   addr: 127.0.0.1:6379
-  password:
+  password: 002161
   db: 0
 mongodb:
   # uri: "mongodb://localhost:27017"
@@ -74,12 +74,12 @@ db:
     maxidleconns: 10
     connmaxlifetime: 30
 rabbitmq:
-  url: amqp://guest:guest@localhost:5672/
+  url: #amqp://guest:guest@localhost:5672/
   exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
   exchangetype: topic #direct fanout  headers
 
 rabbitmqconsumer:
-  url: amqp://guest:guest@localhost:5672/
+  url: #amqp://guest:guest@localhost:5672/
   exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
   exchangetype: topic #direct fanout  headers
   queuename: server_queue
