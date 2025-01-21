@@ -46,12 +46,14 @@ func main() {
 			extend.CreateAutoSyncFile()
 		}
 	} //占位置
-	middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
+	if global.OWEN_DB != nil {
+		middlewares.StartAuditLogCleanup(global.OWEN_DB) // 启动日志清理任务
+	}
 
 	serviceinit.InitRedis() //初始化redis
-
-	serviceinit.AutoMigrateDB(global.OWEN_DB) //数据库自动迁移
-
+	if global.OWEN_DB != nil {
+		serviceinit.AutoMigrateDB(global.OWEN_DB) //数据库自动迁移
+	}
 	serviceinit.InitMongoDB() //mongodb
 
 	serviceinit.InitRabbiMQ() //rabbitmq

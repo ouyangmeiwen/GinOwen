@@ -4,8 +4,22 @@ sudo snap install go --channel=1.23/stable --classic
 
 export GOPROXY=https://goproxy.cn,direct
 
-                #echo 'export GOPROXY=https://goproxy.cn,direct' >> ~/.bashrc
+go env -w GOPROXY=https://goproxy.cn,direct
+
+#echo 'export GOPROXY=https://goproxy.cn,direct' >> ~/.bashrc
+
+export GOBIN=$HOME/go/bin
+export PATH=$PATH:$GOBIN
+
 source ~/.bashrc
+
+go install golang.org/x/tools/gopls@latest
+
+export PATH=$PATH:/home/owen/go/bin
+
+
+
+
 
 go mod tidy
 
@@ -27,6 +41,7 @@ sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
 
 
 debug:调试
+    rm -f ./GinOwen
     go build -gcflags="all=-N -l" -o GinOwen
 
 gdb:

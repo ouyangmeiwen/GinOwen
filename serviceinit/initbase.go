@@ -16,6 +16,7 @@ import (
 	//"github.com/dzwvip/oracle"
 
 	"github.com/glebarez/sqlite" // 使用 godror 驱动
+	_ "github.com/godror/godror" // 注册 godror 驱动
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -63,6 +64,7 @@ func InitDB() {
 			continue
 		}
 		var DB *gorm.DB
+		var sqlDB *sql.DB
 		switch dbCfg.Type {
 		case "mysql":
 			DB, dbErr = gorm.Open(mysql.Open(dbCfg.MySQL), &gorm.Config{Logger: newLogger})
@@ -73,11 +75,11 @@ func InitDB() {
 		case "mssql":
 			DB, dbErr = gorm.Open(sqlserver.Open(dbCfg.MSSQL), &gorm.Config{Logger: newLogger})
 		case "oracle":
-			oracleDB, _ := sql.Open("godror", dbCfg.Oracle)
-			DB, dbErr = gorm.Open(gorm.Config{
-				ConnPool: oracleDB,  // 将底层的 sql.DB 连接池传给 GORM
-				Logger:   newLogger, // 可选：设置 GORM 日志输出级别
-			})
+			sqlDB, _ = sql.Open("godror", dbCfg.Oracle)
+			// DB, dbErr = gorm.Open(gorm.Config{
+			// 	ConnPool: oracleDB,  // 将底层的 sql.DB 连接池传给 GORM
+			// 	Logger:   newLogger, // 可选：设置 GORM 日志输出级别
+			// })
 		default:
 			log.Fatalf("Unsupported database type: %s", dbCfg.Type)
 		}
@@ -87,16 +89,19 @@ func InitDB() {
 		}
 
 		// 配置数据库连接池
-		sqlDB, err := DB.DB()
-		if err != nil {
-			log.Fatalf("Failed to get database instance: %v", err)
+		var err error
+		if sqlDB == nil {
+			sqlDB, err = DB.DB()
+			if err != nil {
+				log.Fatalf("Failed to get database instance: %v", err)
+			}
 		}
-
 		sqlDB.SetMaxOpenConns(dbCfg.MaxOpenConns)                                      // 最大连接数
 		sqlDB.SetMaxIdleConns(dbCfg.MaxIdleConns)                                      // 最大空闲连接数
 		sqlDB.SetConnMaxLifetime((time.Duration(dbCfg.ConnMaxLifetime)) * time.Minute) // 连接的最大生命周期
 		if key == "default" {
 			global.OWEN_DB = DB
+			global.SQL_DB = sqlDB
 		}
 		if global.OWEN_DBList == nil {
 			global.OWEN_DBList = make(map[string]*gorm.DB)

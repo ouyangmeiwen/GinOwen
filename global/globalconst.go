@@ -2,6 +2,7 @@ package global
 
 import (
 	"context"
+	"database/sql"
 	"sync"
 
 	"github.com/redis/go-redis/v9"
@@ -12,6 +13,7 @@ import (
 
 var (
 	OWEN_DB     *gorm.DB
+	SQL_DB      *sql.DB
 	OWEN_DBList map[string]*gorm.DB
 	OWEN_REDIS  redis.UniversalClient
 	OWEN_MONGO  *mongo.Client

@@ -9,7 +9,6 @@ import (
 )
 
 type SysauditlmslogService struct {
-	
 }
 
 // 查询审计日志LMS

@@ -9,7 +9,7 @@ type ScheduledTask struct {
 	IntervalSeconds *int       `gorm:"default:null"`                                                                      // 执行间隔（秒），可为 NULL
 	LastRunTime     *time.Time `gorm:"default:null"`                                                                      // 上次执行时间，可以为空
 	NextRunTime     time.Time  `gorm:"not null"`                                                                          // 下次执行时间，非空
-	Status          string     `gorm:"type:enum('pending', 'running', 'completed', 'failed');default:'pending';not null"` // 任务状态，默认值为 'pending'
+	Status          string     `gorm:"type:varchar(50);not null"` // 任务状态，默认值为 'pending', 'running', 'completed', 'failed'
 }
 
 func (*ScheduledTask) TableName() string {
