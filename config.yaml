@@ -35,7 +35,7 @@ mongodb:
 
 db:
   default:
-    type: oracle
+    type: mysql
     cancreatemodel: false #无效占位
     canautomigration: false #无效 占位符
     canautosyndata: false #无效 占位符
