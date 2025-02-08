@@ -15,7 +15,7 @@ RUN go mod download
 COPY . .
 
 # 静态编译 Go 可执行文件，避免依赖 C 库
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ginowen
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o ginowen
 
 # 使用轻量级 Alpine 镜像运行程序
 FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/alpine:latest
@@ -37,7 +37,8 @@ COPY --from=builder /app/config.yaml .
 COPY --from=builder /app/config_linux.yaml .
 
 # 确保文件具有执行权限
-RUN chmod +x ./ginowen
+RUN chmod +x /root/ginowen
 
 # 设置容器启动命令
-CMD ["./ginowen"]
+CMD ["/root/ginowen"]
+

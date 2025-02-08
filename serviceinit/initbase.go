@@ -14,9 +14,8 @@ import (
 	"time"
 
 	//"github.com/dzwvip/oracle"
-
 	"github.com/glebarez/sqlite" // 使用 godror 驱动
-	_ "github.com/godror/godror" // 注册 godror 驱动
+	// 注册 godror 驱动
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -75,18 +74,18 @@ func InitDB() {
 		case "mssql":
 			DB, dbErr = gorm.Open(sqlserver.Open(dbCfg.MSSQL), &gorm.Config{Logger: newLogger})
 		case "oracle":
-			sqlDB, _ = sql.Open("godror", dbCfg.Oracle)
-			// DB, dbErr = gorm.Open(gorm.Config{
-			// 	ConnPool: oracleDB,  // 将底层的 sql.DB 连接池传给 GORM
-			// 	Logger:   newLogger, // 可选：设置 GORM 日志输出级别
-			// })
-			var currentTime string
-			err := sqlDB.QueryRow("SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AS current_time FROM dual").Scan(&currentTime)
-			if err != nil {
-				log.Fatal(err)
-			}
-			// 打印当前时间
-			fmt.Println("验证oracle数据库:", currentTime)
+			// sqlDB, _ = sql.Open("godror", dbCfg.Oracle)
+			// // DB, dbErr = gorm.Open(gorm.Config{
+			// // 	ConnPool: oracleDB,  // 将底层的 sql.DB 连接池传给 GORM
+			// // 	Logger:   newLogger, // 可选：设置 GORM 日志输出级别
+			// // })
+			// var currentTime string
+			// err := sqlDB.QueryRow("SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AS current_time FROM dual").Scan(&currentTime)
+			// if err != nil {
+			// 	log.Fatal(err)
+			// }
+			// // 打印当前时间
+			// fmt.Println("验证oracle数据库:", currentTime)
 
 		default:
 			log.Fatalf("Unsupported database type: %s", dbCfg.Type)
