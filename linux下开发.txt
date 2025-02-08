@@ -42,7 +42,7 @@ sudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
 
 debug:调试
     rm -f ./GinOwen
-    go build -gcflags="all=-N -l" -o GinOwen
+    go build -gcflags="all=-N -l" -buildvcs=false -o GinOwen
 
 gdb:
     gdbserver :1234 ./GinOwen
@@ -52,10 +52,11 @@ gdb:
 
 
 release:发布
-GOOS=linux GOARCH=amd64 go build -o GinOwen
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o GinOwen    #独立运行
-GOOS=windows GOARCH=amd64 go build -o GinOwen.exe
-GOOS=darwin GOARCH=amd64 go build -o GinOwen
+GOOS=linux GOARCH=amd64 go build -buildvcs=false -o GinOwen
+GOOS=linux GOARCH=amd64 go build -buildvcs=false  -o GinOwen
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwen    #独立运行
+GOOS=windows GOARCH=amd64 go build -buildvcs=false -o GinOwen.exe
+GOOS=darwin GOARCH=amd64 go build -buildvcs=false -o GinOwen
 
 #后台发布
 nohup ./GinOwen > ginowen.log 2>&1 &
@@ -121,7 +122,7 @@ docker rmi -f $(docker images -q)
 docker build -t ginowen:latest . -f Dockerfile
 
 #直接通过运行包需要特殊打法
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o GinOwenRelease     
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwenRelease     
 docker build -t ginowen:latest . -f DockerfileRelease
 
 docker run -d -p 6789:6789 --restart=always --name ginowen  ginowen:latest
@@ -145,3 +146,14 @@ FROM golang:1.23.1_owen as builder
 ...
 
 FROM alpine:latest_owen
+
+
+
+curl -X 'POST' \
+  'http://192.168.229.130:30789/auth/Login' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "password": "123456",
+  "username": "admin"
+}'
