@@ -24,7 +24,7 @@ system:
     addblacklistminutes: 0 #超过这个阈值增加到黑名单中 分钟 0则不生效
 redis:
   addr: 127.0.0.1:6379
-  password: #002161
+  password: 002161
   db: 0
 mongodb:
   # uri: "mongodb://localhost:27017"
