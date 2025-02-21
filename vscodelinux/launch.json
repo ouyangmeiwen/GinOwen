@@ -2,29 +2,21 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Go Debug (Remote GDB)",
-      "type": "cppdbg",
+      "name": "Launch Go Program",
+      "type": "go",
       "request": "launch",
-      "program": "${workspaceFolder}/GinOwen",  // 本地的 Go 可执行文件
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {},
+      "args": []
+    },
+    {
+      "type": "go",
+      "name": "debug main.go",
+      "request": "launch",
+      "mode": "auto",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "gdb",
-      "miDebuggerPath": "/usr/bin/gdb",  // GDB 的本地路径
-      "miDebuggerServerAddress": "192.168.229.130:1234",  // 目标机器的 IP 和 GDB 服务器端口
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": false
-        }
-      ],
-      "preLaunchTask": "",
-      "sourceFileMap": {
-        "/path/to/your/go/source": "${workspaceFolder}/src"
-      }
+      "program": "/home/owen/Github/GinOwen/extend/other/produce/main.go"
     }
   ]
 }
