@@ -11,7 +11,6 @@ WORKDIR /app/
 # 复制构建好的可执行文件
 
 COPY ./GinOwenRelease  /app/GinOwenRelease
-COPY ./config_linux.yaml  /app/config_linux.yaml
 COPY ./config.yaml  /app/config.yaml
 
 # 确保文件具有执行权限

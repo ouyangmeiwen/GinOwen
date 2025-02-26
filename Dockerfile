@@ -33,8 +33,6 @@ COPY --from=builder /app/ginowen .
 
 # 复制配置文件 config.yaml
 COPY --from=builder /app/config.yaml .
-# 复制配置文件 config.yaml
-COPY --from=builder /app/config_linux.yaml .
 
 # 确保文件具有执行权限
 RUN chmod +x /root/ginowen

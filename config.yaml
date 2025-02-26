@@ -6,7 +6,7 @@ system:
   enabledebug: false
   blacklistpre: owen_
   enableblacklist: true
-  ipwhitelist: ::1,localhost,127.0.0.1
+  ipwhitelist: ::1,localhost,192.168.229.130,127.0.0.1
   swaggerui: true #是否开启swagger
   enablewebsocket: true
   taskinterval: 60 #任务检查时间 单位秒
@@ -23,11 +23,11 @@ system:
     burst: 20 #并发 最大并发数
     addblacklistminutes: 0 #超过这个阈值增加到黑名单中 分钟 0则不生效
 redis:
-  addr: 127.0.0.1:6379
+  addr: 192.168.229.130:6379
   password: 002161
   db: 0
 mongodb:
-  # uri: "mongodb://localhost:27017"
+  # uri: "mongodb://192.168.229.130:27017"
   uri:
   database: "testdb"
   username: "your_username"
@@ -39,10 +39,10 @@ db:
     cancreatemodel: false #无效占位
     canautomigration: false #无效 占位符
     canautosyndata: false #无效 占位符
-    mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
-    mssql: "server=127.0.0.1,1433;user id=sa;password=Abc@1234;database=invengodbv4"
-    oracle: "C##sa/abc123@localhost:1521/DCLHR"
-    postgres: "user=postgres password=abc@123 dbname=postgres host=127.0.0.1 port=5432 sslmode=disable"
+    mysql: "root:abc@123@tcp(192.168.229.130:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mssql: "server=192.168.229.130,1433;user id=sa;password=Abc@1234;database=invengodbv4"
+    oracle: "C##sa/abc123@192.168.229.130:1521/DCLHR"
+    postgres: "user=postgres password=abc@123 dbname=postgres host=192.168.229.130 port=5432 sslmode=disable"
     sqlite: "invengo.db"
     maxopenconns: 100
     maxidleconns: 10
@@ -52,10 +52,10 @@ db:
     cancreatemodel: false #是否允许from 数据库生成model文件
     canautomigration: false #是否允许from 数据库生成migration文件
     canautosyndata: false #是否允许from 数据库生成syncdata文件
-    mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
-    mssql: "server=127.0.0.1,1433;user id=sa;password=Abc@1234;database=invengodbv4"
-    oracle: "user/password@localhost:1521/service_name"
-    postgres: "user=postgres password=password123 dbname=invengodbv4 host=127.0.0.1 port=5432 sslmode=disable"
+    mysql: "root:abc@123@tcp(192.168.229.130:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mssql: "server=192.168.229.130,1433;user id=sa;password=Abc@1234;database=invengodbv4"
+    oracle: "user/password@192.168.229.130:1521/service_name"
+    postgres: "user=postgres password=password123 dbname=invengodbv4 host=192.168.229.130 port=5432 sslmode=disable"
     sqlite: "invengo.db"
     maxopenconns: 100
     maxidleconns: 10
@@ -65,21 +65,21 @@ db:
     cancreatemodel: false #无效占位
     canautomigration: false #是否根据from migration文件 生成表结构
     canautosyndata: false #是否通过from syncdata文件 生成表结构数据
-    mysql: "root:abc@123@tcp(127.0.0.1:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
-    mssql: "server=127.0.0.1,1433;user id=sa;password=Abc@1234;database=invengodbv4"
-    oracle: "user/password@localhost:1521/service_name"
-    postgres: "user=postgres password=password123 dbname=invengodbv4 host=127.0.0.1 port=5432 sslmode=disable"
+    mysql: "root:abc@123@tcp(192.168.229.130:3306)/invengodbv41?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mssql: "server=192.168.229.130,1433;user id=sa;password=Abc@1234;database=invengodbv4"
+    oracle: "user/password@192.168.229.130:1521/service_name"
+    postgres: "user=postgres password=password123 dbname=invengodbv4 host=192.168.229.130 port=5432 sslmode=disable"
     sqlite: "invengo.db"
     maxopenconns: 100
     maxidleconns: 10
     connmaxlifetime: 30
 rabbitmq:
-  url: #amqp://guest:guest@localhost:5672/
+  url: #amqp://guest:guest@192.168.229.130:5672/
   exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
   exchangetype: topic #direct fanout  headers
 
 rabbitmqconsumer:
-  url: #amqp://guest:guest@localhost:5672/
+  url: #amqp://guest:guest@192.168.229.130:5672/
   exchangename: topic_exchange #direct_exchange  fanout_exchange headers_exchange
   exchangetype: topic #direct fanout  headers
   queuename: server_queue
