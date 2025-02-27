@@ -1,11 +1,11 @@
 system:
-  port: 6789
+  port: 9003
   routerpre: api/services/app/
   tokenexpire: 24 #hour
   token: Token
   enabledebug: false
   blacklistpre: owen_
-  enableblacklist: true
+  enableblacklist: false
   ipwhitelist: ::1,localhost,192.168.229.130,127.0.0.1
   swaggerui: true #是否开启swagger
   enablewebsocket: true

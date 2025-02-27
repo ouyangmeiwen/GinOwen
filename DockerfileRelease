@@ -14,7 +14,7 @@ COPY ./GinOwenRelease  /app/GinOwenRelease
 COPY ./config.yaml  /app/config.yaml
 
 # 确保文件具有执行权限
-RUN chmod +x ./GinOwenRelease
+RUN chmod +x /app/GinOwenRelease
 
 # 设置容器启动命令
-CMD ["./GinOwenRelease"]
+CMD ["/app/GinOwenRelease"]

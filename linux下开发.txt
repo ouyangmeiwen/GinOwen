@@ -125,9 +125,11 @@ docker build -t ginowen:latest . -f Dockerfile
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwenRelease     
 docker build -t ginowen:latest . -f DockerfileRelease
 
-docker run -d -p 6789:6789 --restart=always --name ginowen  ginowen:latest
 
-http://localhost:6789/swagger-ui/index.html
+docker run -d -p 9003:9003 --restart=always --name ginowen  ginowen:latest
+
+
+http://192.168.229.130:9003/swagger-ui/index.html
 
 
 docker save -o ./golang:1.23.1_owen.tar imageid
@@ -150,7 +152,7 @@ FROM alpine:latest_owen
 
 
 curl -X 'POST' \
-  'http://192.168.229.130:30789/auth/Login' \
+  'http://192.168.229.130:9003/auth/Login' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
