@@ -125,8 +125,9 @@ docker build -t ginowen:latest . -f Dockerfile
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwenRelease     
 docker build -t ginowen:latest . -f DockerfileRelease
 
-
 docker run -d -p 9003:9003 --restart=always --name ginowen  ginowen:latest
+docker run -d -p 9003:9003  --name ginowen  ginowen:latest
+
 
 
 http://192.168.229.130:9003/swagger-ui/index.html
