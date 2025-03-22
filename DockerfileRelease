@@ -16,5 +16,7 @@ COPY ./config.yaml  /app/config.yaml
 # 确保文件具有执行权限
 RUN chmod +x /app/GinOwenRelease
 
+EXPOSE 9003
+
 # 设置容器启动命令
 CMD ["/app/GinOwenRelease"]

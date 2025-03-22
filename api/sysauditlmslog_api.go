@@ -134,7 +134,7 @@ func (b *SysauditlmslogApi) UpdateLmsLog(c *gin.Context) {
 
 // DeleteLmsLog
 // @Tags     Sysauditlmslog
-// @Summary  查询LMS日志
+// @Summary  删除LMS日志
 // @Produce   application/json
 // @Param    data  query     request.DeleteLmsLogInput 			true  "参数"
 // @Success  200   {object}  utils.Response{data=[]response.DeleteLmsLogDto,msg=string}  "返回清单"

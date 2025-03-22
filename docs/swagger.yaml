@@ -1,4 +1,59 @@
 definitions:
+  models.Libiteminventoryinfo:
+    properties:
+      Antenna:
+        type: string
+      CreationTime:
+        type: string
+      CreatorUserId:
+        type: integer
+      ExceptionMsg:
+        type: string
+      Id:
+        type: string
+      InventoryState:
+        type: integer
+      ItemBarcode:
+        type: string
+      ItemEpc:
+        type: string
+      ItemTid:
+        type: string
+      LastModificationTime:
+        type: string
+      LastModifierUserId:
+        type: integer
+      LayerCode:
+        type: string
+      LayerId:
+        type: string
+      LayerName:
+        type: string
+      LocLayerCode:
+        type: string
+      LocLayerId:
+        type: string
+      LocLayerName:
+        type: string
+      OCRItemAuthor:
+        type: string
+      OCRItemCallNo:
+        type: string
+      OCRItemISBN:
+        type: string
+      OCRItemPublisher:
+        type: string
+      OCRItemTitle:
+        type: string
+      OffShelfTime:
+        type: string
+      OriginType:
+        type: integer
+      Remark:
+        type: string
+      TenantId:
+        type: integer
+    type: object
   request.AddBlackListInput:
     properties:
       ip:
@@ -6,6 +61,11 @@ definitions:
       unlock_time:
         description: 解锁时间，格式："yyyy-mm-dd hh:mm:ss"
         type: string
+    type: object
+  request.CreateInventoryInput:
+    properties:
+      item:
+        $ref: '#/definitions/models.Libiteminventoryinfo'
     type: object
   request.CreateLmsLogInput:
     properties:
@@ -224,6 +284,11 @@ definitions:
       ip:
         type: string
     type: object
+  request.UpdateInventoryInput:
+    properties:
+      item:
+        $ref: '#/definitions/models.Libiteminventoryinfo'
+    type: object
   request.UpdateLmsLogInput:
     properties:
       BrowserInfo:
@@ -261,9 +326,22 @@ definitions:
     type: object
   response.AddScheduledTaskDto:
     type: object
+  response.CreateInventoryDto:
+    type: object
   response.CreateLmsLogDto:
     type: object
+  response.DeleteInventoryDto:
+    type: object
   response.DeleteLmsLogDto:
+    type: object
+  response.GetInventoryDto:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/models.Libiteminventoryinfo'
+        type: array
+      totalCount:
+        type: integer
     type: object
   response.ImportExcelDto:
     type: object
@@ -322,6 +400,8 @@ definitions:
           type: string
         type: object
     type: object
+  response.UpdateInventoryDto:
+    type: object
   response.UpdateLmsLogDto:
     type: object
   response.UploadResponse:
@@ -364,8 +444,7 @@ paths:
             allOf:
             - $ref: '#/definitions/utils.Response'
             - properties:
-                data:
-                  type: object
+                data: {}
                 msg:
                   type: string
               type: object
@@ -527,6 +606,155 @@ paths:
       summary: 添加任务
       tags:
       - Task
+  /api/services/app/Libiteminventory/CreateInventory:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateInventoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.CreateInventoryDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 新增盘点位置
+      tags:
+      - Libiteminventory
+  /api/services/app/Libiteminventory/DeleteInventory:
+    delete:
+      parameters:
+      - in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回清单
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.DeleteInventoryDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 删除盘点位置
+      tags:
+      - Libiteminventory
+  /api/services/app/Libiteminventory/QueryInventory:
+    get:
+      parameters:
+      - default: 100
+        description: 获取多少条结果
+        in: query
+        maximum: 99999
+        minimum: 1
+        name: MaxResultCount
+        type: integer
+      - default: 0
+        description: 跳过多少数量
+        in: query
+        maximum: 99999
+        minimum: -1
+        name: SkipCount
+        type: integer
+      - in: query
+        name: barcode
+        type: string
+      - in: query
+        name: callNo
+        type: string
+      - in: query
+        name: isbn
+        type: string
+      - in: query
+        name: layerCode
+        type: string
+      - in: query
+        name: layerName
+        type: string
+      - in: query
+        name: locLayerCode
+        type: string
+      - in: query
+        name: locLayerName
+        type: string
+      - in: query
+        name: title
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.GetInventoryDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 查询盘点位置
+      tags:
+      - Libiteminventory
+  /api/services/app/Libiteminventory/UpdateInventory:
+    put:
+      parameters:
+      - description: 参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateInventoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.UpdateInventoryDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 修改盘点位置
+      tags:
+      - Libiteminventory
   /api/services/app/Libitems/ImportExcelByIndex:
     post:
       consumes:
@@ -680,7 +908,7 @@ paths:
               type: object
       security:
       - BearerAuth: []
-      summary: 查询LMS日志
+      summary: 删除LMS日志
       tags:
       - Sysauditlmslog
   /api/services/app/Sysauditlmslog/QueryLmsLog:

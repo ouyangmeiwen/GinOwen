@@ -8,6 +8,7 @@ type Services struct {
 	sysauditlmslogService services.SysauditlmslogService
 	jwtService            services.JWTService
 	TaskService           services.ScheduledTaskService
+	InventoryService      services.LibiteminventoryinfoService
 }
 
 var ServicesGroup = new(Services)

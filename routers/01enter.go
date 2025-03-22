@@ -10,6 +10,7 @@ type RouterApis struct {
 	blacklistApi      api.BlackListApi
 	gpiApi            api.GPIApi
 	taskApi           api.ScheduledTaskApi
+	inventoryApi      api.LibiteminventoryinfoApi
 }
 
 var ApiGroup = new(RouterApis)

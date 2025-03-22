@@ -6,8 +6,9 @@ go mod vendor // 如果你的项目需要使用 vendor 目录作为依赖项的�
 如果代码无法弹出正常提示，则检查文件是否为.go结尾
 
 重新生成swagger
+go install github.com/swaggo/swag/cmd/swag@latest
 
-Swag init
+swag init
 如果为生成的对应接口的swaggerUI
 1.格式错误
 2.清除浏览器缓存
