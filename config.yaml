@@ -34,7 +34,7 @@ mongodb:
   password: "your_password"
 
 db:
-  default:
+  default: #默认查询使用的数据库
     type: mysql
     cancreatemodel: false #无效占位
     canautomigration: false #无效 占位符
@@ -47,8 +47,8 @@ db:
     maxopenconns: 100
     maxidleconns: 10
     connmaxlifetime: 30
-  from:
-    type:  #空则数据库不初始化
+  from:    #通过这个生成数据库脚本
+    type:  #空则数据库不初始化 mysql  mssql  oracle postgres sqlite
     cancreatemodel: false #是否允许from 数据库生成model文件
     canautomigration: false #是否允许from 数据库生成migration文件
     canautosyndata: false #是否允许from 数据库生成syncdata文件
@@ -60,8 +60,8 @@ db:
     maxopenconns: 100
     maxidleconns: 10
     connmaxlifetime: 30
-  to:
-    type:  #空则数据库不初始化
+  to:      #通过这个拿from生成的文件初始化数据库
+    type:  #空则数据库不初始化  mysql  mssql  oracle postgres sqlite
     cancreatemodel: false #无效占位
     canautomigration: false #是否根据from migration文件 生成表结构
     canautosyndata: false #是否通过from syncdata文件 生成表结构数据
