@@ -345,6 +345,165 @@ definitions:
     type: object
   response.ImportExcelDto:
     type: object
+  response.LiblayerDto:
+    properties:
+      Barcode:
+        type: string
+      Code:
+        type: string
+      CreationTime:
+        type: string
+      CreatorUserId:
+        type: integer
+      DeleterUserId:
+        type: integer
+      DeletionTime:
+        type: string
+      Id:
+        type: string
+      IsDeleted:
+        items:
+          type: integer
+        type: array
+      IsEnable:
+        items:
+          type: integer
+        type: array
+      ItemBarcode:
+        type: string
+      ItemCallNo:
+        type: string
+      LastModificationTime:
+        type: string
+      LastModifierUserId:
+        type: integer
+      LayerNo:
+        type: integer
+      Name:
+        type: string
+      OriginType:
+        type: integer
+      PreCallNo:
+        type: string
+      Remark:
+        type: string
+      ShelfId:
+        type: string
+      Side:
+        type: string
+      TenantId:
+        type: integer
+      Tid:
+        type: string
+    type: object
+  response.LibrowDto:
+    properties:
+      CatalogCode:
+        type: string
+      Code:
+        type: string
+      CreationTime:
+        type: string
+      CreatorUserId:
+        type: integer
+      DeleterUserId:
+        type: integer
+      DeletionTime:
+        type: string
+      Id:
+        type: string
+      IsDeleted:
+        items:
+          type: integer
+        type: array
+      LastModificationTime:
+        type: string
+      LastModifierUserId:
+        type: integer
+      LocationId:
+        type: string
+      Name:
+        type: string
+      Remark:
+        type: string
+      RowNo:
+        type: integer
+      RowType:
+        type: integer
+      RowUsageType:
+        type: integer
+      Shelfs:
+        description: 架
+        items:
+          $ref: '#/definitions/response.LibshelfDto'
+        type: array
+      TenantId:
+        type: integer
+    type: object
+  response.LibshelfDto:
+    properties:
+      Angel:
+        type: number
+      Code:
+        type: string
+      CreationTime:
+        type: string
+      CreatorUserId:
+        type: integer
+      DeleterUserId:
+        type: integer
+      DeletionTime:
+        type: string
+      Id:
+        type: string
+      IsBosseyed:
+        items:
+          type: integer
+        type: array
+      IsDeleted:
+        items:
+          type: integer
+        type: array
+      IsEnable:
+        items:
+          type: integer
+        type: array
+      LastModificationTime:
+        type: string
+      LastModifierUserId:
+        type: integer
+      Layers:
+        description: 层
+        items:
+          $ref: '#/definitions/response.LiblayerDto'
+        type: array
+      Name:
+        type: string
+      Remark:
+        type: string
+      RfidReaderId:
+        type: string
+      RowIdentity:
+        type: string
+      SerialPortId:
+        type: string
+      ShelfNo:
+        type: integer
+      Side:
+        type: string
+      StructId:
+        type: string
+      TenantId:
+        type: integer
+      X1:
+        type: number
+      X2:
+        type: number
+      Y1:
+        type: number
+      Y2:
+        type: number
+    type: object
   response.QueryLmsDto:
     properties:
       items:
@@ -390,6 +549,14 @@ definitions:
         type: integer
       UserId:
         type: integer
+    type: object
+  response.QueryRowDto:
+    properties:
+      Rows:
+        description: 行
+        items:
+          $ref: '#/definitions/response.LibrowDto'
+        type: array
     type: object
   response.SendMqMsgDto:
     type: object
@@ -606,6 +773,38 @@ paths:
       summary: 添加任务
       tags:
       - Task
+  /api/services/app/LibRow/QueryRows:
+    get:
+      parameters:
+      - description: 书架号
+        in: query
+        name: row_no
+        type: integer
+      - description: 馆藏地编码
+        in: query
+        name: struct_code
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回清单
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.QueryRowDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 查询书架
+      tags:
+      - LibRow
   /api/services/app/Libiteminventory/CreateInventory:
     post:
       parameters:

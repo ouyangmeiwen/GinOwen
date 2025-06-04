@@ -9,6 +9,7 @@ type Services struct {
 	jwtService            services.JWTService
 	TaskService           services.ScheduledTaskService
 	InventoryService      services.LibiteminventoryinfoService
+	librowService         services.LibrowService
 }
 
 var ServicesGroup = new(Services)

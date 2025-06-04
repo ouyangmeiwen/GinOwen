@@ -11,6 +11,7 @@ type RouterApis struct {
 	gpiApi            api.GPIApi
 	taskApi           api.ScheduledTaskApi
 	inventoryApi      api.LibiteminventoryinfoApi
+	librowApi         api.LibrowApi
 }
 
 var ApiGroup = new(RouterApis)
