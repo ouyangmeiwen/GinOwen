@@ -5,6 +5,7 @@ import (
 	"GINOWEN/models"
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
+	"GINOWEN/utils"
 )
 
 type LibrowService struct {
@@ -41,20 +42,28 @@ func (LibrowService) QueryRows(input request.QueryRowInput) (resp response.Query
 			layer_map := make(map[string][]response.LiblayerDto)
 			if err == nil {
 				for _, layer := range layers {
-					layer_map[layer.ShelfID] = append(layer_map[layer.ShelfID], response.LiblayerDto{Liblayer: layer})
+					layer_map[layer.ShelfID] = append(layer_map[layer.ShelfID], response.LiblayerDto{
+						Liblayer:  layer,
+						IsDeleted: utils.Uint8slicetoboolslice(layer.IsDeleted),
+						IsEnable:  utils.Uint8slicetoboolslice(layer.IsEnable),
+					})
 				}
 			}
 			shelf_map := make(map[string][]response.LibshelfDto)
 			for _, shelf := range shelfs {
 				shelf_map[shelf.RowIdentity] = append(shelf_map[shelf.RowIdentity], response.LibshelfDto{
-					Libshelf: shelf,
-					Layers:   layer_map[shelf.ID],
+					Libshelf:   shelf,
+					IsDeleted:  utils.Uint8slicetoboolslice(shelf.IsDeleted),
+					IsEnable:   utils.Uint8slicetoboolslice(shelf.IsEnable),
+					IsBosseyed: utils.Uint8slicetoboolslice(shelf.IsBosseyed),
+					Layers:     layer_map[shelf.ID],
 				})
 			}
 			for _, row := range rows {
 				resp.Rows = append(resp.Rows, response.LibrowDto{
-					Librow: row,
-					Shelfs: shelf_map[row.ID],
+					Librow:    row,
+					IsDeleted: utils.Uint8slicetoboolslice(row.IsDeleted),
+					Shelfs:    shelf_map[row.ID],
 				})
 			}
 		}

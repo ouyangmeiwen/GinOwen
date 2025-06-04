@@ -1902,16 +1902,10 @@
                     "type": "string"
                 },
                 "IsDeleted": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "IsEnable": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "ItemBarcode": {
                     "type": "string"
@@ -1979,10 +1973,7 @@
                     "type": "string"
                 },
                 "IsDeleted": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "LastModificationTime": {
                     "type": "string"
@@ -2045,22 +2036,13 @@
                     "type": "string"
                 },
                 "IsBosseyed": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "IsDeleted": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "IsEnable": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "LastModificationTime": {
                     "type": "string"

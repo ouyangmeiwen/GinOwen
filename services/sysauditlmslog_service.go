@@ -44,23 +44,24 @@ func (SysauditlmslogService) QueryLmsLog(req request.QueryLmsInput) (resp respon
 	}
 	resp.TotalCount = cnt
 	for _, item := range lmslogs_lst {
-		var cp response.QueryLmsItem
-		cp.ID = item.ID
-		cp.BrowserInfo = item.BrowserInfo
-		cp.ClientIPAddress = item.ClientIPAddress
-		cp.ClientName = item.ClientName
-		cp.CustomData = item.CustomData
-		cp.Exception = item.Exception
-		cp.ExecutionDuration = item.ExecutionDuration
-		cp.ExecutionTime = item.ExecutionTime
-		cp.ImpersonatorTenantID = item.ImpersonatorTenantID
-		cp.ImpersonatorUserID = item.ImpersonatorUserID
-		cp.MethodName = item.MethodName
-		cp.Parameters = item.Parameters
-		cp.ServiceName = item.ServiceName
-		cp.TenantID = item.TenantID
-		cp.UserID = item.UserID
-		cp.ReturnValue = item.ReturnValue
+		//var cp response.QueryLmsItem
+		// cp.ID = item.ID
+		// cp.BrowserInfo = item.BrowserInfo
+		// cp.ClientIPAddress = item.ClientIPAddress
+		// cp.ClientName = item.ClientName
+		// cp.CustomData = item.CustomData
+		// cp.Exception = item.Exception
+		// cp.ExecutionDuration = item.ExecutionDuration
+		// cp.ExecutionTime = item.ExecutionTime
+		// cp.ImpersonatorTenantID = item.ImpersonatorTenantID
+		// cp.ImpersonatorUserID = item.ImpersonatorUserID
+		// cp.MethodName = item.MethodName
+		// cp.Parameters = item.Parameters
+		// cp.ServiceName = item.ServiceName
+		// cp.TenantID = item.TenantID
+		// cp.UserID = item.UserID
+		// cp.ReturnValue = item.ReturnValue
+		cp := response.QueryLmsItem{Sysauditlmslog: item}
 		resp.Items = append(resp.Items, cp)
 	}
 	return resp, err
@@ -69,23 +70,24 @@ func (SysauditlmslogService) QueryLmsLog(req request.QueryLmsInput) (resp respon
 // 新增审计日志
 func (SysauditlmslogService) CreateLmsLog(req request.CreateLmsLogInput) (resp response.CreateLmsLogDto, err error) {
 
-	var lmslog models.Sysauditlmslog
-	lmslog.ID = 0
-	lmslog.BrowserInfo = req.BrowserInfo
-	lmslog.ClientIPAddress = req.ClientIPAddress
-	lmslog.ClientName = req.BrowserInfo
-	lmslog.CustomData = req.CustomData
-	lmslog.Exception = req.Exception
-	lmslog.ExecutionDuration = req.ExecutionDuration
-	lmslog.ExecutionTime = req.ExecutionTime
-	lmslog.ImpersonatorTenantID = req.ImpersonatorTenantID
-	lmslog.ImpersonatorUserID = req.ImpersonatorUserID
-	lmslog.MethodName = req.MethodName
-	lmslog.Parameters = req.Parameters
-	lmslog.ServiceName = req.ServiceName
-	lmslog.TenantID = req.TenantID
-	lmslog.UserID = req.UserID
-	lmslog.ReturnValue = req.ReturnValue
+	// var lmslog models.Sysauditlmslog
+	// lmslog.ID = 0
+	// lmslog.BrowserInfo = req.BrowserInfo
+	// lmslog.ClientIPAddress = req.ClientIPAddress
+	// lmslog.ClientName = req.BrowserInfo
+	// lmslog.CustomData = req.CustomData
+	// lmslog.Exception = req.Exception
+	// lmslog.ExecutionDuration = req.ExecutionDuration
+	// lmslog.ExecutionTime = req.ExecutionTime
+	// lmslog.ImpersonatorTenantID = req.ImpersonatorTenantID
+	// lmslog.ImpersonatorUserID = req.ImpersonatorUserID
+	// lmslog.MethodName = req.MethodName
+	// lmslog.Parameters = req.Parameters
+	// lmslog.ServiceName = req.ServiceName
+	// lmslog.TenantID = req.TenantID
+	// lmslog.UserID = req.UserID
+	// lmslog.ReturnValue = req.ReturnValue
+	lmslog := req.Sysauditlmslog
 	err = global.OWEN_DB.Model(&models.Sysauditlmslog{}).Create(&lmslog).Error
 	if err != nil {
 		return resp, err
@@ -104,21 +106,22 @@ func (SysauditlmslogService) UpdateLmsLog(req request.UpdateLmsLogInput) (resp r
 	if lmslog.ID <= 0 {
 		return resp, errors.New("ID查询失败,无法完成更新")
 	}
-	lmslog.BrowserInfo = req.BrowserInfo
-	lmslog.ClientIPAddress = req.ClientIPAddress
-	lmslog.ClientName = req.BrowserInfo
-	lmslog.CustomData = req.CustomData
-	lmslog.Exception = req.Exception
-	lmslog.ExecutionDuration = req.ExecutionDuration
-	lmslog.ExecutionTime = req.ExecutionTime
-	lmslog.ImpersonatorTenantID = req.ImpersonatorTenantID
-	lmslog.ImpersonatorUserID = req.ImpersonatorUserID
-	lmslog.MethodName = req.MethodName
-	lmslog.Parameters = req.Parameters
-	lmslog.ServiceName = req.ServiceName
-	lmslog.TenantID = req.TenantID
-	lmslog.UserID = req.UserID
-	lmslog.ReturnValue = req.ReturnValue
+	// lmslog.BrowserInfo = req.BrowserInfo
+	// lmslog.ClientIPAddress = req.ClientIPAddress
+	// lmslog.ClientName = req.BrowserInfo
+	// lmslog.CustomData = req.CustomData
+	// lmslog.Exception = req.Exception
+	// lmslog.ExecutionDuration = req.ExecutionDuration
+	// lmslog.ExecutionTime = req.ExecutionTime
+	// lmslog.ImpersonatorTenantID = req.ImpersonatorTenantID
+	// lmslog.ImpersonatorUserID = req.ImpersonatorUserID
+	// lmslog.MethodName = req.MethodName
+	// lmslog.Parameters = req.Parameters
+	// lmslog.ServiceName = req.ServiceName
+	// lmslog.TenantID = req.TenantID
+	// lmslog.UserID = req.UserID
+	// lmslog.ReturnValue = req.ReturnValue
+	lmslog = req.Sysauditlmslog
 	err = global.OWEN_DB.Model(&models.Sysauditlmslog{}).Where("Id=?", req.ID).Save(&lmslog).Error
 	if err != nil {
 		return resp, err

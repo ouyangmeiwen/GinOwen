@@ -1910,16 +1910,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "IsDeleted": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "IsEnable": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "ItemBarcode": {
                     "type": "string"
@@ -1987,10 +1981,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "IsDeleted": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "LastModificationTime": {
                     "type": "string"
@@ -2053,22 +2044,13 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "IsBosseyed": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "IsDeleted": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "IsEnable": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
+                    "type": "boolean"
                 },
                 "LastModificationTime": {
                     "type": "string"

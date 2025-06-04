@@ -362,13 +362,9 @@ definitions:
       Id:
         type: string
       IsDeleted:
-        items:
-          type: integer
-        type: array
+        type: boolean
       IsEnable:
-        items:
-          type: integer
-        type: array
+        type: boolean
       ItemBarcode:
         type: string
       ItemCallNo:
@@ -413,9 +409,7 @@ definitions:
       Id:
         type: string
       IsDeleted:
-        items:
-          type: integer
-        type: array
+        type: boolean
       LastModificationTime:
         type: string
       LastModifierUserId:
@@ -457,17 +451,11 @@ definitions:
       Id:
         type: string
       IsBosseyed:
-        items:
-          type: integer
-        type: array
+        type: boolean
       IsDeleted:
-        items:
-          type: integer
-        type: array
+        type: boolean
       IsEnable:
-        items:
-          type: integer
-        type: array
+        type: boolean
       LastModificationTime:
         type: string
       LastModifierUserId:
