@@ -31,14 +31,14 @@ func (LibrowService) QueryRows(input request.QueryRowInput) (resp response.Query
 			rowids = append(rowids, row.ID)
 		}
 		var shelfs []models.Libshelf
-		err = global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted = ?", 0).Where("RowIdentity IN ?", rowids).Order("Code ASC").Find(&shelfs).Error
+		err = global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted = ? and IsEnable= ?", 0, 1).Where("RowIdentity IN ?", rowids).Order("Code ASC").Find(&shelfs).Error
 		var shelfids []string
 		if err == nil {
 			for _, shelf := range shelfs {
 				shelfids = append(shelfids, shelf.ID)
 			}
 			var layers []models.Liblayer
-			err = global.OWEN_DB.Model(&models.Liblayer{}).Where("IsDeleted = ?", 0).Where("ShelfId IN ?", shelfids).Order("LayerNo ASC").Find(&layers).Error
+			err = global.OWEN_DB.Model(&models.Liblayer{}).Where("IsDeleted = ? and IsEnable= ?", 0, 1).Where("ShelfId IN ?", shelfids).Order("LayerNo ASC").Find(&layers).Error
 			layer_map := make(map[string][]response.LiblayerDto)
 			if err == nil {
 				for _, layer := range layers {
