@@ -15,6 +15,31 @@ func (LibrowService) QueryRows(input request.QueryRowInput) (resp response.Query
 	// Implementation of the method to query rows from the library
 	// This will typically involve database operations to fetch the data
 	// based on the input criteria provided in QueryRowInput.
+
+	// var layerstest []models.Libitem
+	// global.OWEN_DB.Model(&models.Libitem{}).Find(&layerstest)
+
+	// // 并发过滤
+	// start := time.Now()
+	// filteredParallel := parallel.ParallelFilter(layerstest, 1, func(ly models.Libitem) bool {
+	// 	return strings.Contains(ly.Title, "4")
+	// })
+	// durationParallel := time.Since(start)
+	// fmt.Println("ParallelFilter duration:", durationParallel)
+	// fmt.Println("ParallelFilter count:", len(filteredParallel))
+
+	// // 普通 for 循环过滤
+	// start = time.Now()
+	// var filteredSerial []models.Libitem
+	// for _, ly := range layerstest {
+	// 	if strings.Contains(ly.Title, "4") {
+	// 		filteredSerial = append(filteredSerial, ly)
+	// 	}
+	// }
+	// durationSerial := time.Since(start)
+	// fmt.Println("Serial for-loop duration:", durationSerial)
+	// fmt.Println("Serial count:", len(filteredSerial))
+
 	var rows []models.Librow
 	row_query := global.OWEN_DB.Model(&models.Librow{})
 	if input.RowNo != nil && *input.RowNo > 0 {
@@ -34,6 +59,7 @@ func (LibrowService) QueryRows(input request.QueryRowInput) (resp response.Query
 		err = global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted = ? and IsEnable= ?", 0, 1).Where("RowIdentity IN ?", rowids).Order("Code ASC").Find(&shelfs).Error
 		var shelfids []string
 		if err == nil {
+
 			for _, shelf := range shelfs {
 				shelfids = append(shelfids, shelf.ID)
 			}
