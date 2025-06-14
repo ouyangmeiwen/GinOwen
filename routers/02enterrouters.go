@@ -35,6 +35,7 @@ func InitAllRouter(r *gin.Engine) {
 	RegisterTaskRoutes(r)
 	RegisterInventoryRoutes(r)
 	RegisterLibRowRoutes(r)
+	RegisterFlyReadRoutes(r)
 }
 func InitSwag(r *gin.Engine) {
 	// 如果 swagger.json 存放在 docs 目录下，确保提供静态文件服务

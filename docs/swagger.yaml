@@ -343,6 +343,18 @@ definitions:
       totalCount:
         type: integer
     type: object
+  response.HelloResp:
+    properties:
+      message:
+        description: 响应消息
+        type: string
+      status:
+        description: 响应状态码
+        type: integer
+      success:
+        description: 是否成功
+        type: boolean
+    type: object
   response.ImportExcelDto:
     type: object
   response.LiblayerDto:
@@ -761,6 +773,34 @@ paths:
       summary: 添加任务
       tags:
       - Task
+  /api/services/app/FlyRead/Hello:
+    get:
+      parameters:
+      - description: 用户名
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回清单
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.HelloResp'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 查询书架
+      tags:
+      - FlyRead
   /api/services/app/LibRow/QueryRows:
     get:
       parameters:

@@ -10,6 +10,7 @@ type Services struct {
 	TaskService           services.ScheduledTaskService
 	InventoryService      services.LibiteminventoryinfoService
 	librowService         services.LibrowService
+	flyreadAppService     services.FlyReadAppService
 }
 
 var ServicesGroup = new(Services)
