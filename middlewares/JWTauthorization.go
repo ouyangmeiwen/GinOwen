@@ -113,6 +113,7 @@ func AuthMiddleware(requiredPermissions ...string) gin.HandlerFunc {
 
 		// 将用户信息传递给后续处理
 		c.Set("user_id", claims.UserID)
+		c.Set("tenantid", claims.TenantID)
 		c.Next()
 	}
 }

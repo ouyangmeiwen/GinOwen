@@ -51,7 +51,7 @@ func (LoginAPI) Login(ctx *gin.Context) {
 	}
 	TokenExpire := global.OWEN_CONFIG.System.TokenExpire
 	// 用户身份验证通过，生成 JWT
-	token, err := auth.GenerateJWT(user.User.ID, user.User.RoleID, TokenExpire)
+	token, err := auth.GenerateJWT(user.User.ID, user.User.RoleID, loginReq.TenantId, TokenExpire)
 	if err != nil {
 		utils.FailWithMessage("Could not generate token", ctx)
 		return

@@ -1,6 +1,9 @@
 package api
 
-import "GINOWEN/services"
+import (
+	"GINOWEN/services"
+	"GINOWEN/services/manager"
+)
 
 type Services struct {
 	libitemService        services.LibItemService
@@ -11,6 +14,7 @@ type Services struct {
 	InventoryService      services.LibiteminventoryinfoService
 	librowService         services.LibrowService
 	flyreadAppService     services.FlyReadAppService
+	flyReadAppManager     manager.FlyReadAppManager
 }
 
 var ServicesGroup = new(Services)

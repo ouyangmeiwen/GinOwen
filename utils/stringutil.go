@@ -6,6 +6,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
@@ -146,4 +147,44 @@ func HashContain(hashMap map[string]string, keyToCheck string) bool {
 		fmt.Printf("Key '%s' 不存在\n", keyToCheck)
 		return false
 	}
+}
+
+// 获取token中的key
+func GetContextValue(c *gin.Context, key string) (int, error) {
+	val, exists := c.Get(key)
+	if !exists {
+		return -1, nil // 默认用户 ID
+	}
+	switch v := val.(type) {
+	case int:
+		return int(v), nil
+	case uint:
+		return int(v), nil
+	case int64:
+		return int(v), nil
+	case float64:
+		return int(v), nil
+	default:
+		return -400, fmt.Errorf("invalid %s type: %T", key, val)
+	}
+}
+
+// 获取当前用户登录的token
+func GetCurrentTenantTd(c *gin.Context) int {
+	tenantid, err1 := GetContextValue(c, "tenantid")
+	if err1 != nil {
+		tenantid = -1
+	}
+	fmt.Println("tenantid String:", tenantid)
+	return tenantid
+}
+
+// 获取当前用户登录的token
+func GetCurrentUserTd(c *gin.Context) int {
+	user_id, err1 := GetContextValue(c, "user_id")
+	if err1 != nil {
+		user_id = -1
+	}
+	fmt.Println("user_id String:", user_id)
+	return user_id
 }

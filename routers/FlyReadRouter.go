@@ -9,8 +9,10 @@ import (
 
 // RegisterOrderRoutes 注册订单路由
 func RegisterFlyReadRoutes(r *gin.Engine) {
-	api := r.Group(global.OWEN_CONFIG.System.RouterPre + "/FlyRead").Use(middlewares.AuditLogMiddleware()) //.Use(middlewares.AuthMiddleware("flyread"))
+	api := r.Group(global.OWEN_CONFIG.System.RouterPre + "/FlyRead").Use(middlewares.AuditLogMiddleware()).Use(middlewares.AuthMiddleware("flyread"))
 	{
 		api.GET("Hello", ApiGroup.flyreadApi.Hello)
+		api.GET("GetFlyReadSetting", ApiGroup.flyreadApi.GetFlyReadSetting)
+		api.POST("SetFlyReadSetting", ApiGroup.flyreadApi.SetFlyReadSetting)
 	}
 }

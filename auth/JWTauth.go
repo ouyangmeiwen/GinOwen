@@ -9,13 +9,14 @@ import (
 var jwtKey = []byte("jwtowenjwt")
 
 type Claims struct {
-	UserID uint `json:"user_id"`
-	RoleID uint `json:"role_id"`
+	UserID   uint `json:"user_id"`
+	RoleID   uint `json:"role_id"`
+	TenantID int  `json:"tenant_id"`
 	jwt.StandardClaims
 }
 
 // 生成JWT令牌
-func GenerateJWT(userID uint, roleID uint, expireTime ...int) (string, error) {
+func GenerateJWT(userID uint, roleID uint, TenantID int, expireTime ...int) (string, error) {
 	// 设置默认过期时间为24小时
 	defaultExpireTime := 24
 	if len(expireTime) > 0 {
@@ -24,8 +25,9 @@ func GenerateJWT(userID uint, roleID uint, expireTime ...int) (string, error) {
 
 	expirationTime := time.Now().Add(time.Duration(defaultExpireTime) * time.Hour)
 	claims := &Claims{
-		UserID: userID,
-		RoleID: roleID,
+		UserID:   userID,
+		RoleID:   roleID,
+		TenantID: TenantID,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},

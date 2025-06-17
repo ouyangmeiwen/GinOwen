@@ -317,6 +317,45 @@
                 }
             }
         },
+        "/api/services/app/FlyRead/GetFlyReadSetting": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取当前机构的飞阅参数",
+                "responses": {
+                    "200": {
+                        "description": "返回清单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/dto.FlyReadSetting"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/Hello": {
             "get": {
                 "security": [
@@ -356,6 +395,54 @@
                                                 "$ref": "#/definitions/response.HelloResp"
                                             }
                                         },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/SetFlyReadSetting": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "设置飞阅参数 注意FlyReadIp 如果带上http参数则不启用端口参数",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.FlyReadSetting"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回清单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {},
                                         "msg": {
                                             "type": "string"
                                         }
@@ -1439,6 +1526,79 @@
         }
     },
     "definitions": {
+        "dto.FlyReadSetting": {
+            "type": "object",
+            "properties": {
+                "flyAddLoc": {
+                    "description": "自动上架 默认自动上架 0:则不上架 1:自动上架  默认自动上架",
+                    "type": "string"
+                },
+                "flyAppid": {
+                    "description": "飞阅id",
+                    "type": "string"
+                },
+                "flyDeviceType": {
+                    "description": "任务类型",
+                    "type": "string"
+                },
+                "flyEndTime": {
+                    "description": "每天结束时间",
+                    "type": "string"
+                },
+                "flyLocType": {
+                    "description": "定位模式0 强制定位 1首书定位 2无定位 默认强制定位",
+                    "type": "string"
+                },
+                "flyLostDay": {
+                    "description": "疑似丢失判定天数",
+                    "type": "string"
+                },
+                "flyMode": {
+                    "description": "飞阅OCR模式 0:OCR;1:OCR+条码 默认ocr",
+                    "type": "string"
+                },
+                "flyNewLocMode": {
+                    "description": "获取定位方式 新 1无定位 2自动定位 3配置定位 4RFID首书定位  5 RFID强制定位",
+                    "type": "string"
+                },
+                "flyReadAppSecret": {
+                    "description": "飞阅秘钥",
+                    "type": "string"
+                },
+                "flyReadEnable": {
+                    "description": "是否开启飞阅接口1 则开启",
+                    "type": "string"
+                },
+                "flyReadIp": {
+                    "description": "飞阅接口IP",
+                    "type": "string"
+                },
+                "flyReadPort": {
+                    "description": "飞阅接口端口",
+                    "type": "string"
+                },
+                "flyShowOff": {
+                    "description": "是否显示离架数据",
+                    "type": "string"
+                },
+                "flyStartTime": {
+                    "description": "每天开始时间",
+                    "type": "string"
+                },
+                "flyTempLoc": {
+                    "description": "0无定位模式下  是否启用临时定位 1层提供定位  2面提供定位",
+                    "type": "string"
+                },
+                "flyTenant": {
+                    "description": "飞阅租户",
+                    "type": "string"
+                },
+                "rowShape": {
+                    "description": "书架形状 U型还是同序 0或者空则默认 U型，1则表示同序",
+                    "type": "string"
+                }
+            }
+        },
         "models.Libiteminventoryinfo": {
             "type": "object",
             "properties": {
@@ -1777,12 +1937,17 @@
             "type": "object",
             "required": [
                 "password",
+                "tenantid",
                 "username"
             ],
             "properties": {
                 "password": {
                     "type": "string",
                     "default": "123456"
+                },
+                "tenantid": {
+                    "type": "integer",
+                    "default": 8848
                 },
                 "username": {
                     "type": "string",

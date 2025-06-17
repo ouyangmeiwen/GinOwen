@@ -3,10 +3,10 @@ package middlewares
 import (
 	"GINOWEN/global"
 	"GINOWEN/models"
+	"GINOWEN/utils"
 	"bytes"
 	"io"
 	"log"
-	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -47,32 +47,14 @@ func AuditLogMiddleware() gin.HandlerFunc {
 		// 捕获响应内容
 		writer := &CustomResponseWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
 		c.Writer = writer
-
 		// 处理请求
 		c.Next()
-
-		// 获取用户ID
-		userID, exists := c.Get("user_id")
-		if !exists {
-			userID = 1 // 如果没有用户ID，使用默认值
-		}
-
-		// 强制类型转换为 uint
-		var userIDUint uint
-		switch v := userID.(type) {
-		case int:
-			// 如果是 int 类型，将其转换为 uint
-			userIDUint = uint(v)
-		case uint:
-			// 如果是 uint 类型，直接使用
-			userIDUint = v
-		default:
-			// 如果类型不是 int 或 uint，返回错误
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "invalid userID type"})
+		userIDint := utils.GetCurrentUserTd(c)
+		if userIDint < 0 {
+			// c.JSON(http.StatusInternalServerError, "invalid userID type")
 			c.Abort()
 			return
 		}
-
 		// 记录响应状态、内容和执行时间
 		statusCode := c.Writer.Status()
 		responseBody := writer.body.String()
@@ -86,7 +68,7 @@ func AuditLogMiddleware() gin.HandlerFunc {
 
 		// 创建审计日志记录
 		auditLog := models.OwenAuditLog{
-			UserID:    userIDUint, // 假设已经通过 JWT 或 Session 获取用户 ID
+			UserID:    uint(userIDint), // 假设已经通过 JWT 或 Session 获取用户 ID
 			Action:    truncateString(c.Request.RequestURI, 255),
 			Request:   truncateString(string(requestBody), 1000),
 			Response:  truncateString(responseBody, 1000),

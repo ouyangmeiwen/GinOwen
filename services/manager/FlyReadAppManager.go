@@ -78,12 +78,23 @@ func (FlyReadAppManager) SetFlyReadSetting(req dto.FlyReadSetting, tenantid int)
 		dtupdate := time.Now()
 		sysconfig.LastModificationTime = &dtupdate
 	}
+	utils.SetCache(fmt.Sprintf("%dFlySetting", tenantid), req, 0) //缓存设置
 	global.OWEN_DB.Model(&models.Systenantconfig{}).Save(sysconfig)
 	return nil
 }
 
 // 获取盘点设置
 func (FlyReadAppManager) GetFlyReadSetting(tenantid int) (resp dto.FlyReadSetting, err error) {
+
+	var cachedSetting dto.FlyReadSetting
+	found, err := utils.GetCache(fmt.Sprintf("%dFlySetting", tenantid), &cachedSetting)
+	if err != nil {
+		return resp, err
+	}
+	if found {
+		return cachedSetting, nil
+	}
+
 	var sysconfig models.Systenantconfig
 	err = global.OWEN_DB.Model(&models.Systenantconfig{}).Where("TenantId = ?", tenantid).First(&sysconfig).Error
 	if err != nil {
