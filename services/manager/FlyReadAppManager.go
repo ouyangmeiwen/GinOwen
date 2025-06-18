@@ -184,9 +184,13 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 		return "", fmt.Errorf("获取飞读Token失败，返回结果为空")
 	}
 	var tokenData dto.GetTokenDto2
-	err = utils.FromJSON(tokenResp, &tokenData)
+	err = json.Unmarshal([]byte(tokenResp), &tokenData)
 	if err != nil {
 		fmt.Println("JSON 反序列化失败:", err)
 	}
+	if tokenData.Code != 0 {
+		return "", fmt.Errorf("获取Token失败，错误代码: %d, 错误信息: %s", tokenData.Code, tokenData.Msg)
+	}
+	utils.SetCache(fmt.Sprintf("%d", tenantid), tokenData.Data.AccessToken, 0) //缓存设置
 	return tokenData.Data.AccessToken, nil
 }
