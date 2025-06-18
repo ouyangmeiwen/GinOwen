@@ -82,13 +82,31 @@ func (b *FlyReadController) GetFlyReadSetting(c *gin.Context) {
 	// 打印查询字符串
 	queryStr := c.Request.URL.RawQuery
 	fmt.Println("Query String:", queryStr)
-	list, err := ServicesGroup.flyReadAppManager.GetFlyReadSetting(utils.GetCurrentTenantTd(c))
+	result, err := ServicesGroup.flyReadAppManager.GetFlyReadSetting(utils.GetCurrentTenantTd(c))
 	if err != nil {
 		global.OWEN_LOG.Error("获取失败!"+err.Error(), zap.Error(err))
 		utils.FailWithMessage("获取失败!"+err.Error(), c)
 		return
 	}
-	utils.OkWithDetailed(list, "获取成功", c)
+	if result.FlyLocType == "2" {
+		if result.FlyTempLoc == "1" {
+			result.FlyNewLocMode = "2"
+		} else if result.FlyTempLoc == "2" {
+			result.FlyNewLocMode = "3"
+		} else {
+			result.FlyNewLocMode = "1"
+		}
+	} else {
+		if result.FlyLocType == "0" {
+			result.FlyNewLocMode = "5"
+		} else {
+			result.FlyNewLocMode = "4"
+		}
+	}
+	if result.RowShape == "" {
+		result.RowShape = "1"
+	}
+	utils.OkWithDetailed(result, "获取成功", c)
 }
 
 // GetFlyReadToken

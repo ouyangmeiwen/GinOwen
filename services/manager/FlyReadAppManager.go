@@ -128,7 +128,7 @@ func (FlyReadAppManager) GetFlyReadSetting(tenantid int) (resp dto.FlyReadSettin
 
 	return resp, nil
 }
-func (b FlyReadAppManager) getHttp(flyseting dto.FlyReadSetting) string {
+func (b FlyReadAppManager) getHttpBySetting(flyseting dto.FlyReadSetting) string {
 
 	url := fmt.Sprintf("http://%s:%s", flyseting.FlyReadIp, flyseting.FlyReadPort)
 	if strings.Contains(flyseting.FlyReadIp, "http") || strings.Contains(flyseting.FlyReadIp, "https") {
@@ -136,7 +136,14 @@ func (b FlyReadAppManager) getHttp(flyseting dto.FlyReadSetting) string {
 	}
 	return url
 }
-
+func (b FlyReadAppManager) getHttpByTenant(tenantid int) string {
+	var flyseting dto.FlyReadSetting
+	flyseting, err := b.GetFlyReadSetting(tenantid)
+	if err != nil {
+		return ""
+	}
+	return b.getHttpBySetting(flyseting)
+}
 func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp string, err error) {
 	if !IsForceRefresh {
 		key := fmt.Sprintf("%d", tenantid)
@@ -154,7 +161,7 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 	if err != nil {
 		return
 	}
-	url := b.getHttp(flyseting) + "/api/module/base/collection-auth/get-auth-token"
+	url := b.getHttpBySetting(flyseting) + "/api/module/base/collection-auth/get-auth-token"
 	fmt.Println("获取飞读Token:", url)
 
 	// 请求体数据（会被序列化为 JSON）
@@ -196,4 +203,85 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 	}
 	utils.SetCache(fmt.Sprintf("%d", tenantid), tokenData.Data.AccessToken, 50*time.Minute) //缓存设置
 	return tokenData.Data.AccessToken, nil
+}
+
+func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (resp bool, msg string, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return false, "", fmt.Errorf("Token获取失败" + err.Error())
+	}
+	input := dto.UploadBookInfoInput{}
+	input.Container = "lcsinv"
+	input.Component = "shelf"
+	input.Service = "service"
+	input.Token = token
+	for _, item := range lst {
+		var bookitem dto.BookItem
+		bookitem.Asset_id = item.Barcode
+		bookitem.Barcode = ""
+		if item.CallNo != nil {
+			bookitem.Call_no = *item.CallNo
+		}
+		bookitem.Title = item.Title
+		if item.Author != nil {
+			bookitem.Author = *item.Author
+		}
+		if item.Publisher != nil {
+			bookitem.Publisher = *item.Publisher
+		}
+		if item.PubDate != nil {
+			bookitem.Pubdate = *item.PubDate
+		}
+		if item.CatalogCode != nil {
+			bookitem.Clc = *item.CatalogCode
+		}
+		if item.LocationName != nil {
+			bookitem.Lib_location = *item.LocationName
+		}
+		bookitem.Status = fmt.Sprintf("%d", item.ItemState)
+		if item.CreationTime != nil {
+			bookitem.Collection_time = item.CreationTime.Format("2006-01-02 15:04:05")
+		} else {
+			bookitem.Collection_time = ""
+		}
+		bookitem.Shelf_time = ""
+		input.Obj.Books = append(input.Obj.Books, bookitem)
+	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
+	fmt.Println("UploadLibItem:", url)
+
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(input)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return false, "", fmt.Errorf("JSON 序列化失败" + err.Error())
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var UploadLibItemResp string
+	UploadLibItemResp, err = utils.GetFileContent("UploadLibItem")
+	if err != nil {
+		UploadLibItemResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return false, "", fmt.Errorf("获取飞读Token失败，返回结果为空" + err.Error())
+		}
+		if UploadLibItemResp == "" {
+			return false, "", fmt.Errorf("获取飞读Token失败，返回结果为空")
+		}
+	}
+	var uploadLibItemResp dto.UploadBookInfoResp
+	err = json.Unmarshal([]byte(UploadLibItemResp), &uploadLibItemResp)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+		return false, "", fmt.Errorf("JSON 反序列化失败" + err.Error())
+	}
+	return uploadLibItemResp.Success, uploadLibItemResp.Message, err
 }
