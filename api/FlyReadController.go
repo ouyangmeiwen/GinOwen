@@ -4,6 +4,7 @@ import (
 	"GINOWEN/global"
 	"GINOWEN/models/dto"
 	"GINOWEN/models/request"
+	"GINOWEN/models/response"
 	"GINOWEN/utils"
 	"fmt"
 
@@ -88,4 +89,30 @@ func (b *FlyReadController) GetFlyReadSetting(c *gin.Context) {
 		return
 	}
 	utils.OkWithDetailed(list, "获取成功", c)
+}
+
+// GetFlyReadToken
+// @Tags     FlyRead
+// @Summary  查询token
+// @Produce  application/json
+// @Param    data  query     request.GetFlyTokenInput 			true  "参数"
+// @Success  200   {object}  utils.Response{data=response.GetFlyTokenInputResp,msg=string}  "返回token"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetFlyReadToken [get]
+func (b *FlyReadController) GetFlyReadToken(c *gin.Context) {
+	var req request.GetFlyTokenInput
+	err := c.ShouldBindQuery(&req) //大小写敏感
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	token, err := ServicesGroup.flyReadAppManager.GetToken(utils.GetCurrentTenantTd(c), req.IsForceRefresh)
+	if err != nil {
+		global.OWEN_LOG.Error("获取失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("获取失败!"+err.Error(), c)
+		return
+	}
+	var response response.GetFlyTokenInputResp
+	response.AccessToken = token
+	utils.OkWithDetailed(response, "获取成功", c)
 }

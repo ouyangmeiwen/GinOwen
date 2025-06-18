@@ -7,6 +7,7 @@ import (
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
 	"GINOWEN/utils"
+	"encoding/json"
 	"fmt"
 	"strings"
 	"time"
@@ -126,4 +127,66 @@ func (FlyReadAppManager) GetFlyReadSetting(tenantid int) (resp dto.FlyReadSettin
 	resp.RowShape = sc.RowShape
 
 	return resp, nil
+}
+func (b FlyReadAppManager) getHttp(flyseting dto.FlyReadSetting) string {
+
+	url := fmt.Sprintf("http://%s:%s", flyseting.FlyReadIp, flyseting.FlyReadPort)
+	if strings.Contains(flyseting.FlyReadIp, "http") || strings.Contains(flyseting.FlyReadIp, "https") {
+		url = flyseting.FlyReadIp
+	}
+	return url
+}
+
+func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp string, err error) {
+	if !IsForceRefresh {
+		key := fmt.Sprintf("%d", tenantid)
+		var token string
+		found, err := utils.GetCache(key, &token)
+		if err != nil {
+			return resp, err
+		}
+		if found {
+			return token, nil
+		}
+	}
+	var flyseting dto.FlyReadSetting
+	flyseting, err = b.GetFlyReadSetting(tenantid)
+	if err != nil {
+		return
+	}
+	url := b.getHttp(flyseting) + "/api/module/base/collection-auth/get-auth-token"
+	fmt.Println("获取飞读Token:", url)
+
+	// 请求体数据（会被序列化为 JSON）
+	payload := map[string]interface{}{
+		"appId":     flyseting.FlyAppid,
+		"appSecret": flyseting.FlyReadAppSecret,
+	}
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id": fmt.Sprintf("%d", tenantid),
+		"Cookie":    fmt.Sprintf("tenant={%d}", tenantid),
+	}
+	// 发起 POST 请求
+	var tokenResp string
+	tokenResp, err = utils.Post(url, data, headers)
+	if err != nil {
+		fmt.Println("请求失败:", err)
+		return
+	}
+	if tokenResp == "" {
+		return "", fmt.Errorf("获取飞读Token失败，返回结果为空")
+	}
+	var tokenData dto.GetTokenDto2
+	err = utils.FromJSON(tokenResp, &tokenData)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	return tokenData.Data.AccessToken, nil
 }

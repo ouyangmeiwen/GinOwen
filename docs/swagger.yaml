@@ -392,6 +392,12 @@ definitions:
     type: object
   response.DeleteLmsLogDto:
     type: object
+  response.GetFlyTokenInputResp:
+    properties:
+      accessToken:
+        description: 飞阅访问令牌
+        type: string
+    type: object
   response.GetInventoryDto:
     properties:
       items:
@@ -850,6 +856,32 @@ paths:
       security:
       - BearerAuth: []
       summary: 获取当前机构的飞阅参数
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/GetFlyReadToken:
+    get:
+      parameters:
+      - description: 是否强制刷新
+        in: query
+        name: isForceRefresh
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回token
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetFlyTokenInputResp'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 查询token
       tags:
       - FlyRead
   /api/services/app/FlyRead/Hello:

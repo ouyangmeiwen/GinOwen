@@ -364,6 +364,53 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/GetFlyReadToken": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "查询token",
+                "parameters": [
+                    {
+                        "type": "boolean",
+                        "description": "是否强制刷新",
+                        "name": "isForceRefresh",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回token",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetFlyTokenInputResp"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/Hello": {
             "get": {
                 "security": [
@@ -2082,6 +2129,15 @@ const docTemplate = `{
         },
         "response.DeleteLmsLogDto": {
             "type": "object"
+        },
+        "response.GetFlyTokenInputResp": {
+            "type": "object",
+            "properties": {
+                "accessToken": {
+                    "description": "飞阅访问令牌",
+                    "type": "string"
+                }
+            }
         },
         "response.GetInventoryDto": {
             "type": "object",

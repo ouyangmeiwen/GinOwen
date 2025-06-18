@@ -5,3 +5,6 @@ type HelloResp struct {
 	Status  int    `json:"status"`  // 响应状态码
 	Success bool   `json:"success"` // 是否成功
 }
+type GetFlyTokenInputResp struct {
+	AccessToken string `json:"accessToken"` // 飞阅访问令牌
+}

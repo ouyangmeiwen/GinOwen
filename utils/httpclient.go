@@ -173,8 +173,8 @@ func DownloadFile(url string, filepath string, headers map[string]string) error 
 
 // setHeaders sets the headers for the HTTP request.
 func setHeaders(req *http.Request, headers map[string]string) {
-	if headers == nil || len(headers) == 0 {
-		return // 如果 headers 为 nil 或为空，则直接返回
+	if len(headers) == 0 {
+		return // 如果 headers 为空，则直接返回
 	}
 	for key, value := range headers {
 		req.Header.Set(key, value)
