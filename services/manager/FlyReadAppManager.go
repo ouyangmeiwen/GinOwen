@@ -194,6 +194,6 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 	if tokenData.Code != 0 {
 		return "", fmt.Errorf("获取Token失败，错误代码: %d, 错误信息: %s", tokenData.Code, tokenData.Msg)
 	}
-	utils.SetCache(fmt.Sprintf("%d", tenantid), tokenData.Data.AccessToken, 0) //缓存设置
+	utils.SetCache(fmt.Sprintf("%d", tenantid), tokenData.Data.AccessToken, 50*time.Minute) //缓存设置
 	return tokenData.Data.AccessToken, nil
 }
