@@ -175,13 +175,16 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 	}
 	// 发起 POST 请求
 	var tokenResp string
-	tokenResp, err = utils.Post(url, data, headers)
+	tokenResp, err = utils.GetFileContent("GetToken")
 	if err != nil {
-		fmt.Println("请求失败:", err)
-		return
-	}
-	if tokenResp == "" {
-		return "", fmt.Errorf("获取飞读Token失败，返回结果为空")
+		tokenResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if tokenResp == "" {
+			return "", fmt.Errorf("获取飞读Token失败，返回结果为空")
+		}
 	}
 	var tokenData dto.GetTokenDto2
 	err = json.Unmarshal([]byte(tokenResp), &tokenData)
