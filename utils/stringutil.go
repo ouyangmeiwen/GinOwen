@@ -14,7 +14,13 @@ func GenerateGUID() string {
 	newUUID := uuid.New()
 	return strings.ReplaceAll(newUUID.String(), "-", "")
 }
-
+func UUID32() string {
+	return GenerateGUID()
+}
+func UUID36() string {
+	newUUID := uuid.New()
+	return newUUID.String()
+}
 func RemoveBrackets(str string) string {
 	// 去除开头的 '['
 	str = strings.TrimPrefix(str, "[")

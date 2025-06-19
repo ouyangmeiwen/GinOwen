@@ -23,7 +23,10 @@ func FormatLocalTime(timestr string) (ts time.Time, err error) {
 	return localtime, nil
 }
 
-// 获取当前时间的字符串表示
+// 获取当前时间的字符串表示 "2006-01-02 15:04:05"
+// fmt.Println(GetCurrentTimeString("2006-01-02 15:04:05"))
+// fmt.Println(GetCurrentTimeString("2006/01/02"))
+// fmt.Println(GetCurrentTimeString("15:04:05"))
 func GetCurrentTimeString(format string) string {
 	return time.Now().Format(format)
 }
@@ -41,4 +44,62 @@ func ParseTime(timeStr, format string) (time.Time, error) {
 // 示例格式: "2006-01-02 15:04:05"
 func FormatTime(t time.Time, format string) string {
 	return t.Format(format)
+}
+
+// 获取当前本地时间
+func Now() time.Time {
+	return time.Now()
+}
+
+// 获取当前UTC时间
+func NowUTC() time.Time {
+	return time.Now().UTC()
+}
+
+// 将时间格式化为指定格式
+func Format(t time.Time, layout string) string {
+	return t.Format(layout)
+}
+
+// 解析字符串为时间
+func Parse(layout, value string) (time.Time, error) {
+	return time.Parse(layout, value)
+}
+
+// 加指定时间
+func Add(t time.Time, duration time.Duration) time.Time {
+	return t.Add(duration)
+}
+
+// 时间加天、月、年
+func AddDate(t time.Time, years, months, days int) time.Time {
+	return t.AddDate(years, months, days)
+}
+
+// 获取当前时间戳（秒）
+func Unix(t time.Time) int64 {
+	return t.Unix()
+}
+
+// 获取当前时间戳（毫秒）
+func UnixMilli(t time.Time) int64 {
+	return t.UnixMilli()
+}
+
+// 获取当前时间戳（纳秒）
+func UnixNano(t time.Time) int64 {
+	return t.UnixNano()
+}
+
+// 比较两个时间
+func IsBefore(t1, t2 time.Time) bool {
+	return t1.Before(t2)
+}
+
+func IsAfter(t1, t2 time.Time) bool {
+	return t1.After(t2)
+}
+
+func IsEqual(t1, t2 time.Time) bool {
+	return t1.Equal(t2)
 }
