@@ -1,12 +1,18 @@
 package utils
 
 import (
+	"GINOWEN/global"
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func GetFileContent(method string) (string, error) {
+	fmt.Println("==============================测试接口数据" + method)
+	if !strings.Contains(global.OWEN_CONFIG.Redis.Addr, "192.168.229.130") {
+		return "", fmt.Errorf("不允许读取本地测试数据")
+	}
 	// 获取程序当前工作目录（运行时所在目录）
 	rootDir, err := os.Getwd()
 	if err != nil {

@@ -184,6 +184,7 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 	var tokenResp string
 	tokenResp, err = utils.GetFileContent("GetToken")
 	if err != nil {
+		fmt.Println("请求参数" + string(data))
 		tokenResp, err = utils.Post(url, data, headers)
 		if err != nil {
 			fmt.Println("请求失败:", err)
@@ -268,6 +269,7 @@ func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (re
 	var UploadLibItemResp string
 	UploadLibItemResp, err = utils.GetFileContent("UploadLibItem")
 	if err != nil {
+		fmt.Println("请求参数" + string(data))
 		UploadLibItemResp, err = utils.Post(url, data, headers)
 		if err != nil {
 			fmt.Println("请求失败:", err)

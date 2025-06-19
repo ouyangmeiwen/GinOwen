@@ -122,7 +122,13 @@ docker rmi -f $(docker images -q)
 docker build -t ginowen:latest . -f Dockerfile
 
 #直接通过运行包需要特殊打法
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwenRelease     
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwenRelease    
+docker build -t ginowentest:latest . -f DockerfileRelease
+
+#windows
+GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwenRelease.exe
+
+
 docker build -t ginowen:latest . -f DockerfileRelease
 
 docker run -d -p 9003:9003 --restart=always --name ginowen  ginowen:latest
