@@ -382,6 +382,14 @@ definitions:
       UserId:
         type: integer
     type: object
+  request.UploadLibItemInput:
+    properties:
+      barcodes:
+        description: 条码集合
+        items:
+          type: string
+        type: array
+    type: object
   response.AddScheduledTaskDto:
     type: object
   response.CreateInventoryDto:
@@ -634,6 +642,12 @@ definitions:
   response.UpdateInventoryDto:
     type: object
   response.UpdateLmsLogDto:
+    type: object
+  response.UploadLibItemResp:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   response.UploadResponse:
     properties:
@@ -937,6 +951,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 设置飞阅参数 注意FlyReadIp 如果带上http参数则不启用端口参数
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/UploadLibItem:
+    post:
+      parameters:
+      - description: 参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UploadLibItemInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回结果
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UploadLibItemResp'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 图书推送
       tags:
       - FlyRead
   /api/services/app/LibRow/QueryRows:

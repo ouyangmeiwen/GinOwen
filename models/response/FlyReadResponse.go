@@ -8,3 +8,6 @@ type HelloResp struct {
 type GetFlyTokenInputResp struct {
 	AccessToken string `json:"accessToken"` // 飞阅访问令牌
 }
+type UploadLibItemResp struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}

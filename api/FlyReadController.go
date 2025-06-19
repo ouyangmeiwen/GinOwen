@@ -134,3 +134,28 @@ func (b *FlyReadController) GetFlyReadToken(c *gin.Context) {
 	response.AccessToken = token
 	utils.OkWithDetailed(response, "获取成功", c)
 }
+
+// UploadLibItem
+// @Tags     FlyRead
+// @Summary  图书推送
+// @Produce  application/json
+// @Param    data  body       request.UploadLibItemInput 			true  "参数"
+// @Success  200   {object}  utils.Response{data=response.UploadLibItemResp,msg=string}  "返回结果"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/UploadLibItem [post]
+func (b *FlyReadController) UploadLibItem(c *gin.Context) {
+	var req request.UploadLibItemInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.UploadLibItemResp
+	resp, err = ServicesGroup.flyreadAppService.UploadLibItem(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("上传失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("上传失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "上传成功", c)
+}

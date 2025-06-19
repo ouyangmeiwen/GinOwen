@@ -6,3 +6,7 @@ type HelloInput struct {
 type GetFlyTokenInput struct {
 	IsForceRefresh bool `form:"isForceRefresh" json:"isForceRefresh"` // 是否强制刷新
 }
+
+type UploadLibItemInput struct {
+	Barcodes []string `form:"barcodes" json:"barcodes"` // 条码集合
+}

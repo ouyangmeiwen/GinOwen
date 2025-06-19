@@ -509,6 +509,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/UploadLibItem": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "图书推送",
+                "parameters": [
+                    {
+                        "description": "参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UploadLibItemInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回结果",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UploadLibItemResp"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/LibRow/QueryRows": {
             "get": {
                 "security": [
@@ -2115,6 +2165,18 @@ const docTemplate = `{
                 }
             }
         },
+        "request.UploadLibItemInput": {
+            "type": "object",
+            "properties": {
+                "barcodes": {
+                    "description": "条码集合",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "response.AddScheduledTaskDto": {
             "type": "object"
         },
@@ -2494,6 +2556,15 @@ const docTemplate = `{
         },
         "response.UpdateLmsLogDto": {
             "type": "object"
+        },
+        "response.UploadLibItemResp": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                }
+            }
         },
         "response.UploadResponse": {
             "type": "object",
