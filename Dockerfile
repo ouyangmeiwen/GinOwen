@@ -33,6 +33,11 @@ COPY --from=builder /app/ginowen .
 
 # 复制配置文件 config.yaml
 COPY --from=builder /app/config.yaml .
+COPY --from=builder /app/doc/swagger.json ./doc/swagger.json
+COPY --from=builder /app/doc/swagger.yaml ./doc/swagger.yaml
+
+
+
 
 # 确保文件具有执行权限
 RUN chmod +x /root/ginowen

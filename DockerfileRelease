@@ -13,6 +13,11 @@ WORKDIR /app/
 COPY ./GinOwenRelease  /app/GinOwenRelease
 COPY ./config.yaml  /app/config.yaml
 
+COPY ./doc/swagger.json  /app/doc/swagger.json
+COPY ./doc/swagger.yaml  /app/doc/swagger.yaml
+
+
+
 # 确保文件具有执行权限
 RUN chmod +x /app/GinOwenRelease
 
