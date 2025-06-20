@@ -14,7 +14,7 @@ const TableNameDasperformance = "dasperformance"
 type Dasperformance struct {
 	ID                                string    `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
 	CreationTime                      time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID                     *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID                     *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	CurrentCPUUsage                   float32   `gorm:"column:Current_CPU_Usage;type:float;not null" json:"Current_CPU_Usage"`
 	AvailableRAM                      float32   `gorm:"column:Available_RAM;type:float;not null" json:"Available_RAM"`
 	TotalSYSRAMInMB                   float32   `gorm:"column:Total_SYS_RAM_In_MB;type:float;not null" json:"Total_SYS_RAM_In_MB"`

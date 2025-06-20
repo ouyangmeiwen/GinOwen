@@ -14,9 +14,9 @@ const TableNameLibpatronitem = "libpatronitem"
 type Libpatronitem struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	PatronID             string     `gorm:"column:PatronId;type:varchar(32);not null" json:"PatronId"`
 	PatronName           string     `gorm:"column:PatronName;type:varchar(64);not null" json:"PatronName"`
 	PatronBarcode        string     `gorm:"column:PatronBarcode;type:varchar(64);not null" json:"PatronBarcode"`
@@ -24,11 +24,11 @@ type Libpatronitem struct {
 	ItemBarcode          string     `gorm:"column:ItemBarcode;type:varchar(32);not null" json:"ItemBarcode"`
 	ItemTitle            string     `gorm:"column:ItemTitle;type:varchar(256);not null" json:"ItemTitle"`
 	ItemAuthor           *string    `gorm:"column:ItemAuthor;type:varchar(256)" json:"ItemAuthor"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
-	PatronItemType       int64      `gorm:"column:PatronItemType;type:tinyint(3) ;not null" json:"PatronItemType"`
-	RenewNum             int64      `gorm:"column:RenewNum;type:int(11);not null" json:"RenewNum"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint unsigned;not null" json:"ItemType"`
+	PatronItemType       int64      `gorm:"column:PatronItemType;type:tinyint unsigned;not null" json:"PatronItemType"`
+	RenewNum             int64      `gorm:"column:RenewNum;type:int;not null" json:"RenewNum"`
 	OverdueTime          time.Time  `gorm:"column:OverdueTime;type:datetime(6);not null" json:"OverdueTime"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libpatronitem's table name

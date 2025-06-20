@@ -14,17 +14,17 @@ const TableNameLibiteminventoryinfo = "libiteminventoryinfo"
 type Libiteminventoryinfo struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	ItemTid              *string    `gorm:"column:ItemTid;type:varchar(32)" json:"ItemTid"`
 	ItemEpc              *string    `gorm:"column:ItemEpc;type:varchar(32)" json:"ItemEpc"`
 	LayerID              *string    `gorm:"column:LayerId;type:varchar(32)" json:"LayerId"`
 	Antenna              *string    `gorm:"column:Antenna;type:varchar(256)" json:"Antenna"`
-	InventoryState       int64      `gorm:"column:InventoryState;type:tinyint(3) ;not null" json:"InventoryState"`
+	InventoryState       int64      `gorm:"column:InventoryState;type:tinyint unsigned;not null" json:"InventoryState"`
 	ItemBarcode          *string    `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	LayerCode            *string    `gorm:"column:LayerCode;type:varchar(32)" json:"LayerCode"`
 	ExceptionMsg         *string    `gorm:"column:ExceptionMsg;type:varchar(256)" json:"ExceptionMsg"`
 	OCRItemAuthor        *string    `gorm:"column:OCRItemAuthor;type:varchar(256)" json:"OCRItemAuthor"`
@@ -32,7 +32,7 @@ type Libiteminventoryinfo struct {
 	OCRItemISBN          *string    `gorm:"column:OCRItemISBN;type:varchar(32)" json:"OCRItemISBN"`
 	OCRItemPublisher     *string    `gorm:"column:OCRItemPublisher;type:varchar(512)" json:"OCRItemPublisher"`
 	OCRItemTitle         *string    `gorm:"column:OCRItemTitle;type:varchar(256)" json:"OCRItemTitle"`
-	OriginType           *int64     `gorm:"column:OriginType;type:tinyint(3) " json:"OriginType"`
+	OriginType           *int64     `gorm:"column:OriginType;type:tinyint unsigned" json:"OriginType"`
 	LayerName            *string    `gorm:"column:LayerName;type:varchar(32)" json:"LayerName"`
 	LocLayerCode         *string    `gorm:"column:LocLayerCode;type:varchar(32)" json:"LocLayerCode"`
 	LocLayerID           *string    `gorm:"column:LocLayerId;type:varchar(32)" json:"LocLayerId"`

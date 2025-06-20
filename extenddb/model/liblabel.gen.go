@@ -12,8 +12,8 @@ type Liblabel struct {
 	Barcode   *string `gorm:"column:Barcode;type:varchar(32)" json:"Barcode"`
 	EpcOrder  *string `gorm:"column:EpcOrder;type:varchar(32)" json:"EpcOrder"`
 	Remark    *string `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID  int64   `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	LabelType int64   `gorm:"column:LabelType;type:tinyint(3) ;not null" json:"LabelType"`
+	TenantID  int64   `gorm:"column:TenantId;type:int;primaryKey" json:"TenantId"`
+	LabelType int64   `gorm:"column:LabelType;type:tinyint unsigned;not null" json:"LabelType"`
 }
 
 // TableName Liblabel's table name

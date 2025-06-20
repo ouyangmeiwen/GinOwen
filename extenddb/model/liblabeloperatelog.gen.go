@@ -14,15 +14,15 @@ const TableNameLiblabeloperatelog = "liblabeloperatelog"
 type Liblabeloperatelog struct {
 	ID               string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime     time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	Tid              string    `gorm:"column:Tid;type:varchar(32);not null" json:"Tid"`
 	Code             string    `gorm:"column:Code;type:varchar(32);not null" json:"Code"`
 	Description      *string   `gorm:"column:Description;type:varchar(256)" json:"Description"`
 	OldTid           *string   `gorm:"column:OldTid;type:varchar(32)" json:"OldTid"`
-	LabelType        int64     `gorm:"column:LabelType;type:tinyint(3) ;not null" json:"LabelType"`
-	LabelOperateType int64     `gorm:"column:LabelOperateType;type:tinyint(3) ;not null" json:"LabelOperateType"`
+	LabelType        int64     `gorm:"column:LabelType;type:tinyint unsigned;not null" json:"LabelType"`
+	LabelOperateType int64     `gorm:"column:LabelOperateType;type:tinyint unsigned;not null" json:"LabelOperateType"`
 	Remark           *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID         int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID         int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	CreatorUserName  *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 }
 

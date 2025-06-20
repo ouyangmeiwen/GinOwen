@@ -14,19 +14,19 @@ const TableNameSyscardconfig = "syscardconfig"
 type Syscardconfig struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	CardTypeID           string     `gorm:"column:CardTypeId;type:varchar(32);not null" json:"CardTypeId"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
-	CheckoutDays         int64      `gorm:"column:CheckoutDays;type:smallint(6);not null" json:"CheckoutDays"`
-	MaxCheckout          int64      `gorm:"column:MaxCheckout;type:smallint(6);not null" json:"MaxCheckout"`
-	MaxOverdue           int64      `gorm:"column:MaxOverdue;type:smallint(6);not null" json:"MaxOverdue"`
-	LateFee              int64      `gorm:"column:LateFee;type:smallint(6);not null" json:"LateFee"`
-	RenewNum             int64      `gorm:"column:RenewNum;type:smallint(6);not null" json:"RenewNum"`
-	CanRenewTime         int64      `gorm:"column:CanRenewTime;type:smallint(6);not null" json:"CanRenewTime"`
-	RenewDays            int64      `gorm:"column:RenewDays;type:smallint(6);not null" json:"RenewDays"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint unsigned;not null" json:"ItemType"`
+	CheckoutDays         int64      `gorm:"column:CheckoutDays;type:smallint;not null" json:"CheckoutDays"`
+	MaxCheckout          int64      `gorm:"column:MaxCheckout;type:smallint;not null" json:"MaxCheckout"`
+	MaxOverdue           int64      `gorm:"column:MaxOverdue;type:smallint;not null" json:"MaxOverdue"`
+	LateFee              int64      `gorm:"column:LateFee;type:smallint;not null" json:"LateFee"`
+	RenewNum             int64      `gorm:"column:RenewNum;type:smallint;not null" json:"RenewNum"`
+	CanRenewTime         int64      `gorm:"column:CanRenewTime;type:smallint;not null" json:"CanRenewTime"`
+	RenewDays            int64      `gorm:"column:RenewDays;type:smallint;not null" json:"RenewDays"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Syscardconfig's table name

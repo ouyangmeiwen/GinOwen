@@ -14,7 +14,7 @@ const TableNameDaspatronlogcount = "daspatronlogcount"
 type Daspatronlogcount struct {
 	ID            string    `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	TerminalID    *string   `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	TerminalCode  *string   `gorm:"column:TerminalCode;type:varchar(32)" json:"TerminalCode"`
 	TerminalName  *string   `gorm:"column:TerminalName;type:varchar(128)" json:"TerminalName"`
@@ -22,11 +22,11 @@ type Daspatronlogcount struct {
 	EndTime       time.Time `gorm:"column:EndTime;type:datetime(6);not null" json:"EndTime"`
 	CardTypeID    *string   `gorm:"column:CardTypeId;type:varchar(32)" json:"CardTypeId"`
 	CardTypeName  *string   `gorm:"column:CardTypeName;type:varchar(128)" json:"CardTypeName"`
-	PatronLogType int64     `gorm:"column:PatronLogType;type:tinyint(3) ;not null" json:"PatronLogType"`
-	PatronLogMode int64     `gorm:"column:PatronLogMode;type:smallint(6);not null" json:"PatronLogMode"`
-	Result        int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
-	Count         int64     `gorm:"column:Count;type:int(11);not null" json:"Count"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	PatronLogType int64     `gorm:"column:PatronLogType;type:tinyint unsigned;not null" json:"PatronLogType"`
+	PatronLogMode int64     `gorm:"column:PatronLogMode;type:smallint;not null" json:"PatronLogMode"`
+	Result        int64     `gorm:"column:Result;type:tinyint unsigned;not null" json:"Result"`
+	Count         int64     `gorm:"column:Count;type:int;not null" json:"Count"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Daspatronlogcount's table name

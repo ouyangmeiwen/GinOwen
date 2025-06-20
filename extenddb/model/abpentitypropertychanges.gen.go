@@ -8,13 +8,13 @@ const TableNameAbpentitypropertychange = "abpentitypropertychanges"
 
 // Abpentitypropertychange mapped from table <abpentitypropertychanges>
 type Abpentitypropertychange struct {
-	ID                   int64   `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
-	EntityChangeID       int64   `gorm:"column:EntityChangeId;type:bigint(20);not null" json:"EntityChangeId"`
+	ID                   int64   `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
+	EntityChangeID       int64   `gorm:"column:EntityChangeId;type:bigint;not null" json:"EntityChangeId"`
 	NewValue             *string `gorm:"column:NewValue;type:varchar(512)" json:"NewValue"`
 	OriginalValue        *string `gorm:"column:OriginalValue;type:varchar(512)" json:"OriginalValue"`
 	PropertyName         *string `gorm:"column:PropertyName;type:varchar(96)" json:"PropertyName"`
 	PropertyTypeFullName *string `gorm:"column:PropertyTypeFullName;type:varchar(192)" json:"PropertyTypeFullName"`
-	TenantID             *int64  `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	TenantID             *int64  `gorm:"column:TenantId;type:int" json:"TenantId"`
 }
 
 // TableName Abpentitypropertychange's table name

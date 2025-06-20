@@ -14,9 +14,9 @@ const TableNameAbpnotificationsubscription = "abpnotificationsubscriptions"
 type Abpnotificationsubscription struct {
 	ID                              string    `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
 	CreationTime                    time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID                   *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
-	TenantID                        *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
-	UserID                          int64     `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
+	CreatorUserID                   *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	TenantID                        *int64    `gorm:"column:TenantId;type:int" json:"TenantId"`
+	UserID                          int64     `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
 	NotificationName                *string   `gorm:"column:NotificationName;type:varchar(96)" json:"NotificationName"`
 	EntityTypeName                  *string   `gorm:"column:EntityTypeName;type:varchar(250)" json:"EntityTypeName"`
 	EntityTypeAssemblyQualifiedName *string   `gorm:"column:EntityTypeAssemblyQualifiedName;type:varchar(512)" json:"EntityTypeAssemblyQualifiedName"`

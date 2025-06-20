@@ -14,8 +14,8 @@ const TableNameLibpointsclearing = "libpointsclearing"
 type Libpointsclearing struct {
 	ID              string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime    time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
-	PointsRuleType  int64     `gorm:"column:PointsRuleType;type:tinyint(3) ;not null" json:"PointsRuleType"`
+	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	PointsRuleType  int64     `gorm:"column:PointsRuleType;type:tinyint unsigned;not null" json:"PointsRuleType"`
 	PatronID        *string   `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
 	PatronBarcode   *string   `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	PatronName      *string   `gorm:"column:PatronName;type:varchar(64)" json:"PatronName"`
@@ -25,7 +25,7 @@ type Libpointsclearing struct {
 	TaskPackageID   *string   `gorm:"column:TaskPackageId;type:varchar(32)" json:"TaskPackageId"`
 	TaskPackageName *string   `gorm:"column:TaskPackageName;type:varchar(32)" json:"TaskPackageName"`
 	Remark          *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID        int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID        int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libpointsclearing's table name

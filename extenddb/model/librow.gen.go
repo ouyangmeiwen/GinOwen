@@ -14,21 +14,21 @@ const TableNameLibrow = "librow"
 type Librow struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	Code                 *string    `gorm:"column:Code;type:varchar(32)" json:"Code"`
 	Name                 *string    `gorm:"column:Name;type:varchar(128)" json:"Name"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
-	RowNo                int64      `gorm:"column:RowNo;type:int(11);not null" json:"RowNo"`
-	RowType              int64      `gorm:"column:RowType;type:tinyint(3) ;not null" json:"RowType"`
-	RowUsageType         int64      `gorm:"column:RowUsageType;type:tinyint(3) ;not null" json:"RowUsageType"`
+	RowNo                int64      `gorm:"column:RowNo;type:int;not null" json:"RowNo"`
+	RowType              int64      `gorm:"column:RowType;type:tinyint unsigned;not null" json:"RowType"`
+	RowUsageType         int64      `gorm:"column:RowUsageType;type:tinyint unsigned;not null" json:"RowUsageType"`
 	LocationID           *string    `gorm:"column:LocationId;type:varchar(32)" json:"LocationId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Librow's table name

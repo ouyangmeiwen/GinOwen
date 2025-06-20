@@ -14,9 +14,9 @@ const TableNameLcpterminalshelf = "lcpterminalshelf"
 type Lcpterminalshelf struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	ShelfName            string     `gorm:"column:ShelfName;type:varchar(64);not null" json:"ShelfName"`
 	TerminalID           string     `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
 	TerminalCode         string     `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
@@ -33,12 +33,13 @@ type Lcpterminalshelf struct {
 	IsInterference       []uint8    `gorm:"column:IsInterference;type:bit(1);not null" json:"IsInterference"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	IsReserve            []uint8    `gorm:"column:IsReserve;type:bit(1);not null" json:"IsReserve"`
-	ReserveType          int64      `gorm:"column:ReserveType;type:tinyint(3) ;not null" json:"ReserveType"`
+	ReserveType          int64      `gorm:"column:ReserveType;type:tinyint unsigned;not null" json:"ReserveType"`
 	PatronBarcode        *string    `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	DisableReason        *string    `gorm:"column:DisableReason;type:varchar(256)" json:"DisableReason"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	ReserveOverdueTime   *time.Time `gorm:"column:ReserveOverdueTime;type:datetime(6)" json:"ReserveOverdueTime"`
 	DisablePatronBarcode *string    `gorm:"column:DisablePatronBarcode;type:varchar(64)" json:"DisablePatronBarcode"`
+	DisplayName          *string    `gorm:"column:DisplayName;type:varchar(64)" json:"DisplayName"`
 }
 
 // TableName Lcpterminalshelf's table name

@@ -14,9 +14,9 @@ const TableNameSystenantconfig = "systenantconfig"
 type Systenantconfig struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	System               *string    `gorm:"column:System;type:longtext" json:"System"`
 	BusinessRule         *string    `gorm:"column:BusinessRule;type:longtext" json:"BusinessRule"`
 	Protocol             *string    `gorm:"column:Protocol;type:longtext" json:"Protocol"`
@@ -28,7 +28,7 @@ type Systenantconfig struct {
 	Task                 *string    `gorm:"column:Task;type:longtext" json:"Task"`
 	Points               *string    `gorm:"column:Points;type:longtext" json:"Points"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Systenantconfig's table name

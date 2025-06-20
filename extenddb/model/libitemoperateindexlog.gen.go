@@ -14,12 +14,12 @@ const TableNameLibitemoperateindexlog = "libitemoperateindexlog"
 type Libitemoperateindexlog struct {
 	ID                  string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime        time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID       *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID       *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	CreatorUserName     *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
-	ItemOperateType     int64     `gorm:"column:ItemOperateType;type:tinyint(3) ;not null" json:"ItemOperateType"`
-	ItemOperateModeType int64     `gorm:"column:ItemOperateModeType;type:tinyint(3) ;not null" json:"ItemOperateModeType"`
+	ItemOperateType     int64     `gorm:"column:ItemOperateType;type:tinyint unsigned;not null" json:"ItemOperateType"`
+	ItemOperateModeType int64     `gorm:"column:ItemOperateModeType;type:tinyint unsigned;not null" json:"ItemOperateModeType"`
 	Remark              *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID            int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID            int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libitemoperateindexlog's table name

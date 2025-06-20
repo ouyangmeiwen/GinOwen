@@ -12,16 +12,16 @@ const TableNameSsbackgroundjob = "ssbackgroundjobs"
 
 // Ssbackgroundjob mapped from table <ssbackgroundjobs>
 type Ssbackgroundjob struct {
-	ID            int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	ID            int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
 	CreationTime  time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	JobType       string     `gorm:"column:JobType;type:varchar(512);not null" json:"JobType"`
 	JobArgs       string     `gorm:"column:JobArgs;type:longtext;not null" json:"JobArgs"`
-	TryCount      int64      `gorm:"column:TryCount;type:smallint(6);not null" json:"TryCount"`
+	TryCount      int64      `gorm:"column:TryCount;type:smallint;not null" json:"TryCount"`
 	NextTryTime   time.Time  `gorm:"column:NextTryTime;type:datetime(6);not null" json:"NextTryTime"`
 	LastTryTime   *time.Time `gorm:"column:LastTryTime;type:datetime(6)" json:"LastTryTime"`
 	IsAbandoned   []uint8    `gorm:"column:IsAbandoned;type:bit(1);not null" json:"IsAbandoned"`
-	Priority      int64      `gorm:"column:Priority;type:tinyint(3) ;not null" json:"Priority"`
+	Priority      int64      `gorm:"column:Priority;type:tinyint unsigned;not null" json:"Priority"`
 }
 
 // TableName Ssbackgroundjob's table name

@@ -14,16 +14,16 @@ const TableNameLcpcommandlog = "lcpcommandlog"
 type Lcpcommandlog struct {
 	ID             string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime   time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID  *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID  *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	TargetID       string    `gorm:"column:TargetId;type:varchar(32);not null" json:"TargetId"`
 	TargetCode     *string   `gorm:"column:TargetCode;type:varchar(32)" json:"TargetCode"`
 	TargetName     *string   `gorm:"column:TargetName;type:varchar(128)" json:"TargetName"`
-	Command        int64     `gorm:"column:Command;type:tinyint(3) ;not null" json:"Command"`
-	CommandLogType int64     `gorm:"column:CommandLogType;type:tinyint(3) ;not null" json:"CommandLogType"`
+	Command        int64     `gorm:"column:Command;type:tinyint unsigned;not null" json:"Command"`
+	CommandLogType int64     `gorm:"column:CommandLogType;type:tinyint unsigned;not null" json:"CommandLogType"`
 	CommandData    *string   `gorm:"column:CommandData;type:longtext" json:"CommandData"`
 	ErrorMessage   *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	Remark         *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID       int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID       int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Lcpcommandlog's table name

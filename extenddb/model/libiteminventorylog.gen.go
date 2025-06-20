@@ -14,15 +14,15 @@ const TableNameLibiteminventorylog = "libiteminventorylog"
 type Libiteminventorylog struct {
 	ID                string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime      time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID     *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID     *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LayerID           *string    `gorm:"column:LayerId;type:varchar(32)" json:"LayerId"`
 	LayerName         *string    `gorm:"column:LayerName;type:varchar(32)" json:"LayerName"`
 	ItemBarcode       string     `gorm:"column:ItemBarcode;type:varchar(32);not null" json:"ItemBarcode"`
-	InventoryWorkType int64      `gorm:"column:InventoryWorkType;type:tinyint(3) ;not null" json:"InventoryWorkType"`
-	InventoryState    int64      `gorm:"column:InventoryState;type:tinyint(3) ;not null" json:"InventoryState"`
+	InventoryWorkType int64      `gorm:"column:InventoryWorkType;type:tinyint unsigned;not null" json:"InventoryWorkType"`
+	InventoryState    int64      `gorm:"column:InventoryState;type:tinyint unsigned;not null" json:"InventoryState"`
 	OffShelfTime      *time.Time `gorm:"column:OffShelfTime;type:datetime(6)" json:"OffShelfTime"`
 	Remark            *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID          int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID          int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	InventoryWorkID   *string    `gorm:"column:InventoryWorkId;type:varchar(32)" json:"InventoryWorkId"`
 	CreatorUserName   *string    `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 	ItemCallNo        *string    `gorm:"column:ItemCallNo;type:varchar(64)" json:"ItemCallNo"`
@@ -37,7 +37,7 @@ type Libiteminventorylog struct {
 	ItemAuthor        *string    `gorm:"column:ItemAuthor;type:varchar(256)" json:"ItemAuthor"`
 	ItemISBN          *string    `gorm:"column:ItemISBN;type:varchar(32)" json:"ItemISBN"`
 	ItemPublisher     *string    `gorm:"column:ItemPublisher;type:varchar(512)" json:"ItemPublisher"`
-	OriginType        *int64     `gorm:"column:OriginType;type:tinyint(3) " json:"OriginType"`
+	OriginType        *int64     `gorm:"column:OriginType;type:tinyint unsigned" json:"OriginType"`
 }
 
 // TableName Libiteminventorylog's table name

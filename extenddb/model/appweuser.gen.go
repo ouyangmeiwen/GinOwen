@@ -14,23 +14,23 @@ const TableNameAppweuser = "appweuser"
 type Appweuser struct {
 	ID                   string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	OpenID               string     `gorm:"column:OpenId;type:varchar(32);not null" json:"OpenId"`
 	NickName             *string    `gorm:"column:NickName;type:varchar(128)" json:"NickName"`
-	Sex                  int64      `gorm:"column:Sex;type:tinyint(3) ;not null" json:"Sex"`
+	Sex                  int64      `gorm:"column:Sex;type:tinyint unsigned;not null" json:"Sex"`
 	Language             *string    `gorm:"column:Language;type:varchar(64)" json:"Language"`
 	City                 *string    `gorm:"column:City;type:varchar(64)" json:"City"`
 	Province             *string    `gorm:"column:Province;type:varchar(64)" json:"Province"`
 	Country              *string    `gorm:"column:Country;type:varchar(64)" json:"Country"`
 	HeadImgURL           *string    `gorm:"column:HeadImgUrl;type:varchar(256)" json:"HeadImgUrl"`
-	Subscribe            int64      `gorm:"column:Subscribe;type:smallint(6);not null" json:"Subscribe"`
+	Subscribe            int64      `gorm:"column:Subscribe;type:smallint;not null" json:"Subscribe"`
 	SubscribeTime        *time.Time `gorm:"column:SubscribeTime;type:datetime(6)" json:"SubscribeTime"`
 	UnionID              *string    `gorm:"column:UnionId;type:varchar(64)" json:"UnionId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	WeUserType           int64      `gorm:"column:WeUserType;type:tinyint(3) ;not null" json:"WeUserType"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	WeUserType           int64      `gorm:"column:WeUserType;type:tinyint unsigned;not null" json:"WeUserType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Appweuser's table name

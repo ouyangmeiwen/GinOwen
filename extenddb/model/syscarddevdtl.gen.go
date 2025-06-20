@@ -19,8 +19,8 @@ type Syscarddevdtl struct {
 	BDEV04        []uint8 `gorm:"column:bDEV_04;type:bit(1);not null" json:"bDEV_04"`
 	BDEV05        []uint8 `gorm:"column:bDEV_05;type:bit(1);not null" json:"bDEV_05"`
 	BDEV09        []uint8 `gorm:"column:bDEV_09;type:bit(1);not null" json:"bDEV_09"`
-	NOrder        int64   `gorm:"column:nOrder;type:smallint(6);not null" json:"nOrder"`
-	TenantID      int64   `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	NOrder        int64   `gorm:"column:nOrder;type:smallint;not null" json:"nOrder"`
+	TenantID      int64   `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Syscarddevdtl's table name

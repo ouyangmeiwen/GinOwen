@@ -14,20 +14,20 @@ const TableNameLcpupgradelog = "lcpupgradelog"
 type Lcpupgradelog struct {
 	ID                 string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime       time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID      *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
-	OldVersionCode     int64     `gorm:"column:OldVersionCode;type:int(11);not null" json:"OldVersionCode"`
+	CreatorUserID      *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	OldVersionCode     int64     `gorm:"column:OldVersionCode;type:int;not null" json:"OldVersionCode"`
 	OldVersionName     string    `gorm:"column:OldVersionName;type:varchar(32);not null" json:"OldVersionName"`
 	UpgradeVersionID   string    `gorm:"column:UpgradeVersionId;type:varchar(32);not null" json:"UpgradeVersionId"`
-	UpgradeVersionCode int64     `gorm:"column:UpgradeVersionCode;type:int(11);not null" json:"UpgradeVersionCode"`
+	UpgradeVersionCode int64     `gorm:"column:UpgradeVersionCode;type:int;not null" json:"UpgradeVersionCode"`
 	UpgradeVersionName string    `gorm:"column:UpgradeVersionName;type:varchar(32);not null" json:"UpgradeVersionName"`
 	TargetType         string    `gorm:"column:TargetType;type:varchar(32);not null" json:"TargetType"`
 	TargetID           string    `gorm:"column:TargetId;type:varchar(32);not null" json:"TargetId"`
 	TargetCode         *string   `gorm:"column:TargetCode;type:varchar(32)" json:"TargetCode"`
 	TargetName         *string   `gorm:"column:TargetName;type:varchar(128)" json:"TargetName"`
 	Remark             *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	Result             int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
+	Result             int64     `gorm:"column:Result;type:tinyint unsigned;not null" json:"Result"`
 	ErrorMessage       *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
-	TenantID           int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID           int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Lcpupgradelog's table name

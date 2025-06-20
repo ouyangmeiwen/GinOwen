@@ -14,26 +14,26 @@ const TableNameLiblayer = "liblayer"
 type Liblayer struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	ShelfID              string     `gorm:"column:ShelfId;type:varchar(32);not null" json:"ShelfId"`
 	Code                 *string    `gorm:"column:Code;type:varchar(32)" json:"Code"`
 	Name                 string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	Tid                  *string    `gorm:"column:Tid;type:varchar(32)" json:"Tid"`
 	Side                 string     `gorm:"column:Side;type:varchar(32);not null" json:"Side"`
-	LayerNo              int64      `gorm:"column:LayerNo;type:tinyint(3) ;not null" json:"LayerNo"`
+	LayerNo              int64      `gorm:"column:LayerNo;type:tinyint unsigned;not null" json:"LayerNo"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	ItemBarcode          *string    `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemCallNo           *string    `gorm:"column:ItemCallNo;type:varchar(64)" json:"ItemCallNo"`
 	PreCallNo            *string    `gorm:"column:PreCallNo;type:varchar(64)" json:"PreCallNo"`
 	Barcode              *string    `gorm:"column:Barcode;type:varchar(32)" json:"Barcode"`
-	OriginType           *int64     `gorm:"column:OriginType;type:tinyint(3) " json:"OriginType"`
+	OriginType           *int64     `gorm:"column:OriginType;type:tinyint unsigned" json:"OriginType"`
 }
 
 // TableName Liblayer's table name

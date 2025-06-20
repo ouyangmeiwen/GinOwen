@@ -14,9 +14,9 @@ const TableNameSysbookblocklist = "sysbookblocklist"
 type Sysbookblocklist struct {
 	ID            string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	Barcode       *string   `gorm:"column:Barcode;type:varchar(32)" json:"Barcode"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Sysbookblocklist's table name

@@ -14,7 +14,7 @@ const TableNameAppaliuser = "appaliuser"
 type Appaliuser struct {
 	ID                 string    `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
 	CreationTime       time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID      *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID      *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	AliUserID          string    `gorm:"column:AliUserId;type:varchar(16);not null" json:"AliUserId"`
 	Avatar             *string   `gorm:"column:Avatar;type:varchar(400)" json:"Avatar"`
 	Province           *string   `gorm:"column:Province;type:varchar(16)" json:"Province"`
@@ -25,7 +25,7 @@ type Appaliuser struct {
 	UserStatus         *string   `gorm:"column:UserStatus;type:varchar(2)" json:"UserStatus"`
 	IsCertified        *string   `gorm:"column:IsCertified;type:varchar(2)" json:"IsCertified"`
 	Gender             *string   `gorm:"column:Gender;type:varchar(10)" json:"Gender"`
-	TenantID           int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID           int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Appaliuser's table name

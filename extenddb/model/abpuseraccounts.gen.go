@@ -12,17 +12,17 @@ const TableNameAbpuseraccount = "abpuseraccounts"
 
 // Abpuseraccount mapped from table <abpuseraccounts>
 type Abpuseraccount struct {
-	ID                   int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	ID                   int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
-	UserID               int64      `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
-	UserLinkID           *int64     `gorm:"column:UserLinkId;type:bigint(20)" json:"UserLinkId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
+	UserID               int64      `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
+	UserLinkID           *int64     `gorm:"column:UserLinkId;type:bigint" json:"UserLinkId"`
 	UserName             *string    `gorm:"column:UserName;type:varchar(256)" json:"UserName"`
 	EmailAddress         *string    `gorm:"column:EmailAddress;type:varchar(256)" json:"EmailAddress"`
 }

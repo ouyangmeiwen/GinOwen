@@ -33,8 +33,8 @@ COPY --from=builder /app/ginowen .
 
 # 复制配置文件 config.yaml
 COPY --from=builder /app/config.yaml .
-COPY --from=builder /app/doc/swagger.json ./doc/swagger.json
-COPY --from=builder /app/doc/swagger.yaml ./doc/swagger.yaml
+COPY --from=builder /app/docs/swagger.json ./docs/swagger.json
+COPY --from=builder /app/docs/swagger.yaml ./docs/swagger.yaml
 
 
 

@@ -14,38 +14,38 @@ const TableNameLibitem = "libitem"
 type Libitem struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	InfoID               *string    `gorm:"column:InfoId;type:varchar(32)" json:"InfoId"`
-	Title                string     `gorm:"column:Title;type:varchar(512);not null" json:"Title"`
-	Author               *string    `gorm:"column:Author;type:varchar(512)" json:"Author"`
+	Title                string     `gorm:"column:Title;type:varchar(256);not null" json:"Title"`
+	Author               *string    `gorm:"column:Author;type:varchar(256)" json:"Author"`
 	Barcode              string     `gorm:"column:Barcode;type:varchar(32);not null" json:"Barcode"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	CallNo               *string    `gorm:"column:CallNo;type:varchar(64)" json:"CallNo"`
 	PreCallNo            *string    `gorm:"column:PreCallNo;type:varchar(64)" json:"PreCallNo"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
-	ItemState            int64      `gorm:"column:ItemState;type:tinyint(3) ;not null" json:"ItemState"`
+	ItemState            int64      `gorm:"column:ItemState;type:tinyint unsigned;not null" json:"ItemState"`
 	PressmarkID          *string    `gorm:"column:PressmarkId;type:varchar(32)" json:"PressmarkId"`
 	PressmarkName        *string    `gorm:"column:PressmarkName;type:varchar(64)" json:"PressmarkName"`
 	LocationID           *string    `gorm:"column:LocationId;type:varchar(32)" json:"LocationId"`
 	LocationName         *string    `gorm:"column:LocationName;type:varchar(128)" json:"LocationName"`
 	BookBarcode          *string    `gorm:"column:BookBarcode;type:varchar(32)" json:"BookBarcode"`
 	ISBN                 *string    `gorm:"column:ISBN;type:varchar(32)" json:"ISBN"`
-	PubNo                *int64     `gorm:"column:PubNo;type:smallint(6)" json:"PubNo"`
+	PubNo                *int64     `gorm:"column:PubNo;type:smallint" json:"PubNo"`
 	Publisher            *string    `gorm:"column:Publisher;type:varchar(512)" json:"Publisher"`
-	PubDate              *string    `gorm:"column:PubDate;type:varchar(512)" json:"PubDate"`
+	PubDate              *string    `gorm:"column:PubDate;type:varchar(32)" json:"PubDate"`
 	Price                *string    `gorm:"column:Price;type:varchar(32)" json:"Price"`
 	Pages                *string    `gorm:"column:Pages;type:varchar(32)" json:"Pages"`
 	Summary              *string    `gorm:"column:Summary;type:longtext" json:"Summary"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint unsigned;not null" json:"ItemType"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
-	CreateType           int64      `gorm:"column:CreateType;type:tinyint(3) ;not null" json:"CreateType"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	CreateType           int64      `gorm:"column:CreateType;type:tinyint unsigned;not null" json:"CreateType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libitem's table name

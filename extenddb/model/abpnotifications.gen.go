@@ -14,14 +14,14 @@ const TableNameAbpnotification = "abpnotifications"
 type Abpnotification struct {
 	ID                              string    `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
 	CreationTime                    time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID                   *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID                   *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	NotificationName                string    `gorm:"column:NotificationName;type:varchar(96);not null" json:"NotificationName"`
 	Data                            *string   `gorm:"column:Data;type:longtext" json:"Data"`
 	DataTypeName                    *string   `gorm:"column:DataTypeName;type:varchar(512)" json:"DataTypeName"`
 	EntityTypeName                  *string   `gorm:"column:EntityTypeName;type:varchar(250)" json:"EntityTypeName"`
 	EntityTypeAssemblyQualifiedName *string   `gorm:"column:EntityTypeAssemblyQualifiedName;type:varchar(512)" json:"EntityTypeAssemblyQualifiedName"`
 	EntityID                        *string   `gorm:"column:EntityId;type:varchar(96)" json:"EntityId"`
-	Severity                        int64     `gorm:"column:Severity;type:tinyint(3) ;not null" json:"Severity"`
+	Severity                        int64     `gorm:"column:Severity;type:tinyint unsigned;not null" json:"Severity"`
 	UserIds                         *string   `gorm:"column:UserIds;type:longtext" json:"UserIds"`
 	ExcludedUserIds                 *string   `gorm:"column:ExcludedUserIds;type:longtext" json:"ExcludedUserIds"`
 	TenantIds                       *string   `gorm:"column:TenantIds;type:longtext" json:"TenantIds"`

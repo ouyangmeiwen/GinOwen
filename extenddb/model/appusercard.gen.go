@@ -14,18 +14,18 @@ const TableNameAppusercard = "appusercard"
 type Appusercard struct {
 	ID                   string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	OpenID               string     `gorm:"column:OpenId;type:varchar(255);not null" json:"OpenId"`
 	CardNo               string     `gorm:"column:CardNo;type:varchar(255);not null" json:"CardNo"`
-	AppType              int64      `gorm:"column:AppType;type:tinyint(3) ;not null" json:"AppType"`
-	RoleType             int64      `gorm:"column:RoleType;type:tinyint(3) ;not null" json:"RoleType"`
+	AppType              int64      `gorm:"column:AppType;type:tinyint unsigned;not null" json:"AppType"`
+	RoleType             int64      `gorm:"column:RoleType;type:tinyint unsigned;not null" json:"RoleType"`
 	IsEnabled            []uint8    `gorm:"column:IsEnabled;type:bit(1);not null" json:"IsEnabled"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	Password             *string    `gorm:"column:Password;type:varchar(512)" json:"Password"`
 }
 

@@ -14,15 +14,15 @@ const TableNameLibshelf = "libshelf"
 type Libshelf struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	Code                 *string    `gorm:"column:Code;type:varchar(32)" json:"Code"`
 	Name                 *string    `gorm:"column:Name;type:varchar(128)" json:"Name"`
-	ShelfNo              int64      `gorm:"column:ShelfNo;type:int(11);not null" json:"ShelfNo"`
+	ShelfNo              int64      `gorm:"column:ShelfNo;type:int;not null" json:"ShelfNo"`
 	Side                 *string    `gorm:"column:Side;type:varchar(32)" json:"Side"`
 	RowIdentity          string     `gorm:"column:RowIdentity;type:varchar(32);not null" json:"RowIdentity"`
 	RfidReaderID         *string    `gorm:"column:RfidReaderId;type:varchar(32)" json:"RfidReaderId"`
@@ -35,8 +35,10 @@ type Libshelf struct {
 	Angel                *float64   `gorm:"column:Angel;type:decimal(7,2)" json:"Angel"`
 	StructID             *string    `gorm:"column:StructId;type:varchar(255)" json:"StructId"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	IsBosseyed           []uint8    `gorm:"column:IsBosseyed;type:bit(1);not null;default:0" json:"IsBosseyed"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	IsBosseyed           []uint8    `gorm:"column:IsBosseyed;type:bit(1);not null;default:b'0'" json:"IsBosseyed"`
+	FirstCallNo          *string    `gorm:"column:FirstCallNo;type:varchar(64)" json:"FirstCallNo"`
+	LastCallNo           *string    `gorm:"column:LastCallNo;type:varchar(64)" json:"LastCallNo"`
 }
 
 // TableName Libshelf's table name

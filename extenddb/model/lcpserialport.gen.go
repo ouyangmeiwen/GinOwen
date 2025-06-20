@@ -14,21 +14,21 @@ const TableNameLcpserialport = "lcpserialport"
 type Lcpserialport struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	TerminalID           *string    `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	PortName             string     `gorm:"column:PortName;type:varchar(32);not null" json:"PortName"`
-	BaudRate             int64      `gorm:"column:BaudRate;type:int(11);not null" json:"BaudRate"`
-	DataBits             int64      `gorm:"column:DataBits;type:tinyint(3) ;not null" json:"DataBits"`
-	StopBits             int64      `gorm:"column:StopBits;type:tinyint(3) ;not null" json:"StopBits"`
-	Parity               int64      `gorm:"column:Parity;type:tinyint(3) ;not null" json:"Parity"`
-	ReadTimeout          int64      `gorm:"column:ReadTimeout;type:int(11);not null" json:"ReadTimeout"`
+	BaudRate             int64      `gorm:"column:BaudRate;type:int;not null" json:"BaudRate"`
+	DataBits             int64      `gorm:"column:DataBits;type:tinyint unsigned;not null" json:"DataBits"`
+	StopBits             int64      `gorm:"column:StopBits;type:tinyint unsigned;not null" json:"StopBits"`
+	Parity               int64      `gorm:"column:Parity;type:tinyint unsigned;not null" json:"Parity"`
+	ReadTimeout          int64      `gorm:"column:ReadTimeout;type:int;not null" json:"ReadTimeout"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Lcpserialport's table name

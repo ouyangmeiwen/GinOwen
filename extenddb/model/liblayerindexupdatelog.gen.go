@@ -14,7 +14,7 @@ const TableNameLiblayerindexupdatelog = "liblayerindexupdatelog"
 type Liblayerindexupdatelog struct {
 	ID               string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime     time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID    *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID    *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	MinLayerID       *string    `gorm:"column:MinLayerId;type:varchar(32)" json:"MinLayerId"`
 	MinLayerName     *string    `gorm:"column:MinLayerName;type:varchar(32)" json:"MinLayerName"`
 	MaxLayerID       *string    `gorm:"column:MaxLayerId;type:varchar(32)" json:"MaxLayerId"`
@@ -24,7 +24,7 @@ type Liblayerindexupdatelog struct {
 	UpdateStartTime  *time.Time `gorm:"column:UpdateStartTime;type:datetime(6)" json:"UpdateStartTime"`
 	UpdateEndTime    *time.Time `gorm:"column:UpdateEndTime;type:datetime(6)" json:"UpdateEndTime"`
 	Remark           *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID         int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID         int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	MaxLayerCode     *string    `gorm:"column:MaxLayerCode;type:varchar(32)" json:"MaxLayerCode"`
 	MinLayerCode     *string    `gorm:"column:MinLayerCode;type:varchar(32)" json:"MinLayerCode"`
 	UpdatedLayerCode *string    `gorm:"column:UpdatedLayerCode;type:varchar(32)" json:"UpdatedLayerCode"`

@@ -14,18 +14,18 @@ const TableNameLcpterminal = "lcpterminal"
 type Lcpterminal struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	TerminalCategory     string     `gorm:"column:TerminalCategory;type:varchar(32);not null" json:"TerminalCategory"`
 	TerminalType         string     `gorm:"column:TerminalType;type:varchar(32);not null" json:"TerminalType"`
 	Code                 string     `gorm:"column:Code;type:varchar(32);not null" json:"Code"`
 	Name                 string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
-	VersionCode          int64      `gorm:"column:VersionCode;type:int(11);not null" json:"VersionCode"`
+	VersionCode          int64      `gorm:"column:VersionCode;type:int;not null" json:"VersionCode"`
 	VersionName          *string    `gorm:"column:VersionName;type:varchar(32)" json:"VersionName"`
 	Longitude            float64    `gorm:"column:Longitude;type:decimal(10,6);not null" json:"Longitude"`
 	Latitude             float64    `gorm:"column:Latitude;type:decimal(10,6);not null" json:"Latitude"`
@@ -40,8 +40,8 @@ type Lcpterminal struct {
 	LocationName         *string    `gorm:"column:LocationName;type:varchar(128)" json:"LocationName"`
 	Password             *string    `gorm:"column:Password;type:varchar(16)" json:"Password"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	MachineCode          *string    `gorm:"column:MachineCode;type:varchar(32)" json:"MachineCode"`
 }
 

@@ -14,13 +14,13 @@ const TableNameSyscoderuleseed = "syscoderuleseed"
 type Syscoderuleseed struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	CodeRuleID           *string    `gorm:"column:CodeRuleId;type:varchar(32)" json:"CodeRuleId"`
-	SeedValue            int64      `gorm:"column:SeedValue;type:int(11);not null" json:"SeedValue"`
-	UserID               *int64     `gorm:"column:UserId;type:bigint(20)" json:"UserId"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	SeedValue            int64      `gorm:"column:SeedValue;type:int;not null" json:"SeedValue"`
+	UserID               *int64     `gorm:"column:UserId;type:bigint" json:"UserId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
 }
 
 // TableName Syscoderuleseed's table name

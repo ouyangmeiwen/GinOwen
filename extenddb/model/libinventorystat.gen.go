@@ -14,16 +14,16 @@ const TableNameLibinventorystat = "libinventorystat"
 type Libinventorystat struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	StatDate             time.Time  `gorm:"column:StatDate;type:datetime(6);not null" json:"StatDate"`
-	StatType             int64      `gorm:"column:StatType;type:int(11);not null" json:"StatType"`
-	InventoryState       int64      `gorm:"column:InventoryState;type:int(11);not null" json:"InventoryState"`
-	InventoryCount       int64      `gorm:"column:InventoryCount;type:int(11);not null" json:"InventoryCount"`
+	StatType             int64      `gorm:"column:StatType;type:int;not null" json:"StatType"`
+	InventoryState       int64      `gorm:"column:InventoryState;type:int;not null" json:"InventoryState"`
+	InventoryCount       int64      `gorm:"column:InventoryCount;type:int;not null" json:"InventoryCount"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
 }
 
 // TableName Libinventorystat's table name

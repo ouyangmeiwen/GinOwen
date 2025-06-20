@@ -14,15 +14,15 @@ const TableNameLibinventorywork = "libinventorywork"
 type Libinventorywork struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	TaskStatus           int64      `gorm:"column:TaskStatus;type:int(11);not null" json:"TaskStatus"`
-	SendStatus           int64      `gorm:"column:SendStatus;type:int(11);not null" json:"SendStatus"`
-	TriggerSatus         int64      `gorm:"column:TriggerSatus;type:int(11);not null" json:"TriggerSatus"`
+	TaskStatus           int64      `gorm:"column:TaskStatus;type:int;not null" json:"TaskStatus"`
+	SendStatus           int64      `gorm:"column:SendStatus;type:int;not null" json:"SendStatus"`
+	TriggerSatus         int64      `gorm:"column:TriggerSatus;type:int;not null" json:"TriggerSatus"`
 	TaskID               *string    `gorm:"column:TaskId;type:varchar(32)" json:"TaskId"`
 	TaskName             *string    `gorm:"column:TaskName;type:varchar(256)" json:"TaskName"`
 	WorkTime             time.Time  `gorm:"column:WorkTime;type:datetime(6);not null" json:"WorkTime"`
@@ -32,8 +32,9 @@ type Libinventorywork struct {
 	Comment              *string    `gorm:"column:Comment;type:varchar(256)" json:"Comment"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	ExceptionMsg         *string    `gorm:"column:ExceptionMsg;type:varchar(256)" json:"ExceptionMsg"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	DeviceType           *string    `gorm:"column:DeviceType;type:varchar(32)" json:"DeviceType"`
 }
 
 // TableName Libinventorywork's table name

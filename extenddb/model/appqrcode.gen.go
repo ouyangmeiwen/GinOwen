@@ -14,13 +14,13 @@ const TableNameAppqrcode = "appqrcode"
 type Appqrcode struct {
 	ID            string    `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	OpenID        string    `gorm:"column:OpenId;type:varchar(32);not null" json:"OpenId"`
-	ExpireSeconds int64     `gorm:"column:ExpireSeconds;type:int(11);not null" json:"ExpireSeconds"`
+	ExpireSeconds int64     `gorm:"column:ExpireSeconds;type:int;not null" json:"ExpireSeconds"`
 	Ticket        *string   `gorm:"column:Ticket;type:varchar(256)" json:"Ticket"`
 	QrURL         string    `gorm:"column:QrUrl;type:varchar(256);not null" json:"QrUrl"`
 	ExpireTime    time.Time `gorm:"column:ExpireTime;type:datetime(6);not null" json:"ExpireTime"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Appqrcode's table name

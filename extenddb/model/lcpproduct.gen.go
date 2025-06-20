@@ -14,25 +14,25 @@ const TableNameLcpproduct = "lcpproduct"
 type Lcpproduct struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	ParentID             *string    `gorm:"column:ParentId;type:varchar(32)" json:"ParentId"`
 	Code                 string     `gorm:"column:Code;type:varchar(32);not null" json:"Code"`
 	Name                 string     `gorm:"column:Name;type:varchar(32);not null" json:"Name"`
 	Directory            *string    `gorm:"column:Directory;type:varchar(128)" json:"Directory"`
 	IsSupportUpgrade     []uint8    `gorm:"column:IsSupportUpgrade;type:bit(1);not null" json:"IsSupportUpgrade"`
-	IsSupportOpen        []uint8    `gorm:"column:IsSupportOpen;type:bit(1);not null;default:0" json:"IsSupportOpen"`
-	Order                int64      `gorm:"column:Order;type:int(11);not null" json:"Order"`
-	Port                 *int64     `gorm:"column:Port;type:int(11)" json:"Port"`
+	IsSupportOpen        []uint8    `gorm:"column:IsSupportOpen;type:bit(1);not null;default:b'0'" json:"IsSupportOpen"`
+	Order                int64      `gorm:"column:Order;type:int;not null" json:"Order"`
+	Port                 *int64     `gorm:"column:Port;type:int" json:"Port"`
 	ApplicationName      *string    `gorm:"column:ApplicationName;type:varchar(128)" json:"ApplicationName"`
 	Description          *string    `gorm:"column:Description;type:varchar(512)" json:"Description"`
 	TerminalTypes        *string    `gorm:"column:TerminalTypes;type:varchar(512)" json:"TerminalTypes"`
-	StartupType          *int64     `gorm:"column:StartupType;type:tinyint(3) " json:"StartupType"`
-	IsNeedActivate       []uint8    `gorm:"column:IsNeedActivate;type:bit(1);not null;default:0" json:"IsNeedActivate"`
+	StartupType          *int64     `gorm:"column:StartupType;type:tinyint unsigned" json:"StartupType"`
+	IsNeedActivate       []uint8    `gorm:"column:IsNeedActivate;type:bit(1);not null;default:b'0'" json:"IsNeedActivate"`
 }
 
 // TableName Lcpproduct's table name

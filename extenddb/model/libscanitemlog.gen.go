@@ -14,14 +14,14 @@ const TableNameLibscanitemlog = "libscanitemlog"
 type Libscanitemlog struct {
 	ID              string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime    time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	SerialNo        *string   `gorm:"column:SerialNo;type:varchar(32)" json:"SerialNo"`
 	ItemBarcode     *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle       *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
 	LocationID      *string   `gorm:"column:LocationId;type:varchar(32)" json:"LocationId"`
 	LocationName    *string   `gorm:"column:LocationName;type:varchar(128)" json:"LocationName"`
 	Remark          *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID        int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID        int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	CreatorUserName *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 }
 

@@ -62,6 +62,7 @@ var (
 	Appsubscriptionpayment          *appsubscriptionpayment
 	Appusercard                     *appusercard
 	Appweuser                       *appweuser
+	Bookcaseinfo                    *bookcaseinfo
 	Dasbusinesscount                *dasbusinesscount
 	Dascirculatecount               *dascirculatecount
 	Dasdatabaselink                 *dasdatabaselink
@@ -73,18 +74,8 @@ var (
 	Dasvisitpage                    *dasvisitpage
 	Dasvisittrend                   *dasvisittrend
 	Efmigrationshistory             *efmigrationshistory
-	Hangfireaggregatedcounter       *hangfireaggregatedcounter
-	Hangfirecounter                 *hangfirecounter
-	Hangfiredistributedlock         *hangfiredistributedlock
-	Hangfirehash                    *hangfirehash
-	Hangfirejob                     *hangfirejob
-	Hangfirejobparameter            *hangfirejobparameter
-	Hangfirejobqueue                *hangfirejobqueue
-	Hangfirejobstate                *hangfirejobstate
-	Hangfirelist                    *hangfirelist
-	Hangfireserver                  *hangfireserver
-	Hangfireset                     *hangfireset
-	Hangfirestate                   *hangfirestate
+	Item                            *item
+	Itemloc010301                   *itemloc010301
 	Lcpcommandlog                   *lcpcommandlog
 	Lcpconfig                       *lcpconfig
 	Lcpmaintainlog                  *lcpmaintainlog
@@ -132,7 +123,6 @@ var (
 	Libinventoryworkdetail          *libinventoryworkdetail
 	Libinventoryworklog             *libinventoryworklog
 	Libitem                         *libitem
-	LibitemCopy                     *libitemCopy
 	Libiteminventoryinfo            *libiteminventoryinfo
 	Libiteminventorylog             *libiteminventorylog
 	Libitemlocinfo                  *libitemlocinfo
@@ -148,6 +138,7 @@ var (
 	Libpatron                       *libpatron
 	Libpatronitem                   *libpatronitem
 	Libpatronlog                    *libpatronlog
+	Libpointrobot                   *libpointrobot
 	Libpointsclearing               *libpointsclearing
 	Libpointslog                    *libpointslog
 	Librfidantlayer                 *librfidantlayer
@@ -157,6 +148,7 @@ var (
 	Librowcatalog                   *librowcatalog
 	Libscanitemlog                  *libscanitemlog
 	Libshelf                        *libshelf
+	Libshelfpoint                   *libshelfpoint
 	Libstruct                       *libstruct
 	Libtagtobarcodelog              *libtagtobarcodelog
 	Libtaskitem                     *libtaskitem
@@ -166,6 +158,10 @@ var (
 	Mismediainfo                    *mismediainfo
 	Misnews                         *misnews
 	Mistemplate                     *mistemplate
+	OwenAuditlog                    *owenAuditlog
+	OwenRole                        *owenRole
+	OwenScheduledtask               *owenScheduledtask
+	OwenUser                        *owenUser
 	Rescatalog                      *rescatalog
 	Rescipinfo                      *rescipinfo
 	Resfourcorner                   *resfourcorner
@@ -206,7 +202,6 @@ var (
 	Syslayertran                    *syslayertran
 	Syslocation                     *syslocation
 	Sysmenu                         *sysmenu
-	SysmenuCopy                     *sysmenuCopy
 	Systasklist                     *systasklist
 	Systenantconfig                 *systenantconfig
 	Systenantextend                 *systenantextend
@@ -263,6 +258,7 @@ func SetDefault(db *gorm.DB) {
 	Appsubscriptionpayment = &Q.Appsubscriptionpayment
 	Appusercard = &Q.Appusercard
 	Appweuser = &Q.Appweuser
+	Bookcaseinfo = &Q.Bookcaseinfo
 	Dasbusinesscount = &Q.Dasbusinesscount
 	Dascirculatecount = &Q.Dascirculatecount
 	Dasdatabaselink = &Q.Dasdatabaselink
@@ -274,18 +270,8 @@ func SetDefault(db *gorm.DB) {
 	Dasvisitpage = &Q.Dasvisitpage
 	Dasvisittrend = &Q.Dasvisittrend
 	Efmigrationshistory = &Q.Efmigrationshistory
-	Hangfireaggregatedcounter = &Q.Hangfireaggregatedcounter
-	Hangfirecounter = &Q.Hangfirecounter
-	Hangfiredistributedlock = &Q.Hangfiredistributedlock
-	Hangfirehash = &Q.Hangfirehash
-	Hangfirejob = &Q.Hangfirejob
-	Hangfirejobparameter = &Q.Hangfirejobparameter
-	Hangfirejobqueue = &Q.Hangfirejobqueue
-	Hangfirejobstate = &Q.Hangfirejobstate
-	Hangfirelist = &Q.Hangfirelist
-	Hangfireserver = &Q.Hangfireserver
-	Hangfireset = &Q.Hangfireset
-	Hangfirestate = &Q.Hangfirestate
+	Item = &Q.Item
+	Itemloc010301 = &Q.Itemloc010301
 	Lcpcommandlog = &Q.Lcpcommandlog
 	Lcpconfig = &Q.Lcpconfig
 	Lcpmaintainlog = &Q.Lcpmaintainlog
@@ -333,7 +319,6 @@ func SetDefault(db *gorm.DB) {
 	Libinventoryworkdetail = &Q.Libinventoryworkdetail
 	Libinventoryworklog = &Q.Libinventoryworklog
 	Libitem = &Q.Libitem
-	LibitemCopy = &Q.LibitemCopy
 	Libiteminventoryinfo = &Q.Libiteminventoryinfo
 	Libiteminventorylog = &Q.Libiteminventorylog
 	Libitemlocinfo = &Q.Libitemlocinfo
@@ -349,6 +334,7 @@ func SetDefault(db *gorm.DB) {
 	Libpatron = &Q.Libpatron
 	Libpatronitem = &Q.Libpatronitem
 	Libpatronlog = &Q.Libpatronlog
+	Libpointrobot = &Q.Libpointrobot
 	Libpointsclearing = &Q.Libpointsclearing
 	Libpointslog = &Q.Libpointslog
 	Librfidantlayer = &Q.Librfidantlayer
@@ -358,6 +344,7 @@ func SetDefault(db *gorm.DB) {
 	Librowcatalog = &Q.Librowcatalog
 	Libscanitemlog = &Q.Libscanitemlog
 	Libshelf = &Q.Libshelf
+	Libshelfpoint = &Q.Libshelfpoint
 	Libstruct = &Q.Libstruct
 	Libtagtobarcodelog = &Q.Libtagtobarcodelog
 	Libtaskitem = &Q.Libtaskitem
@@ -367,6 +354,10 @@ func SetDefault(db *gorm.DB) {
 	Mismediainfo = &Q.Mismediainfo
 	Misnews = &Q.Misnews
 	Mistemplate = &Q.Mistemplate
+	OwenAuditlog = &Q.OwenAuditlog
+	OwenRole = &Q.OwenRole
+	OwenScheduledtask = &Q.OwenScheduledtask
+	OwenUser = &Q.OwenUser
 	Rescatalog = &Q.Rescatalog
 	Rescipinfo = &Q.Rescipinfo
 	Resfourcorner = &Q.Resfourcorner
@@ -407,7 +398,6 @@ func SetDefault(db *gorm.DB) {
 	Syslayertran = &Q.Syslayertran
 	Syslocation = &Q.Syslocation
 	Sysmenu = &Q.Sysmenu
-	SysmenuCopy = &Q.SysmenuCopy
 	Systasklist = &Q.Systasklist
 	Systenantconfig = &Q.Systenantconfig
 	Systenantextend = &Q.Systenantextend
@@ -465,6 +455,7 @@ func Use(db *gorm.DB) *Query {
 		Appsubscriptionpayment:          newAppsubscriptionpayment(db),
 		Appusercard:                     newAppusercard(db),
 		Appweuser:                       newAppweuser(db),
+		Bookcaseinfo:                    newBookcaseinfo(db),
 		Dasbusinesscount:                newDasbusinesscount(db),
 		Dascirculatecount:               newDascirculatecount(db),
 		Dasdatabaselink:                 newDasdatabaselink(db),
@@ -476,18 +467,8 @@ func Use(db *gorm.DB) *Query {
 		Dasvisitpage:                    newDasvisitpage(db),
 		Dasvisittrend:                   newDasvisittrend(db),
 		Efmigrationshistory:             newEfmigrationshistory(db),
-		Hangfireaggregatedcounter:       newHangfireaggregatedcounter(db),
-		Hangfirecounter:                 newHangfirecounter(db),
-		Hangfiredistributedlock:         newHangfiredistributedlock(db),
-		Hangfirehash:                    newHangfirehash(db),
-		Hangfirejob:                     newHangfirejob(db),
-		Hangfirejobparameter:            newHangfirejobparameter(db),
-		Hangfirejobqueue:                newHangfirejobqueue(db),
-		Hangfirejobstate:                newHangfirejobstate(db),
-		Hangfirelist:                    newHangfirelist(db),
-		Hangfireserver:                  newHangfireserver(db),
-		Hangfireset:                     newHangfireset(db),
-		Hangfirestate:                   newHangfirestate(db),
+		Item:                            newItem(db),
+		Itemloc010301:                   newItemloc010301(db),
 		Lcpcommandlog:                   newLcpcommandlog(db),
 		Lcpconfig:                       newLcpconfig(db),
 		Lcpmaintainlog:                  newLcpmaintainlog(db),
@@ -535,7 +516,6 @@ func Use(db *gorm.DB) *Query {
 		Libinventoryworkdetail:          newLibinventoryworkdetail(db),
 		Libinventoryworklog:             newLibinventoryworklog(db),
 		Libitem:                         newLibitem(db),
-		LibitemCopy:                     newLibitemCopy(db),
 		Libiteminventoryinfo:            newLibiteminventoryinfo(db),
 		Libiteminventorylog:             newLibiteminventorylog(db),
 		Libitemlocinfo:                  newLibitemlocinfo(db),
@@ -551,6 +531,7 @@ func Use(db *gorm.DB) *Query {
 		Libpatron:                       newLibpatron(db),
 		Libpatronitem:                   newLibpatronitem(db),
 		Libpatronlog:                    newLibpatronlog(db),
+		Libpointrobot:                   newLibpointrobot(db),
 		Libpointsclearing:               newLibpointsclearing(db),
 		Libpointslog:                    newLibpointslog(db),
 		Librfidantlayer:                 newLibrfidantlayer(db),
@@ -560,6 +541,7 @@ func Use(db *gorm.DB) *Query {
 		Librowcatalog:                   newLibrowcatalog(db),
 		Libscanitemlog:                  newLibscanitemlog(db),
 		Libshelf:                        newLibshelf(db),
+		Libshelfpoint:                   newLibshelfpoint(db),
 		Libstruct:                       newLibstruct(db),
 		Libtagtobarcodelog:              newLibtagtobarcodelog(db),
 		Libtaskitem:                     newLibtaskitem(db),
@@ -569,6 +551,10 @@ func Use(db *gorm.DB) *Query {
 		Mismediainfo:                    newMismediainfo(db),
 		Misnews:                         newMisnews(db),
 		Mistemplate:                     newMistemplate(db),
+		OwenAuditlog:                    newOwenAuditlog(db),
+		OwenRole:                        newOwenRole(db),
+		OwenScheduledtask:               newOwenScheduledtask(db),
+		OwenUser:                        newOwenUser(db),
 		Rescatalog:                      newRescatalog(db),
 		Rescipinfo:                      newRescipinfo(db),
 		Resfourcorner:                   newResfourcorner(db),
@@ -609,7 +595,6 @@ func Use(db *gorm.DB) *Query {
 		Syslayertran:                    newSyslayertran(db),
 		Syslocation:                     newSyslocation(db),
 		Sysmenu:                         newSysmenu(db),
-		SysmenuCopy:                     newSysmenuCopy(db),
 		Systasklist:                     newSystasklist(db),
 		Systenantconfig:                 newSystenantconfig(db),
 		Systenantextend:                 newSystenantextend(db),
@@ -668,6 +653,7 @@ type Query struct {
 	Appsubscriptionpayment          appsubscriptionpayment
 	Appusercard                     appusercard
 	Appweuser                       appweuser
+	Bookcaseinfo                    bookcaseinfo
 	Dasbusinesscount                dasbusinesscount
 	Dascirculatecount               dascirculatecount
 	Dasdatabaselink                 dasdatabaselink
@@ -679,18 +665,8 @@ type Query struct {
 	Dasvisitpage                    dasvisitpage
 	Dasvisittrend                   dasvisittrend
 	Efmigrationshistory             efmigrationshistory
-	Hangfireaggregatedcounter       hangfireaggregatedcounter
-	Hangfirecounter                 hangfirecounter
-	Hangfiredistributedlock         hangfiredistributedlock
-	Hangfirehash                    hangfirehash
-	Hangfirejob                     hangfirejob
-	Hangfirejobparameter            hangfirejobparameter
-	Hangfirejobqueue                hangfirejobqueue
-	Hangfirejobstate                hangfirejobstate
-	Hangfirelist                    hangfirelist
-	Hangfireserver                  hangfireserver
-	Hangfireset                     hangfireset
-	Hangfirestate                   hangfirestate
+	Item                            item
+	Itemloc010301                   itemloc010301
 	Lcpcommandlog                   lcpcommandlog
 	Lcpconfig                       lcpconfig
 	Lcpmaintainlog                  lcpmaintainlog
@@ -738,7 +714,6 @@ type Query struct {
 	Libinventoryworkdetail          libinventoryworkdetail
 	Libinventoryworklog             libinventoryworklog
 	Libitem                         libitem
-	LibitemCopy                     libitemCopy
 	Libiteminventoryinfo            libiteminventoryinfo
 	Libiteminventorylog             libiteminventorylog
 	Libitemlocinfo                  libitemlocinfo
@@ -754,6 +729,7 @@ type Query struct {
 	Libpatron                       libpatron
 	Libpatronitem                   libpatronitem
 	Libpatronlog                    libpatronlog
+	Libpointrobot                   libpointrobot
 	Libpointsclearing               libpointsclearing
 	Libpointslog                    libpointslog
 	Librfidantlayer                 librfidantlayer
@@ -763,6 +739,7 @@ type Query struct {
 	Librowcatalog                   librowcatalog
 	Libscanitemlog                  libscanitemlog
 	Libshelf                        libshelf
+	Libshelfpoint                   libshelfpoint
 	Libstruct                       libstruct
 	Libtagtobarcodelog              libtagtobarcodelog
 	Libtaskitem                     libtaskitem
@@ -772,6 +749,10 @@ type Query struct {
 	Mismediainfo                    mismediainfo
 	Misnews                         misnews
 	Mistemplate                     mistemplate
+	OwenAuditlog                    owenAuditlog
+	OwenRole                        owenRole
+	OwenScheduledtask               owenScheduledtask
+	OwenUser                        owenUser
 	Rescatalog                      rescatalog
 	Rescipinfo                      rescipinfo
 	Resfourcorner                   resfourcorner
@@ -812,7 +793,6 @@ type Query struct {
 	Syslayertran                    syslayertran
 	Syslocation                     syslocation
 	Sysmenu                         sysmenu
-	SysmenuCopy                     sysmenuCopy
 	Systasklist                     systasklist
 	Systenantconfig                 systenantconfig
 	Systenantextend                 systenantextend
@@ -872,6 +852,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Appsubscriptionpayment:          q.Appsubscriptionpayment.clone(db),
 		Appusercard:                     q.Appusercard.clone(db),
 		Appweuser:                       q.Appweuser.clone(db),
+		Bookcaseinfo:                    q.Bookcaseinfo.clone(db),
 		Dasbusinesscount:                q.Dasbusinesscount.clone(db),
 		Dascirculatecount:               q.Dascirculatecount.clone(db),
 		Dasdatabaselink:                 q.Dasdatabaselink.clone(db),
@@ -883,18 +864,8 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Dasvisitpage:                    q.Dasvisitpage.clone(db),
 		Dasvisittrend:                   q.Dasvisittrend.clone(db),
 		Efmigrationshistory:             q.Efmigrationshistory.clone(db),
-		Hangfireaggregatedcounter:       q.Hangfireaggregatedcounter.clone(db),
-		Hangfirecounter:                 q.Hangfirecounter.clone(db),
-		Hangfiredistributedlock:         q.Hangfiredistributedlock.clone(db),
-		Hangfirehash:                    q.Hangfirehash.clone(db),
-		Hangfirejob:                     q.Hangfirejob.clone(db),
-		Hangfirejobparameter:            q.Hangfirejobparameter.clone(db),
-		Hangfirejobqueue:                q.Hangfirejobqueue.clone(db),
-		Hangfirejobstate:                q.Hangfirejobstate.clone(db),
-		Hangfirelist:                    q.Hangfirelist.clone(db),
-		Hangfireserver:                  q.Hangfireserver.clone(db),
-		Hangfireset:                     q.Hangfireset.clone(db),
-		Hangfirestate:                   q.Hangfirestate.clone(db),
+		Item:                            q.Item.clone(db),
+		Itemloc010301:                   q.Itemloc010301.clone(db),
 		Lcpcommandlog:                   q.Lcpcommandlog.clone(db),
 		Lcpconfig:                       q.Lcpconfig.clone(db),
 		Lcpmaintainlog:                  q.Lcpmaintainlog.clone(db),
@@ -942,7 +913,6 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Libinventoryworkdetail:          q.Libinventoryworkdetail.clone(db),
 		Libinventoryworklog:             q.Libinventoryworklog.clone(db),
 		Libitem:                         q.Libitem.clone(db),
-		LibitemCopy:                     q.LibitemCopy.clone(db),
 		Libiteminventoryinfo:            q.Libiteminventoryinfo.clone(db),
 		Libiteminventorylog:             q.Libiteminventorylog.clone(db),
 		Libitemlocinfo:                  q.Libitemlocinfo.clone(db),
@@ -958,6 +928,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Libpatron:                       q.Libpatron.clone(db),
 		Libpatronitem:                   q.Libpatronitem.clone(db),
 		Libpatronlog:                    q.Libpatronlog.clone(db),
+		Libpointrobot:                   q.Libpointrobot.clone(db),
 		Libpointsclearing:               q.Libpointsclearing.clone(db),
 		Libpointslog:                    q.Libpointslog.clone(db),
 		Librfidantlayer:                 q.Librfidantlayer.clone(db),
@@ -967,6 +938,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Librowcatalog:                   q.Librowcatalog.clone(db),
 		Libscanitemlog:                  q.Libscanitemlog.clone(db),
 		Libshelf:                        q.Libshelf.clone(db),
+		Libshelfpoint:                   q.Libshelfpoint.clone(db),
 		Libstruct:                       q.Libstruct.clone(db),
 		Libtagtobarcodelog:              q.Libtagtobarcodelog.clone(db),
 		Libtaskitem:                     q.Libtaskitem.clone(db),
@@ -976,6 +948,10 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Mismediainfo:                    q.Mismediainfo.clone(db),
 		Misnews:                         q.Misnews.clone(db),
 		Mistemplate:                     q.Mistemplate.clone(db),
+		OwenAuditlog:                    q.OwenAuditlog.clone(db),
+		OwenRole:                        q.OwenRole.clone(db),
+		OwenScheduledtask:               q.OwenScheduledtask.clone(db),
+		OwenUser:                        q.OwenUser.clone(db),
 		Rescatalog:                      q.Rescatalog.clone(db),
 		Rescipinfo:                      q.Rescipinfo.clone(db),
 		Resfourcorner:                   q.Resfourcorner.clone(db),
@@ -1016,7 +992,6 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		Syslayertran:                    q.Syslayertran.clone(db),
 		Syslocation:                     q.Syslocation.clone(db),
 		Sysmenu:                         q.Sysmenu.clone(db),
-		SysmenuCopy:                     q.SysmenuCopy.clone(db),
 		Systasklist:                     q.Systasklist.clone(db),
 		Systenantconfig:                 q.Systenantconfig.clone(db),
 		Systenantextend:                 q.Systenantextend.clone(db),
@@ -1073,6 +1048,7 @@ type queryCtx struct {
 	Appsubscriptionpayment          IAppsubscriptionpaymentDo
 	Appusercard                     IAppusercardDo
 	Appweuser                       IAppweuserDo
+	Bookcaseinfo                    IBookcaseinfoDo
 	Dasbusinesscount                IDasbusinesscountDo
 	Dascirculatecount               IDascirculatecountDo
 	Dasdatabaselink                 IDasdatabaselinkDo
@@ -1084,18 +1060,8 @@ type queryCtx struct {
 	Dasvisitpage                    IDasvisitpageDo
 	Dasvisittrend                   IDasvisittrendDo
 	Efmigrationshistory             IEfmigrationshistoryDo
-	Hangfireaggregatedcounter       IHangfireaggregatedcounterDo
-	Hangfirecounter                 IHangfirecounterDo
-	Hangfiredistributedlock         IHangfiredistributedlockDo
-	Hangfirehash                    IHangfirehashDo
-	Hangfirejob                     IHangfirejobDo
-	Hangfirejobparameter            IHangfirejobparameterDo
-	Hangfirejobqueue                IHangfirejobqueueDo
-	Hangfirejobstate                IHangfirejobstateDo
-	Hangfirelist                    IHangfirelistDo
-	Hangfireserver                  IHangfireserverDo
-	Hangfireset                     IHangfiresetDo
-	Hangfirestate                   IHangfirestateDo
+	Item                            IItemDo
+	Itemloc010301                   IItemloc010301Do
 	Lcpcommandlog                   ILcpcommandlogDo
 	Lcpconfig                       ILcpconfigDo
 	Lcpmaintainlog                  ILcpmaintainlogDo
@@ -1143,7 +1109,6 @@ type queryCtx struct {
 	Libinventoryworkdetail          ILibinventoryworkdetailDo
 	Libinventoryworklog             ILibinventoryworklogDo
 	Libitem                         ILibitemDo
-	LibitemCopy                     ILibitemCopyDo
 	Libiteminventoryinfo            ILibiteminventoryinfoDo
 	Libiteminventorylog             ILibiteminventorylogDo
 	Libitemlocinfo                  ILibitemlocinfoDo
@@ -1159,6 +1124,7 @@ type queryCtx struct {
 	Libpatron                       ILibpatronDo
 	Libpatronitem                   ILibpatronitemDo
 	Libpatronlog                    ILibpatronlogDo
+	Libpointrobot                   ILibpointrobotDo
 	Libpointsclearing               ILibpointsclearingDo
 	Libpointslog                    ILibpointslogDo
 	Librfidantlayer                 ILibrfidantlayerDo
@@ -1168,6 +1134,7 @@ type queryCtx struct {
 	Librowcatalog                   ILibrowcatalogDo
 	Libscanitemlog                  ILibscanitemlogDo
 	Libshelf                        ILibshelfDo
+	Libshelfpoint                   ILibshelfpointDo
 	Libstruct                       ILibstructDo
 	Libtagtobarcodelog              ILibtagtobarcodelogDo
 	Libtaskitem                     ILibtaskitemDo
@@ -1177,6 +1144,10 @@ type queryCtx struct {
 	Mismediainfo                    IMismediainfoDo
 	Misnews                         IMisnewsDo
 	Mistemplate                     IMistemplateDo
+	OwenAuditlog                    IOwenAuditlogDo
+	OwenRole                        IOwenRoleDo
+	OwenScheduledtask               IOwenScheduledtaskDo
+	OwenUser                        IOwenUserDo
 	Rescatalog                      IRescatalogDo
 	Rescipinfo                      IRescipinfoDo
 	Resfourcorner                   IResfourcornerDo
@@ -1217,7 +1188,6 @@ type queryCtx struct {
 	Syslayertran                    ISyslayertranDo
 	Syslocation                     ISyslocationDo
 	Sysmenu                         ISysmenuDo
-	SysmenuCopy                     ISysmenuCopyDo
 	Systasklist                     ISystasklistDo
 	Systenantconfig                 ISystenantconfigDo
 	Systenantextend                 ISystenantextendDo
@@ -1274,6 +1244,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Appsubscriptionpayment:          q.Appsubscriptionpayment.WithContext(ctx),
 		Appusercard:                     q.Appusercard.WithContext(ctx),
 		Appweuser:                       q.Appweuser.WithContext(ctx),
+		Bookcaseinfo:                    q.Bookcaseinfo.WithContext(ctx),
 		Dasbusinesscount:                q.Dasbusinesscount.WithContext(ctx),
 		Dascirculatecount:               q.Dascirculatecount.WithContext(ctx),
 		Dasdatabaselink:                 q.Dasdatabaselink.WithContext(ctx),
@@ -1285,18 +1256,8 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Dasvisitpage:                    q.Dasvisitpage.WithContext(ctx),
 		Dasvisittrend:                   q.Dasvisittrend.WithContext(ctx),
 		Efmigrationshistory:             q.Efmigrationshistory.WithContext(ctx),
-		Hangfireaggregatedcounter:       q.Hangfireaggregatedcounter.WithContext(ctx),
-		Hangfirecounter:                 q.Hangfirecounter.WithContext(ctx),
-		Hangfiredistributedlock:         q.Hangfiredistributedlock.WithContext(ctx),
-		Hangfirehash:                    q.Hangfirehash.WithContext(ctx),
-		Hangfirejob:                     q.Hangfirejob.WithContext(ctx),
-		Hangfirejobparameter:            q.Hangfirejobparameter.WithContext(ctx),
-		Hangfirejobqueue:                q.Hangfirejobqueue.WithContext(ctx),
-		Hangfirejobstate:                q.Hangfirejobstate.WithContext(ctx),
-		Hangfirelist:                    q.Hangfirelist.WithContext(ctx),
-		Hangfireserver:                  q.Hangfireserver.WithContext(ctx),
-		Hangfireset:                     q.Hangfireset.WithContext(ctx),
-		Hangfirestate:                   q.Hangfirestate.WithContext(ctx),
+		Item:                            q.Item.WithContext(ctx),
+		Itemloc010301:                   q.Itemloc010301.WithContext(ctx),
 		Lcpcommandlog:                   q.Lcpcommandlog.WithContext(ctx),
 		Lcpconfig:                       q.Lcpconfig.WithContext(ctx),
 		Lcpmaintainlog:                  q.Lcpmaintainlog.WithContext(ctx),
@@ -1344,7 +1305,6 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Libinventoryworkdetail:          q.Libinventoryworkdetail.WithContext(ctx),
 		Libinventoryworklog:             q.Libinventoryworklog.WithContext(ctx),
 		Libitem:                         q.Libitem.WithContext(ctx),
-		LibitemCopy:                     q.LibitemCopy.WithContext(ctx),
 		Libiteminventoryinfo:            q.Libiteminventoryinfo.WithContext(ctx),
 		Libiteminventorylog:             q.Libiteminventorylog.WithContext(ctx),
 		Libitemlocinfo:                  q.Libitemlocinfo.WithContext(ctx),
@@ -1360,6 +1320,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Libpatron:                       q.Libpatron.WithContext(ctx),
 		Libpatronitem:                   q.Libpatronitem.WithContext(ctx),
 		Libpatronlog:                    q.Libpatronlog.WithContext(ctx),
+		Libpointrobot:                   q.Libpointrobot.WithContext(ctx),
 		Libpointsclearing:               q.Libpointsclearing.WithContext(ctx),
 		Libpointslog:                    q.Libpointslog.WithContext(ctx),
 		Librfidantlayer:                 q.Librfidantlayer.WithContext(ctx),
@@ -1369,6 +1330,7 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Librowcatalog:                   q.Librowcatalog.WithContext(ctx),
 		Libscanitemlog:                  q.Libscanitemlog.WithContext(ctx),
 		Libshelf:                        q.Libshelf.WithContext(ctx),
+		Libshelfpoint:                   q.Libshelfpoint.WithContext(ctx),
 		Libstruct:                       q.Libstruct.WithContext(ctx),
 		Libtagtobarcodelog:              q.Libtagtobarcodelog.WithContext(ctx),
 		Libtaskitem:                     q.Libtaskitem.WithContext(ctx),
@@ -1378,6 +1340,10 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Mismediainfo:                    q.Mismediainfo.WithContext(ctx),
 		Misnews:                         q.Misnews.WithContext(ctx),
 		Mistemplate:                     q.Mistemplate.WithContext(ctx),
+		OwenAuditlog:                    q.OwenAuditlog.WithContext(ctx),
+		OwenRole:                        q.OwenRole.WithContext(ctx),
+		OwenScheduledtask:               q.OwenScheduledtask.WithContext(ctx),
+		OwenUser:                        q.OwenUser.WithContext(ctx),
 		Rescatalog:                      q.Rescatalog.WithContext(ctx),
 		Rescipinfo:                      q.Rescipinfo.WithContext(ctx),
 		Resfourcorner:                   q.Resfourcorner.WithContext(ctx),
@@ -1418,7 +1384,6 @@ func (q *Query) WithContext(ctx context.Context) *queryCtx {
 		Syslayertran:                    q.Syslayertran.WithContext(ctx),
 		Syslocation:                     q.Syslocation.WithContext(ctx),
 		Sysmenu:                         q.Sysmenu.WithContext(ctx),
-		SysmenuCopy:                     q.SysmenuCopy.WithContext(ctx),
 		Systasklist:                     q.Systasklist.WithContext(ctx),
 		Systenantconfig:                 q.Systenantconfig.WithContext(ctx),
 		Systenantextend:                 q.Systenantextend.WithContext(ctx),

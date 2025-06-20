@@ -14,11 +14,11 @@ const TableNameLibpartonreservation = "libpartonreservation"
 type Libpartonreservation struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	PatronID             *string    `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
 	PatronName           string     `gorm:"column:PatronName;type:varchar(64);not null" json:"PatronName"`
@@ -29,8 +29,8 @@ type Libpartonreservation struct {
 	ItemAuthor           *string    `gorm:"column:ItemAuthor;type:varchar(256)" json:"ItemAuthor"`
 	ItemISBN             *string    `gorm:"column:ItemISBN;type:varchar(32)" json:"ItemISBN"`
 	ItemPublisher        *string    `gorm:"column:ItemPublisher;type:varchar(512)" json:"ItemPublisher"`
-	ItemType             int64      `gorm:"column:ItemType;type:tinyint(3) ;not null" json:"ItemType"`
-	ReserveItemType      int64      `gorm:"column:ReserveItemType;type:int(11);not null" json:"ReserveItemType"`
+	ItemType             int64      `gorm:"column:ItemType;type:tinyint unsigned;not null" json:"ItemType"`
+	ReserveItemType      int64      `gorm:"column:ReserveItemType;type:int;not null" json:"ReserveItemType"`
 	OverdueTime          time.Time  `gorm:"column:OverdueTime;type:datetime(6);not null" json:"OverdueTime"`
 	TernimalID           *string    `gorm:"column:TernimalID;type:varchar(32)" json:"TernimalID"`
 	Name                 *string    `gorm:"column:Name;type:varchar(128)" json:"Name"`
@@ -42,7 +42,7 @@ type Libpartonreservation struct {
 	CancelWorker         *string    `gorm:"column:CancelWorker;type:varchar(32)" json:"CancelWorker"`
 	CancelWorkerTime     *time.Time `gorm:"column:CancelWorkerTime;type:datetime(6)" json:"CancelWorkerTime"`
 	CancelReason         *string    `gorm:"column:CancelReason;type:varchar(512)" json:"CancelReason"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libpartonreservation's table name

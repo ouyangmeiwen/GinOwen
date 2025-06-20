@@ -14,7 +14,7 @@ const TableNameLibupdatefirstbooklog = "libupdatefirstbooklog"
 type Libupdatefirstbooklog struct {
 	ID               string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime     time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LayerID          string    `gorm:"column:LayerId;type:varchar(32);not null" json:"LayerId"`
 	LayerName        *string   `gorm:"column:LayerName;type:varchar(32)" json:"LayerName"`
 	ItemID           *string   `gorm:"column:ItemId;type:varchar(32)" json:"ItemId"`
@@ -26,7 +26,7 @@ type Libupdatefirstbooklog struct {
 	PreItemCallNo    *string   `gorm:"column:PreItemCallNo;type:varchar(64)" json:"PreItemCallNo"`
 	PrePretendCallNo *string   `gorm:"column:PrePretendCallNo;type:varchar(64)" json:"PrePretendCallNo"`
 	Remark           *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID         int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID         int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	CreatorUserName  *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 	ItemTitle        *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
 	LayerCode        *string   `gorm:"column:LayerCode;type:varchar(32)" json:"LayerCode"`

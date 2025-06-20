@@ -14,7 +14,7 @@ const TableNameLcpterminalboxitem = "lcpterminalboxitem"
 type Lcpterminalboxitem struct {
 	ID            string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	TerminalID    string    `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
 	TerminalCode  string    `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
 	TerminalName  string    `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
@@ -22,7 +22,7 @@ type Lcpterminalboxitem struct {
 	ItemID        *string   `gorm:"column:ItemId;type:varchar(32)" json:"ItemId"`
 	ItemBarcode   *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle     *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Lcpterminalboxitem's table name

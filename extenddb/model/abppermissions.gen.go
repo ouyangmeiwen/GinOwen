@@ -12,15 +12,15 @@ const TableNameAbppermission = "abppermissions"
 
 // Abppermission mapped from table <abppermissions>
 type Abppermission struct {
-	ID            int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	ID            int64     `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
-	TenantID      *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
+	TenantID      *int64    `gorm:"column:TenantId;type:int" json:"TenantId"`
 	Name          string    `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	IsGranted     []uint8   `gorm:"column:IsGranted;type:bit(1);not null" json:"IsGranted"`
 	Discriminator string    `gorm:"column:Discriminator;type:longtext;not null" json:"Discriminator"`
-	RoleID        *int64    `gorm:"column:RoleId;type:int(11)" json:"RoleId"`
-	UserID        *int64    `gorm:"column:UserId;type:bigint(20)" json:"UserId"`
+	RoleID        *int64    `gorm:"column:RoleId;type:int" json:"RoleId"`
+	UserID        *int64    `gorm:"column:UserId;type:bigint" json:"UserId"`
 }
 
 // TableName Abppermission's table name

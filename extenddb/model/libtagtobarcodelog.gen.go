@@ -14,15 +14,15 @@ const TableNameLibtagtobarcodelog = "libtagtobarcodelog"
 type Libtagtobarcodelog struct {
 	ID              string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime    time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	IPAddress       *string   `gorm:"column:IPAddress;type:varchar(32)" json:"IPAddress"`
 	ItemBarcode     *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle       *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
-	OperateType     int64     `gorm:"column:OperateType;type:int(11);not null" json:"OperateType"`
+	OperateType     int64     `gorm:"column:OperateType;type:int;not null" json:"OperateType"`
 	IsSuccess       []uint8   `gorm:"column:IsSuccess;type:bit(1);not null" json:"IsSuccess"`
 	IsUpdate        []uint8   `gorm:"column:IsUpdate;type:bit(1);not null" json:"IsUpdate"`
 	Remark          *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID        int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID        int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	CreatorUserName *string   `gorm:"column:CreatorUserName;type:varchar(64)" json:"CreatorUserName"`
 }
 

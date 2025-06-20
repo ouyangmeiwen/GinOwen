@@ -14,7 +14,7 @@ const TableNameLcpsecuritygatebookaccesslog = "lcpsecuritygatebookaccesslog"
 type Lcpsecuritygatebookaccesslog struct {
 	ID            string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	AccessTime    time.Time `gorm:"column:AccessTime;type:datetime;not null" json:"AccessTime"`
 	TerminalID    string    `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
 	TerminalCode  string    `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
@@ -22,10 +22,10 @@ type Lcpsecuritygatebookaccesslog struct {
 	ItemTid       string    `gorm:"column:ItemTid;type:varchar(32);not null" json:"ItemTid"`
 	ItemBarcode   *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
 	ItemTitle     *string   `gorm:"column:ItemTitle;type:varchar(256)" json:"ItemTitle"`
-	BookStatus    int64     `gorm:"column:BookStatus;type:tinyint(3) ;not null" json:"BookStatus"`
+	BookStatus    int64     `gorm:"column:BookStatus;type:tinyint unsigned;not null" json:"BookStatus"`
 	Remark        *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	Direction     int64     `gorm:"column:Direction;type:int(11);not null" json:"Direction"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	Direction     int64     `gorm:"column:Direction;type:int;not null" json:"Direction"`
 }
 
 // TableName Lcpsecuritygatebookaccesslog's table name

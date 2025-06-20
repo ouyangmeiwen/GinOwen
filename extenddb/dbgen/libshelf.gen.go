@@ -52,6 +52,8 @@ func newLibshelf(db *gorm.DB) libshelf {
 	_libshelf.Remark = field.NewString(tableName, "Remark")
 	_libshelf.TenantID = field.NewInt64(tableName, "TenantId")
 	_libshelf.IsBosseyed = field.NewField(tableName, "IsBosseyed")
+	_libshelf.FirstCallNo = field.NewString(tableName, "FirstCallNo")
+	_libshelf.LastCallNo = field.NewString(tableName, "LastCallNo")
 
 	_libshelf.fillFieldMap()
 
@@ -87,6 +89,8 @@ type libshelf struct {
 	Remark               field.String
 	TenantID             field.Int64
 	IsBosseyed           field.Field
+	FirstCallNo          field.String
+	LastCallNo           field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -128,6 +132,8 @@ func (l *libshelf) updateTableName(table string) *libshelf {
 	l.Remark = field.NewString(table, "Remark")
 	l.TenantID = field.NewInt64(table, "TenantId")
 	l.IsBosseyed = field.NewField(table, "IsBosseyed")
+	l.FirstCallNo = field.NewString(table, "FirstCallNo")
+	l.LastCallNo = field.NewString(table, "LastCallNo")
 
 	l.fillFieldMap()
 
@@ -150,7 +156,7 @@ func (l *libshelf) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (l *libshelf) fillFieldMap() {
-	l.fieldMap = make(map[string]field.Expr, 25)
+	l.fieldMap = make(map[string]field.Expr, 27)
 	l.fieldMap["Id"] = l.ID
 	l.fieldMap["CreationTime"] = l.CreationTime
 	l.fieldMap["CreatorUserId"] = l.CreatorUserID
@@ -176,6 +182,8 @@ func (l *libshelf) fillFieldMap() {
 	l.fieldMap["Remark"] = l.Remark
 	l.fieldMap["TenantId"] = l.TenantID
 	l.fieldMap["IsBosseyed"] = l.IsBosseyed
+	l.fieldMap["FirstCallNo"] = l.FirstCallNo
+	l.fieldMap["LastCallNo"] = l.LastCallNo
 }
 
 func (l libshelf) clone(db *gorm.DB) libshelf {

@@ -12,21 +12,21 @@ const TableNameAbpauditlog = "abpauditlogs"
 
 // Abpauditlog mapped from table <abpauditlogs>
 type Abpauditlog struct {
-	ID                   int64     `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
-	TenantID             *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
-	UserID               *int64    `gorm:"column:UserId;type:bigint(20)" json:"UserId"`
+	ID                   int64     `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
+	TenantID             *int64    `gorm:"column:TenantId;type:int" json:"TenantId"`
+	UserID               *int64    `gorm:"column:UserId;type:bigint" json:"UserId"`
 	ServiceName          *string   `gorm:"column:ServiceName;type:varchar(256)" json:"ServiceName"`
 	MethodName           *string   `gorm:"column:MethodName;type:varchar(256)" json:"MethodName"`
 	Parameters           *string   `gorm:"column:Parameters;type:varchar(1024)" json:"Parameters"`
 	ReturnValue          *string   `gorm:"column:ReturnValue;type:longtext" json:"ReturnValue"`
 	ExecutionTime        time.Time `gorm:"column:ExecutionTime;type:datetime(6);not null" json:"ExecutionTime"`
-	ExecutionDuration    int64     `gorm:"column:ExecutionDuration;type:int(11);not null" json:"ExecutionDuration"`
+	ExecutionDuration    int64     `gorm:"column:ExecutionDuration;type:int;not null" json:"ExecutionDuration"`
 	ClientIPAddress      *string   `gorm:"column:ClientIpAddress;type:varchar(64)" json:"ClientIpAddress"`
 	ClientName           *string   `gorm:"column:ClientName;type:varchar(128)" json:"ClientName"`
 	BrowserInfo          *string   `gorm:"column:BrowserInfo;type:varchar(512)" json:"BrowserInfo"`
 	Exception            *string   `gorm:"column:Exception;type:varchar(2000)" json:"Exception"`
-	ImpersonatorUserID   *int64    `gorm:"column:ImpersonatorUserId;type:bigint(20)" json:"ImpersonatorUserId"`
-	ImpersonatorTenantID *int64    `gorm:"column:ImpersonatorTenantId;type:int(11)" json:"ImpersonatorTenantId"`
+	ImpersonatorUserID   *int64    `gorm:"column:ImpersonatorUserId;type:bigint" json:"ImpersonatorUserId"`
+	ImpersonatorTenantID *int64    `gorm:"column:ImpersonatorTenantId;type:int" json:"ImpersonatorTenantId"`
 	CustomData           *string   `gorm:"column:CustomData;type:varchar(2000)" json:"CustomData"`
 }
 

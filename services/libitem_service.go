@@ -59,8 +59,7 @@ func (LibItemService) ImportExcelByName(req request.ImportExcelByNameInput) (res
 		}
 		obj := models.Libitem{}
 		obj.ID = utils.GenerateGUID()
-		CreationTime := time.Now()
-		obj.CreationTime = &CreationTime
+		obj.CreationTime = time.Now()
 		obj.CreatorUserID = nil
 		obj.LastModificationTime = nil
 		obj.LastModifierUserID = nil
@@ -203,8 +202,7 @@ func (LibItemService) ImportExcelByIndex(req request.ImportExcelByIndexInput) (r
 		}
 		obj := models.Libitem{}
 		obj.ID = utils.GenerateGUID()
-		CreationTime := time.Now()
-		obj.CreationTime = &CreationTime
+		obj.CreationTime = time.Now()
 		obj.CreatorUserID = nil
 		obj.LastModificationTime = nil
 		obj.LastModifierUserID = nil

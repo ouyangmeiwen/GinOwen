@@ -14,11 +14,11 @@ const TableNameLibjournalinfo = "libjournalinfo"
 type Libjournalinfo struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	PubYear              string     `gorm:"column:PubYear;type:varchar(32);not null" json:"PubYear"`
 	PostCode             *string    `gorm:"column:PostCode;type:varchar(32)" json:"PostCode"`
@@ -27,20 +27,20 @@ type Libjournalinfo struct {
 	Title                string     `gorm:"column:Title;type:varchar(256);not null" json:"Title"`
 	Publisher            *string    `gorm:"column:Publisher;type:varchar(64)" json:"Publisher"`
 	Language             *string    `gorm:"column:Language;type:varchar(32)" json:"Language"`
-	JournalType          int64      `gorm:"column:JournalType;type:tinyint(3) ;not null" json:"JournalType"`
+	JournalType          int64      `gorm:"column:JournalType;type:tinyint unsigned;not null" json:"JournalType"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
 	Frequency            string     `gorm:"column:Frequency;type:varchar(32);not null" json:"Frequency"`
 	UnitPrice            *string    `gorm:"column:UnitPrice;type:varchar(32)" json:"UnitPrice"`
 	AnnualPrice          *string    `gorm:"column:AnnualPrice;type:varchar(32)" json:"AnnualPrice"`
 	SubscriptionPrice    *string    `gorm:"column:SubscriptionPrice;type:varchar(32)" json:"SubscriptionPrice"`
-	SubscriptionType     int64      `gorm:"column:SubscriptionType;type:tinyint(3) ;not null" json:"SubscriptionType"`
-	SubscriptionNPer     int64      `gorm:"column:SubscriptionNPer;type:int(11);not null" json:"SubscriptionNPer"`
-	SubscriptionNum      int64      `gorm:"column:SubscriptionNum;type:int(11);not null" json:"SubscriptionNum"`
+	SubscriptionType     int64      `gorm:"column:SubscriptionType;type:tinyint unsigned;not null" json:"SubscriptionType"`
+	SubscriptionNPer     int64      `gorm:"column:SubscriptionNPer;type:int;not null" json:"SubscriptionNPer"`
+	SubscriptionNum      int64      `gorm:"column:SubscriptionNum;type:int;not null" json:"SubscriptionNum"`
 	Tags                 *string    `gorm:"column:Tags;type:varchar(256)" json:"Tags"`
 	Barcodes             *string    `gorm:"column:Barcodes;type:varchar(8000)" json:"Barcodes"`
 	Summary              *string    `gorm:"column:Summary;type:varchar(2000)" json:"Summary"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libjournalinfo's table name

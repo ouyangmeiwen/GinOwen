@@ -14,11 +14,11 @@ const TableNameApppickupcode = "apppickupcode"
 type Apppickupcode struct {
 	ID            string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
 	CreationTime  time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	Code          string     `gorm:"column:Code;type:char(8);not null" json:"Code"`
 	SerialNo      string     `gorm:"column:SerialNo;type:varchar(32);not null" json:"SerialNo"`
 	OverdueTime   *time.Time `gorm:"column:OverdueTime;type:datetime(6)" json:"OverdueTime"`
-	TenantID      int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID      int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Apppickupcode's table name

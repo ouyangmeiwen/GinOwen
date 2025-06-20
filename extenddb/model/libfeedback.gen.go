@@ -14,21 +14,21 @@ const TableNameLibfeedback = "libfeedback"
 type Libfeedback struct {
 	ID            string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	TerminalID    *string   `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	TerminalCode  *string   `gorm:"column:TerminalCode;type:varchar(32)" json:"TerminalCode"`
 	TerminalName  *string   `gorm:"column:TerminalName;type:varchar(128)" json:"TerminalName"`
 	PatronID      *string   `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
 	PatronName    *string   `gorm:"column:PatronName;type:varchar(64)" json:"PatronName"`
 	PatronBarcode *string   `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
-	FeedbackType  int64     `gorm:"column:FeedbackType;type:tinyint(3) ;not null" json:"FeedbackType"`
-	Grade         int64     `gorm:"column:Grade;type:tinyint(3) ;not null" json:"Grade"`
-	MessageCode   int64     `gorm:"column:MessageCode;type:int(11);not null" json:"MessageCode"`
+	FeedbackType  int64     `gorm:"column:FeedbackType;type:tinyint unsigned;not null" json:"FeedbackType"`
+	Grade         int64     `gorm:"column:Grade;type:tinyint unsigned;not null" json:"Grade"`
+	MessageCode   int64     `gorm:"column:MessageCode;type:int;not null" json:"MessageCode"`
 	Message       *string   `gorm:"column:Message;type:varchar(256)" json:"Message"`
 	Contact       *string   `gorm:"column:Contact;type:varchar(128)" json:"Contact"`
 	Remark        *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType    int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	OriginType    int64     `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libfeedback's table name

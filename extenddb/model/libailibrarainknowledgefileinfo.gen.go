@@ -12,17 +12,17 @@ const TableNameLibailibrarainknowledgefileinfo = "libailibrarainknowledgefileinf
 
 // Libailibrarainknowledgefileinfo mapped from table <libailibrarainknowledgefileinfo>
 type Libailibrarainknowledgefileinfo struct {
-	ID                   int64      `gorm:"column:Id;type:bigint(20);primaryKey;autoIncrement:true" json:"Id"`
+	ID                   int64      `gorm:"column:Id;type:bigint;primaryKey;autoIncrement:true" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
-	Category             int64      `gorm:"column:Category;type:int(11);not null" json:"Category"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
+	Category             int64      `gorm:"column:Category;type:int;not null" json:"Category"`
 	ArchiveName          string     `gorm:"column:ArchiveName;type:varchar(60);not null" json:"ArchiveName"`
 	FileName             string     `gorm:"column:FileName;type:varchar(128);not null" json:"FileName"`
-	Status               int64      `gorm:"column:Status;type:int(11);not null" json:"Status"`
+	Status               int64      `gorm:"column:Status;type:int;not null" json:"Status"`
 	LastAppliedTime      *time.Time `gorm:"column:LastAppliedTime;type:datetime(6)" json:"LastAppliedTime"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	ContentType          *string    `gorm:"column:ContentType;type:varchar(128)" json:"ContentType"`
 	Remark               string     `gorm:"column:Remark;type:varchar(1024);not null" json:"Remark"`
 	SyncTicket           *string    `gorm:"column:SyncTicket;type:longtext" json:"SyncTicket"`

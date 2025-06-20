@@ -14,7 +14,7 @@ const TableNameLibnotificationlog = "libnotificationlog"
 type Libnotificationlog struct {
 	ID               string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime     time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID    *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	TerminalID       *string   `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	TerminalCode     *string   `gorm:"column:TerminalCode;type:varchar(32)" json:"TerminalCode"`
 	TerminalName     *string   `gorm:"column:TerminalName;type:varchar(128)" json:"TerminalName"`
@@ -22,13 +22,13 @@ type Libnotificationlog struct {
 	PatronName       *string   `gorm:"column:PatronName;type:varchar(64)" json:"PatronName"`
 	PatronBarcode    *string   `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	SendTo           string    `gorm:"column:SendTo;type:varchar(64);not null" json:"SendTo"`
-	NotificationType int64     `gorm:"column:NotificationType;type:tinyint(3) ;not null" json:"NotificationType"`
+	NotificationType int64     `gorm:"column:NotificationType;type:tinyint unsigned;not null" json:"NotificationType"`
 	Content          string    `gorm:"column:Content;type:varchar(2000);not null" json:"Content"`
-	Result           int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
+	Result           int64     `gorm:"column:Result;type:tinyint unsigned;not null" json:"Result"`
 	ErrorMessage     *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
 	Remark           *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType       int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
-	TenantID         int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	OriginType       int64     `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	TenantID         int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Libnotificationlog's table name

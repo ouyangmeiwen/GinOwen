@@ -13,8 +13,8 @@ WORKDIR /app/
 COPY ./GinOwenRelease  /app/GinOwenRelease
 COPY ./config.yaml  /app/config.yaml
 
-COPY ./doc/swagger.json  /app/doc/swagger.json
-COPY ./doc/swagger.yaml  /app/doc/swagger.yaml
+COPY ./docs/swagger.json  /app/docs/swagger.json
+COPY ./docs/swagger.yaml  /app/docs/swagger.yaml
 
 
 

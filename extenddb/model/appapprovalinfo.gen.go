@@ -14,25 +14,25 @@ const TableNameAppapprovalinfo = "appapprovalinfo"
 type Appapprovalinfo struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	SpNo                 string     `gorm:"column:SpNo;type:varchar(32);not null" json:"SpNo"`
 	SpCreatorUserID      string     `gorm:"column:SpCreatorUserId;type:varchar(32);not null" json:"SpCreatorUserId"`
 	SpCreatorUserName    string     `gorm:"column:SpCreatorUserName;type:varchar(32);not null" json:"SpCreatorUserName"`
 	SpTemplateID         string     `gorm:"column:SpTemplateId;type:varchar(64);not null" json:"SpTemplateId"`
-	SpStatus             int64      `gorm:"column:SpStatus;type:tinyint(3) ;not null" json:"SpStatus"`
+	SpStatus             int64      `gorm:"column:SpStatus;type:tinyint unsigned;not null" json:"SpStatus"`
 	UseTemplateApprover  []uint8    `gorm:"column:UseTemplateApprover;type:bit(1);not null" json:"UseTemplateApprover"`
-	ChooseDepartment     int64      `gorm:"column:ChooseDepartment;type:bigint(20);not null" json:"ChooseDepartment"`
+	ChooseDepartment     int64      `gorm:"column:ChooseDepartment;type:bigint;not null" json:"ChooseDepartment"`
 	Approver             string     `gorm:"column:Approver;type:varchar(512);not null" json:"Approver"`
 	Notifyer             *string    `gorm:"column:Notifyer;type:varchar(256)" json:"Notifyer"`
-	NotifyType           int64      `gorm:"column:NotifyType;type:tinyint(3) ;not null" json:"NotifyType"`
+	NotifyType           int64      `gorm:"column:NotifyType;type:tinyint unsigned;not null" json:"NotifyType"`
 	ApplyData            string     `gorm:"column:ApplyData;type:longtext;not null" json:"ApplyData"`
 	SummaryList          string     `gorm:"column:SummaryList;type:varchar(2000);not null" json:"SummaryList"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Appapprovalinfo's table name

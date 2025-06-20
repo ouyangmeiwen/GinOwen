@@ -14,7 +14,7 @@ const TableNameLibrfidscanlog = "librfidscanlog"
 type Librfidscanlog struct {
 	ID            string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	ItemTid       *string   `gorm:"column:ItemTid;type:varchar(32)" json:"ItemTid"`
 	ItemEpc       *string   `gorm:"column:ItemEpc;type:varchar(32)" json:"ItemEpc"`
 	ItemBarcode   *string   `gorm:"column:ItemBarcode;type:varchar(32)" json:"ItemBarcode"`
@@ -22,7 +22,7 @@ type Librfidscanlog struct {
 	RfidReaderID  string    `gorm:"column:RfidReaderId;type:varchar(32);not null" json:"RfidReaderId"`
 	Antenna       string    `gorm:"column:Antenna;type:varchar(256);not null" json:"Antenna"`
 	Remark        *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 	RecordTime    time.Time `gorm:"column:RecordTime;type:datetime(6);not null" json:"RecordTime"`
 }
 

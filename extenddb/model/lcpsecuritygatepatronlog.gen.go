@@ -14,18 +14,18 @@ const TableNameLcpsecuritygatepatronlog = "lcpsecuritygatepatronlog"
 type Lcpsecuritygatepatronlog struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	TerminalID           string     `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
 	TerminalCode         string     `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
 	TerminalName         string     `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
 	StartTime            time.Time  `gorm:"column:StartTime;type:datetime(6);not null" json:"StartTime"`
 	EndTime              time.Time  `gorm:"column:EndTime;type:datetime(6);not null" json:"EndTime"`
-	TotalInCount         int64      `gorm:"column:TotalInCount;type:int(11);not null" json:"TotalInCount"`
-	TotalOutCount        int64      `gorm:"column:TotalOutCount;type:int(11);not null" json:"TotalOutCount"`
-	OriginType           int64      `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TotalInCount         int64      `gorm:"column:TotalInCount;type:int;not null" json:"TotalInCount"`
+	TotalOutCount        int64      `gorm:"column:TotalOutCount;type:int;not null" json:"TotalOutCount"`
+	OriginType           int64      `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Lcpsecuritygatepatronlog's table name

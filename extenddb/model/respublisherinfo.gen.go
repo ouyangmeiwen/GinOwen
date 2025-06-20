@@ -8,7 +8,7 @@ const TableNameRespublisherinfo = "respublisherinfo"
 
 // Respublisherinfo mapped from table <respublisherinfo>
 type Respublisherinfo struct {
-	ID            int64   `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
+	ID            int64   `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
 	Code          string  `gorm:"column:Code;type:varchar(32);not null" json:"Code"`
 	Name          string  `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	Area          *string `gorm:"column:Area;type:varchar(32)" json:"Area"`

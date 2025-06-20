@@ -12,7 +12,7 @@ const TableNameAppinvoice = "appinvoices"
 
 // Appinvoice mapped from table <appinvoices>
 type Appinvoice struct {
-	ID              int64     `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
+	ID              int64     `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
 	InvoiceNo       *string   `gorm:"column:InvoiceNo;type:longtext" json:"InvoiceNo"`
 	InvoiceDate     time.Time `gorm:"column:InvoiceDate;type:datetime(6);not null" json:"InvoiceDate"`
 	TenantLegalName *string   `gorm:"column:TenantLegalName;type:longtext" json:"TenantLegalName"`

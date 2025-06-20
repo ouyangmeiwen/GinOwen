@@ -14,9 +14,9 @@ const TableNameLcpterminalshelfitem = "lcpterminalshelfitem"
 type Lcpterminalshelfitem struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	ShelfID              string     `gorm:"column:ShelfId;type:varchar(32);not null" json:"ShelfId"`
 	ShelfName            string     `gorm:"column:ShelfName;type:varchar(64);not null" json:"ShelfName"`
 	ItemID               *string    `gorm:"column:ItemId;type:varchar(32)" json:"ItemId"`
@@ -27,11 +27,11 @@ type Lcpterminalshelfitem struct {
 	ItemISBN             *string    `gorm:"column:ItemISBN;type:varchar(32)" json:"ItemISBN"`
 	CatalogCode          *string    `gorm:"column:CatalogCode;type:varchar(32)" json:"CatalogCode"`
 	IsReserve            []uint8    `gorm:"column:IsReserve;type:bit(1);not null" json:"IsReserve"`
-	ReserveType          *int64     `gorm:"column:ReserveType;type:tinyint(3) " json:"ReserveType"`
+	ReserveType          *int64     `gorm:"column:ReserveType;type:tinyint unsigned" json:"ReserveType"`
 	PatronBarcode        *string    `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	ReserveDate          *time.Time `gorm:"column:ReserveDate;type:datetime(6)" json:"ReserveDate"`
 	DisableReason        *string    `gorm:"column:DisableReason;type:varchar(256)" json:"DisableReason"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Lcpterminalshelfitem's table name

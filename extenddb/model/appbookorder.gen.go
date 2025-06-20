@@ -14,18 +14,18 @@ const TableNameAppbookorder = "appbookorder"
 type Appbookorder struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	PatronID             *string    `gorm:"column:PatronId;type:varchar(32)" json:"PatronId"`
 	PatronName           *string    `gorm:"column:PatronName;type:varchar(64)" json:"PatronName"`
 	PatronBarcode        *string    `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	SubBookInfoID        *string    `gorm:"column:SubBookInfoId;type:varchar(32)" json:"SubBookInfoId"`
 	SubBookInfoISBN      *string    `gorm:"column:SubBookInfoISBN;type:varchar(32)" json:"SubBookInfoISBN"`
 	SubBookInfoTitle     *string    `gorm:"column:SubBookInfoTitle;type:varchar(256)" json:"SubBookInfoTitle"`
-	BookOrderStatus      int64      `gorm:"column:BookOrderStatus;type:tinyint(3) ;not null" json:"BookOrderStatus"`
+	BookOrderStatus      int64      `gorm:"column:BookOrderStatus;type:tinyint unsigned;not null" json:"BookOrderStatus"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Appbookorder's table name

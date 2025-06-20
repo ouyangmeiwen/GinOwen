@@ -14,23 +14,23 @@ const TableNameMisnews = "misnews"
 type Misnews struct {
 	ID                   string     `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
-	NewsType             int64      `gorm:"column:NewsType;type:tinyint(3) ;not null" json:"NewsType"`
+	NewsType             int64      `gorm:"column:NewsType;type:tinyint unsigned;not null" json:"NewsType"`
 	Title                string     `gorm:"column:Title;type:varchar(256);not null" json:"Title"`
 	CoverID              *string    `gorm:"column:CoverId;type:varchar(32)" json:"CoverId"`
 	Editor               string     `gorm:"column:Editor;type:varchar(64);not null" json:"Editor"`
 	Tags                 *string    `gorm:"column:Tags;type:varchar(128)" json:"Tags"`
 	ReleaseTime          time.Time  `gorm:"column:ReleaseTime;type:datetime(6);not null" json:"ReleaseTime"`
-	SortCode             int64      `gorm:"column:SortCode;type:int(11);not null" json:"SortCode"`
-	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint(3) ;not null" json:"InformationStatus"`
+	SortCode             int64      `gorm:"column:SortCode;type:int;not null" json:"SortCode"`
+	InformationStatus    int64      `gorm:"column:InformationStatus;type:tinyint unsigned;not null" json:"InformationStatus"`
 	Content              string     `gorm:"column:Content;type:longtext;not null" json:"Content"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             *int64     `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
+	TenantID             *int64     `gorm:"column:TenantId;type:int" json:"TenantId"`
 }
 
 // TableName Misnews's table name

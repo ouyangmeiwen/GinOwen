@@ -14,9 +14,9 @@ const TableNameAppitemlocked = "appitemlocked"
 type Appitemlocked struct {
 	ID                   string     `gorm:"column:Id;type:varchar(255);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	PatronID             string     `gorm:"column:PatronId;type:varchar(32);not null" json:"PatronId"`
 	SerialNo             string     `gorm:"column:SerialNo;type:varchar(32);not null" json:"SerialNo"`
 	PatronName           string     `gorm:"column:PatronName;type:varchar(64);not null" json:"PatronName"`
@@ -36,7 +36,7 @@ type Appitemlocked struct {
 	LockEndTime          *time.Time `gorm:"column:LockEndTime;type:datetime(6)" json:"LockEndTime"`
 	PickUpTime           *time.Time `gorm:"column:PickUpTime;type:datetime(6)" json:"PickUpTime"`
 	IsCanceled           []uint8    `gorm:"column:IsCanceled;type:bit(1);not null" json:"IsCanceled"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Appitemlocked's table name

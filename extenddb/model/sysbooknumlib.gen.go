@@ -10,12 +10,12 @@ const TableNameSysbooknumlib = "sysbooknumlib"
 type Sysbooknumlib struct {
 	ID           string  `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	Barcode      *string `gorm:"column:Barcode;type:varchar(32)" json:"Barcode"`
-	Year         int64   `gorm:"column:Year;type:smallint(6);not null" json:"Year"`
-	Order        int64   `gorm:"column:Order;type:int(11);not null" json:"Order"`
+	Year         int64   `gorm:"column:Year;type:smallint;not null" json:"Year"`
+	Order        int64   `gorm:"column:Order;type:int;not null" json:"Order"`
 	IsUsed       []uint8 `gorm:"column:IsUsed;type:bit(1);not null" json:"IsUsed"`
 	LocationName *string `gorm:"column:LocationName;type:varchar(128)" json:"LocationName"`
 	BookType     *string `gorm:"column:BookType;type:varchar(32)" json:"BookType"`
-	TenantID     int64   `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID     int64   `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Sysbooknumlib's table name

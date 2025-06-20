@@ -16,6 +16,7 @@ import (
 type FlyReadAppManager struct {
 }
 
+// helloworld
 func (f FlyReadAppManager) Hello(req request.HelloInput) (resp response.HelloResp) {
 
 	var builder strings.Builder
@@ -128,6 +129,8 @@ func (FlyReadAppManager) GetFlyReadSetting(tenantid int) (resp dto.FlyReadSettin
 
 	return resp, nil
 }
+
+// 获取http地址
 func (b FlyReadAppManager) getHttpBySetting(flyseting dto.FlyReadSetting) string {
 
 	url := fmt.Sprintf("http://%s:%s", flyseting.FlyReadIp, flyseting.FlyReadPort)
@@ -136,6 +139,8 @@ func (b FlyReadAppManager) getHttpBySetting(flyseting dto.FlyReadSetting) string
 	}
 	return url
 }
+
+// 获取http地址
 func (b FlyReadAppManager) getHttpByTenant(tenantid int) string {
 	var flyseting dto.FlyReadSetting
 	flyseting, err := b.GetFlyReadSetting(tenantid)
@@ -144,6 +149,8 @@ func (b FlyReadAppManager) getHttpByTenant(tenantid int) string {
 	}
 	return b.getHttpBySetting(flyseting)
 }
+
+// 获取token
 func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp string, err error) {
 	if !IsForceRefresh {
 		key := fmt.Sprintf("%d", tenantid)
@@ -206,6 +213,7 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 	return tokenData.Data.AccessToken, nil
 }
 
+// 图书推送
 func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (resp bool, msg string, err error) {
 
 	var token string
@@ -213,6 +221,9 @@ func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (re
 	if err != nil {
 		return false, "", fmt.Errorf("Token获取失败" + err.Error())
 	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
+	fmt.Println("UploadLibItem:", url)
+
 	input := dto.UploadBookInfoInput{}
 	input.Container = "lcsinv"
 	input.Component = "shelf"
@@ -242,16 +253,10 @@ func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (re
 			bookitem.Lib_location = *item.LocationName
 		}
 		bookitem.Status = fmt.Sprintf("%d", item.ItemState)
-		if item.CreationTime != nil {
-			bookitem.Collection_time = item.CreationTime.Format("2006-01-02 15:04:05")
-		} else {
-			bookitem.Collection_time = ""
-		}
+		bookitem.Collection_time = item.CreationTime.Format("2006-01-02 15:04:05")
 		bookitem.Shelf_time = ""
 		input.Obj.Books = append(input.Obj.Books, bookitem)
 	}
-	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
-	fmt.Println("UploadLibItem:", url)
 
 	// 将 map 序列化为 JSON 字节
 	data, err := json.Marshal(input)
@@ -286,4 +291,8 @@ func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (re
 		return false, "", fmt.Errorf("JSON 反序列化失败" + err.Error())
 	}
 	return uploadLibItemResp.Success, uploadLibItemResp.Message, err
+}
+
+func (b FlyReadAppManager) UploadTenant() {
+
 }

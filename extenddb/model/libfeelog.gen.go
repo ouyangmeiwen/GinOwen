@@ -14,7 +14,7 @@ const TableNameLibfeelog = "libfeelog"
 type Libfeelog struct {
 	ID              string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime    time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID   *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	TerminalID      *string   `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	TerminalCode    *string   `gorm:"column:TerminalCode;type:varchar(32)" json:"TerminalCode"`
 	TerminalName    *string   `gorm:"column:TerminalName;type:varchar(128)" json:"TerminalName"`
@@ -23,16 +23,16 @@ type Libfeelog struct {
 	PatronBarcode   *string   `gorm:"column:PatronBarcode;type:varchar(64)" json:"PatronBarcode"`
 	CardTypeID      *string   `gorm:"column:CardTypeId;type:varchar(32)" json:"CardTypeId"`
 	CardTypeName    *string   `gorm:"column:CardTypeName;type:varchar(128)" json:"CardTypeName"`
-	Amount          int64     `gorm:"column:Amount;type:int(11);not null" json:"Amount"`
+	Amount          int64     `gorm:"column:Amount;type:int;not null" json:"Amount"`
 	AmountDetail    *string   `gorm:"column:AmountDetail;type:varchar(128)" json:"AmountDetail"`
-	PaymentType     int64     `gorm:"column:PaymentType;type:tinyint(3) ;not null" json:"PaymentType"`
-	FeeLogType      int64     `gorm:"column:FeeLogType;type:tinyint(3) ;not null" json:"FeeLogType"`
-	Result          int64     `gorm:"column:Result;type:tinyint(3) ;not null" json:"Result"`
+	PaymentType     int64     `gorm:"column:PaymentType;type:tinyint unsigned;not null" json:"PaymentType"`
+	FeeLogType      int64     `gorm:"column:FeeLogType;type:tinyint unsigned;not null" json:"FeeLogType"`
+	Result          int64     `gorm:"column:Result;type:tinyint unsigned;not null" json:"Result"`
 	Remark          *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	OriginType      int64     `gorm:"column:OriginType;type:tinyint(3) ;not null" json:"OriginType"`
+	OriginType      int64     `gorm:"column:OriginType;type:tinyint unsigned;not null" json:"OriginType"`
 	ErrorMessage    *string   `gorm:"column:ErrorMessage;type:varchar(256)" json:"ErrorMessage"`
-	TenantID        int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	OperateTenantID *int64    `gorm:"column:OperateTenantId;type:int(11)" json:"OperateTenantId"`
+	TenantID        int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	OperateTenantID *int64    `gorm:"column:OperateTenantId;type:int" json:"OperateTenantId"`
 }
 
 // TableName Libfeelog's table name

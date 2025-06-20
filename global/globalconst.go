@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"sync"
 
+	"GINOWEN/global/cfg"
+
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
@@ -17,7 +19,7 @@ var (
 	OWEN_DBList map[string]*gorm.DB
 	OWEN_REDIS  redis.UniversalClient
 	OWEN_MONGO  *mongo.Client
-	OWEN_CONFIG YarmConfig
+	OWEN_CONFIG cfg.YarmConfig
 	OWEN_LOCK   sync.RWMutex
 	OWEN_LOG    *zap.Logger
 	Ctx         = context.Background()

@@ -45,6 +45,11 @@ func newLibinventorytask(db *gorm.DB) libinventorytask {
 	_libinventorytask.Remark = field.NewString(tableName, "Remark")
 	_libinventorytask.TenantID = field.NewInt64(tableName, "TenantId")
 	_libinventorytask.OriginType = field.NewInt64(tableName, "OriginType")
+	_libinventorytask.DeviceType = field.NewString(tableName, "DeviceType")
+	_libinventorytask.RobotID = field.NewString(tableName, "RobotId")
+	_libinventorytask.RobotName = field.NewString(tableName, "RobotName")
+	_libinventorytask.RobotRouterID = field.NewString(tableName, "RobotRouterId")
+	_libinventorytask.RobotRouterName = field.NewString(tableName, "RobotRouterName")
 
 	_libinventorytask.fillFieldMap()
 
@@ -73,6 +78,11 @@ type libinventorytask struct {
 	Remark               field.String
 	TenantID             field.Int64
 	OriginType           field.Int64
+	DeviceType           field.String
+	RobotID              field.String
+	RobotName            field.String
+	RobotRouterID        field.String
+	RobotRouterName      field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -107,6 +117,11 @@ func (l *libinventorytask) updateTableName(table string) *libinventorytask {
 	l.Remark = field.NewString(table, "Remark")
 	l.TenantID = field.NewInt64(table, "TenantId")
 	l.OriginType = field.NewInt64(table, "OriginType")
+	l.DeviceType = field.NewString(table, "DeviceType")
+	l.RobotID = field.NewString(table, "RobotId")
+	l.RobotName = field.NewString(table, "RobotName")
+	l.RobotRouterID = field.NewString(table, "RobotRouterId")
+	l.RobotRouterName = field.NewString(table, "RobotRouterName")
 
 	l.fillFieldMap()
 
@@ -131,7 +146,7 @@ func (l *libinventorytask) GetFieldByName(fieldName string) (field.OrderExpr, bo
 }
 
 func (l *libinventorytask) fillFieldMap() {
-	l.fieldMap = make(map[string]field.Expr, 18)
+	l.fieldMap = make(map[string]field.Expr, 23)
 	l.fieldMap["Id"] = l.ID
 	l.fieldMap["CreationTime"] = l.CreationTime
 	l.fieldMap["CreatorUserId"] = l.CreatorUserID
@@ -150,6 +165,11 @@ func (l *libinventorytask) fillFieldMap() {
 	l.fieldMap["Remark"] = l.Remark
 	l.fieldMap["TenantId"] = l.TenantID
 	l.fieldMap["OriginType"] = l.OriginType
+	l.fieldMap["DeviceType"] = l.DeviceType
+	l.fieldMap["RobotId"] = l.RobotID
+	l.fieldMap["RobotName"] = l.RobotName
+	l.fieldMap["RobotRouterId"] = l.RobotRouterID
+	l.fieldMap["RobotRouterName"] = l.RobotRouterName
 }
 
 func (l libinventorytask) clone(db *gorm.DB) libinventorytask {

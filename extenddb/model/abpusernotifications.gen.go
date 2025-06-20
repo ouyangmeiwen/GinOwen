@@ -13,10 +13,10 @@ const TableNameAbpusernotification = "abpusernotifications"
 // Abpusernotification mapped from table <abpusernotifications>
 type Abpusernotification struct {
 	ID                   string    `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
-	TenantID             *int64    `gorm:"column:TenantId;type:int(11)" json:"TenantId"`
-	UserID               int64     `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
+	TenantID             *int64    `gorm:"column:TenantId;type:int" json:"TenantId"`
+	UserID               int64     `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
 	TenantNotificationID string    `gorm:"column:TenantNotificationId;type:char(36);not null" json:"TenantNotificationId"`
-	State                int64     `gorm:"column:State;type:int(11);not null" json:"State"`
+	State                int64     `gorm:"column:State;type:int;not null" json:"State"`
 	CreationTime         time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
 }
 

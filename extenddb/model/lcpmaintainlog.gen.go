@@ -14,21 +14,21 @@ const TableNameLcpmaintainlog = "lcpmaintainlog"
 type Lcpmaintainlog struct {
 	ID                   string    `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	TerminalID           string    `gorm:"column:TerminalId;type:varchar(32);not null" json:"TerminalId"`
 	TerminalCode         string    `gorm:"column:TerminalCode;type:varchar(32);not null" json:"TerminalCode"`
 	TerminalName         string    `gorm:"column:TerminalName;type:varchar(128);not null" json:"TerminalName"`
-	UserID               int64     `gorm:"column:UserId;type:bigint(20);not null" json:"UserId"`
+	UserID               int64     `gorm:"column:UserId;type:bigint;not null" json:"UserId"`
 	Name                 string    `gorm:"column:Name;type:varchar(64);not null" json:"Name"`
 	UserName             string    `gorm:"column:UserName;type:varchar(256);not null" json:"UserName"`
-	MaintainLogType      int64     `gorm:"column:MaintainLogType;type:tinyint(3) ;not null" json:"MaintainLogType"`
-	MaintainAmount       *int64    `gorm:"column:MaintainAmount;type:int(11)" json:"MaintainAmount"`
+	MaintainLogType      int64     `gorm:"column:MaintainLogType;type:tinyint unsigned;not null" json:"MaintainLogType"`
+	MaintainAmount       *int64    `gorm:"column:MaintainAmount;type:int" json:"MaintainAmount"`
 	MaintainAmountDetail *string   `gorm:"column:MaintainAmountDetail;type:varchar(64)" json:"MaintainAmountDetail"`
-	WithDrawAmount       *int64    `gorm:"column:WithDrawAmount;type:int(11)" json:"WithDrawAmount"`
+	WithDrawAmount       *int64    `gorm:"column:WithDrawAmount;type:int" json:"WithDrawAmount"`
 	WithDrawAmountDetail *string   `gorm:"column:WithDrawAmountDetail;type:varchar(64)" json:"WithDrawAmountDetail"`
-	CardQuantity         *int64    `gorm:"column:CardQuantity;type:smallint(6)" json:"CardQuantity"`
+	CardQuantity         *int64    `gorm:"column:CardQuantity;type:smallint" json:"CardQuantity"`
 	Remark               *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TenantID             int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Lcpmaintainlog's table name

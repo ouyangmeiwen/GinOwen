@@ -49,6 +49,7 @@ func newLibinventorywork(db *gorm.DB) libinventorywork {
 	_libinventorywork.ExceptionMsg = field.NewString(tableName, "ExceptionMsg")
 	_libinventorywork.TenantID = field.NewInt64(tableName, "TenantId")
 	_libinventorywork.OriginType = field.NewInt64(tableName, "OriginType")
+	_libinventorywork.DeviceType = field.NewString(tableName, "DeviceType")
 
 	_libinventorywork.fillFieldMap()
 
@@ -81,6 +82,7 @@ type libinventorywork struct {
 	ExceptionMsg         field.String
 	TenantID             field.Int64
 	OriginType           field.Int64
+	DeviceType           field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -119,6 +121,7 @@ func (l *libinventorywork) updateTableName(table string) *libinventorywork {
 	l.ExceptionMsg = field.NewString(table, "ExceptionMsg")
 	l.TenantID = field.NewInt64(table, "TenantId")
 	l.OriginType = field.NewInt64(table, "OriginType")
+	l.DeviceType = field.NewString(table, "DeviceType")
 
 	l.fillFieldMap()
 
@@ -143,7 +146,7 @@ func (l *libinventorywork) GetFieldByName(fieldName string) (field.OrderExpr, bo
 }
 
 func (l *libinventorywork) fillFieldMap() {
-	l.fieldMap = make(map[string]field.Expr, 22)
+	l.fieldMap = make(map[string]field.Expr, 23)
 	l.fieldMap["Id"] = l.ID
 	l.fieldMap["CreationTime"] = l.CreationTime
 	l.fieldMap["CreatorUserId"] = l.CreatorUserID
@@ -166,6 +169,7 @@ func (l *libinventorywork) fillFieldMap() {
 	l.fieldMap["ExceptionMsg"] = l.ExceptionMsg
 	l.fieldMap["TenantId"] = l.TenantID
 	l.fieldMap["OriginType"] = l.OriginType
+	l.fieldMap["DeviceType"] = l.DeviceType
 }
 
 func (l libinventorywork) clone(db *gorm.DB) libinventorywork {

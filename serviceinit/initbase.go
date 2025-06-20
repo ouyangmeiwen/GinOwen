@@ -16,6 +16,8 @@ import (
 	//"github.com/dzwvip/oracle"
 	"github.com/glebarez/sqlite" // 使用 godror 驱动
 	// 注册 godror 驱动
+	"GINOWEN/global/cfg"
+
 	"github.com/redis/go-redis/v9"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -28,7 +30,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func LoadConfig() global.YarmConfig {
+func LoadConfig() cfg.YarmConfig {
 
 	configfile := "config.yaml"
 	configFile, err := os.Open(configfile)
@@ -37,7 +39,7 @@ func LoadConfig() global.YarmConfig {
 	}
 	defer configFile.Close()
 
-	var config global.YarmConfig
+	var config cfg.YarmConfig
 	decoder := yaml.NewDecoder(configFile)
 	if err := decoder.Decode(&config); err != nil {
 		log.Fatalf("Error decoding config file: %v", err)

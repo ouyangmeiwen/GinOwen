@@ -14,15 +14,15 @@ const TableNameDassecuritygatecount = "dassecuritygatecount"
 type Dassecuritygatecount struct {
 	ID            string    `gorm:"column:Id;type:char(36);primaryKey" json:"Id"`
 	CreationTime  time.Time `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID *int64    `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	StartTime     time.Time `gorm:"column:StartTime;type:datetime(6);not null" json:"StartTime"`
 	EndTime       time.Time `gorm:"column:EndTime;type:datetime(6);not null" json:"EndTime"`
 	TerminalID    *string   `gorm:"column:TerminalId;type:varchar(32)" json:"TerminalId"`
 	TerminalCode  *string   `gorm:"column:TerminalCode;type:varchar(32)" json:"TerminalCode"`
 	TerminalName  *string   `gorm:"column:TerminalName;type:varchar(128)" json:"TerminalName"`
-	TotalInCount  int64     `gorm:"column:TotalInCount;type:int(11);not null" json:"TotalInCount"`
-	TotalOutCount int64     `gorm:"column:TotalOutCount;type:int(11);not null" json:"TotalOutCount"`
-	TenantID      int64     `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
+	TotalInCount  int64     `gorm:"column:TotalInCount;type:int;not null" json:"TotalInCount"`
+	TotalOutCount int64     `gorm:"column:TotalOutCount;type:int;not null" json:"TotalOutCount"`
+	TenantID      int64     `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
 }
 
 // TableName Dassecuritygatecount's table name

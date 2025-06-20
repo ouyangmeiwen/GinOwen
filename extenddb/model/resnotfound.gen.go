@@ -12,9 +12,9 @@ const TableNameResnotfound = "resnotfound"
 
 // Resnotfound mapped from table <resnotfound>
 type Resnotfound struct {
-	ID         int64     `gorm:"column:Id;type:int(11);primaryKey;autoIncrement:true" json:"Id"`
+	ID         int64     `gorm:"column:Id;type:int;primaryKey;autoIncrement:true" json:"Id"`
 	ISBN       string    `gorm:"column:ISBN;type:varchar(32);not null" json:"ISBN"`
-	IsFind     int64     `gorm:"column:IsFind;type:int(11);not null" json:"IsFind"`
+	IsFind     int64     `gorm:"column:IsFind;type:int;not null" json:"IsFind"`
 	Remark     *string   `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
 	CreateTime time.Time `gorm:"column:CreateTime;type:datetime(6);not null" json:"CreateTime"`
 }

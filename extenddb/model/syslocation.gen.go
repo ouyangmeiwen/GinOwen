@@ -14,17 +14,17 @@ const TableNameSyslocation = "syslocation"
 type Syslocation struct {
 	ID                   string     `gorm:"column:Id;type:varchar(32);primaryKey" json:"Id"`
 	CreationTime         time.Time  `gorm:"column:CreationTime;type:datetime(6);not null" json:"CreationTime"`
-	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint(20)" json:"CreatorUserId"`
+	CreatorUserID        *int64     `gorm:"column:CreatorUserId;type:bigint" json:"CreatorUserId"`
 	LastModificationTime *time.Time `gorm:"column:LastModificationTime;type:datetime(6)" json:"LastModificationTime"`
-	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint(20)" json:"LastModifierUserId"`
+	LastModifierUserID   *int64     `gorm:"column:LastModifierUserId;type:bigint" json:"LastModifierUserId"`
 	IsDeleted            []uint8    `gorm:"column:IsDeleted;type:bit(1);not null" json:"IsDeleted"`
-	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint(20)" json:"DeleterUserId"`
+	DeleterUserID        *int64     `gorm:"column:DeleterUserId;type:bigint" json:"DeleterUserId"`
 	DeletionTime         *time.Time `gorm:"column:DeletionTime;type:datetime(6)" json:"DeletionTime"`
 	Code                 string     `gorm:"column:Code;type:varchar(32);not null" json:"Code"`
 	Name                 string     `gorm:"column:Name;type:varchar(128);not null" json:"Name"`
 	IsEnable             []uint8    `gorm:"column:IsEnable;type:bit(1);not null" json:"IsEnable"`
 	IsDefault            []uint8    `gorm:"column:IsDefault;type:bit(1);not null" json:"IsDefault"`
-	LocationType         int64      `gorm:"column:LocationType;type:tinyint(3) ;not null" json:"LocationType"`
+	LocationType         int64      `gorm:"column:LocationType;type:tinyint unsigned;not null" json:"LocationType"`
 	ParentID             *string    `gorm:"column:ParentId;type:varchar(32)" json:"ParentId"`
 	Longitude            float64    `gorm:"column:Longitude;type:decimal(10,6);not null" json:"Longitude"`
 	Latitude             float64    `gorm:"column:Latitude;type:decimal(10,6);not null" json:"Latitude"`
@@ -34,10 +34,10 @@ type Syslocation struct {
 	Street               *string    `gorm:"column:Street;type:varchar(32)" json:"Street"`
 	Address              *string    `gorm:"column:Address;type:varchar(128)" json:"Address"`
 	Remark               *string    `gorm:"column:Remark;type:varchar(256)" json:"Remark"`
-	TenantID             int64      `gorm:"column:TenantId;type:int(11);not null" json:"TenantId"`
-	IsForceSort          []uint8    `gorm:"column:IsForceSort;type:bit(1);not null;default:0" json:"IsForceSort"`
+	TenantID             int64      `gorm:"column:TenantId;type:int;not null" json:"TenantId"`
+	IsForceSort          []uint8    `gorm:"column:IsForceSort;type:bit(1);not null;default:b'0'" json:"IsForceSort"`
 	CatalogSort          *string    `gorm:"column:CatalogSort;type:varchar(256)" json:"CatalogSort"`
-	SortCode             *int64     `gorm:"column:SortCode;type:int(11)" json:"SortCode"`
+	SortCode             *int64     `gorm:"column:SortCode;type:int" json:"SortCode"`
 }
 
 // TableName Syslocation's table name
