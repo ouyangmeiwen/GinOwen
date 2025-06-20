@@ -17,5 +17,6 @@ func RegisterFlyReadRoutes(r *gin.Engine) {
 		api.GET("GetFlyReadToken", ApiGroup.flyreadApi.GetFlyReadToken)
 		api.POST("UploadLibItem", ApiGroup.flyreadApi.UploadLibItem)
 		api.POST("UploadTenant", ApiGroup.flyreadApi.UploadTenant)
+		api.POST("UploadStruct", ApiGroup.flyreadApi.UploadStruct)
 	}
 }

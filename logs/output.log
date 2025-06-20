@@ -1,0 +1,272 @@
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.555ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[3.680ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[2.188ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'invengodbv41' AND table_name = 'owen_role' AND table_type = 'BASE TABLE'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[0.588ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.567ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.211ms] [34;1m[rows:-][0m SELECT * FROM `owen_role` LIMIT 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[3.164ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'invengodbv41' AND table_name = 'owen_role' ORDER BY ORDINAL_POSITION
+
+2025/01/13 10:34:01 [32m
+[0m[33m[0.511ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.856ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[2.229ms] [34;1m[rows:2][0m 
+SELECT
+	TABLE_NAME,
+	COLUMN_NAME,
+	INDEX_NAME,
+	NON_UNIQUE 
+FROM
+	information_schema.STATISTICS 
+WHERE
+	TABLE_SCHEMA = 'invengodbv41' 
+	AND TABLE_NAME = 'owen_role' 
+ORDER BY
+	INDEX_NAME,
+	SEQ_IN_INDEX
+
+2025/01/13 10:34:01 [32m
+[0m[33m[0.358ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m
+[0m[33m[0.940ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.585ms] [34;1m[rows:-][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'invengodbv41' AND table_name = 'owen_role' AND constraint_name = 'uni_owen_role_name'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[0.421ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.071ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.490ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'invengodbv41' AND table_name = 'owen_user' AND table_type = 'BASE TABLE'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[0.696ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.449ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.476ms] [34;1m[rows:-][0m SELECT * FROM `owen_user` LIMIT 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[2.039ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'invengodbv41' AND table_name = 'owen_user' ORDER BY ORDINAL_POSITION
+
+2025/01/13 10:34:01 [32m
+[0m[33m[0.687ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.579ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.634ms] [34;1m[rows:3][0m 
+SELECT
+	TABLE_NAME,
+	COLUMN_NAME,
+	INDEX_NAME,
+	NON_UNIQUE 
+FROM
+	information_schema.STATISTICS 
+WHERE
+	TABLE_SCHEMA = 'invengodbv41' 
+	AND TABLE_NAME = 'owen_user' 
+ORDER BY
+	INDEX_NAME,
+	SEQ_IN_INDEX
+
+2025/01/13 10:34:01 [32m
+[0m[33m[0.354ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.323ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.416ms] [34;1m[rows:-][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'invengodbv41' AND table_name = 'owen_user' AND constraint_name = 'uni_owen_user_username'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[0.464ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.419ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:136
+[0m[33m[1.429ms] [34;1m[rows:-][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'invengodbv41' AND table_name = 'owen_user' AND constraint_name = 'fk_owen_user_role'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[0.536ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[1.634ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[1.524ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'invengodbv41' AND table_name = 'owen_role' AND table_type = 'BASE TABLE'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[0.609ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[1.346ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[0.724ms] [34;1m[rows:-][0m SELECT * FROM `owen_role` LIMIT 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[1.522ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'invengodbv41' AND table_name = 'owen_role' ORDER BY ORDINAL_POSITION
+
+2025/01/13 10:34:01 [32m
+[0m[33m[0.388ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.018ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:137
+[0m[33m[1.652ms] [34;1m[rows:2][0m 
+SELECT
+	TABLE_NAME,
+	COLUMN_NAME,
+	INDEX_NAME,
+	NON_UNIQUE 
+FROM
+	information_schema.STATISTICS 
+WHERE
+	TABLE_SCHEMA = 'invengodbv41' 
+	AND TABLE_NAME = 'owen_role' 
+ORDER BY
+	INDEX_NAME,
+	SEQ_IN_INDEX
+
+2025/01/13 10:34:01 [32m
+[0m[33m[0.428ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.037ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m
+[0m[33m[1.375ms] [34;1m[rows:-][0m SELECT count(*) FROM INFORMATION_SCHEMA.table_constraints WHERE constraint_schema = 'invengodbv41' AND table_name = 'owen_role' AND constraint_name = 'uni_owen_role_name'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[0.695ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[2.001ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.779ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'invengodbv41' AND table_name = 'owen_auditlog' AND table_type = 'BASE TABLE'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[0.697ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.566ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.315ms] [34;1m[rows:-][0m SELECT * FROM `owen_auditlog` LIMIT 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[2.070ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'invengodbv41' AND table_name = 'owen_auditlog' ORDER BY ORDINAL_POSITION
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[0.383ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.425ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.146ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'invengodbv41' AND table_name = 'owen_auditlog' AND index_name = 'idx_owen_auditlog_user_id'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[0.503ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.013ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.969ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'invengodbv41' AND table_name = 'owen_auditlog' AND index_name = 'idx_owen_auditlog_created_at'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[0.464ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.605ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:138
+[0m[33m[1.759ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'invengodbv41' AND table_name = 'owen_auditlog' AND index_name = 'idx_owen_auditlog_deleted_at'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:139
+[0m[33m[0.752ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:139
+[0m[33m[1.245ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:139
+[0m[33m[1.551ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'invengodbv41' AND table_name = 'owen_scheduledtask' AND table_type = 'BASE TABLE'
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:139
+[0m[33m[0.397ms] [34;1m[rows:-][0m SELECT DATABASE()
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:139
+[0m[33m[1.101ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'invengodbv41%' ORDER BY SCHEMA_NAME='invengodbv41' DESC,SCHEMA_NAME limit 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:139
+[0m[33m[1.063ms] [34;1m[rows:-][0m SELECT * FROM `owen_scheduledtask` LIMIT 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:139
+[0m[33m[1.837ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'invengodbv41' AND table_name = 'owen_scheduledtask' ORDER BY ORDINAL_POSITION
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:160
+[0m[33m[1.412ms] [34;1m[rows:1][0m SELECT * FROM `owen_role` ORDER BY `owen_role`.`id` LIMIT 1
+
+2025/01/13 10:34:01 [32m/home/owen/GinOwen/serviceinit/initbase.go:178
+[0m[33m[2.055ms] [34;1m[rows:1][0m SELECT * FROM `owen_user` ORDER BY `owen_user`.`id` LIMIT 1
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /swagger/*filepath        --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (6 handlers)
+[GIN-debug] HEAD   /swagger/*filepath        --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (6 handlers)
+[GIN-debug] GET    /swagger-ui/*any          --> GINOWEN/routers.InitSwag.func1 (6 handlers)
+[GIN-debug] GET    /websocket/:clientID      --> GINOWEN/extend/websocketextend.RegisterWebsocket.func1 (6 handlers)
+[GIN-debug] POST   /websocket_send           --> GINOWEN/extend/websocketextend.RegisterWebsocket.func2 (6 handlers)
+[GIN-debug] GET    /health                   --> GINOWEN/routers.InitAllRouter.func1 (6 handlers)
+[GIN-debug] POST   /GPI/GPIReceive           --> GINOWEN/api.GPIApi.GPIReceive-fm (7 handlers)
+[GIN-debug] POST   /api/services/app/Libitems/ImportExcelByName --> GINOWEN/api.(*LibItemApi).ImportExcelByName-fm (7 handlers)
+[GIN-debug] POST   /api/services/app/Libitems/ImportExcelByIndex --> GINOWEN/api.(*LibItemApi).ImportExcelByIndex-fm (7 handlers)
+[GIN-debug] POST   /api/services/app/file/UploadFile --> GINOWEN/api.(*UploadfileApi).UploadFile-fm (7 handlers)
+[GIN-debug] GET    /api/services/app/file/DownloadFile --> GINOWEN/api.(*UploadfileApi).DownloadFile-fm (7 handlers)
+[GIN-debug] POST   /api/services/app/Sysauditlmslog/CreateLmsLog --> GINOWEN/api.(*SysauditlmslogApi).CreateLmsLog-fm (8 handlers)
+[GIN-debug] DELETE /api/services/app/Sysauditlmslog/DeleteLmsLog --> GINOWEN/api.(*SysauditlmslogApi).DeleteLmsLog-fm (8 handlers)
+[GIN-debug] PUT    /api/services/app/Sysauditlmslog/UpdateLmsLog --> GINOWEN/api.(*SysauditlmslogApi).UpdateLmsLog-fm (8 handlers)
+[GIN-debug] GET    /api/services/app/Sysauditlmslog/QueryLmsLog --> GINOWEN/api.(*SysauditlmslogApi).QueryLmsLog-fm (8 handlers)
+[GIN-debug] POST   /auth/Login               --> GINOWEN/api.LoginAPI.Login-fm (7 handlers)
+[GIN-debug] POST   /auth/Register            --> GINOWEN/api.LoginAPI.Register-fm (8 handlers)
+[GIN-debug] POST   /auth/LoginOut            --> GINOWEN/api.LoginAPI.LoginOut-fm (8 handlers)
+[GIN-debug] POST   /IP/AddBlackList          --> GINOWEN/api.BlackListApi.AddBlackList-fm (8 handlers)
+[GIN-debug] POST   /IP/UnLockIp              --> GINOWEN/api.BlackListApi.UnLockIp-fm (8 handlers)
+[GIN-debug] GET    /IP/GetBlackList          --> GINOWEN/api.BlackListApi.GetBlackList-fm (8 handlers)
+[GIN-debug] POST   /MQ/SendRabbitMQMsg       --> GINOWEN/api.BlackListApi.SendRabbitMQMsg-fm (8 handlers)
+[GIN-debug] GET    /Task/AddTask             --> GINOWEN/api.ScheduledTaskApi.AddTask-fm (8 handlers)
+Key '192.168.229.1' 不存在
+Key '192.168.229.1' 不存在
+Key '192.168.229.1' 不存在
+Key '192.168.229.1' 不存在
+Key '192.168.229.1' 不存在

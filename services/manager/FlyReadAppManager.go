@@ -356,3 +356,68 @@ func (b *FlyReadAppManager) UploadTenant(tenant models.Abptenant) (resp bool, er
 
 	return true, nil
 }
+
+// 机构推送
+func (b *FlyReadAppManager) UploadStruct(_struct models.Libstruct, tenantid int) (resp bool, err error) {
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return false, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
+	fmt.Println("UploadRegion:", url)
+
+	//构建http请求
+	var payload dto.UploadRegionInput
+	payload.Container = "lcsinv"
+	payload.Component = "shelf"
+	payload.Service = "region_sync"
+	payload.Token = token
+
+	var Region_name string
+	if _struct.RoomName != nil {
+		Region_name = *_struct.RoomName
+	}
+	payload.Obj = dto.RegionObj{
+		Branch_no:   fmt.Sprintf("%d", tenantid),
+		Region_no:   fmt.Sprintf("%02d%02d%02d", _struct.BuildNo, _struct.FloorNo, _struct.RoomNo),
+		Region_name: Region_name,
+	}
+
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("UploadRegion")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.UploadBranchResp
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if !httpRespJson.Success {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return true, nil
+}

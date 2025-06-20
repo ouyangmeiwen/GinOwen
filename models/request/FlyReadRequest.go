@@ -14,3 +14,7 @@ type UploadLibItemInput struct {
 type UploadTenantInput struct {
 	Tenantid int `form:"tenantid" json:"tenantid"` // 条码集合
 }
+
+type UploadStructInput struct {
+	Structid string `form:"structid" json:"structid"` //结构ID或者结构编码
+}

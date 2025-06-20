@@ -390,6 +390,12 @@ definitions:
           type: string
         type: array
     type: object
+  request.UploadStructInput:
+    properties:
+      structid:
+        description: 结构ID或者结构编码
+        type: string
+    type: object
   request.UploadTenantInput:
     properties:
       tenantid:
@@ -663,6 +669,12 @@ definitions:
     properties:
       filePath:
         type: string
+    type: object
+  response.UploadStructDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   response.UploadTenantDto:
     properties:
@@ -995,6 +1007,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 图书推送
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/UploadStruct:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UploadStructInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UploadStructDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 结构推送
       tags:
       - FlyRead
   /api/services/app/FlyRead/UploadTenant:

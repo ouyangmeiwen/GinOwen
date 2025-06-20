@@ -559,6 +559,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/UploadStruct": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "结构推送",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UploadStructInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UploadStructDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/UploadTenant": {
             "post": {
                 "security": [
@@ -2227,6 +2277,15 @@ const docTemplate = `{
                 }
             }
         },
+        "request.UploadStructInput": {
+            "type": "object",
+            "properties": {
+                "structid": {
+                    "description": "结构ID或者结构编码",
+                    "type": "string"
+                }
+            }
+        },
         "request.UploadTenantInput": {
             "type": "object",
             "properties": {
@@ -2636,6 +2695,15 @@ const docTemplate = `{
             "properties": {
                 "filePath": {
                     "type": "string"
+                }
+            }
+        },
+        "response.UploadStructDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
                 }
             }
         },

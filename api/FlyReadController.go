@@ -188,3 +188,28 @@ func (b *FlyReadController) UploadTenant(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// UploadStruct
+// @Tags     FlyRead
+// @Summary  结构推送
+// @Produce  application/json
+// @Param    data  body       request.UploadStructInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.UploadStructDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/UploadStruct [post]
+func (b *FlyReadController) UploadStruct(c *gin.Context) {
+	var req request.UploadStructInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.UploadStructDto
+	resp, err = ServicesGroup.flyreadAppService.UploadStruct(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

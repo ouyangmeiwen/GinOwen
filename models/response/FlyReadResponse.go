@@ -11,7 +11,9 @@ type GetFlyTokenInputResp struct {
 type UploadLibItemResp struct {
 	Success bool `form:"success" json:"success"` // 是否成功
 }
-
 type UploadTenantDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}
+type UploadStructDto struct {
 	Success bool `form:"success" json:"success"` // 是否成功
 }
