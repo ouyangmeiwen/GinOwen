@@ -48,10 +48,10 @@ db:
     maxidleconns: 10
     connmaxlifetime: 30
   from:    #通过这个生成数据库脚本
-    type: mysql #空则数据库不初始化 mysql  mssql  oracle postgres sqlite
-    cancreatemodel: true #是否允许from 数据库生成model文件
-    canautomigration: false #是否允许from 数据库生成migration文件
-    canautosyndata: false #是否允许from 数据库生成syncdata文件
+    type:  #空则数据库不初始化 mysql  mssql  oracle postgres sqlite
+    cancreatemodel: false #是否允许from 数据库生成model文件
+    canautomigration: false #是否允许from 数据库生成migration文件 auto_migrate.go
+    canautosyndata: false #是否允许from 数据库生成syncdata文件  auto_sync.go
     mysql: "root:abc@123@tcp(192.168.229.130:3306)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.229.130,1433;user id=sa;password=Abc@1234;database=invengodbv4"
     oracle: "user/password@192.168.229.130:1521/service_name"
