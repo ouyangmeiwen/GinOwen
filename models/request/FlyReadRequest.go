@@ -10,3 +10,7 @@ type GetFlyTokenInput struct {
 type UploadLibItemInput struct {
 	Barcodes []string `form:"barcodes" json:"barcodes"` // 条码集合
 }
+
+type UploadTenantInput struct {
+	Tenantid int `form:"tenantid" json:"tenantid"` // 条码集合
+}

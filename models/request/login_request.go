@@ -2,7 +2,7 @@ package request
 
 // LoginRequest 用于接收前端发送的登录请求数据
 type LoginRequest struct {
-	TenantId int    `json:"tenantid" binding:"required" default:"8848"`
+	TenantId int    `json:"tenantid" binding:"required" default:"5325"`
 	Username string `json:"username" binding:"required" default:"admin"`
 	Password string `json:"password" binding:"required" default:"123456"`
 }

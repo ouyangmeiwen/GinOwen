@@ -17,7 +17,7 @@ type FlyReadAppManager struct {
 }
 
 // helloworld
-func (f FlyReadAppManager) Hello(req request.HelloInput) (resp response.HelloResp) {
+func (b *FlyReadAppManager) Hello(req request.HelloInput) (resp response.HelloResp) {
 
 	var builder strings.Builder
 	builder.WriteString(req.Name)
@@ -30,7 +30,7 @@ func (f FlyReadAppManager) Hello(req request.HelloInput) (resp response.HelloRes
 }
 
 // 盘点设置
-func (FlyReadAppManager) SetFlyReadSetting(req dto.FlyReadSetting, tenantid int) (err error) {
+func (b *FlyReadAppManager) SetFlyReadSetting(req dto.FlyReadSetting, tenantid int) (err error) {
 	// 这里可以添加逻辑来处理设置
 	var sysconfig models.Systenantconfig
 	err = global.OWEN_DB.Model(&models.Systenantconfig{}).Where("TenantId = ?", tenantid).First(&sysconfig).Error
@@ -86,7 +86,7 @@ func (FlyReadAppManager) SetFlyReadSetting(req dto.FlyReadSetting, tenantid int)
 }
 
 // 获取盘点设置
-func (FlyReadAppManager) GetFlyReadSetting(tenantid int) (resp dto.FlyReadSetting, err error) {
+func (b *FlyReadAppManager) GetFlyReadSetting(tenantid int) (resp dto.FlyReadSetting, err error) {
 
 	var cachedSetting dto.FlyReadSetting
 	found, err := utils.GetCache(fmt.Sprintf("%dFlySetting", tenantid), &cachedSetting)
@@ -131,7 +131,7 @@ func (FlyReadAppManager) GetFlyReadSetting(tenantid int) (resp dto.FlyReadSettin
 }
 
 // 获取http地址
-func (b FlyReadAppManager) getHttpBySetting(flyseting dto.FlyReadSetting) string {
+func (b *FlyReadAppManager) getHttpBySetting(flyseting dto.FlyReadSetting) string {
 
 	url := fmt.Sprintf("http://%s:%s", flyseting.FlyReadIp, flyseting.FlyReadPort)
 	if strings.Contains(flyseting.FlyReadIp, "http") || strings.Contains(flyseting.FlyReadIp, "https") {
@@ -141,7 +141,7 @@ func (b FlyReadAppManager) getHttpBySetting(flyseting dto.FlyReadSetting) string
 }
 
 // 获取http地址
-func (b FlyReadAppManager) getHttpByTenant(tenantid int) string {
+func (b *FlyReadAppManager) getHttpByTenant(tenantid int) string {
 	var flyseting dto.FlyReadSetting
 	flyseting, err := b.GetFlyReadSetting(tenantid)
 	if err != nil {
@@ -151,7 +151,7 @@ func (b FlyReadAppManager) getHttpByTenant(tenantid int) string {
 }
 
 // 获取token
-func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp string, err error) {
+func (b *FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp string, err error) {
 	if !IsForceRefresh {
 		key := fmt.Sprintf("%d", tenantid)
 		var token string
@@ -188,33 +188,34 @@ func (b FlyReadAppManager) GetToken(tenantid int, IsForceRefresh bool) (resp str
 		"Cookie":    fmt.Sprintf("tenant={%d}", tenantid),
 	}
 	// 发起 POST 请求
-	var tokenResp string
-	tokenResp, err = utils.GetFileContent("GetToken")
+	var httpResp string
+	httpResp, err = utils.GetFileContent("GetToken")
 	if err != nil {
 		fmt.Println("请求参数" + string(data))
-		tokenResp, err = utils.Post(url, data, headers)
+		httpResp, err = utils.Post(url, data, headers)
 		if err != nil {
 			fmt.Println("请求失败:", err)
 			return
 		}
-		if tokenResp == "" {
+		if httpResp == "" {
 			return "", fmt.Errorf("获取飞读Token失败，返回结果为空")
 		}
+		fmt.Println("请求返回" + httpResp)
 	}
-	var tokenData dto.GetTokenDto2
-	err = json.Unmarshal([]byte(tokenResp), &tokenData)
+	var httpRespJson dto.GetTokenDto2
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
 	if err != nil {
 		fmt.Println("JSON 反序列化失败:", err)
 	}
-	if tokenData.Code != 0 {
-		return "", fmt.Errorf("获取Token失败，错误代码: %d, 错误信息: %s", tokenData.Code, tokenData.Msg)
+	if httpRespJson.Code != 0 {
+		return "", fmt.Errorf("获取Token失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
 	}
-	utils.SetCache(fmt.Sprintf("%d", tenantid), tokenData.Data.AccessToken, 50*time.Minute) //缓存设置
-	return tokenData.Data.AccessToken, nil
+	utils.SetCache(fmt.Sprintf("%d", tenantid), httpRespJson.Data.AccessToken, 50*time.Minute) //缓存设置
+	return httpRespJson.Data.AccessToken, nil
 }
 
 // 图书推送
-func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (resp bool, msg string, err error) {
+func (b *FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (resp bool, msg string, err error) {
 
 	var token string
 	token, err = b.GetToken(tenantid, false)
@@ -224,11 +225,11 @@ func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (re
 	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
 	fmt.Println("UploadLibItem:", url)
 
-	input := dto.UploadBookInfoInput{}
-	input.Container = "lcsinv"
-	input.Component = "shelf"
-	input.Service = "service"
-	input.Token = token
+	payload := dto.UploadBookInfoInput{}
+	payload.Container = "lcsinv"
+	payload.Component = "shelf"
+	payload.Service = "service"
+	payload.Token = token
 	for _, item := range lst {
 		var bookitem dto.BookItem
 		bookitem.Asset_id = item.Barcode
@@ -255,11 +256,11 @@ func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (re
 		bookitem.Status = fmt.Sprintf("%d", item.ItemState)
 		bookitem.Collection_time = item.CreationTime.Format("2006-01-02 15:04:05")
 		bookitem.Shelf_time = ""
-		input.Obj.Books = append(input.Obj.Books, bookitem)
+		payload.Obj.Books = append(payload.Obj.Books, bookitem)
 	}
 
 	// 将 map 序列化为 JSON 字节
-	data, err := json.Marshal(input)
+	data, err := json.Marshal(payload)
 	if err != nil {
 		fmt.Println("JSON 序列化失败:", err)
 		return false, "", fmt.Errorf("JSON 序列化失败" + err.Error())
@@ -271,28 +272,87 @@ func (b FlyReadAppManager) UploadLibItem(lst []models.Libitem, tenantid int) (re
 		"Authorization": fmt.Sprintf("Bearer %s", token),
 	}
 	// 发起 POST 请求
-	var UploadLibItemResp string
-	UploadLibItemResp, err = utils.GetFileContent("UploadLibItem")
+	var httpResp string
+	httpResp, err = utils.GetFileContent("UploadLibItem")
 	if err != nil {
 		fmt.Println("请求参数" + string(data))
-		UploadLibItemResp, err = utils.Post(url, data, headers)
+		httpResp, err = utils.Post(url, data, headers)
 		if err != nil {
 			fmt.Println("请求失败:", err)
-			return false, "", fmt.Errorf("获取飞读Token失败，返回结果为空" + err.Error())
+			return false, "", fmt.Errorf("失败，返回结果为空" + err.Error())
 		}
-		if UploadLibItemResp == "" {
-			return false, "", fmt.Errorf("获取飞读Token失败，返回结果为空")
+		if httpResp == "" {
+			return false, "", fmt.Errorf("失败，返回结果为空")
 		}
+		fmt.Println("请求返回" + httpResp)
 	}
-	var uploadLibItemResp dto.UploadBookInfoResp
-	err = json.Unmarshal([]byte(UploadLibItemResp), &uploadLibItemResp)
+	var httpRespJson dto.UploadBookInfoResp
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
 	if err != nil {
 		fmt.Println("JSON 反序列化失败:", err)
 		return false, "", fmt.Errorf("JSON 反序列化失败" + err.Error())
 	}
-	return uploadLibItemResp.Success, uploadLibItemResp.Message, err
+	return httpRespJson.Success, httpRespJson.Message, err
 }
 
-func (b FlyReadAppManager) UploadTenant() {
+// 租户推送
+func (b *FlyReadAppManager) UploadTenant(tenant models.Abptenant) (resp bool, err error) {
 
+	tenantid := int(tenant.ID)
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return false, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
+	fmt.Println("UploadTenant:", url)
+
+	//构建http请求
+	var payload dto.UploadBranchInput
+	payload.Container = "lcsinv"
+	payload.Component = "shelf"
+	payload.Service = "branch_sync"
+	payload.Token = token
+	payload.Obj = dto.Brandobj{
+		Branch_no:   fmt.Sprintf("%d", tenant.ID),
+		Branch_name: tenant.Name,
+	}
+
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("UploadTenant")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.UploadBranchResp
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if !httpRespJson.Success {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+
+	return true, nil
 }

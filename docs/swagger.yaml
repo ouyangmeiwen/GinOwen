@@ -302,7 +302,7 @@ definitions:
         default: "123456"
         type: string
       tenantid:
-        default: 8848
+        default: 5325
         type: integer
       username:
         default: admin
@@ -389,6 +389,12 @@ definitions:
         items:
           type: string
         type: array
+    type: object
+  request.UploadTenantInput:
+    properties:
+      tenantid:
+        description: 条码集合
+        type: integer
     type: object
   response.AddScheduledTaskDto:
     type: object
@@ -532,6 +538,8 @@ definitions:
         type: integer
       DeletionTime:
         type: string
+      FirstCallNo:
+        type: string
       Id:
         type: string
       IsBosseyed:
@@ -540,6 +548,8 @@ definitions:
         type: boolean
       IsEnable:
         type: boolean
+      LastCallNo:
+        type: string
       LastModificationTime:
         type: string
       LastModifierUserId:
@@ -653,6 +663,12 @@ definitions:
     properties:
       filePath:
         type: string
+    type: object
+  response.UploadTenantDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   utils.Response:
     properties:
@@ -857,7 +873,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 返回清单
+          description: 返回
           schema:
             allOf:
             - $ref: '#/definitions/utils.Response'
@@ -883,7 +899,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 返回token
+          description: 返回
           schema:
             allOf:
             - $ref: '#/definitions/utils.Response'
@@ -909,7 +925,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 返回清单
+          description: 返回
           schema:
             allOf:
             - $ref: '#/definitions/utils.Response'
@@ -939,7 +955,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 返回清单
+          description: 返回
           schema:
             allOf:
             - $ref: '#/definitions/utils.Response'
@@ -966,7 +982,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 返回结果
+          description: 返回
           schema:
             allOf:
             - $ref: '#/definitions/utils.Response'
@@ -979,6 +995,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 图书推送
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/UploadTenant:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UploadTenantInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UploadTenantDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 分馆推送
       tags:
       - FlyRead
   /api/services/app/LibRow/QueryRows:

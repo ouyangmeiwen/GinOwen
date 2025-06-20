@@ -40,3 +40,22 @@ func (f *FlyReadAppService) UploadLibItem(req request.UploadLibItemInput, tenant
 	return resp, nil
 
 }
+
+func (f *FlyReadAppService) UploadTenant(input request.UploadTenantInput) (resp response.UploadTenantDto, err error) {
+
+	var tenant models.Abptenant
+	err = global.OWEN_DB.Model(&models.Abptenant{}).Where("id=?", input.Tenantid).First(&tenant).Error
+	if err != nil {
+		return resp, err
+	}
+	if tenant.ID == 0 {
+		return resp, fmt.Errorf("error tenantid")
+	}
+	var bol bool
+	bol, err = ManagerGroup.frymanager.UploadTenant(tenant)
+	if err != nil {
+		return resp, err
+	}
+	resp.Success = bol
+	return resp, nil
+}

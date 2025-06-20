@@ -341,7 +341,7 @@ const docTemplate = `{
                 "summary": "获取当前机构的飞阅参数",
                 "responses": {
                     "200": {
-                        "description": "返回清单",
+                        "description": "返回",
                         "schema": {
                             "allOf": [
                                 {
@@ -388,7 +388,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "返回token",
+                        "description": "返回",
                         "schema": {
                             "allOf": [
                                 {
@@ -435,7 +435,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "返回清单",
+                        "description": "返回",
                         "schema": {
                             "allOf": [
                                 {
@@ -488,7 +488,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "返回清单",
+                        "description": "返回",
                         "schema": {
                             "allOf": [
                                 {
@@ -536,7 +536,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "返回结果",
+                        "description": "返回",
                         "schema": {
                             "allOf": [
                                 {
@@ -547,6 +547,56 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/response.UploadLibItemResp"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/UploadTenant": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "分馆推送",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UploadTenantInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UploadTenantDto"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -2052,7 +2102,7 @@ const docTemplate = `{
                 },
                 "tenantid": {
                     "type": "integer",
-                    "default": 8848
+                    "default": 5325
                 },
                 "username": {
                     "type": "string",
@@ -2174,6 +2224,15 @@ const docTemplate = `{
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "request.UploadTenantInput": {
+            "type": "object",
+            "properties": {
+                "tenantid": {
+                    "description": "条码集合",
+                    "type": "integer"
                 }
             }
         },
@@ -2390,6 +2449,9 @@ const docTemplate = `{
                 "DeletionTime": {
                     "type": "string"
                 },
+                "FirstCallNo": {
+                    "type": "string"
+                },
                 "Id": {
                     "type": "string"
                 },
@@ -2401,6 +2463,9 @@ const docTemplate = `{
                 },
                 "IsEnable": {
                     "type": "boolean"
+                },
+                "LastCallNo": {
+                    "type": "string"
                 },
                 "LastModificationTime": {
                     "type": "string"
@@ -2571,6 +2636,15 @@ const docTemplate = `{
             "properties": {
                 "filePath": {
                     "type": "string"
+                }
+            }
+        },
+        "response.UploadTenantDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
                 }
             }
         },

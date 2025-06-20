@@ -19,14 +19,14 @@ type BookObj struct {
 	Books []BookItem `json:"books"` //书籍列表
 }
 type UploadBookInfoInput struct {
-	Container string  `default:"lcsinv" json:"container"`        //容器名称
-	Component string  `default:"shelf" json:"component"`         //组件名称
-	Service   string  `default:"collection_sync" json:"service"` //服务名称
+	Container string  `default:"lcsinv" json:"container"`        //容器名称 lcsinv
+	Component string  `default:"shelf" json:"component"`         //组件名称 shelf
+	Service   string  `default:"collection_sync" json:"service"` //服务名称 collection_sync
 	Token     string  `json:"token"`                             //飞阅Token
 	Obj       BookObj `json:"obj"`                               //书籍对象
 }
 
 type UploadBookInfoResp struct {
 	FlyReadBaseResp
-	obj string
+	Obj string `json:"obj"`
 }
