@@ -88,3 +88,25 @@ func (f *FlyReadAppService) UploadStruct(input request.UploadStructInput, tenant
 	resp.Success = bol
 	return resp, nil
 }
+
+// 推送图书定位
+func (f *FlyReadAppService) UploadLibItemLoc(input request.UploadLibItemLocInput, tenantid int) (resp response.UploadLibItemLocDto, err error) {
+	if len(input.Layercode) <= 0 {
+		return resp, fmt.Errorf("layercode集合不能空")
+	}
+	var lst []models.Libitemlocinfo
+	err = global.OWEN_DB.Model(&models.Libitemlocinfo{}).Where("IsDeleted=0 and LayerCode in ?", input.Layercode).Find(&lst).Error
+	if err != nil {
+		return resp, err
+	}
+	if len(lst) <= 0 {
+		return resp, fmt.Errorf("layercode  is invalid")
+	}
+	var bol bool
+	bol, err = ManagerGroup.frymanager.UploadLibItemLoc(lst, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.Success = bol
+	return resp, nil
+}

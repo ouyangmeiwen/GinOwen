@@ -18,3 +18,7 @@ type UploadTenantInput struct {
 type UploadStructInput struct {
 	Structid string `form:"structid" json:"structid"` //结构ID或者结构编码
 }
+
+type UploadLibItemLocInput struct {
+	Layercode []string `form:"layercode" json:"layercode"` // 层架集合
+}

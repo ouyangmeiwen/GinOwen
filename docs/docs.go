@@ -559,6 +559,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/UploadLibItemLoc": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "推送图书定位",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UploadLibItemLocInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UploadLibItemLocDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/UploadStruct": {
             "post": {
                 "security": [
@@ -2277,6 +2327,18 @@ const docTemplate = `{
                 }
             }
         },
+        "request.UploadLibItemLocInput": {
+            "type": "object",
+            "properties": {
+                "layercode": {
+                    "description": "层架集合",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "request.UploadStructInput": {
             "type": "object",
             "properties": {
@@ -2680,6 +2742,15 @@ const docTemplate = `{
         },
         "response.UpdateLmsLogDto": {
             "type": "object"
+        },
+        "response.UploadLibItemLocDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                }
+            }
         },
         "response.UploadLibItemResp": {
             "type": "object",

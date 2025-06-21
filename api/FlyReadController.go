@@ -213,3 +213,28 @@ func (b *FlyReadController) UploadStruct(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// UploadLibItemLoc
+// @Tags     FlyRead
+// @Summary  推送图书定位
+// @Produce  application/json
+// @Param    data  body       request.UploadLibItemLocInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.UploadLibItemLocDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/UploadLibItemLoc [post]
+func (b *FlyReadController) UploadLibItemLoc(c *gin.Context) {
+	var req request.UploadLibItemLocInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.UploadLibItemLocDto
+	resp, err = ServicesGroup.flyreadAppService.UploadLibItemLoc(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

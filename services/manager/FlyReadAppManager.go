@@ -421,3 +421,72 @@ func (b *FlyReadAppManager) UploadStruct(_struct models.Libstruct, tenantid int)
 	}
 	return true, nil
 }
+
+// 推送图书定位
+func (b *FlyReadAppManager) UploadLibItemLoc(lst []models.Libitemlocinfo, tenantid int) (resp bool, err error) {
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return false, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/base/collection/create-case-item"
+	fmt.Println("UploadLibItemLoc:", url)
+
+	//构建http请求
+	var payload []dto.UploadBookLocInput
+
+	locmap := make(map[string][]models.Libitemlocinfo)
+	//按照层码分类处理成map
+	for _, val := range lst {
+		key := *val.LayerCode
+		locmap[key] = append(locmap[key], val)
+	}
+	//循环map 把数据构建好
+	for key, vals := range locmap {
+		var it dto.UploadBookLocInput
+		it.CaseNo = key
+		for _, item := range vals {
+			if item.ItemBarcode != "" {
+				it.AssetIdSet = append(it.AssetIdSet, item.ItemBarcode)
+			}
+		}
+		payload = append(payload, it)
+	}
+
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("UploadLibItemLoc")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.UploadBookInfoLocDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return true, nil
+}

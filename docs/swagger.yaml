@@ -390,6 +390,14 @@ definitions:
           type: string
         type: array
     type: object
+  request.UploadLibItemLocInput:
+    properties:
+      layercode:
+        description: 层架集合
+        items:
+          type: string
+        type: array
+    type: object
   request.UploadStructInput:
     properties:
       structid:
@@ -658,6 +666,12 @@ definitions:
   response.UpdateInventoryDto:
     type: object
   response.UpdateLmsLogDto:
+    type: object
+  response.UploadLibItemLocDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   response.UploadLibItemResp:
     properties:
@@ -1007,6 +1021,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 图书推送
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/UploadLibItemLoc:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UploadLibItemLocInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UploadLibItemLocDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 推送图书定位
       tags:
       - FlyRead
   /api/services/app/FlyRead/UploadStruct:
