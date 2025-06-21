@@ -7,8 +7,10 @@ import (
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
 	"GINOWEN/utils"
+	"GINOWEN/utils/parallel"
 	"encoding/json"
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 )
@@ -481,6 +483,140 @@ func (b *FlyReadAppManager) UploadLibItemLoc(lst []models.Libitemlocinfo, tenant
 		fmt.Println("请求返回" + httpResp)
 	}
 	var httpRespJson dto.UploadBookInfoLocDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return true, nil
+}
+
+// 书架推送
+func (b *FlyReadAppManager) UploadRow(row models.Librow,
+	shelfs []models.Libshelf,
+	layers []models.Liblayer,
+	structs []models.Libstruct,
+	tenantid int) (resp bool, err error) {
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return false, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
+	fmt.Println("UploadRow:", url)
+
+	//构建http请求
+	var payload dto.UploadLayersInput
+	payload.Container = "lcsinv"
+	payload.Component = "shelf"
+	payload.Service = "shelf_sync"
+	payload.Token = token
+
+	needShelfs := make(map[string][]models.Libshelf) //按照面分组
+	layermap := make(map[string][]models.Liblayer)   //根据shelfid 分层
+	for _, val := range shelfs {
+		if val.Code != nil {
+			code := utils.SafeSubstring(*val.Code, 0, len(*val.Code)-3)
+			needShelfs[code] = append(needShelfs[code], val)
+		}
+	}
+	// 提取并排序 key
+	keys := make([]string, 0, len(needShelfs))
+	for key := range needShelfs {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys) // 升序排序，如需降序可用 sort.Sort(sort.Reverse(sort.StringSlice(keys)))
+	for _, code := range keys {
+		columns := needShelfs[code]
+
+		shelf_no := code               //面编码
+		side := *columns[0].Side       //AB面
+		shelf_name := *row.Name + side //面名称
+		needStruct := parallel.SmartFilter(structs, 1, 1, func(ly models.Libstruct) bool {
+			return *columns[0].StructID == ly.ID
+		})
+		region_no := fmt.Sprintf("%02d%02d%02d", needStruct[0].BuildNo, needStruct[0].FloorNo, needStruct[0].RoomNo)
+		for _, col := range columns {
+			col_layers := parallel.SmartFilter(layers, 1, 1, func(ly models.Liblayer) bool {
+				return ly.ShelfID == col.ID
+			})
+			layermap[col.ID] = append(layermap[col.ID], col_layers...)
+		}
+		sidelshelfs := dto.UploadLayersShelf{} //面信息
+		sidelshelfs.Shelf_info = dto.UploadLayersShelf_info{
+			Shelf_no:      shelf_no,
+			Shelf_name:    shelf_name,
+			Branch_no:     fmt.Sprintf("%d", tenantid),
+			Case_num:      6,
+			Region_no:     region_no,
+			Column_num:    len(columns),
+			Side:          side,
+			First_call_no: "",
+			Last_call_no:  "",
+		}
+		sidelshelfs.Columns = []dto.UploadLayersColumns{} //面下面的列信息
+		for _, col := range columns {
+			var it dto.UploadLayersColumns
+			it.Column_info = dto.UploadLayersColumnInfo{
+				Column_no:     *col.Code,
+				Column_name:   *col.Name,
+				Shelf_no:      shelf_no,
+				Case_num:      6,
+				Column_seq:    int(col.ShelfNo),
+				First_call_no: "",
+				Last_call_no:  "",
+			}
+			it.Cases = []dto.UploadLayersCase{}
+			layer := layermap[col.ID]
+			if len(layer) > 0 {
+				for _, ly := range layer {
+					lydto := dto.UploadLayersCase{
+						Case_no:       *ly.Code,
+						Case_name:     ly.Name,
+						Shelf_no:      shelf_no,
+						Column_no:     *col.Code,
+						Case_seq:      int(ly.LayerNo),
+						First_call_no: "",
+						Last_call_no:  "",
+					}
+					it.Cases = append(it.Cases, lydto)
+				}
+			}
+			sidelshelfs.Columns = append(sidelshelfs.Columns, it)
+		}
+		payload.Obj.Shelfs = append(payload.Obj.Shelfs, sidelshelfs)
+	}
+
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("UploadRow")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.UploadLayersDto
 	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
 	if err != nil {
 		fmt.Println("JSON 反序列化失败:", err)

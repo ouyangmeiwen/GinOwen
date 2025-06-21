@@ -22,3 +22,6 @@ type UploadStructInput struct {
 type UploadLibItemLocInput struct {
 	Layercode []string `form:"layercode" json:"layercode"` // 层架集合
 }
+type UploadRowInput struct {
+	RowNos []int `form:"rownos" json:"rownos"` // 架号
+}

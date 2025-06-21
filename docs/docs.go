@@ -609,6 +609,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/UploadRow": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "推送图书定位",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UploadRowInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UploadRowDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/UploadStruct": {
             "post": {
                 "security": [
@@ -2339,6 +2389,18 @@ const docTemplate = `{
                 }
             }
         },
+        "request.UploadRowInput": {
+            "type": "object",
+            "properties": {
+                "rownos": {
+                    "description": "架号",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
         "request.UploadStructInput": {
             "type": "object",
             "properties": {
@@ -2766,6 +2828,15 @@ const docTemplate = `{
             "properties": {
                 "filePath": {
                     "type": "string"
+                }
+            }
+        },
+        "response.UploadRowDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
                 }
             }
         },

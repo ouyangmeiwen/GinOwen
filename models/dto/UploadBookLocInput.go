@@ -5,6 +5,5 @@ type UploadBookLocInput struct {
 	AssetIdSet []string `json:"assetIdSet"`
 }
 type UploadBookInfoLocDto struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	FlyReadBaseResp
 }

@@ -398,6 +398,14 @@ definitions:
           type: string
         type: array
     type: object
+  request.UploadRowInput:
+    properties:
+      rownos:
+        description: 架号
+        items:
+          type: integer
+        type: array
+    type: object
   request.UploadStructInput:
     properties:
       structid:
@@ -683,6 +691,12 @@ definitions:
     properties:
       filePath:
         type: string
+    type: object
+  response.UploadRowDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   response.UploadStructDto:
     properties:
@@ -1043,6 +1057,34 @@ paths:
             - properties:
                 data:
                   $ref: '#/definitions/response.UploadLibItemLocDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 推送图书定位
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/UploadRow:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UploadRowInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UploadRowDto'
                 msg:
                   type: string
               type: object

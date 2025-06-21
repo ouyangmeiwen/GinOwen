@@ -238,3 +238,28 @@ func (b *FlyReadController) UploadLibItemLoc(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// UploadRow
+// @Tags     FlyRead
+// @Summary  推送图书定位
+// @Produce  application/json
+// @Param    data  body       request.UploadRowInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.UploadRowDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/UploadRow [post]
+func (b *FlyReadController) UploadRow(c *gin.Context) {
+	var req request.UploadRowInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.UploadRowDto
+	resp, err = ServicesGroup.flyreadAppService.UploadRow(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

@@ -20,3 +20,6 @@ type UploadStructDto struct {
 type UploadLibItemLocDto struct {
 	Success bool `form:"success" json:"success"` // 是否成功
 }
+type UploadRowDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}
