@@ -7,7 +7,6 @@ import (
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
 	"GINOWEN/utils"
-	"GINOWEN/utils/parallel"
 	"encoding/json"
 	"fmt"
 	"sort"
@@ -534,14 +533,30 @@ func (b *FlyReadAppManager) UploadRow(row models.Librow,
 		shelf_no := code               //面编码
 		side := *columns[0].Side       //AB面
 		shelf_name := *row.Name + side //面名称
-		needStruct := parallel.SmartFilter(structs, 1, 1, func(ly models.Libstruct) bool {
-			return *columns[0].StructID == ly.ID
-		})
-		region_no := fmt.Sprintf("%02d%02d%02d", needStruct[0].BuildNo, needStruct[0].FloorNo, needStruct[0].RoomNo)
+		// needStruct := parallel.SmartFilter(structs, 1, 1, func(ly models.Libstruct) bool {
+		// 	return *columns[0].StructID == ly.ID
+		// })
+		var needStruct models.Libstruct
+		for _, val := range structs {
+			if *columns[0].StructID == val.ID {
+				needStruct = val
+				break
+			}
+		}
+
+		region_no := fmt.Sprintf("%02d%02d%02d", needStruct.BuildNo, needStruct.FloorNo, needStruct.RoomNo)
 		for _, col := range columns {
-			col_layers := parallel.SmartFilter(layers, 1, 1, func(ly models.Liblayer) bool {
-				return ly.ShelfID == col.ID
-			})
+			// col_layers := parallel.SmartFilter(layers, 1, 1, func(ly models.Liblayer) bool {
+			// 	return ly.ShelfID == col.ID
+			// })
+
+			var col_layers []models.Liblayer
+			for _, val := range layers {
+				if val.ShelfID == col.ID {
+					col_layers = append(col_layers, val)
+				}
+			}
+
 			layermap[col.ID] = append(layermap[col.ID], col_layers...)
 		}
 		sidelshelfs := dto.UploadLayersShelf{} //面信息
