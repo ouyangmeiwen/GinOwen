@@ -3,8 +3,10 @@ package services
 import (
 	"GINOWEN/global"
 	"GINOWEN/models"
+	"GINOWEN/models/dto"
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
+	"GINOWEN/utils"
 	"fmt"
 	"strconv"
 )
@@ -197,5 +199,41 @@ func (f *FlyReadAppService) UploadRow(input request.UploadRowInput, tenantid int
 		}
 	}
 	resp.Success = true
+	return resp, nil
+}
+
+// 盘点指令下发
+func (f *FlyReadAppService) Inventory(req request.InventoryInput, tenantid int) (resp response.InventoryDto, err error) {
+
+	if req.Workid == "" {
+		req.Workid = utils.UUID32()
+	}
+	var layers []models.Liblayer
+	if !req.IsAll {
+		layers, err = ManagerGroup.frymanager.GetEnableLayers(tenantid, req.IsAll, req.Devicetype, req.RobotId, req.RobotRouterId)
+		if err != nil {
+			return resp, err
+		}
+		var layerneed []models.Liblayer
+		for _, ly := range layers {
+			for _, id := range req.Layerids {
+				if id == ly.ID || (ly.Code != nil && id == *ly.Code) {
+					layerneed = append(layerneed, ly)
+				}
+			}
+		}
+
+		if len(layerneed) != len(req.Layerids) {
+			return resp, fmt.Errorf("启用层不匹配！")
+		}
+		layers = layerneed
+	}
+
+	var dto_resp dto.InventoryDto
+	dto_resp, err = ManagerGroup.frymanager.Inventory(req.IsAll, req.Workid, req.Triggers, req.Workname, layers, tenantid, req.Devicetype, req.RobotId, req.RobotRouterId)
+	if err != nil {
+		return resp, err
+	}
+	resp.Success = dto_resp.Success
 	return resp, nil
 }

@@ -411,6 +411,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/GetRobotRouterlist": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取机器人规划路线列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "robotid",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetRobotRouterlistDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/Hello": {
             "get": {
                 "security": [
@@ -449,6 +495,56 @@ const docTemplate = `{
                                             "items": {
                                                 "$ref": "#/definitions/response.HelloResp"
                                             }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/Inventory": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "盘点指令下发",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InventoryInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.InventoryDto"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -799,10 +895,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/response.QueryRowDto"
-                                            }
+                                            "$ref": "#/definitions/response.QueryRowDto"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -1831,6 +1924,70 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.FlyReadLayer": {
+            "type": "object",
+            "properties": {
+                "callNo": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "itemBarcode": {
+                    "type": "string"
+                },
+                "layerFaultNums": {
+                    "type": "integer"
+                },
+                "layerNo": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "preCallNo": {
+                    "type": "string"
+                },
+                "side": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.FlyReadRow": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "rowFaultNum": {
+                    "type": "integer"
+                },
+                "rowNo": {
+                    "type": "integer"
+                },
+                "rowType": {
+                    "type": "integer"
+                },
+                "rowUsageType": {
+                    "type": "integer"
+                },
+                "shelfs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.FlyReadShelf"
+                    }
+                }
+            }
+        },
         "dto.FlyReadSetting": {
             "type": "object",
             "properties": {
@@ -1900,6 +2057,58 @@ const docTemplate = `{
                 },
                 "rowShape": {
                     "description": "书架形状 U型还是同序 0或者空则默认 U型，1则表示同序",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.FlyReadShelf": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isBindShelfPoint": {
+                    "type": "boolean"
+                },
+                "layers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.FlyReadLayer"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "shelfFaultNum": {
+                    "type": "integer"
+                },
+                "shelfNo": {
+                    "type": "integer"
+                },
+                "side": {
+                    "type": "string"
+                },
+                "structId": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.FlyRouter": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.FlyReadRow"
+                    }
+                },
+                "routerId": {
+                    "type": "string"
+                },
+                "routerName": {
                     "type": "string"
                 }
             }
@@ -2238,6 +2447,38 @@ const docTemplate = `{
                 }
             }
         },
+        "request.InventoryInput": {
+            "type": "object",
+            "properties": {
+                "IsAll": {
+                    "type": "boolean"
+                },
+                "devicetype": {
+                    "type": "string"
+                },
+                "layerids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "robotId": {
+                    "type": "string"
+                },
+                "robotRouterId": {
+                    "type": "string"
+                },
+                "triggers": {
+                    "type": "integer"
+                },
+                "workid": {
+                    "type": "string"
+                },
+                "workname": {
+                    "type": "string"
+                }
+            }
+        },
         "request.LoginRequest": {
             "type": "object",
             "required": [
@@ -2457,6 +2698,18 @@ const docTemplate = `{
                 }
             }
         },
+        "response.GetRobotRouterlistDto": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "description": "是否成功",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.FlyRouter"
+                    }
+                }
+            }
+        },
         "response.HelloResp": {
             "type": "object",
             "properties": {
@@ -2476,6 +2729,15 @@ const docTemplate = `{
         },
         "response.ImportExcelDto": {
             "type": "object"
+        },
+        "response.InventoryDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                }
+            }
         },
         "response.LiblayerDto": {
             "type": "object",

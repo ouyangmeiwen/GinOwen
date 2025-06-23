@@ -1,4 +1,46 @@
 definitions:
+  dto.FlyReadLayer:
+    properties:
+      callNo:
+        type: string
+      code:
+        type: string
+      id:
+        type: string
+      itemBarcode:
+        type: string
+      layerFaultNums:
+        type: integer
+      layerNo:
+        type: integer
+      name:
+        type: string
+      preCallNo:
+        type: string
+      side:
+        type: string
+    type: object
+  dto.FlyReadRow:
+    properties:
+      code:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      rowFaultNum:
+        type: integer
+      rowNo:
+        type: integer
+      rowType:
+        type: integer
+      rowUsageType:
+        type: integer
+      shelfs:
+        items:
+          $ref: '#/definitions/dto.FlyReadShelf'
+        type: array
+    type: object
   dto.FlyReadSetting:
     properties:
       flyAddLoc:
@@ -51,6 +93,40 @@ definitions:
         type: string
       rowShape:
         description: 书架形状 U型还是同序 0或者空则默认 U型，1则表示同序
+        type: string
+    type: object
+  dto.FlyReadShelf:
+    properties:
+      code:
+        type: string
+      id:
+        type: string
+      isBindShelfPoint:
+        type: boolean
+      layers:
+        items:
+          $ref: '#/definitions/dto.FlyReadLayer'
+        type: array
+      name:
+        type: string
+      shelfFaultNum:
+        type: integer
+      shelfNo:
+        type: integer
+      side:
+        type: string
+      structId:
+        type: string
+    type: object
+  dto.FlyRouter:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/dto.FlyReadRow'
+        type: array
+      routerId:
+        type: string
+      routerName:
         type: string
     type: object
   models.Libiteminventoryinfo:
@@ -296,6 +372,27 @@ definitions:
     - path
     - tenantid
     type: object
+  request.InventoryInput:
+    properties:
+      IsAll:
+        type: boolean
+      devicetype:
+        type: string
+      layerids:
+        items:
+          type: string
+        type: array
+      robotId:
+        type: string
+      robotRouterId:
+        type: string
+      triggers:
+        type: integer
+      workid:
+        type: string
+      workname:
+        type: string
+    type: object
   request.LoginRequest:
     properties:
       password:
@@ -443,6 +540,14 @@ definitions:
       totalCount:
         type: integer
     type: object
+  response.GetRobotRouterlistDto:
+    properties:
+      items:
+        description: 是否成功
+        items:
+          $ref: '#/definitions/dto.FlyRouter'
+        type: array
+    type: object
   response.HelloResp:
     properties:
       message:
@@ -456,6 +561,12 @@ definitions:
         type: boolean
     type: object
   response.ImportExcelDto:
+    type: object
+  response.InventoryDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   response.LiblayerDto:
     properties:
@@ -954,6 +1065,31 @@ paths:
       summary: 查询token
       tags:
       - FlyRead
+  /api/services/app/FlyRead/GetRobotRouterlist:
+    get:
+      parameters:
+      - in: query
+        name: robotid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetRobotRouterlistDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取机器人规划路线列表
+      tags:
+      - FlyRead
   /api/services/app/FlyRead/Hello:
     get:
       parameters:
@@ -980,6 +1116,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 查询书架
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/Inventory:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.InventoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.InventoryDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 盘点指令下发
       tags:
       - FlyRead
   /api/services/app/FlyRead/SetFlyReadSetting:
@@ -1170,9 +1334,7 @@ paths:
             - $ref: '#/definitions/utils.Response'
             - properties:
                 data:
-                  items:
-                    $ref: '#/definitions/response.QueryRowDto'
-                  type: array
+                  $ref: '#/definitions/response.QueryRowDto'
                 msg:
                   type: string
               type: object

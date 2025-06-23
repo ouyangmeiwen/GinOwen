@@ -669,3 +669,466 @@ func (b *FlyReadAppManager) UploadRow(row models.Librow,
 	}
 	return true, nil
 }
+
+// 典藏-根据盘点类型查询对应绑定层位编号集合
+func (b *FlyReadAppManager) GetCaselistbyinv(input dto.CaselistbyinvInput, tenantid int) (resp dto.CaselistbyinvDto, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/base/collection/case-list-by-inv?deviceType=" + input.DeviceType
+	fmt.Println("GetCaselistbyinv:", url)
+
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("GetCaselistbyinv")
+	if err != nil {
+		httpResp, err = utils.Get(url, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.CaselistbyinvDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}
+
+// 典藏-根据盘点类型查询对应绑定层位编号集合
+func (b *FlyReadAppManager) GetRobotlist(input dto.RobotlistInput, tenantid int) (resp dto.RobotlistDto, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/robot-camera/collection/robot-list"
+	fmt.Println("GetRobotlist:", url)
+
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("GetRobotlist")
+	if err != nil {
+		httpResp, err = utils.Get(url, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.RobotlistDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}
+
+// 典藏管理对接-路线列表
+func (b *FlyReadAppManager) GetRouterlist(input dto.RouterlistInput, tenantid int) (resp dto.RouterlistDto, err error) {
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/robot-camera/collection/router-list?id=" + input.Id
+	fmt.Println("GetRouterlist:", url)
+
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("GetRouterlist")
+	if err != nil {
+		httpResp, err = utils.Get(url, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.RouterlistDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}
+
+// 通过机器人获取点位相关的书架信息
+func (b *FlyReadAppManager) GetRobotRouterlist(robotid string, tenantid int) (resp []dto.FlyRouter, err error) {
+	var input dto.RouterlistInput
+	input.Id = robotid
+	var lst dto.RouterlistDto
+	lst, err = b.GetRouterlist(input, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	if len(lst.Data) > 0 {
+		var resp_GetEnableRow dto.GetEnableRowDto
+		resp_GetEnableRow, err = b.GetEnableRow(false, "2", tenantid)
+		if err != nil {
+			return resp, err
+		}
+		for _, item := range lst.Data {
+			var r dto.FlyRouter
+			r.RouterId = item.Id
+			r.RouterName = item.RouterName
+
+			var cloneRows []dto.FlyReadRow
+			bytes, _ := json.Marshal(resp_GetEnableRow.Items)
+			_ = json.Unmarshal(bytes, &cloneRows)
+
+			for ri := range cloneRows {
+				for si := range cloneRows[ri].Shelfs {
+					var filteredLayers []dto.FlyReadLayer
+					for _, layer := range cloneRows[ri].Shelfs[si].Layers {
+						for _, code := range item.CaseNoList {
+							if layer.Code == code {
+								filteredLayers = append(filteredLayers, layer)
+							}
+						}
+					}
+					cloneRows[ri].Shelfs[si].Layers = filteredLayers // ✅ 这样才会真正修改到 cloneRows 的内容
+				}
+
+				for ri := range cloneRows {
+					var filteredShelfs []dto.FlyReadShelf
+					for _, shelf := range cloneRows[ri].Shelfs {
+						if len(shelf.Layers) > 0 {
+							filteredShelfs = append(filteredShelfs, shelf)
+						}
+					}
+					cloneRows[ri].Shelfs = filteredShelfs
+				}
+			}
+
+			for _, row := range cloneRows {
+				if len(row.Shelfs) > 0 {
+					r.Items = append(r.Items, row)
+				}
+			}
+
+			resp = append(resp, r)
+		}
+	}
+	return resp, nil
+}
+
+// 层架查询
+func (b *FlyReadAppManager) LayerQuery(isQueryAll bool, devicetype string, tenantid int) (resp_rows []models.Librow, resp_shelfs []models.Libshelf, resp_layers []models.Liblayer, err error) {
+	var rows []models.Librow
+	var shelfs []models.Libshelf
+	var layers []models.Liblayer
+	if isQueryAll {
+		err = global.OWEN_DB.Model(&models.Librow{}).Where("IsDeleted =0 and TenantId=?", tenantid).Find(&rows).Error
+		if err != nil {
+			return rows, shelfs, layers, err
+		}
+
+		err = global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted =0 and IsEnable=1 and TenantId=?", tenantid).Find(&shelfs).Error
+		if err != nil {
+			return rows, shelfs, layers, err
+		}
+		err = global.OWEN_DB.Model(&models.Liblayer{}).Where("IsDeleted =0 and IsEnable=1 and TenantId=?", tenantid).Find(&layers).Error
+		if err != nil {
+			return rows, shelfs, layers, err
+		}
+
+	} else {
+
+		//1 Normal
+		//2 Theme
+		//3 VisualInventory
+		err = global.OWEN_DB.Model(&models.Librow{}).Where("IsDeleted =0 and TenantId=? and RowUsageType=?", tenantid, 3).Find(&rows).Error
+		if err != nil {
+			return rows, shelfs, layers, err
+		}
+		var rowids []string
+		for _, r := range rows {
+			rowids = append(rowids, r.ID)
+		}
+		err = global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted =0 and IsEnable=1 and TenantId=? and RowIdentity in ?", tenantid, rowids).Find(&shelfs).Error
+		if err != nil {
+			return rows, shelfs, layers, err
+		}
+		var shelfids []string
+		for _, s := range shelfs {
+			shelfids = append(shelfids, s.ID)
+		}
+		err = global.OWEN_DB.Model(&models.Liblayer{}).Where("IsDeleted =0 and IsEnable=1 and TenantId=? and ShelfId in ?", tenantid, shelfids).Find(&layers).Error
+		if err != nil {
+			return rows, shelfs, layers, err
+		}
+		if devicetype != "" {
+			if devicetype == "2" {
+				return rows, shelfs, layers, err
+			} else {
+				var cas_input dto.CaselistbyinvInput
+				cas_input.DeviceType = devicetype
+				var cas_resp dto.CaselistbyinvDto
+				cas_resp, err = b.GetCaselistbyinv(cas_input, tenantid)
+				if err != nil {
+					return rows, shelfs, layers, err
+				} else {
+					var ly []models.Liblayer
+					if len(cas_resp.Data) > 0 {
+						for _, cas_ly_code := range cas_resp.Data {
+							for _, first := range layers {
+								if first.Code != nil &&
+									cas_ly_code == *first.Code &&
+									first.OriginType != nil &&
+									*first.OriginType == 10 { //10表示 智能典藏启用的层架位
+									ly = append(ly, first)
+									break
+								}
+							}
+						}
+					}
+					return rows, shelfs, ly, err
+				}
+			}
+		}
+	}
+
+	return
+}
+
+// 获取可用的层架
+func (b *FlyReadAppManager) GetEnableLayers(tenantid int, isQueryAll bool, devicetype string, robotId string, robotRouterId string) (resp []models.Liblayer, err error) {
+	_, _, layers, e := b.LayerQuery(isQueryAll, devicetype, tenantid)
+	if e != nil {
+		return resp, err
+	}
+	if devicetype == "2" && len(layers) > 0 {
+		var router_list_input dto.RouterlistInput
+		router_list_input.Id = robotId
+		var router_list_resp dto.RouterlistDto
+		router_list_resp, err = b.GetRouterlist(router_list_input, tenantid)
+		if err != nil {
+			return resp, err
+		}
+		if router_list_resp.Code != 0 {
+			return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", router_list_resp.Code, router_list_resp.Msg)
+		}
+		for _, r := range router_list_resp.Data {
+			if r.Id == robotRouterId {
+				var lys []models.Liblayer
+				for _, ly_code := range r.CaseNoList {
+					for _, ly := range layers {
+						if ly.Code != nil && ly_code == *ly.Code {
+							lys = append(lys, ly)
+						}
+					}
+				}
+				return lys, nil
+			}
+		}
+
+	}
+	return layers, nil
+}
+
+// 获取可用的书架信息
+func (b *FlyReadAppManager) GetEnableRow(isQueryAll bool, devicetype string, tenantid int) (resp dto.GetEnableRowDto, err error) {
+	rows, shelfs, layers, e := b.LayerQuery(isQueryAll, devicetype, tenantid)
+	if e != nil {
+		return resp, err
+	}
+
+	for _, r := range rows {
+		var row dto.FlyReadRow
+
+		for _, sh := range shelfs {
+			if sh.RowIdentity != r.ID {
+				continue
+			}
+			var flshelf dto.FlyReadShelf
+			for _, ly := range layers {
+				if ly.ShelfID != sh.ID {
+					continue
+				}
+				var flly dto.FlyReadLayer
+				flly.Id = ly.ID
+				flly.Code = *ly.Code
+				flly.Name = ly.Name
+				flly.Side = ly.Side
+				flly.LayerNo = int(ly.LayerNo)
+				flshelf.Layers = append(flshelf.Layers, flly)
+			}
+
+			if len(flshelf.Layers) > 0 {
+				flshelf.Id = sh.ID
+				if sh.Code != nil {
+					flshelf.Code = *sh.Code
+				}
+				if sh.Name != nil {
+					flshelf.Name = *sh.Name
+				}
+				flshelf.ShelfNo = int(sh.ShelfNo)
+				flshelf.Side = *sh.Side
+				if sh.StructID != nil {
+					flshelf.StructId = *sh.StructID
+				}
+				row.Shelfs = append(row.Shelfs, flshelf)
+			}
+		}
+
+		row.Id = r.ID
+		if r.Code != nil {
+			row.Code = *r.Code
+		}
+		if r.Name != nil {
+			row.Name = *r.Name
+		}
+		row.RowNo = int(r.RowNo)
+		row.RowType = int(r.RowType)
+		row.RowUsageType = int(r.RowUsageType)
+		resp.Items = append(resp.Items, row)
+	}
+
+	return resp, nil
+}
+
+// 下发盘点任务
+func (b *FlyReadAppManager) Inventory(IsAll bool,
+	workid string,
+	triggersatus int,
+	workname string,
+	lst []models.Liblayer,
+	tenantid int,
+	devicetype string,
+	robotId string,
+	robotRouterId string) (resp dto.InventoryDto, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/inv/collection/task-check"
+	fmt.Println("Inventory:", url)
+
+	//pre input
+	var input dto.InventoryInput
+	//input.Token = token
+	workType := ""
+	switch triggersatus {
+	case 0: //间隔盘点
+		workType = "INTERVAL"
+	case 1: //自定义盘点
+		workType = "CUSTOM"
+	case 2: //触发盘点
+		workType = "TRIGGER"
+	default:
+		workType = "CUSTOM" //默认自定盘点
+	}
+	if triggersatus == 1 {
+		if IsAll {
+			workType = "CUSTOM_1"
+			IsAll = false
+		} else {
+			workType = "CUSTOM_2"
+		}
+	}
+
+	input.Obj.CheckAll = IsAll
+	input.Obj.WorkType = workType
+	input.Obj.WorkId = workid
+	input.Obj.WorkName = workname
+	if !input.Obj.CheckAll {
+		for _, ly := range lst {
+			var it dto.InventoryCheckList
+			if ly.Code == nil {
+				continue
+			}
+			it.CaseNo = *ly.Code
+			it.CaseName = ly.Name
+			input.Obj.CheckList = append(input.Obj.CheckList, it)
+		}
+	}
+	input.Obj.DeviceType = devicetype
+	input.Obj.RobotId = robotId
+	input.Obj.RobotRouterId = robotRouterId
+
+	//构建http请求
+	payload := input.Obj
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("Inventory")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.TaskCheckDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	resp.Code = 0
+	resp.Errors = append(resp.Errors, httpRespJson.Data.FailCases...)
+	return resp, nil
+}

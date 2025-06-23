@@ -18,7 +18,7 @@ type LibrowApi struct {
 // @Summary  查询书架
 // @Produce  application/json
 // @Param    data  query     request.QueryRowInput 			true  "参数"
-// @Success  200   {object}  utils.Response{data=[]response.QueryRowDto,msg=string}  "返回清单"
+// @Success  200   {object}  utils.Response{data=response.QueryRowDto,msg=string}  "返回清单"
 // @Security BearerAuth
 // @Router   /api/services/app/LibRow/QueryRows [get]
 func (b *LibrowApi) QueryRows(c *gin.Context) {

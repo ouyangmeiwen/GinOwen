@@ -25,3 +25,17 @@ type UploadLibItemLocInput struct {
 type UploadRowInput struct {
 	RowNos []int `form:"rownos" json:"rownos"` // 架号
 }
+type InventoryInput struct {
+	IsAll         bool     `form:"IsAll" json:"IsAll"`
+	Workid        string   `form:"workid" json:"workid"`
+	Triggers      int      `form:"triggers" json:"triggers"`
+	Workname      string   `form:"workname" json:"workname"`
+	Layerids      []string `form:"layerids" json:"layerids"`
+	Devicetype    string   `form:"devicetype" json:"devicetype"`
+	RobotId       string   `form:"robotId" json:"robotId"`
+	RobotRouterId string   `form:"robotRouterId" json:"robotRouterId"`
+}
+
+type GetRobotRouterlistInput struct {
+	Robotid string `form:"robotid" json:"robotid"`
+}

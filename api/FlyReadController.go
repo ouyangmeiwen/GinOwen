@@ -263,3 +263,54 @@ func (b *FlyReadController) UploadRow(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// Inventory
+// @Tags     FlyRead
+// @Summary  盘点指令下发
+// @Produce  application/json
+// @Param    data  body       request.InventoryInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.InventoryDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/Inventory [post]
+func (b *FlyReadController) Inventory(c *gin.Context) {
+	var req request.InventoryInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.InventoryDto
+	resp, err = ServicesGroup.flyreadAppService.Inventory(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// GetRobotRouterlist
+// @Tags     FlyRead
+// @Summary  获取机器人规划路线列表
+// @Produce  application/json
+// @Param    data  query       request.GetRobotRouterlistInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.GetRobotRouterlistDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetRobotRouterlist [get]
+func (b *FlyReadController) GetRobotRouterlist(c *gin.Context) {
+
+	var req request.GetRobotRouterlistInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.GetRobotRouterlistDto
+	resp.Items, err = ServicesGroup.flyReadAppManager.GetRobotRouterlist(req.Robotid, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

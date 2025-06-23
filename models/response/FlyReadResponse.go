@@ -1,5 +1,7 @@
 package response
 
+import "GINOWEN/models/dto"
+
 type HelloResp struct {
 	Message string `json:"message"` // 响应消息
 	Status  int    `json:"status"`  // 响应状态码
@@ -22,4 +24,10 @@ type UploadLibItemLocDto struct {
 }
 type UploadRowDto struct {
 	Success bool `form:"success" json:"success"` // 是否成功
+}
+type InventoryDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}
+type GetRobotRouterlistDto struct {
+	Items []dto.FlyRouter `form:"items" json:"items"` // 是否成功
 }
