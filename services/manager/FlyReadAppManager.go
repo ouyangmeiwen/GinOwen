@@ -530,9 +530,16 @@ func (b *FlyReadAppManager) UploadRow(row models.Librow,
 	for _, code := range keys {
 		columns := needShelfs[code]
 
-		shelf_no := code               //面编码
-		side := *columns[0].Side       //AB面
-		shelf_name := *row.Name + side //面名称
+		shelf_no := code //面编码
+		side := "A"
+		if len(columns) > 0 && columns[0].Side == nil {
+			side = *columns[0].Side //AB面
+		}
+		row_name := ""
+		if row.Name != nil {
+			row_name = *row.Name
+		}
+		shelf_name := row_name + side //面名称
 		// needStruct := parallel.SmartFilter(structs, 1, 1, func(ly models.Libstruct) bool {
 		// 	return *columns[0].StructID == ly.ID
 		// })
@@ -574,24 +581,45 @@ func (b *FlyReadAppManager) UploadRow(row models.Librow,
 		sidelshelfs.Columns = []dto.UploadLayersColumns{} //面下面的列信息
 		for _, col := range columns {
 			var it dto.UploadLayersColumns
+			col_code := ""
+			if col.Code != nil {
+				col_code = *col.Code
+			}
+			col_name := ""
+			if col.Name != nil {
+				col_name = *col.Name
+			}
+			firstcallno := ""
+			if col.FirstCallNo != nil {
+				firstcallno = *col.FirstCallNo
+			}
+			lastcallno := ""
+			if col.LastCallNo != nil {
+				lastcallno = *col.LastCallNo
+			}
+
 			it.Column_info = dto.UploadLayersColumnInfo{
-				Column_no:     *col.Code,
-				Column_name:   *col.Name,
+				Column_no:     col_code,
+				Column_name:   col_name,
 				Shelf_no:      shelf_no,
 				Case_num:      6,
 				Column_seq:    int(col.ShelfNo),
-				First_call_no: "",
-				Last_call_no:  "",
+				First_call_no: firstcallno,
+				Last_call_no:  lastcallno,
 			}
 			it.Cases = []dto.UploadLayersCase{}
 			layer := layermap[col.ID]
 			if len(layer) > 0 {
 				for _, ly := range layer {
+					ly_code := ""
+					if ly.Code != nil {
+						ly_code = *ly.Code
+					}
 					lydto := dto.UploadLayersCase{
-						Case_no:       *ly.Code,
+						Case_no:       ly_code,
 						Case_name:     ly.Name,
 						Shelf_no:      shelf_no,
-						Column_no:     *col.Code,
+						Column_no:     col_code,
 						Case_seq:      int(ly.LayerNo),
 						First_call_no: "",
 						Last_call_no:  "",

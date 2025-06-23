@@ -113,9 +113,13 @@ func (f *FlyReadAppService) UploadLibItemLoc(input request.UploadLibItemLocInput
 
 // 层架推送
 func (f *FlyReadAppService) UploadRow(input request.UploadRowInput, tenantid int) (resp response.UploadRowDto, err error) {
+	islimitquery := false
+	if len(input.RowNos) > 0 {
+		islimitquery = true
+	}
 	var rows []models.Librow
 	row_query := global.OWEN_DB.Model(&models.Librow{}).Where("IsDeleted=0 and TenantId=?", tenantid)
-	if len(input.RowNos) > 0 {
+	if islimitquery {
 		row_query = row_query.Where("RowNo in ?", input.RowNos)
 	}
 	err = row_query.Find(&rows).Error
@@ -131,7 +135,11 @@ func (f *FlyReadAppService) UploadRow(input request.UploadRowInput, tenantid int
 	}
 	var shelfs []models.Libshelf
 	shelfs_map := make(map[string][]models.Libshelf) //按照架分号的列
-	err = global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted=0 and IsEnable=1 and TenantId=?", tenantid).Where("RowIdentity in ?", rowids).Find(&shelfs).Error
+	shelf_query := global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted=0 and IsEnable=1 and TenantId=?", tenantid)
+	if islimitquery {
+		shelf_query = shelf_query.Where("RowIdentity in ?", rowids)
+	}
+	err = shelf_query.Find(&shelfs).Error
 	if err != nil {
 		return resp, err
 	}
@@ -161,7 +169,11 @@ func (f *FlyReadAppService) UploadRow(input request.UploadRowInput, tenantid int
 	}
 	var layers []models.Liblayer
 	layers_map := make(map[string][]models.Liblayer) //按照列分号的层
-	err = global.OWEN_DB.Model(&models.Liblayer{}).Where("IsDeleted=0 and TenantId=?", tenantid).Where("ShelfId in ?", shelfids).Find(&layers).Error
+	layer_query := global.OWEN_DB.Model(&models.Liblayer{}).Where("IsDeleted=0 and TenantId=?", tenantid)
+	if islimitquery {
+		layer_query = layer_query.Where("ShelfId in ?", shelfids)
+	}
+	err = layer_query.Find(&layers).Error
 	if err != nil {
 		return resp, err
 	}
