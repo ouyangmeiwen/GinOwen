@@ -608,6 +608,13 @@ definitions:
     type: object
   response.DeleteLmsLogDto:
     type: object
+  response.GetEnableRowDto:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/dto.FlyReadRow'
+        type: array
+    type: object
   response.GetFlyTokenInputResp:
     properties:
       accessToken:
@@ -622,6 +629,30 @@ definitions:
         type: array
       totalCount:
         type: integer
+    type: object
+  response.GetInventorySetDto:
+    properties:
+      deviceType:
+        description: 设备类型
+        type: string
+      interval:
+        description: 盘点间隔时间
+        type: integer
+      inventoryEndDate:
+        description: 盘点结束时间
+        type: string
+      inventoryStartDate:
+        description: 盘点开始时间
+        type: string
+      isEnable:
+        description: 是否启用
+        type: boolean
+      sysEndTime:
+        description: 系统结束时间
+        type: string
+      sysStartTime:
+        description: 系统开始时间
+        type: string
     type: object
   response.GetRobotRouterlistDto:
     properties:
@@ -1155,6 +1186,36 @@ paths:
       summary: 添加任务
       tags:
       - Task
+  /api/services/app/FlyRead/GetEnableRow:
+    get:
+      parameters:
+      - description: 设备类型
+        in: query
+        name: devicetype
+        type: string
+      - description: 是否查询全部行
+        in: query
+        name: isQueryAll
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetEnableRowDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取可用的层架关系
+      tags:
+      - FlyRead
   /api/services/app/FlyRead/GetFlyReadSetting:
     get:
       produces:
@@ -1200,6 +1261,27 @@ paths:
       security:
       - BearerAuth: []
       summary: 查询token
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/GetInventorySet:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetInventorySetDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取盘点设置
       tags:
       - FlyRead
   /api/services/app/FlyRead/GetRobotRouterlist:

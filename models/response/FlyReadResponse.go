@@ -41,3 +41,15 @@ type InventoryListDto struct {
 type SetBussinessDto struct {
 	Success bool `form:"success" json:"success"` // 是否成功
 }
+type GetInventorySetDto struct {
+	SysStartTime       string `json:"sysStartTime"`       // 系统开始时间
+	SysEndTime         string `json:"sysEndTime"`         // 系统结束时间
+	IsEnable           bool   `json:"isEnable"`           // 是否启用
+	InventoryStartDate string `json:"inventoryStartDate"` // 盘点开始时间
+	InventoryEndDate   string `json:"inventoryEndDate"`   // 盘点结束时间
+	Interval           int    `json:"interval"`           // 盘点间隔时间
+	DeviceType         string `json:"deviceType"`         // 设备类型
+}
+type GetEnableRowDto struct {
+	dto.GetEnableRowDto
+}

@@ -325,6 +325,59 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/GetEnableRow": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取可用的层架关系",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "设备类型",
+                        "name": "devicetype",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否查询全部行",
+                        "name": "isQueryAll",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetEnableRowDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetFlyReadSetting": {
             "get": {
                 "security": [
@@ -399,6 +452,45 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/response.GetFlyTokenInputResp"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/GetInventorySet": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取盘点设置",
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetInventorySetDto"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -2938,6 +3030,17 @@ const docTemplate = `{
         "response.DeleteLmsLogDto": {
             "type": "object"
         },
+        "response.GetEnableRowDto": {
+            "type": "object",
+            "properties": {
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.FlyReadRow"
+                    }
+                }
+            }
+        },
         "response.GetFlyTokenInputResp": {
             "type": "object",
             "properties": {
@@ -2958,6 +3061,39 @@ const docTemplate = `{
                 },
                 "totalCount": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.GetInventorySetDto": {
+            "type": "object",
+            "properties": {
+                "deviceType": {
+                    "description": "设备类型",
+                    "type": "string"
+                },
+                "interval": {
+                    "description": "盘点间隔时间",
+                    "type": "integer"
+                },
+                "inventoryEndDate": {
+                    "description": "盘点结束时间",
+                    "type": "string"
+                },
+                "inventoryStartDate": {
+                    "description": "盘点开始时间",
+                    "type": "string"
+                },
+                "isEnable": {
+                    "description": "是否启用",
+                    "type": "boolean"
+                },
+                "sysEndTime": {
+                    "description": "系统结束时间",
+                    "type": "string"
+                },
+                "sysStartTime": {
+                    "description": "系统开始时间",
+                    "type": "string"
                 }
             }
         },

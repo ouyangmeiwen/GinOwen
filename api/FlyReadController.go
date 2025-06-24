@@ -389,3 +389,55 @@ func (b *FlyReadController) SetBussiness(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// GetInventorySet
+// @Tags     FlyRead
+// @Summary  获取盘点设置
+// @Produce  application/json
+// @Param    data  query       request.GetInventorySetInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.GetInventorySetDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetInventorySet [get]
+func (b *FlyReadController) GetInventorySet(c *gin.Context) {
+
+	var req request.GetInventorySetInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.GetInventorySetDto
+	resp, err = ServicesGroup.flyreadAppService.GetInventorySet(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// GetEnableRow
+// @Tags     FlyRead
+// @Summary  获取可用的层架关系
+// @Produce  application/json
+// @Param    data  query       request.GetEnableRowInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.GetEnableRowDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetEnableRow [get]
+func (b *FlyReadController) GetEnableRow(c *gin.Context) {
+
+	var req request.GetEnableRowInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.GetEnableRowDto
+	resp, err = ServicesGroup.flyreadAppService.GetEnableRow(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

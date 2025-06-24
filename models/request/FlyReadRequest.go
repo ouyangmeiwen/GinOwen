@@ -58,3 +58,10 @@ type SetBussinessInput struct {
 	ShowOff    string `form:"showOff" json:"showOff"`              // 是否显示离架数据
 	Shape      string `form:"shape" json:"shape"`                  // 书架形状 U型还是同序 0或者空则默认 U型，1则表示同序
 }
+type GetInventorySetInput struct {
+}
+
+type GetEnableRowInput struct {
+	IsQueryAll bool   `form:"isQueryAll" json:"isQueryAll"` // 是否查询全部行
+	Devicetype string `form:"devicetype" json:"devicetype"` // 设备类型
+}
