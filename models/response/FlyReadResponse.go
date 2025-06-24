@@ -38,3 +38,6 @@ type InventoryHisDto struct {
 type InventoryListDto struct {
 	List []dto.InventoryHisRespObj `json:"list"` // 盘点列表
 }
+type SetBussinessDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}

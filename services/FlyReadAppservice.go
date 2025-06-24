@@ -270,3 +270,43 @@ func (f *FlyReadAppService) InventoryList(req request.InventoryListInput, tenant
 	resp.List = dto_resp.Obj.List
 	return resp, nil
 }
+
+func (f *FlyReadAppService) SetBussiness(input request.SetBussinessInput, tenantid int) (resp response.SetBussinessDto, err error) {
+	var sets dto.FlyReadSetting
+	sets, err = ManagerGroup.frymanager.GetFlyReadSetting(tenantid)
+	if err != nil {
+		return resp, err
+	}
+	if input.Addloc == "" || input.Newlocmode == "" || input.Lostday == "" {
+		return resp, fmt.Errorf("addloc, newlocmode, lostday 不能为空")
+	}
+	sets.FlyAddLoc = input.Addloc
+	sets.FlyNewLocMode = input.Newlocmode
+	sets.FlyLostDay = input.Lostday
+	switch input.Newlocmode {
+	case "1":
+		sets.FlyLocType = "2"
+		sets.FlyTempLoc = ""
+	case "2":
+		sets.FlyLocType = "2"
+		sets.FlyTempLoc = "1"
+	case "3":
+		sets.FlyLocType = "2"
+		sets.FlyTempLoc = "2"
+	case "4":
+		sets.FlyLocType = "1"
+	case "5":
+		sets.FlyLocType = "0"
+	}
+	if input.Shape == "0" || input.Shape == "1" {
+		sets.RowShape = input.Shape
+	} else {
+		sets.RowShape = "0"
+	}
+	err = ManagerGroup.frymanager.SetFlyReadSetting(sets, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.Success = true
+	return resp, nil
+}

@@ -50,3 +50,11 @@ type InventoryListInput struct {
 	DtStart   string `form:"dtStart" json:"dtStart" default:"2025-01-01"` // 开始时间
 	DtEnd     string `form:"dtEnd" json:"dtEnd" default:"2025-01-10"`     // 结束时间
 }
+type SetBussinessInput struct {
+	Addloc     string `form:"addloc" json:"addloc"`                // 0:则不上架 1:自动上架  默认自动上架
+	Newlocmode string `form:"newlocmode" json:"newlocmode"`        // 1无定位 2自动定位 3配置定位 4RFID首书定位  5 RFID强制定位
+	Lostday    string `form:"lostday" json:"lostday"`              // 疑似丢失判定天数
+	Mode       string `binding:"required" form:"mode" json:"mode"` // 0:OCR;1:OCR+条码 默认ocr
+	ShowOff    string `form:"showOff" json:"showOff"`              // 是否显示离架数据
+	Shape      string `form:"shape" json:"shape"`                  // 书架形状 U型还是同序 0或者空则默认 U型，1则表示同序
+}

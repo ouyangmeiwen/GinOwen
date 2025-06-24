@@ -364,3 +364,28 @@ func (b *FlyReadController) InventoryList(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// SetBussiness
+// @Tags     FlyRead
+// @Summary  设置业务规则
+// @Produce  application/json
+// @Param    data  body       request.SetBussinessInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.SetBussinessDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/SetBussiness [post]
+func (b *FlyReadController) SetBussiness(c *gin.Context) {
+	var req request.SetBussinessInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.SetBussinessDto
+	resp, err = ServicesGroup.flyreadAppService.SetBussiness(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

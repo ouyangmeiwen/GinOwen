@@ -649,6 +649,56 @@
                 }
             }
         },
+        "/api/services/app/FlyRead/SetBussiness": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "设置业务规则",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SetBussinessInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.SetBussinessDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/SetFlyReadSetting": {
             "post": {
                 "security": [
@@ -2710,6 +2760,38 @@
                 }
             }
         },
+        "request.SetBussinessInput": {
+            "type": "object",
+            "required": [
+                "mode"
+            ],
+            "properties": {
+                "addloc": {
+                    "description": "0:则不上架 1:自动上架  默认自动上架",
+                    "type": "string"
+                },
+                "lostday": {
+                    "description": "疑似丢失判定天数",
+                    "type": "string"
+                },
+                "mode": {
+                    "description": "0:OCR;1:OCR+条码 默认ocr",
+                    "type": "string"
+                },
+                "newlocmode": {
+                    "description": "1无定位 2自动定位 3配置定位 4RFID首书定位  5 RFID强制定位",
+                    "type": "string"
+                },
+                "shape": {
+                    "description": "书架形状 U型还是同序 0或者空则默认 U型，1则表示同序",
+                    "type": "string"
+                },
+                "showOff": {
+                    "description": "是否显示离架数据",
+                    "type": "string"
+                }
+            }
+        },
         "request.UnLockIpInput": {
             "type": "object",
             "properties": {
@@ -3287,6 +3369,15 @@
         },
         "response.SendMqMsgDto": {
             "type": "object"
+        },
+        "response.SetBussinessDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                }
+            }
         },
         "response.ShowBlackListDto": {
             "type": "object",
