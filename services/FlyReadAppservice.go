@@ -310,3 +310,47 @@ func (f *FlyReadAppService) SetBussiness(input request.SetBussinessInput, tenant
 	resp.Success = true
 	return resp, nil
 }
+
+// 获取盘点设置
+func (f *FlyReadAppService) GetInventorySet(input request.GetInventorySetInput, tenantid int) (resp response.GetInventorySetDto, err error) {
+	fset, e := ManagerGroup.frymanager.GetFlyReadSetting(tenantid)
+	if e != nil {
+		return resp, e
+	}
+	var firsttask models.Libinventorytask
+	err = global.OWEN_DB.Model(&models.Libinventorytask{}).Where("TenantId=? and IsDeleted=0 and OriginType=10 and TaskType=0 and TriggerSatus=0", tenantid).First(&firsttask).Error
+	if err != nil {
+		return resp, fmt.Errorf("获取盘点设置失败: %v", err)
+	}
+	if firsttask.ID == "" {
+		return resp, fmt.Errorf("没有设置盘点任务")
+	}
+	resp.SysStartTime = fset.FlyStartTime
+	resp.SysEndTime = fset.FlyEndTime
+	resp.IsEnable = utils.Uint8slicetoboolslice(firsttask.IsEnable)
+	if firsttask.InventoryStartDate != nil {
+		resp.InventoryStartDate = firsttask.InventoryStartDate.Format("2006-01-02")
+	} else {
+		resp.InventoryStartDate = ""
+	}
+	if firsttask.InventoryEndDate != nil {
+		resp.InventoryEndDate = firsttask.InventoryEndDate.Format("2006-01-02")
+	} else {
+		resp.InventoryEndDate = ""
+	}
+	resp.Interval = int(firsttask.Interval)
+	if firsttask.DeviceType != nil {
+		resp.DeviceType = *firsttask.DeviceType
+	}
+	return resp, nil
+}
+
+func (f *FlyReadAppService) GetEnableRow(input request.GetEnableRowInput, tenantid int) (resp response.GetEnableRowDto, err error) {
+	var dto_resp dto.GetEnableRowDto
+	dto_resp, err = ManagerGroup.frymanager.GetEnableRow(input.IsQueryAll, input.Devicetype, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.GetEnableRowDto = dto_resp
+	return resp, nil
+}

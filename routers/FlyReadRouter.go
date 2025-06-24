@@ -25,5 +25,7 @@ func RegisterFlyReadRoutes(r *gin.Engine) {
 		api.POST("InventoryHis", ApiGroup.flyreadApi.InventoryHis)
 		api.POST("InventoryList", ApiGroup.flyreadApi.InventoryList)
 		api.POST("SetBussiness", ApiGroup.flyreadApi.SetBussiness)
+		api.GET("GetInventorySet", ApiGroup.flyreadApi.GetInventorySet)
+		api.GET("GetEnableRow", ApiGroup.flyreadApi.GetEnableRow)
 	}
 }

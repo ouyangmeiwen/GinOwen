@@ -865,7 +865,6 @@ func (b *FlyReadAppManager) LayerQuery(isQueryAll bool, devicetype string, tenan
 		if err != nil {
 			return rows, shelfs, layers, err
 		}
-
 		err = global.OWEN_DB.Model(&models.Libshelf{}).Where("IsDeleted =0 and IsEnable=1 and TenantId=?", tenantid).Find(&shelfs).Error
 		if err != nil {
 			return rows, shelfs, layers, err
@@ -930,8 +929,7 @@ func (b *FlyReadAppManager) LayerQuery(isQueryAll bool, devicetype string, tenan
 			}
 		}
 	}
-
-	return
+	return rows, shelfs, layers, err
 }
 
 // 获取可用的层架
