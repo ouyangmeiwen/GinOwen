@@ -9,6 +9,7 @@ import (
 	"GINOWEN/utils"
 	"fmt"
 	"strconv"
+	"time"
 )
 
 type FlyReadAppService struct {
@@ -235,5 +236,37 @@ func (f *FlyReadAppService) Inventory(req request.InventoryInput, tenantid int) 
 		return resp, err
 	}
 	resp.Success = dto_resp.Success
+	return resp, nil
+}
+
+func (f *FlyReadAppService) InventoryHis(req request.InventoryHisInput, tenantid int) (resp response.InventoryHisDto, err error) {
+	var dto_resp dto.InventoryHisDto
+	dto_resp, err = ManagerGroup.frymanager.InventoryHis(req.IsHistory, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.Success = dto_resp.Success
+	resp.InventoryHisRespObj = dto_resp.Obj
+	return resp, nil
+}
+
+func (f *FlyReadAppService) InventoryList(req request.InventoryListInput, tenantid int) (resp response.InventoryListDto, err error) {
+	var dto_resp dto.InventoryListDto
+	var dtstart time.Time
+	var dtend time.Time
+	dtstart, err = utils.ParseTime(req.DtStart, "2006-01-02")
+	if err != nil {
+		return resp, fmt.Errorf("开始时间格式错误: %v", err)
+	}
+	dtend, err = utils.ParseTime(req.DtEnd, "2006-01-02")
+	if err != nil {
+		return resp, fmt.Errorf("结束时间格式错误: %v", err)
+	}
+
+	dto_resp, err = ManagerGroup.frymanager.InventoryList(req.PageIndex, req.PageSize, dtstart, dtend, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.List = dto_resp.Obj.List
 	return resp, nil
 }

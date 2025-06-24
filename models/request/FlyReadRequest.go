@@ -39,3 +39,14 @@ type InventoryInput struct {
 type GetRobotRouterlistInput struct {
 	Robotid string `form:"robotid" json:"robotid"`
 }
+
+type InventoryHisInput struct {
+	IsHistory bool `json:"isHistory" form:"isHistory"` // 是否历史盘点
+}
+
+type InventoryListInput struct {
+	PageIndex int    `form:"pageIndex" json:"pageIndex"`                  // 页码
+	PageSize  int    `form:"pageSize" json:"pageSize"`                    // 页大小
+	DtStart   string `form:"dtStart" json:"dtStart" default:"2025-01-01"` // 开始时间
+	DtEnd     string `form:"dtEnd" json:"dtEnd" default:"2025-01-10"`     // 结束时间
+}

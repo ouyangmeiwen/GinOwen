@@ -557,6 +557,106 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/InventoryHis": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "盘点任务查询",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InventoryHisInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.InventoryHisDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/InventoryList": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "盘点摄像头历史任务查询",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InventoryListInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.InventoryListDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/SetFlyReadSetting": {
             "post": {
                 "security": [
@@ -2113,6 +2213,55 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.InventoryHisRespObj": {
+            "type": "object",
+            "properties": {
+                "assertCount": {
+                    "description": "馆藏总数",
+                    "type": "integer"
+                },
+                "bookCount": {
+                    "description": "已盘点图书",
+                    "type": "integer"
+                },
+                "checkAll": {
+                    "description": "是否全馆",
+                    "type": "boolean"
+                },
+                "checkType": {
+                    "description": "\"REALTIME\",//任务类型",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "\"2024-05-03 17:44:58\",//创建时间",
+                    "type": "string"
+                },
+                "deviceType": {
+                    "description": "\"CAMERA\",//盘点设备类型",
+                    "type": "string"
+                },
+                "finishNum": {
+                    "description": "完成个数",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "\"EXPORTED\",//盘点任务状态 INIT-创建 COLLECTING-采集 COMPUTED-盘点 EXPORTED-盘点完成 FAILED-失败",
+                    "type": "string"
+                },
+                "taskAllNum": {
+                    "description": "盘点总个数",
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "description": "\"2024-05-03 17:47:58\",//更新时间",
+                    "type": "string"
+                },
+                "workId": {
+                    "description": "\"706441161815887872\",//盘点id",
+                    "type": "string"
+                }
+            }
+        },
         "models.Libiteminventoryinfo": {
             "type": "object",
             "properties": {
@@ -2447,6 +2596,15 @@ const docTemplate = `{
                 }
             }
         },
+        "request.InventoryHisInput": {
+            "type": "object",
+            "properties": {
+                "isHistory": {
+                    "description": "是否历史盘点",
+                    "type": "boolean"
+                }
+            }
+        },
         "request.InventoryInput": {
             "type": "object",
             "properties": {
@@ -2476,6 +2634,29 @@ const docTemplate = `{
                 },
                 "workname": {
                     "type": "string"
+                }
+            }
+        },
+        "request.InventoryListInput": {
+            "type": "object",
+            "properties": {
+                "dtEnd": {
+                    "description": "结束时间",
+                    "type": "string",
+                    "default": "2025-01-10"
+                },
+                "dtStart": {
+                    "description": "开始时间",
+                    "type": "string",
+                    "default": "2025-01-01"
+                },
+                "pageIndex": {
+                    "description": "页码",
+                    "type": "integer"
+                },
+                "pageSize": {
+                    "description": "页大小",
+                    "type": "integer"
                 }
             }
         },
@@ -2736,6 +2917,71 @@ const docTemplate = `{
                 "success": {
                     "description": "是否成功",
                     "type": "boolean"
+                }
+            }
+        },
+        "response.InventoryHisDto": {
+            "type": "object",
+            "properties": {
+                "assertCount": {
+                    "description": "馆藏总数",
+                    "type": "integer"
+                },
+                "bookCount": {
+                    "description": "已盘点图书",
+                    "type": "integer"
+                },
+                "checkAll": {
+                    "description": "是否全馆",
+                    "type": "boolean"
+                },
+                "checkType": {
+                    "description": "\"REALTIME\",//任务类型",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "\"2024-05-03 17:44:58\",//创建时间",
+                    "type": "string"
+                },
+                "deviceType": {
+                    "description": "\"CAMERA\",//盘点设备类型",
+                    "type": "string"
+                },
+                "finishNum": {
+                    "description": "完成个数",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "\"EXPORTED\",//盘点任务状态 INIT-创建 COLLECTING-采集 COMPUTED-盘点 EXPORTED-盘点完成 FAILED-失败",
+                    "type": "string"
+                },
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                },
+                "taskAllNum": {
+                    "description": "盘点总个数",
+                    "type": "integer"
+                },
+                "updateTime": {
+                    "description": "\"2024-05-03 17:47:58\",//更新时间",
+                    "type": "string"
+                },
+                "workId": {
+                    "description": "\"706441161815887872\",//盘点id",
+                    "type": "string"
+                }
+            }
+        },
+        "response.InventoryListDto": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "description": "盘点列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.InventoryHisRespObj"
+                    }
                 }
             }
         },

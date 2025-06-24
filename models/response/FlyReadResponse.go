@@ -31,3 +31,10 @@ type InventoryDto struct {
 type GetRobotRouterlistDto struct {
 	Items []dto.FlyRouter `form:"items" json:"items"` // 是否成功
 }
+type InventoryHisDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+	dto.InventoryHisRespObj
+}
+type InventoryListDto struct {
+	List []dto.InventoryHisRespObj `json:"list"` // 盘点列表
+}

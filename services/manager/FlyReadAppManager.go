@@ -1132,3 +1132,122 @@ func (b *FlyReadAppManager) Inventory(IsAll bool,
 	resp.Errors = append(resp.Errors, httpRespJson.Data.FailCases...)
 	return resp, nil
 }
+
+// 获取当前和最近一次批次接口
+func (b *FlyReadAppManager) InventoryHis(isHistory bool, tenantid int) (resp dto.InventoryHisDto, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/inv/collection/check-latest"
+	fmt.Println("InventoryHis:", url)
+
+	//构建http请求
+	var payload dto.InventoryHisInput
+	if isHistory {
+		payload.Obj.Type = "LATEST"
+	} else {
+		payload.Obj.Type = "CURRENT"
+	}
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("InventoryHis")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.ChecklatestDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+
+	resp.Code = httpRespJson.Code
+	resp.Success = true
+	if len(httpRespJson.Data) > 0 {
+		resp.Obj = httpRespJson.Data[0]
+	}
+	return resp, nil
+}
+
+// 历史盘点任务查询
+func (b *FlyReadAppManager) InventoryList(pageIndex int, pageSize int, dtStart time.Time, dtEnd time.Time, tenantid int) (resp dto.InventoryListDto, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv/edge/check/list"
+	fmt.Println("InventoryList:", url)
+
+	//构建http请求
+	var payload dto.InventoryListInput
+	payload.Token = token
+	payload.Obj.DeviceType = "CAMERA"
+	payload.Obj.Offset = (pageIndex - 1) * pageSize
+	payload.Obj.PageSize = pageSize
+	payload.Obj.StartTime = utils.FormatTime(dtStart, "2006-01-02")
+	payload.Obj.EndTime = utils.FormatTime(dtEnd, "2006-01-02")
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("InventoryList")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.InventoryListDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if !httpRespJson.Success {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}

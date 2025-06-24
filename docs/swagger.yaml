@@ -129,6 +129,43 @@ definitions:
       routerName:
         type: string
     type: object
+  dto.InventoryHisRespObj:
+    properties:
+      assertCount:
+        description: 馆藏总数
+        type: integer
+      bookCount:
+        description: 已盘点图书
+        type: integer
+      checkAll:
+        description: 是否全馆
+        type: boolean
+      checkType:
+        description: '"REALTIME",//任务类型'
+        type: string
+      createTime:
+        description: '"2024-05-03 17:44:58",//创建时间'
+        type: string
+      deviceType:
+        description: '"CAMERA",//盘点设备类型'
+        type: string
+      finishNum:
+        description: 完成个数
+        type: integer
+      status:
+        description: '"EXPORTED",//盘点任务状态 INIT-创建 COLLECTING-采集 COMPUTED-盘点 EXPORTED-盘点完成
+          FAILED-失败'
+        type: string
+      taskAllNum:
+        description: 盘点总个数
+        type: integer
+      updateTime:
+        description: '"2024-05-03 17:47:58",//更新时间'
+        type: string
+      workId:
+        description: '"706441161815887872",//盘点id'
+        type: string
+    type: object
   models.Libiteminventoryinfo:
     properties:
       Antenna:
@@ -372,6 +409,12 @@ definitions:
     - path
     - tenantid
     type: object
+  request.InventoryHisInput:
+    properties:
+      isHistory:
+        description: 是否历史盘点
+        type: boolean
+    type: object
   request.InventoryInput:
     properties:
       IsAll:
@@ -392,6 +435,23 @@ definitions:
         type: string
       workname:
         type: string
+    type: object
+  request.InventoryListInput:
+    properties:
+      dtEnd:
+        default: "2025-01-10"
+        description: 结束时间
+        type: string
+      dtStart:
+        default: "2025-01-01"
+        description: 开始时间
+        type: string
+      pageIndex:
+        description: 页码
+        type: integer
+      pageSize:
+        description: 页大小
+        type: integer
     type: object
   request.LoginRequest:
     properties:
@@ -567,6 +627,54 @@ definitions:
       success:
         description: 是否成功
         type: boolean
+    type: object
+  response.InventoryHisDto:
+    properties:
+      assertCount:
+        description: 馆藏总数
+        type: integer
+      bookCount:
+        description: 已盘点图书
+        type: integer
+      checkAll:
+        description: 是否全馆
+        type: boolean
+      checkType:
+        description: '"REALTIME",//任务类型'
+        type: string
+      createTime:
+        description: '"2024-05-03 17:44:58",//创建时间'
+        type: string
+      deviceType:
+        description: '"CAMERA",//盘点设备类型'
+        type: string
+      finishNum:
+        description: 完成个数
+        type: integer
+      status:
+        description: '"EXPORTED",//盘点任务状态 INIT-创建 COLLECTING-采集 COMPUTED-盘点 EXPORTED-盘点完成
+          FAILED-失败'
+        type: string
+      success:
+        description: 是否成功
+        type: boolean
+      taskAllNum:
+        description: 盘点总个数
+        type: integer
+      updateTime:
+        description: '"2024-05-03 17:47:58",//更新时间'
+        type: string
+      workId:
+        description: '"706441161815887872",//盘点id'
+        type: string
+    type: object
+  response.InventoryListDto:
+    properties:
+      list:
+        description: 盘点列表
+        items:
+          $ref: '#/definitions/dto.InventoryHisRespObj'
+        type: array
     type: object
   response.LiblayerDto:
     properties:
@@ -1144,6 +1252,62 @@ paths:
       security:
       - BearerAuth: []
       summary: 盘点指令下发
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/InventoryHis:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.InventoryHisInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.InventoryHisDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 盘点任务查询
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/InventoryList:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.InventoryListInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.InventoryListDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 盘点摄像头历史任务查询
       tags:
       - FlyRead
   /api/services/app/FlyRead/SetFlyReadSetting:
