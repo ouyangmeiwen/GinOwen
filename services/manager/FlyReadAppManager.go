@@ -1305,6 +1305,9 @@ func (b *FlyReadAppManager) GetCaseImgs(layer_codes []string, tenantid int) (res
 	return httpRespJson, nil
 }
 func (b *FlyReadAppManager) GetOcrImgs(LayerCode, ItemBarcode string, tenantid int) (resp dto.GetOcrImgsDto, err error) {
+	if utils.StartsWith(LayerCode, "*") {
+		LayerCode = utils.SafeSubstring(LayerCode, 1, len(LayerCode)-1) //去掉前面的0
+	}
 	var token string
 	token, err = b.GetToken(tenantid, false)
 	if err != nil {
