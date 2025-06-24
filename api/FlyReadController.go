@@ -441,3 +441,85 @@ func (b *FlyReadController) GetEnableRow(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// GetRobotlist
+// @Tags     FlyRead
+// @Summary  获取可用的层架关系
+// @Produce  application/json
+// @Param    data  query       request.GetRobotlistInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.GetRobotlistDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetRobotlist [get]
+func (b *FlyReadController) GetRobotlist(c *gin.Context) {
+
+	var req request.GetRobotlistInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.GetRobotlistDto
+	resp, err = ServicesGroup.flyreadAppService.GetRobotlist(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// GetCaseCodeImage
+// @Tags     FlyRead
+// @Summary  获取可用的层架关系
+// @Produce  application/json
+// @Param    data  body     request.GetCaseCodeImageInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.GetCaseImgsDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetCaseCodeImage [post]
+func (b *FlyReadController) GetCaseCodeImage(c *gin.Context) {
+
+	var req request.GetCaseCodeImageInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.GetCaseImgsDto
+	var dto dto.GetCaseImgsDto
+	dto, err = ServicesGroup.flyReadAppManager.GetCaseImgs(req.Layer_codes, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	resp.GetCaseImgsDto = dto
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// GetOcrImgs
+// @Tags     FlyRead
+// @Summary  获取层图片
+// @Produce  application/json
+// @Param    data  query       request.GetOcrImgsInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.GetOcrImgsDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetOcrImgs [get]
+func (b *FlyReadController) GetOcrImgs(c *gin.Context) {
+
+	var req request.GetOcrImgsInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.GetOcrImgsDto
+	var dto_response dto.GetOcrImgsDto
+	dto_response, err = ServicesGroup.flyReadAppManager.GetOcrImgs(req.LayerCode, req.ItemBarcode, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	resp.GetOcrImgsDto = dto_response
+	utils.OkWithDetailed(resp, "成功", c)
+}

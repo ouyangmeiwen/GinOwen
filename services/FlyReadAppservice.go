@@ -354,3 +354,16 @@ func (f *FlyReadAppService) GetEnableRow(input request.GetEnableRowInput, tenant
 	resp.GetEnableRowDto = dto_resp
 	return resp, nil
 }
+
+// 获取机器人列表
+func (f *FlyReadAppService) GetRobotlist(input request.GetRobotlistInput, tenantid int) (resp response.GetRobotlistDto, err error) {
+
+	var dto_input dto.RobotlistInput
+	var dto_resp dto.RobotlistDto
+	dto_resp, err = ManagerGroup.frymanager.GetRobotlist(dto_input, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.RobotlistDto = dto_resp
+	return resp, nil
+}

@@ -1249,3 +1249,97 @@ func (b *FlyReadAppManager) InventoryList(pageIndex int, pageSize int, dtStart t
 	}
 	return httpRespJson, nil
 }
+
+func (b *FlyReadAppManager) GetCaseImgs(layer_codes []string, tenantid int) (resp dto.GetCaseImgsDto, err error) {
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/base/collection/get-case-img"
+	fmt.Println("GetCaseImgs:", url)
+
+	//构建http请求
+	var payload []dto.GetCaseImgsInput
+	for _, code := range layer_codes {
+		var it dto.GetCaseImgsInput
+		it.CaseNo = code
+		it.Type = "1"
+		payload = append(payload, it)
+	}
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("GetCaseImgs")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.GetCaseImgsDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}
+func (b *FlyReadAppManager) GetOcrImgs(LayerCode, ItemBarcode string, tenantid int) (resp dto.GetOcrImgsDto, err error) {
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/api/module/base/collection/get-ocr-img?caseNo=" + LayerCode + "&assetId=" + ItemBarcode
+	fmt.Println("GetOcrImgs:", url)
+
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("GetOcrImgs")
+	if err != nil {
+		httpResp, err = utils.Get(url, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.GetOcrImgsDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if httpRespJson.Code != 0 {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}

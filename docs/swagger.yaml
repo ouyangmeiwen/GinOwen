@@ -129,6 +129,28 @@ definitions:
       routerName:
         type: string
     type: object
+  dto.GetCaseImgsItem:
+    properties:
+      caseNo:
+        description: 层位编码
+        type: string
+      imageList:
+        description: 图片列表bs64
+        items:
+          type: string
+        type: array
+    type: object
+  dto.GetOcrImgsData:
+    properties:
+      caseNo:
+        description: 层位编码
+        type: string
+      imageList:
+        description: 图片列表bs64
+        items:
+          type: string
+        type: array
+    type: object
   dto.InventoryHisRespObj:
     properties:
       assertCount:
@@ -164,6 +186,13 @@ definitions:
         type: string
       workId:
         description: '"706441161815887872",//盘点id'
+        type: string
+    type: object
+  dto.RobotlistData:
+    properties:
+      id:
+        type: string
+      robotName:
         type: string
     type: object
   models.Libiteminventoryinfo:
@@ -276,6 +305,14 @@ definitions:
       receivetype:
         description: 消息类型
         type: string
+    type: object
+  request.GetCaseCodeImageInput:
+    properties:
+      layer_codes:
+        description: 层位编码集合
+        items:
+          type: string
+        type: array
     type: object
   request.ImportExcelByIndexInput:
     properties:
@@ -608,6 +645,24 @@ definitions:
     type: object
   response.DeleteLmsLogDto:
     type: object
+  response.GetCaseImgsDto:
+    properties:
+      code:
+        type: integer
+      data:
+        description: 图片列表
+        items:
+          $ref: '#/definitions/dto.GetCaseImgsItem'
+        type: array
+      err:
+        type: string
+      message:
+        type: string
+      msg:
+        type: string
+      success:
+        type: boolean
+    type: object
   response.GetEnableRowDto:
     properties:
       items:
@@ -654,6 +709,23 @@ definitions:
         description: 系统开始时间
         type: string
     type: object
+  response.GetOcrImgsDto:
+    properties:
+      code:
+        type: integer
+      data:
+        allOf:
+        - $ref: '#/definitions/dto.GetOcrImgsData'
+        description: 图片列表
+      err:
+        type: string
+      message:
+        type: string
+      msg:
+        type: string
+      success:
+        type: boolean
+    type: object
   response.GetRobotRouterlistDto:
     properties:
       items:
@@ -661,6 +733,23 @@ definitions:
         items:
           $ref: '#/definitions/dto.FlyRouter'
         type: array
+    type: object
+  response.GetRobotlistDto:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/dto.RobotlistData'
+        type: array
+      err:
+        type: string
+      message:
+        type: string
+      msg:
+        type: string
+      success:
+        type: boolean
     type: object
   response.HelloResp:
     properties:
@@ -1186,6 +1275,34 @@ paths:
       summary: 添加任务
       tags:
       - Task
+  /api/services/app/FlyRead/GetCaseCodeImage:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetCaseCodeImageInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetCaseImgsDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取可用的层架关系
+      tags:
+      - FlyRead
   /api/services/app/FlyRead/GetEnableRow:
     get:
       parameters:
@@ -1284,6 +1401,36 @@ paths:
       summary: 获取盘点设置
       tags:
       - FlyRead
+  /api/services/app/FlyRead/GetOcrImgs:
+    get:
+      parameters:
+      - description: 物品条码
+        in: query
+        name: itemBarcode
+        type: string
+      - description: 层位编码
+        in: query
+        name: layerCode
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetOcrImgsDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取层图片
+      tags:
+      - FlyRead
   /api/services/app/FlyRead/GetRobotRouterlist:
     get:
       parameters:
@@ -1307,6 +1454,27 @@ paths:
       security:
       - BearerAuth: []
       summary: 获取机器人规划路线列表
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/GetRobotlist:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.GetRobotlistDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取可用的层架关系
       tags:
       - FlyRead
   /api/services/app/FlyRead/Hello:

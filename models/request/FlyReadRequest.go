@@ -65,3 +65,12 @@ type GetEnableRowInput struct {
 	IsQueryAll bool   `form:"isQueryAll" json:"isQueryAll"` // 是否查询全部行
 	Devicetype string `form:"devicetype" json:"devicetype"` // 设备类型
 }
+type GetRobotlistInput struct {
+}
+type GetCaseCodeImageInput struct {
+	Layer_codes []string `form:"layer_codes" json:"layer_codes"` // 层位编码集合
+}
+type GetOcrImgsInput struct {
+	LayerCode   string `form:"layerCode" json:"layerCode"`     // 层位编码
+	ItemBarcode string `form:"itemBarcode" json:"itemBarcode"` // 物品条码
+}

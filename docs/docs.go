@@ -325,6 +325,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/GetCaseCodeImage": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取可用的层架关系",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetCaseCodeImageInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetCaseImgsDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetEnableRow": {
             "get": {
                 "security": [
@@ -503,6 +553,59 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/GetOcrImgs": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取层图片",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "物品条码",
+                        "name": "itemBarcode",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "层位编码",
+                        "name": "layerCode",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetOcrImgsDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetRobotRouterlist": {
             "get": {
                 "security": [
@@ -537,6 +640,45 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/response.GetRobotRouterlistDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/GetRobotlist": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取可用的层架关系",
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.GetRobotlistDto"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -2355,6 +2497,38 @@ const docTemplate = `{
                 }
             }
         },
+        "dto.GetCaseImgsItem": {
+            "type": "object",
+            "properties": {
+                "caseNo": {
+                    "description": "层位编码",
+                    "type": "string"
+                },
+                "imageList": {
+                    "description": "图片列表bs64",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dto.GetOcrImgsData": {
+            "type": "object",
+            "properties": {
+                "caseNo": {
+                    "description": "层位编码",
+                    "type": "string"
+                },
+                "imageList": {
+                    "description": "图片列表bs64",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "dto.InventoryHisRespObj": {
             "type": "object",
             "properties": {
@@ -2400,6 +2574,17 @@ const docTemplate = `{
                 },
                 "workId": {
                     "description": "\"706441161815887872\",//盘点id",
+                    "type": "string"
+                }
+            }
+        },
+        "dto.RobotlistData": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "robotName": {
                     "type": "string"
                 }
             }
@@ -2569,6 +2754,18 @@ const docTemplate = `{
                 "receivetype": {
                     "description": "消息类型",
                     "type": "string"
+                }
+            }
+        },
+        "request.GetCaseCodeImageInput": {
+            "type": "object",
+            "properties": {
+                "layer_codes": {
+                    "description": "层位编码集合",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
@@ -3030,6 +3227,33 @@ const docTemplate = `{
         "response.DeleteLmsLogDto": {
             "type": "object"
         },
+        "response.GetCaseImgsDto": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "图片列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.GetCaseImgsItem"
+                    }
+                },
+                "err": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
         "response.GetEnableRowDto": {
             "type": "object",
             "properties": {
@@ -3097,6 +3321,34 @@ const docTemplate = `{
                 }
             }
         },
+        "response.GetOcrImgsDto": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "图片列表",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dto.GetOcrImgsData"
+                        }
+                    ]
+                },
+                "err": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
         "response.GetRobotRouterlistDto": {
             "type": "object",
             "properties": {
@@ -3106,6 +3358,32 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/dto.FlyRouter"
                     }
+                }
+            }
+        },
+        "response.GetRobotlistDto": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.RobotlistData"
+                    }
+                },
+                "err": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
                 }
             }
         },

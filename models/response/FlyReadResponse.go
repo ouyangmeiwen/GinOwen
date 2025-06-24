@@ -53,3 +53,12 @@ type GetInventorySetDto struct {
 type GetEnableRowDto struct {
 	dto.GetEnableRowDto
 }
+type GetRobotlistDto struct {
+	dto.RobotlistDto
+}
+type GetCaseImgsDto struct {
+	dto.GetCaseImgsDto
+}
+type GetOcrImgsDto struct {
+	dto.GetOcrImgsDto
+}
