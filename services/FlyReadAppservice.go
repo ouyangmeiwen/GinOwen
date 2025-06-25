@@ -367,3 +367,200 @@ func (f *FlyReadAppService) GetRobotlist(input request.GetRobotlistInput, tenant
 	resp.RobotlistDto = dto_resp
 	return resp, nil
 }
+
+func (f *FlyReadAppService) InventorySet(input request.InventorySetInput, tenantid int) (resp response.InventorySetDto, err error) {
+	if (input.SysStartTime == "" && input.SysEndTime != "") || input.SysStartTime != "" && input.SysEndTime == "" {
+		return resp, fmt.Errorf("盘点工作时间设置不合理")
+	}
+	if input.Interval <= 0 || input.Interval >= 24 {
+		return resp, fmt.Errorf("间隔小时设置设置不合理")
+	}
+	// 获取当前日期
+	now := time.Now()
+	today := now.Format("2006-01-02")
+	var SysStartTime time.Time
+	var SysEndTime time.Time
+	if input.SysStartTime != "" {
+		SysStartTime, err = time.Parse("2006-01-02 15:04", today+" "+input.SysStartTime)
+		if err != nil {
+			return resp, fmt.Errorf("SysStartTime 格式错误: %v", err)
+		}
+	}
+	if input.SysEndTime != "" {
+		SysEndTime, err = time.Parse("2006-01-02 15:04", today+" "+input.SysEndTime)
+		if err != nil {
+			return resp, fmt.Errorf("SysEndTime 格式错误: %v", err)
+		}
+	}
+
+	var InventoryStartDate *time.Time
+	InventoryStartDate1, er1 := time.Parse("2006-01-02", input.InventoryStartDate)
+	if er1 != nil {
+		InventoryStartDate = nil
+	} else {
+		InventoryStartDate = &InventoryStartDate1
+	}
+	var InventoryEndDate *time.Time
+	InventoryEndDate1, err2 := time.Parse("2006-01-02", input.InventoryEndDate)
+	if err2 != nil {
+		InventoryEndDate = nil
+	} else {
+		InventoryEndDate = &InventoryEndDate1
+	}
+
+	var fsets dto.FlyReadSetting
+	fsets, err = ManagerGroup.frymanager.GetFlyReadSetting(tenantid)
+	if err != nil {
+		return resp, err
+	}
+	if input.SysStartTime != "" && input.SysEndTime != "" {
+		if SysStartTime.After(SysEndTime) {
+			return resp, fmt.Errorf("SysStartTime 不能大于 SysEndTime")
+		} else {
+			fsets.FlyStartTime = input.SysStartTime
+			fsets.FlyEndTime = input.SysEndTime
+		}
+	} else if input.SysStartTime == "" && input.SysEndTime == "" {
+		fsets.FlyStartTime = ""
+		fsets.FlyEndTime = ""
+	}
+	if input.DeviceType != "0" && input.DeviceType != "1" {
+		return resp, fmt.Errorf("间隔全盘仅限deviceType只能是1,2")
+	}
+	fsets.FlyDeviceType = input.DeviceType
+	err = ManagerGroup.frymanager.SetFlyReadSetting(fsets, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	var firsttask models.Libinventorytask
+	err = global.OWEN_DB.Model(&models.Libinventorytask{}).Where("TenantId=? and IsDeleted=0 and OriginType=10 and TaskType=0 and TriggerSatus=0", tenantid).First(&firsttask).Error
+	if err != nil {
+		return resp, fmt.Errorf("获取盘点设置失败: %v", err)
+	}
+	if firsttask.ID != "" {
+		err = global.OWEN_DB.
+			Model(&models.Libinventorytask{}).
+			Where("TenantId = ? AND IsDeleted = 0 AND OriginType = 10 AND TaskType = 0 AND TriggerSatus = 0 and ID!=?", tenantid, firsttask.ID).
+			Delete(&models.Libinventorytask{}).Error
+		if err != nil {
+			return resp, fmt.Errorf("删除其他盘点任务失败: %v", err)
+		}
+		firsttask.InventoryStartDate = InventoryStartDate
+		firsttask.InventoryEndDate = InventoryEndDate
+		firsttask.Interval = int64(input.Interval)
+		firsttask.IsEnable = utils.BoolToUint8Slice(input.IsEnable)
+		// 二期改造
+		firsttask.DeviceType = &input.DeviceType
+		firsttask.RobotID = nil
+		firsttask.RobotName = nil
+		firsttask.RobotRouterID = nil
+		firsttask.RobotRouterName = nil
+		err = global.OWEN_DB.Model(&models.Libinventorytask{}).Where("ID=?", firsttask.ID).Save(firsttask).Error
+		if err != nil {
+			return resp, fmt.Errorf("更新盘点任务失败: %v", err)
+		}
+		//remove  old  works
+		err = global.OWEN_DB.
+			Model(&models.Libinventorywork{}).
+			Where("TenantId = ? AND IsDeleted = 0 AND OriginType = 10 and TaskID=?  and SendStatus=0", tenantid, firsttask.ID).
+			Delete(&models.Libinventorywork{}).Error
+		if err != nil {
+			return resp, fmt.Errorf("删除旧任务失败: %v", err)
+		}
+
+	} else {
+		firsttask.ID = utils.UUID32()
+		firsttask.CreationTime = time.Now()
+		firsttask.CreatorUserID = nil
+		firsttask.LastModificationTime = nil
+		firsttask.LastModifierUserID = nil
+		firsttask.IsDeleted = utils.BoolToUint8Slice(false)
+		firsttask.DeleterUserID = nil
+		firsttask.DeletionTime = nil
+		taskname := "间隔盘点-全盘"
+		firsttask.TaskName = &taskname
+		firsttask.TaskType = 0     // 0:全盘巡检
+		firsttask.TriggerSatus = 0 // 0:未触发
+		firsttask.InventoryStartDate = InventoryStartDate
+		firsttask.InventoryEndDate = InventoryEndDate
+		firsttask.Interval = int64(input.Interval)
+		firsttask.IsEnable = utils.BoolToUint8Slice(input.IsEnable)
+		firsttask.TenantID = int64(tenantid)
+		firsttask.OriginType = 10 // 10:飞阅
+		firsttask.DeviceType = &input.DeviceType
+		firsttask.RobotID = nil
+		firsttask.RobotName = nil
+		firsttask.RobotRouterID = nil
+		firsttask.RobotRouterName = nil
+		err = global.OWEN_DB.Model(&models.Libinventorytask{}).Create(&firsttask).Error
+		if err != nil {
+			return resp, fmt.Errorf("创建盘点任务失败: %v", err)
+		}
+	}
+
+	if firsttask.InventoryStartDate != nil &&
+		firsttask.InventoryStartDate.Before(time.Now()) &&
+		firsttask.InventoryEndDate.After(time.Now()) &&
+		firsttask.InventoryEndDate != nil &&
+		input.IsEnable {
+
+		loc, _ := time.LoadLocation("Asia/Shanghai")
+		now := time.Now().In(loc)
+
+		today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+
+		hour := 0                  // 假设初始值
+		interval := input.Interval // 假设 input.Interval 是 int 类型
+		for {
+			if hour >= 24 {
+				break
+			}
+			worktime := today.Add(time.Duration(hour) * time.Hour)
+			if worktime.Before(now) {
+				hour += interval
+				continue
+			}
+
+			if input.SysStartTime != "" {
+				if worktime.Before(SysStartTime) {
+					hour += interval
+					continue
+				}
+			}
+			if input.SysEndTime != "" {
+				if worktime.After(SysEndTime) {
+					hour += input.Interval
+					continue
+				}
+			}
+
+			var work models.Libinventorywork
+			work.ID = utils.UUID32()
+			work.CreationTime = time.Now()
+			work.CreatorUserID = nil
+			work.LastModificationTime = nil
+			work.LastModifierUserID = nil
+			work.IsDeleted = utils.BoolToUint8Slice(false)
+			work.DeleterUserID = nil
+			work.DeletionTime = nil
+			TaskName := *firsttask.TaskName + worktime.Format("2006010215")
+			work.TaskName = &TaskName
+			work.TaskID = &firsttask.ID
+			work.WorkTime = worktime
+			hangfire := fmt.Sprintf("Collection_全盘_%d_%s", tenantid, worktime.Format("2006010215"))
+			work.HangFireKey = &hangfire
+			Comment := "图书全盘"
+			work.Comment = &Comment
+			work.SendStatus = 0 // 0:未发送
+			work.TenantID = int64(tenantid)
+			work.OriginType = 10 // 10:飞阅
+			work.DeviceType = &input.DeviceType
+			err = global.OWEN_DB.Model(&models.Libinventorywork{}).Create(&work).Error
+			if err != nil {
+				return resp, fmt.Errorf("创建盘点工作失败: %v", err)
+			}
+			hour += input.Interval
+		}
+	}
+	return resp, nil
+}

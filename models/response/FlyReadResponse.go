@@ -62,3 +62,6 @@ type GetCaseImgsDto struct {
 type GetOcrImgsDto struct {
 	dto.GetOcrImgsDto
 }
+type InventorySetDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}

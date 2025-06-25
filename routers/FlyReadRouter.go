@@ -30,5 +30,6 @@ func RegisterFlyReadRoutes(r *gin.Engine) {
 		api.GET("GetRobotlist", ApiGroup.flyreadApi.GetRobotlist)
 		api.POST("GetCaseCodeImage", ApiGroup.flyreadApi.GetCaseCodeImage)
 		api.GET("GetOcrImgs", ApiGroup.flyreadApi.GetOcrImgs)
+		api.POST("InventorySet", ApiGroup.flyreadApi.InventorySet)
 	}
 }

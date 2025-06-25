@@ -523,3 +523,29 @@ func (b *FlyReadController) GetOcrImgs(c *gin.Context) {
 	resp.GetOcrImgsDto = dto_response
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// InventorySet
+// @Tags     FlyRead
+// @Summary  盘点设置
+// @Produce  application/json
+// @Param    data  body     request.InventorySetInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.InventorySetDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/InventorySet [post]
+func (b *FlyReadController) InventorySet(c *gin.Context) {
+
+	var req request.InventorySetInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.InventorySetDto
+	resp, err = ServicesGroup.flyreadAppService.InventorySet(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

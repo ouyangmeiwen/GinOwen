@@ -891,6 +891,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/InventorySet": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "盘点设置",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InventorySetInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.InventorySetDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/SetBussiness": {
             "post": {
                 "security": [
@@ -2999,6 +3049,42 @@ const docTemplate = `{
                 }
             }
         },
+        "request.InventorySetInput": {
+            "type": "object",
+            "required": [
+                "DeviceType"
+            ],
+            "properties": {
+                "DeviceType": {
+                    "description": "设备类型 目前只有摄像头  盘点类型：0:全景巡盘球机(球机摄像头),1:书架定点摄像头",
+                    "type": "string"
+                },
+                "Interval": {
+                    "description": "盘点间隔时间",
+                    "type": "integer"
+                },
+                "InventoryEndDate": {
+                    "description": "盘点结束时间",
+                    "type": "string"
+                },
+                "InventoryStartDate": {
+                    "description": "盘点开始时间",
+                    "type": "string"
+                },
+                "IsEnable": {
+                    "description": "是否启用",
+                    "type": "boolean"
+                },
+                "SysEndTime": {
+                    "description": "系统结束时间编码",
+                    "type": "string"
+                },
+                "SysStartTime": {
+                    "description": "系统开始时间编码",
+                    "type": "string"
+                }
+            }
+        },
         "request.LoginRequest": {
             "type": "object",
             "required": [
@@ -3478,6 +3564,15 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/dto.InventoryHisRespObj"
                     }
+                }
+            }
+        },
+        "response.InventorySetDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
                 }
             }
         },

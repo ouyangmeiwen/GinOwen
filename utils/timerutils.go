@@ -51,6 +51,12 @@ func Now() time.Time {
 	return time.Now()
 }
 
+func NowLocal() time.Time {
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	now := time.Now().In(loc)
+	return now
+}
+
 // 获取当前UTC时间
 func NowUTC() time.Time {
 	return time.Now().UTC()

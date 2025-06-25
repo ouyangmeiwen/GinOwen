@@ -74,3 +74,12 @@ type GetOcrImgsInput struct {
 	LayerCode   string `form:"layerCode" json:"layerCode"`     // 层位编码
 	ItemBarcode string `form:"itemBarcode" json:"itemBarcode"` // 物品条码
 }
+type InventorySetInput struct {
+	SysStartTime       string `form:"SysStartTime" json:"SysStartTime"`                // 系统开始时间编码
+	SysEndTime         string `form:"SysEndTime" json:"SysEndTime"`                    // 系统结束时间编码
+	IsEnable           bool   `form:"IsEnable" json:"IsEnable"`                        // 是否启用
+	InventoryStartDate string `form:"InventoryStartDate" json:"InventoryStartDate"`    // 盘点开始时间
+	InventoryEndDate   string `form:"InventoryEndDate" json:"InventoryEndDate"`        // 盘点结束时间
+	Interval           int    `form:"Interval" json:"Interval"`                        // 盘点间隔时间
+	DeviceType         string `binding:"required" form:"DeviceType" json:"DeviceType"` // 设备类型 目前只有摄像头  盘点类型：0:全景巡盘球机(球机摄像头),1:书架定点摄像头
+}
