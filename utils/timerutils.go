@@ -12,7 +12,7 @@ func GetCurrentTime() string {
 func FormatLocalTime(timestr string) (ts time.Time, err error) {
 	// 解析时间
 	// 获取当前时区（本地时区）
-	location, err := time.LoadLocation("Local")
+	location, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		return time.Time{}, err
 	}

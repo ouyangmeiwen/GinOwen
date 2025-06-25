@@ -65,3 +65,6 @@ type GetOcrImgsDto struct {
 type InventorySetDto struct {
 	Success bool `form:"success" json:"success"` // 是否成功
 }
+type CreatWorkDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}

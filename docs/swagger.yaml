@@ -258,6 +258,40 @@ definitions:
         description: 解锁时间，格式："yyyy-mm-dd hh:mm:ss"
         type: string
     type: object
+  request.CreatWorkInput:
+    properties:
+      deviceType:
+        description: 设备类型
+        type: string
+      layerIds:
+        description: 层位ID集合
+        items:
+          type: string
+        type: array
+      robotId:
+        description: 机器人ID
+        type: string
+      robotName:
+        description: 机器人名称
+        type: string
+      robotRouterId:
+        description: 机器人路由ID
+        type: string
+      robotRouterName:
+        description: 机器人路由名称
+        type: string
+      taskName:
+        description: 任务名称
+        type: string
+      workTime:
+        description: 任务时间
+        type: string
+      workTimes:
+        description: 工作时间集合
+        items:
+          type: string
+        type: array
+    type: object
   request.CreateInventoryInput:
     properties:
       item:
@@ -662,6 +696,12 @@ definitions:
         type: integer
     type: object
   response.AddScheduledTaskDto:
+    type: object
+  response.CreatWorkDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   response.CreateInventoryDto:
     type: object
@@ -1307,6 +1347,34 @@ paths:
       summary: 添加任务
       tags:
       - Task
+  /api/services/app/FlyRead/CreatWork:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreatWorkInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.CreatWorkDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 创建任务
+      tags:
+      - FlyRead
   /api/services/app/FlyRead/GetCaseCodeImage:
     post:
       parameters:

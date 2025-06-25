@@ -83,3 +83,15 @@ type InventorySetInput struct {
 	Interval           int    `form:"Interval" json:"Interval"`                        // 盘点间隔时间
 	DeviceType         string `binding:"required" form:"DeviceType" json:"DeviceType"` // 设备类型 目前只有摄像头  盘点类型：0:全景巡盘球机(球机摄像头),1:书架定点摄像头
 }
+
+type CreatWorkInput struct {
+	TaskName        string   `form:"taskName" json:"taskName"`               // 任务名称
+	WorkTime        string   `form:"workTime" json:"workTime"`               // 任务时间
+	LayerIds        []string `form:"layerIds" json:"layerIds"`               // 层位ID集合
+	DeviceType      string   `form:"deviceType" json:"deviceType"`           // 设备类型
+	RobotId         string   `form:"robotId" json:"robotId"`                 // 机器人ID
+	RobotName       string   `form:"robotName" json:"robotName"`             // 机器人名称
+	RobotRouterId   string   `form:"robotRouterId" json:"robotRouterId"`     // 机器人路由ID
+	RobotRouterName string   `form:"robotRouterName" json:"robotRouterName"` // 机器人路由名称
+	WorkTimes       []string `form:"workTimes" json:"workTimes"`             // 工作时间集合
+}

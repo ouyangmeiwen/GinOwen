@@ -39,7 +39,7 @@ db:
     cancreatemodel: false #无效占位
     canautomigration: false #无效 占位符
     canautosyndata: false #无效 占位符
-    mysql: "admin:admin@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mysql: "admin:admin@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.0.126,1433;user id=sa;password=Abc@1234;database=invengodbv4"
     oracle: "C##sa/abc123@192.168.0.126:1521/DCLHR"
     postgres: "user=postgres password=qyisno1forever@worl dbname=postgres host=192.168.0.126 port=5432 sslmode=disable"
@@ -52,7 +52,7 @@ db:
     cancreatemodel: false #是否允许from 数据库生成model文件
     canautomigration: false #是否允许from 数据库生成migration文件
     canautosyndata: false #是否允许from 数据库生成syncdata文件
-    mysql: "root:qyisno1forever@worl@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mysql: "root:qyisno1forever@worl@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.0.126,1433;user id=sa;password=Abc@1234;database=invengodbv4"
     oracle: "user/password@192.168.0.126:1521/service_name"
     postgres: "user=postgres password=password123 dbname=invengodbv4 host=192.168.0.126 port=5432 sslmode=disable"
@@ -65,7 +65,7 @@ db:
     cancreatemodel: false #无效占位
     canautomigration: false #是否根据from migration文件 生成表结构
     canautosyndata: false #是否通过from syncdata文件 生成表结构数据
-    mysql: "root:qyisno1forever@worl@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Local" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
+    mysql: "root:qyisno1forever@worl@tcp(192.168.0.126:29010)/invengodbv4?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai" # 数据库类型（mysql, postgres, sqlite, sqlserver, oracle）
     mssql: "server=192.168.0.126,1433;user id=sa;password=Abc@1234;database=invengodbv4"
     oracle: "user/password@192.168.0.126:1521/service_name"
     postgres: "user=postgres password=password123 dbname=invengodbv4 host=192.168.0.126 port=5432 sslmode=disable"

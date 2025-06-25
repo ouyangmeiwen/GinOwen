@@ -317,6 +317,56 @@
                 }
             }
         },
+        "/api/services/app/FlyRead/CreatWork": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "创建任务",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreatWorkInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.CreatWorkDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetCaseCodeImage": {
             "post": {
                 "security": [
@@ -2726,6 +2776,53 @@
                 }
             }
         },
+        "request.CreatWorkInput": {
+            "type": "object",
+            "properties": {
+                "deviceType": {
+                    "description": "设备类型",
+                    "type": "string"
+                },
+                "layerIds": {
+                    "description": "层位ID集合",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "robotId": {
+                    "description": "机器人ID",
+                    "type": "string"
+                },
+                "robotName": {
+                    "description": "机器人名称",
+                    "type": "string"
+                },
+                "robotRouterId": {
+                    "description": "机器人路由ID",
+                    "type": "string"
+                },
+                "robotRouterName": {
+                    "description": "机器人路由名称",
+                    "type": "string"
+                },
+                "taskName": {
+                    "description": "任务名称",
+                    "type": "string"
+                },
+                "workTime": {
+                    "description": "任务时间",
+                    "type": "string"
+                },
+                "workTimes": {
+                    "description": "工作时间集合",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "request.CreateInventoryInput": {
             "type": "object",
             "properties": {
@@ -3292,6 +3389,15 @@
         },
         "response.AddScheduledTaskDto": {
             "type": "object"
+        },
+        "response.CreatWorkDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                }
+            }
         },
         "response.CreateInventoryDto": {
             "type": "object"
