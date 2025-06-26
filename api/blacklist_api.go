@@ -65,7 +65,7 @@ func (BlackListApi) AddBlackList(c *gin.Context) {
 		utils.FailWithMessage("IP Invalid", c)
 		return
 	}
-	unlockTime, err := utils.FormatLocalTime(request.Unlock)
+	unlockTime, err := utils.ParseInLocation("2006-01-02 15:04:05", request.Unlock)
 	if err != nil {
 		utils.FailWithMessage("Invalid time", c)
 		return

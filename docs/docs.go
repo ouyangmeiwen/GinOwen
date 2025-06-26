@@ -1089,6 +1089,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/UpdateWork": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "创建任务",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateWorkInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UpdateWorkDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/UploadLibItem": {
             "post": {
                 "security": [
@@ -3341,6 +3391,50 @@ const docTemplate = `{
                 }
             }
         },
+        "request.UpdateWorkInput": {
+            "type": "object",
+            "properties": {
+                "deviceType": {
+                    "description": "设备类型",
+                    "type": "string"
+                },
+                "layerIds": {
+                    "description": "层",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "robotId": {
+                    "description": "机器人ID",
+                    "type": "string"
+                },
+                "robotName": {
+                    "description": "机器人名称",
+                    "type": "string"
+                },
+                "robotRouterId": {
+                    "description": "机器人路由ID",
+                    "type": "string"
+                },
+                "robotRouterName": {
+                    "description": "机器人路由名称",
+                    "type": "string"
+                },
+                "workId": {
+                    "description": "任务ID",
+                    "type": "string"
+                },
+                "workName": {
+                    "description": "任务名称",
+                    "type": "string"
+                },
+                "workTime": {
+                    "description": "任务时间 2006-01-02 15:04:05",
+                    "type": "string"
+                }
+            }
+        },
         "request.UploadLibItemInput": {
             "type": "object",
             "properties": {
@@ -4018,6 +4112,15 @@ const docTemplate = `{
         },
         "response.UpdateLmsLogDto": {
             "type": "object"
+        },
+        "response.UpdateWorkDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                }
+            }
         },
         "response.UploadLibItemLocDto": {
             "type": "object",

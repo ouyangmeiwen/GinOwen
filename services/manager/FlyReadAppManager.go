@@ -1210,8 +1210,8 @@ func (b *FlyReadAppManager) InventoryList(pageIndex int, pageSize int, dtStart t
 	payload.Obj.DeviceType = "CAMERA"
 	payload.Obj.Offset = (pageIndex - 1) * pageSize
 	payload.Obj.PageSize = pageSize
-	payload.Obj.StartTime = utils.FormatTime(dtStart, "2006-01-02")
-	payload.Obj.EndTime = utils.FormatTime(dtEnd, "2006-01-02")
+	payload.Obj.StartTime = utils.FormatInLocation("2006-01-02", dtStart)
+	payload.Obj.EndTime = utils.FormatInLocation("2006-01-02", dtEnd)
 	// 将 map 序列化为 JSON 字节
 	data, err := json.Marshal(payload)
 	if err != nil {

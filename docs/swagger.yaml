@@ -659,6 +659,38 @@ definitions:
       UserId:
         type: integer
     type: object
+  request.UpdateWorkInput:
+    properties:
+      deviceType:
+        description: 设备类型
+        type: string
+      layerIds:
+        description: 层
+        items:
+          type: string
+        type: array
+      robotId:
+        description: 机器人ID
+        type: string
+      robotName:
+        description: 机器人名称
+        type: string
+      robotRouterId:
+        description: 机器人路由ID
+        type: string
+      robotRouterName:
+        description: 机器人路由名称
+        type: string
+      workId:
+        description: 任务ID
+        type: string
+      workName:
+        description: 任务名称
+        type: string
+      workTime:
+        description: 任务时间 2006-01-02 15:04:05
+        type: string
+    type: object
   request.UploadLibItemInput:
     properties:
       barcodes:
@@ -1114,6 +1146,12 @@ definitions:
   response.UpdateInventoryDto:
     type: object
   response.UpdateLmsLogDto:
+    type: object
+  response.UpdateWorkDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
     type: object
   response.UploadLibItemLocDto:
     properties:
@@ -1770,6 +1808,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 设置飞阅参数 注意FlyReadIp 如果带上http参数则不启用端口参数
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/UpdateWork:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateWorkInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UpdateWorkDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 创建任务
       tags:
       - FlyRead
   /api/services/app/FlyRead/UploadLibItem:

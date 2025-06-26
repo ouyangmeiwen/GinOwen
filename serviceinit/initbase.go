@@ -77,10 +77,6 @@ func InitDB() {
 			DB, dbErr = gorm.Open(sqlserver.Open(dbCfg.MSSQL), &gorm.Config{Logger: newLogger})
 		case "oracle":
 			// sqlDB, _ = sql.Open("godror", dbCfg.Oracle)
-			// // DB, dbErr = gorm.Open(gorm.Config{
-			// // 	ConnPool: oracleDB,  // 将底层的 sql.DB 连接池传给 GORM
-			// // 	Logger:   newLogger, // 可选：设置 GORM 日志输出级别
-			// // })
 			// var currentTime string
 			// err := sqlDB.QueryRow("SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') AS current_time FROM dual").Scan(&currentTime)
 			// if err != nil {

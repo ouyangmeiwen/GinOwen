@@ -95,3 +95,14 @@ type CreatWorkInput struct {
 	RobotRouterName string   `form:"robotRouterName" json:"robotRouterName"` // 机器人路由名称
 	WorkTimes       []string `form:"workTimes" json:"workTimes"`             // 工作时间集合
 }
+type UpdateWorkInput struct {
+	WorkId          string   `form:"workId" json:"workId"`                   // 任务ID
+	WorkName        string   `form:"workName" json:"workName"`               // 任务名称
+	WorkTime        string   `form:"workTime" json:"workTime"`               // 任务时间 2006-01-02 15:04:05
+	LayerIds        []string `form:"layerIds" json:"layerIds"`               // 层
+	DeviceType      string   `form:"deviceType" json:"deviceType"`           // 设备类型
+	RobotId         string   `form:"robotId" json:"robotId"`                 // 机器人ID
+	RobotName       string   `form:"robotName" json:"robotName"`             // 机器人名称
+	RobotRouterId   string   `form:"robotRouterId" json:"robotRouterId"`     // 机器人路由ID
+	RobotRouterName string   `form:"robotRouterName" json:"robotRouterName"` // 机器人路由名称
+}

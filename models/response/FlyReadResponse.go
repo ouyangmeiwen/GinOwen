@@ -68,3 +68,6 @@ type InventorySetDto struct {
 type CreatWorkDto struct {
 	Success bool `form:"success" json:"success"` // 是否成功
 }
+type UpdateWorkDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}

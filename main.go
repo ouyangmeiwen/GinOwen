@@ -11,6 +11,7 @@ import (
 	"GINOWEN/serviceinit"
 	"GINOWEN/services"
 	"GINOWEN/utils"
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -26,6 +27,26 @@ import (
 // @name Authorization
 // @description JWT Authorization header (Bearer token)
 func main() {
+
+	now := time.Now()
+	utcstr := now.Format("2006-01-02 15:04:05")
+	fmt.Printf("UTC GinOwen API started at %s\n", utcstr)
+	parsedTime, err := time.Parse("2006-01-02 15:04:05", utcstr)
+	if err != nil {
+		fmt.Println("UTC GinOwen API started at (parse error):", err)
+	} else {
+		fmt.Println("UTC GinOwen API started at", parsedTime)
+	}
+
+	locstr := utils.FormatInLocation("2006-01-02 15:04:05", now)
+	fmt.Printf("Asia/Shanghai GinOwen API started at %s\n", locstr)
+	ts, err := utils.ParseInLocation("2006-01-02 15:04:05", locstr)
+	if err != nil {
+		fmt.Println("Asia/Shanghai GinOwen API started at (parse error):", err)
+	} else {
+		fmt.Println("Asia/Shanghai GinOwen API started at:", ts)
+	}
+
 	// 加载配置文件
 	global.OWEN_CONFIG = serviceinit.LoadConfig()
 	// 初始化日志

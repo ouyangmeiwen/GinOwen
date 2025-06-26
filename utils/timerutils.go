@@ -4,23 +4,47 @@ import (
 	"time"
 )
 
-func GetCurrentTime() string {
-	return time.Now().Format("2006-01-02 15:04:05")
+// 东八区时间
+func LoadLocation() (*time.Location, error) {
+	return time.LoadLocation("Asia/Shanghai")
 }
 
+// 将字符串解析出东八区时间
 // "yyyy-mm-dd hh:mm:ss" 使用该格式
-func FormatLocalTime(timestr string) (ts time.Time, err error) {
+func ParseInLocation(layout string, timestr string) (ts time.Time, err error) {
 	// 解析时间
 	// 获取当前时区（本地时区）
 	location, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		return time.Time{}, err
 	}
-	localtime, err := time.ParseInLocation("2006-01-02 15:04:05", timestr, location)
+	localtime, err := time.ParseInLocation(layout, timestr, location)
 	if err != nil {
 		return time.Time{}, err
 	}
 	return localtime, nil
+}
+
+// 将时间类型转成东八区时间字符串
+// "yyyy-mm-dd hh:mm:ss" 使用该格式
+func FormatInLocation(layout string, t time.Time) string {
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		// 如果加载失败就退回原时间
+		return t.Format(layout)
+	}
+	return t.In(loc).Format(layout)
+}
+
+// 东八区时间系统当前时间
+func NowInLocation() time.Time {
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	now := time.Now().In(loc)
+	return now
+}
+
+func GetCurrentTime() string {
+	return time.Now().Format("2006-01-02 15:04:05")
 }
 
 // 获取当前时间的字符串表示 "2006-01-02 15:04:05"
@@ -49,12 +73,6 @@ func FormatTime(t time.Time, format string) string {
 // 获取当前本地时间
 func Now() time.Time {
 	return time.Now()
-}
-
-func NowLocal() time.Time {
-	loc, _ := time.LoadLocation("Asia/Shanghai")
-	now := time.Now().In(loc)
-	return now
 }
 
 // 获取当前UTC时间

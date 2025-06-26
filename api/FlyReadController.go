@@ -575,3 +575,29 @@ func (b *FlyReadController) CreatWork(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// UpdateWork
+// @Tags     FlyRead
+// @Summary  创建任务
+// @Produce  application/json
+// @Param    data  body     request.UpdateWorkInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.UpdateWorkDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/UpdateWork [post]
+func (b *FlyReadController) UpdateWork(c *gin.Context) {
+
+	var req request.UpdateWorkInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.UpdateWorkDto
+	resp, err = ServicesGroup.flyreadAppService.UpdateWork(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

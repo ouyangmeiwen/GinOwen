@@ -255,11 +255,11 @@ func (f *FlyReadAppService) InventoryList(req request.InventoryListInput, tenant
 	var dto_resp dto.InventoryListDto
 	var dtstart time.Time
 	var dtend time.Time
-	dtstart, err = utils.ParseTime(req.DtStart, "2006-01-02")
+	dtstart, err = utils.ParseInLocation("2006-01-02", req.DtStart)
 	if err != nil {
 		return resp, fmt.Errorf("开始时间格式错误: %v", err)
 	}
-	dtend, err = utils.ParseTime(req.DtEnd, "2006-01-02")
+	dtend, err = utils.ParseInLocation("2006-01-02", req.DtEnd)
 	if err != nil {
 		return resp, fmt.Errorf("结束时间格式错误: %v", err)
 	}
@@ -383,27 +383,27 @@ func (f *FlyReadAppService) InventorySet(input request.InventorySetInput, tenant
 	var SysStartTime time.Time
 	var SysEndTime time.Time
 	if input.SysStartTime != "" {
-		SysStartTime, err = time.Parse("2006-01-02 15:04", today+" "+input.SysStartTime)
+		SysStartTime, err = utils.ParseInLocation("2006-01-02 15:04", today+" "+input.SysStartTime)
 		if err != nil {
 			return resp, fmt.Errorf("SysStartTime 格式错误: %v", err)
 		}
 	}
 	if input.SysEndTime != "" {
-		SysEndTime, err = time.Parse("2006-01-02 15:04", today+" "+input.SysEndTime)
+		SysEndTime, err = utils.ParseInLocation("2006-01-02 15:04", today+" "+input.SysEndTime)
 		if err != nil {
 			return resp, fmt.Errorf("SysEndTime 格式错误: %v", err)
 		}
 	}
 
 	var InventoryStartDate *time.Time
-	InventoryStartDate1, er1 := time.Parse("2006-01-02", input.InventoryStartDate)
+	InventoryStartDate1, er1 := utils.ParseInLocation("2006-01-02", input.InventoryStartDate)
 	if er1 != nil {
 		InventoryStartDate = nil
 	} else {
 		InventoryStartDate = &InventoryStartDate1
 	}
 	var InventoryEndDate *time.Time
-	InventoryEndDate1, err2 := time.Parse("2006-01-02", input.InventoryEndDate)
+	InventoryEndDate1, err2 := utils.ParseInLocation("2006-01-02", input.InventoryEndDate)
 	if err2 != nil {
 		InventoryEndDate = nil
 	} else {
@@ -568,17 +568,20 @@ func (f *FlyReadAppService) InventorySet(input request.InventorySetInput, tenant
 }
 
 func (f *FlyReadAppService) CheckWorkTime(tenantid int, worktime time.Time) (err error) {
+	if worktime.Before(time.Now()) {
+		return fmt.Errorf("工作时间不能小于当前时间")
+	}
 	var fsets dto.FlyReadSetting
 	fsets, err = ManagerGroup.frymanager.GetFlyReadSetting(tenantid)
 	if err != nil {
 		return err
 	}
 	// 获取当前日期
-	today := worktime.Format("2006-01-02")
+	today := utils.FormatInLocation("2006-01-02", worktime)
 	var SysStartTime time.Time
 	var SysEndTime time.Time
 	if fsets.FlyStartTime != "" {
-		SysStartTime, err = time.Parse("2006-01-02 15:04", today+" "+fsets.FlyStartTime)
+		SysStartTime, err = utils.ParseInLocation("2006-01-02 15:04", today+" "+fsets.FlyStartTime)
 		if err != nil {
 			return fmt.Errorf("SysStartTime 格式错误: %v", err)
 		}
@@ -587,7 +590,7 @@ func (f *FlyReadAppService) CheckWorkTime(tenantid int, worktime time.Time) (err
 		}
 	}
 	if fsets.FlyEndTime != "" {
-		SysEndTime, err = time.Parse("2006-01-02 15:04", today+" "+fsets.FlyEndTime)
+		SysEndTime, err = utils.ParseInLocation("2006-01-02 15:04", today+" "+fsets.FlyEndTime)
 		if err != nil {
 			return fmt.Errorf("SysEndTime 格式错误: %v", err)
 		}
@@ -622,8 +625,8 @@ func (f *FlyReadAppService) CreatWork(input request.CreatWorkInput, tenantid int
 	}
 
 	var works []time.Time
-
-	WorkTime, err1 := time.Parse("2006-01-02 15:04:05", input.WorkTime)
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	WorkTime, err1 := utils.ParseInLocation("2006-01-02 15:04:05", input.WorkTime)
 	if err1 != nil {
 		return resp, fmt.Errorf("工作时间格式错误: %v", err1)
 	}
@@ -635,10 +638,10 @@ func (f *FlyReadAppService) CreatWork(input request.CreatWorkInput, tenantid int
 
 	hour := WorkTime.Hour()
 	minutes := WorkTime.Minute()
-	loc, _ := time.LoadLocation("Asia/Shanghai")
+
 	if len(input.WorkTimes) > 0 {
 		for _, wt := range input.WorkTimes {
-			worktime_temp, err2 := time.Parse("2006-01-02 15:04:05", wt)
+			worktime_temp, err2 := utils.ParseInLocation("2006-01-02 15:04:05", wt)
 			if err2 != nil {
 				return resp, fmt.Errorf("工作时间格式错误: %v", err2)
 			}
@@ -726,6 +729,154 @@ func (f *FlyReadAppService) CreatWork(input request.CreatWorkInput, tenantid int
 		err = global.OWEN_DB.Model(&models.Libinventorywork{}).Create(&work).Error
 		if err != nil {
 			return resp, fmt.Errorf("创建盘点工作失败: %v", err)
+		}
+		for _, layerid := range input.LayerIds {
+			var detail models.Libinventoryworkdetail
+			detail.ID = utils.UUID32()
+			detail.CreationTime = time.Now()
+			detail.CreatorUserID = nil
+			detail.TaskStatus = 0 // 0:未开始
+			detail.WorkID = &work.ID
+			lyone := layermap[layerid]
+			detail.LayerID = &lyone.ID
+			detail.LayerCode = lyone.Code
+			detail.LayerName = &lyone.Name
+			detail.TenantID = int64(tenantid)
+			err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Create(&detail).Error
+			if err != nil {
+				return resp, fmt.Errorf("创建盘点工作详情失败: %v", err)
+			}
+		}
+	}
+	return resp, nil
+}
+func (f *FlyReadAppService) UpdateWork(input request.UpdateWorkInput, tenantid int) (resp response.UpdateWorkDto, err error) {
+	if len(input.LayerIds) <= 0 {
+		return resp, fmt.Errorf("层集合为空不允许创建任务")
+	}
+	if len(strings.TrimSpace(input.DeviceType)) <= 0 {
+		return resp, fmt.Errorf("设备类型不能空")
+	}
+	switch input.DeviceType {
+	case "2":
+		if len(strings.TrimSpace(input.RobotId)) <= 0 {
+			return resp, fmt.Errorf("机器人ID不能空")
+		}
+		if len(strings.TrimSpace(input.RobotRouterId)) <= 0 {
+			return resp, fmt.Errorf("机器人路由ID不能空")
+		}
+	case "1", "0":
+		{
+
+		}
+	default:
+		return resp, fmt.Errorf("设备类型只能是0,1,2")
+	}
+	WorkTime, err1 := utils.ParseInLocation("2006-01-02 15:04:05", input.WorkTime)
+	if err1 != nil {
+		return resp, fmt.Errorf("工作时间格式错误: %v", err1)
+	}
+	err = f.CheckWorkTime(tenantid, WorkTime)
+	if err != nil {
+		return resp, fmt.Errorf("工作时间不符合系统设置: %v", err)
+	}
+	layermap := make(map[string]models.Liblayer)
+	layers, e2 := ManagerGroup.frymanager.GetEnableLayers(tenantid, true, input.DeviceType, input.RobotId, input.RobotRouterId)
+	if e2 != nil {
+		return resp, fmt.Errorf("获取启用层失败: %v", e2)
+	}
+	if len(layers) <= 0 {
+		return resp, fmt.Errorf("没有启用层")
+	}
+	for _, ly := range input.LayerIds {
+		found := false
+		for _, layer := range layers {
+			if layer.ID == ly || (layer.Code != nil && *layer.Code == ly) {
+				found = true
+				layermap[ly] = layer
+				break
+			}
+		}
+		if !found {
+			return resp, fmt.Errorf("图书层 %s 不在启用层列表中", ly)
+		}
+	}
+	var work models.Libinventorywork
+	err = global.OWEN_DB.Model(&models.Libinventorywork{}).Where("TenantId=? and IsDeleted=0 and Id=? ", tenantid, input.WorkId).First(&work).Error
+	if err != nil || work.ID == "" {
+		return resp, fmt.Errorf("当前Work不存在")
+	}
+	if work.TaskStatus != 0 {
+		return resp, fmt.Errorf("work状态是%d,不可以编辑", work.TaskStatus)
+	}
+	if work.SendStatus != 0 {
+		return resp, fmt.Errorf("work状态已经发送视觉盘点,不可以编辑")
+	}
+
+	var task models.Libinventorytask
+	err = global.OWEN_DB.Model(&models.Libinventorytask{}).Where("TenantId=? and IsDeleted=0 and Id=? ", tenantid, work.TaskID).First(&task).Error
+	if err != nil || task.ID == "" {
+		return resp, fmt.Errorf("当前task不存在")
+	}
+	if task.TriggerSatus != 1 {
+		return resp, fmt.Errorf("当前Task不是定时任务不能编辑")
+	}
+	task.DeviceType = &input.DeviceType
+	task.TaskName = &input.WorkName
+	task.RobotID = &input.RobotId
+	task.RobotName = &input.RobotName
+	task.RobotRouterID = &input.RobotRouterId
+	task.RobotRouterName = &input.RobotRouterName
+	err = global.OWEN_DB.Model(&models.Libinventorytask{}).Where("Id=?", task.ID).Updates(map[string]interface{}{
+		"DeviceType":      task.DeviceType,
+		"TaskName":        task.TaskName,
+		"RobotID":         task.RobotID,
+		"RobotName":       task.RobotName,
+		"RobotRouterID":   task.RobotRouterID,
+		"RobotRouterName": task.RobotRouterName,
+	}).Error
+	if err != nil || task.ID == "" {
+		return resp, fmt.Errorf("当前task不存在")
+	}
+	WorkTime1 := utils.FormatInLocation("2016-01-02 15:04:05", work.WorkTime)
+
+	if work.TaskName != &input.WorkName || WorkTime1 != input.WorkTime || work.DeviceType != &input.DeviceType {
+		work.TaskName = &input.WorkName
+		work.WorkTime = WorkTime
+		work.DeviceType = &input.DeviceType
+		err = global.OWEN_DB.Model(&models.Libinventorywork{}).Where("Id=?", work.ID).Updates(map[string]interface{}{
+			"TaskName":   work.TaskName,
+			"WorkTime":   work.WorkTime,
+			"DeviceType": work.DeviceType,
+		}).Error
+	}
+
+	var details []models.Libinventoryworkdetail
+	err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantId=? and WorkId=? ", tenantid, work.ID).Find(&details).Error
+	if err != nil {
+		return resp, fmt.Errorf("详情查询报错")
+	}
+	isneedupdate := false
+	if len(input.LayerIds) != len(details) {
+		isneedupdate = true
+	}
+	for _, de := range details {
+		found := false
+		for _, code := range input.LayerIds {
+			if code == *de.LayerCode {
+				found = true
+				break
+			}
+		}
+		if !found {
+			isneedupdate = true
+			break
+		}
+	}
+	if isneedupdate {
+		err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantId=? and WorkId=? ", tenantid, work.ID).Delete(&models.Libinventoryworkdetail{}).Error
+		if err != nil {
+			return resp, fmt.Errorf("删除明细失败")
 		}
 		for _, layerid := range input.LayerIds {
 			var detail models.Libinventoryworkdetail
