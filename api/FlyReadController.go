@@ -601,3 +601,29 @@ func (b *FlyReadController) UpdateWork(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// WorkList
+// @Tags     FlyRead
+// @Summary  创建任务
+// @Produce  application/json
+// @Param    data  body     request.WorkListInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.PageWorkListDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/WorkList [post]
+func (b *FlyReadController) WorkList(c *gin.Context) {
+
+	var req request.WorkListInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.PageWorkListDto
+	resp, err = ServicesGroup.flyreadAppService.WorkList(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

@@ -11,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type FlyReadAppService struct {
@@ -896,5 +898,149 @@ func (f *FlyReadAppService) UpdateWork(input request.UpdateWorkInput, tenantid i
 			}
 		}
 	}
+	return resp, nil
+}
+
+type detailgroup struct {
+	WorkId            string
+	Count             int
+	ExceptionMsgCount int
+}
+
+// 任务列表
+func (f *FlyReadAppService) WorkList(input request.WorkListInput, tenantid int) (resp response.PageWorkListDto, err error) {
+
+	worksAll := global.OWEN_DB.Model(&models.Libinventorywork{}).Where("TenantID=? and IsDeleted=0 and OriginType=10", tenantid)
+	if input.WorkId != "" {
+		worksAll = worksAll.Where("Id=?", input.WorkId)
+	}
+	if input.DeviceType != "" {
+		worksAll = worksAll.Where("DeviceType=?", input.DeviceType)
+	}
+	if input.WorkName != "" {
+		worksAll = worksAll.Where("WorkName like ?", "%"+input.WorkName+"%")
+	}
+	if input.TriggerSatus > 0 {
+		worksAll = worksAll.Where("TriggerSatus=?", input.TriggerSatus)
+	}
+	workquery := worksAll.Session(&gorm.Session{})
+	if input.TaskStatus > 0 {
+		workquery = workquery.Where("TaskStatus=?", input.TaskStatus)
+	}
+	workquery = workquery.Order(" CreationTime desc")
+	var total int64
+	workquery.Count(&total)
+
+	var itemworks []models.Libinventorywork
+	err = workquery.Offset(input.SkipCount).Limit(input.MaxResultCount).Find(&itemworks).Error
+	if err != nil {
+		return resp, err
+	}
+	if len(itemworks) <= 0 {
+		return resp, nil
+	}
+
+	var items []response.WorkListDto
+
+	var workids []string
+	for _, work := range itemworks {
+		workids = append(workids, work.ID)
+
+		var TaskName string
+		if work.TaskName != nil {
+			TaskName = *work.TaskName
+		}
+
+		var WorkStarTime string
+		if work.WorkStarTime != nil {
+			WorkStarTime = utils.FormatInLocation("2016-01-02 15:04:05", *work.WorkStarTime)
+		}
+
+		var WorkEndTime string
+		if work.WorkEndTime != nil {
+			WorkEndTime = utils.FormatInLocation("2016-01-02 15:04:05", *work.WorkEndTime)
+		}
+
+		var Comment string
+		if work.Comment != nil {
+			Comment = *work.Comment
+		}
+
+		var ExceptionMsg string
+		if work.ExceptionMsg != nil {
+			ExceptionMsg = *work.ExceptionMsg
+		}
+
+		item := response.WorkListDto{
+			WorkName:     TaskName,
+			WorkId:       work.ID,
+			WorkTime:     utils.FormatInLocation("2016-01-02 15:04:05", work.WorkTime),
+			WorkStarTime: WorkStarTime,
+			WorkEndTime:  WorkEndTime,
+			TaskStatus:   int(work.TaskStatus),
+			CreateTime:   utils.FormatInLocation("2016-01-02 15:04:05", work.CreationTime),
+			TriggerSatus: int(work.TaskStatus),
+			Comment:      Comment,
+			ExceptionMsg: ExceptionMsg,
+		}
+		items = append(items, item)
+	}
+
+	var details []models.Libinventoryworkdetail
+	err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=? and WorkId in ?", tenantid, workids).Find(&details).Error
+	if err != nil {
+		return resp, err
+	}
+
+	details_map := make(map[string]*detailgroup)
+	for _, d := range details {
+		if _, exists := details_map[*d.WorkID]; !exists {
+			ExceptionMsgCount := 0
+			if d.ExceptionMsg != nil && *d.ExceptionMsg != "" {
+				ExceptionMsgCount = 1
+			}
+			details_map[*d.WorkID] = &detailgroup{
+				WorkId:            *d.WorkID,
+				Count:             1,
+				ExceptionMsgCount: ExceptionMsgCount,
+			}
+		} else {
+			v := details_map[*d.WorkID]
+			if d.ExceptionMsg != nil && *d.ExceptionMsg != "" {
+				v.ExceptionMsgCount = v.ExceptionMsgCount + 1
+			}
+			v.Count = v.Count + 1
+		}
+	}
+
+	for index := range items {
+		if v, exist := details_map[items[index].WorkId]; exist {
+			items[index].DetailsCount = v.Count
+			items[index].ExceptionMsgCount = v.ExceptionMsgCount
+		} else {
+			items[index].DetailsCount = 0
+			items[index].ExceptionMsgCount = 0
+		}
+	}
+
+	resp.TotalCount = int(total)
+	resp.Items = items
+
+	var InitWorkCount int64
+	worksAll.Session(&gorm.Session{}).Where("TaskStatus=0").Count(&InitWorkCount)
+	resp.InitWorkCount = int(InitWorkCount)
+
+	var InventoryCount int64
+	worksAll.Session(&gorm.Session{}).Where("TaskStatus=1").Count(&InventoryCount)
+	resp.InventoryCount = int(InventoryCount)
+
+	var SucessCount int64
+	worksAll.Session(&gorm.Session{}).Where("TaskStatus=2").Count(&SucessCount)
+	resp.SucessCount = int(SucessCount)
+
+	var FailtureCount int64
+	worksAll.Session(&gorm.Session{}).Where("TaskStatus=3").Count(&FailtureCount)
+	resp.FailtureCount = int(FailtureCount)
+
 	return resp, nil
 }

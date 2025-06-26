@@ -1,5 +1,7 @@
 package request
 
+import "GINOWEN/utils"
+
 type HelloInput struct {
 	Name string `form:"name" json:"name"` // 用户名
 }
@@ -105,4 +107,12 @@ type UpdateWorkInput struct {
 	RobotName       string   `form:"robotName" json:"robotName"`             // 机器人名称
 	RobotRouterId   string   `form:"robotRouterId" json:"robotRouterId"`     // 机器人路由ID
 	RobotRouterName string   `form:"robotRouterName" json:"robotRouterName"` // 机器人路由名称
+}
+type WorkListInput struct {
+	utils.PagedResultRequest
+	WorkId       string `form:"WorkId" json:"WorkId"`
+	WorkName     string `form:"WorkName" json:"WorkName"`
+	TriggerSatus int    `form:"TriggerSatus" json:"TriggerSatus"` //间隔盘点0  自定义盘点1  触发盘点2
+	TaskStatus   int    `form:"TaskStatus" json:"TaskStatus"`     //任务初始化0 盘点中1  成功2 失败3
+	DeviceType   string `form:"DeviceType" json:"DeviceType"`     //目前只有摄像头  盘点类型：0:全景巡盘球机(球机摄像头),1:书架定点摄像头, 2:视觉盘点机器人,示例值(0)
 }

@@ -1381,6 +1381,56 @@
                 }
             }
         },
+        "/api/services/app/FlyRead/WorkList": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "创建任务",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.WorkListInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageWorkListDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/LibRow/QueryRows": {
             "get": {
                 "security": [
@@ -3481,6 +3531,43 @@
                 }
             }
         },
+        "request.WorkListInput": {
+            "type": "object",
+            "properties": {
+                "DeviceType": {
+                    "description": "目前只有摄像头  盘点类型：0:全景巡盘球机(球机摄像头),1:书架定点摄像头, 2:视觉盘点机器人,示例值(0)",
+                    "type": "string"
+                },
+                "MaxResultCount": {
+                    "description": "获取多少条结果",
+                    "type": "integer",
+                    "default": 100,
+                    "maximum": 99999,
+                    "minimum": 1
+                },
+                "SkipCount": {
+                    "description": "跳过多少数量",
+                    "type": "integer",
+                    "default": 0,
+                    "maximum": 99999,
+                    "minimum": -1
+                },
+                "TaskStatus": {
+                    "description": "任务初始化0 盘点中1  成功2 失败3",
+                    "type": "integer"
+                },
+                "TriggerSatus": {
+                    "description": "间隔盘点0  自定义盘点1  触发盘点2",
+                    "type": "integer"
+                },
+                "WorkId": {
+                    "type": "string"
+                },
+                "WorkName": {
+                    "type": "string"
+                }
+            }
+        },
         "response.AddScheduledTaskDto": {
             "type": "object"
         },
@@ -3995,6 +4082,32 @@
                 }
             }
         },
+        "response.PageWorkListDto": {
+            "type": "object",
+            "properties": {
+                "FailtureCount": {
+                    "type": "integer"
+                },
+                "InitWorkCount": {
+                    "type": "integer"
+                },
+                "InventoryCount": {
+                    "type": "integer"
+                },
+                "Items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.WorkListDto"
+                    }
+                },
+                "SucessCount": {
+                    "type": "integer"
+                },
+                "TotalCount": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.QueryLmsDto": {
             "type": "object",
             "properties": {
@@ -4164,6 +4277,47 @@
                 "success": {
                     "description": "是否成功",
                     "type": "boolean"
+                }
+            }
+        },
+        "response.WorkListDto": {
+            "type": "object",
+            "properties": {
+                "Comment": {
+                    "type": "string"
+                },
+                "CreateTime": {
+                    "type": "string"
+                },
+                "DetailsCount": {
+                    "type": "integer"
+                },
+                "ExceptionMsg": {
+                    "type": "string"
+                },
+                "ExceptionMsgCount": {
+                    "type": "integer"
+                },
+                "TaskStatus": {
+                    "type": "integer"
+                },
+                "TriggerSatus": {
+                    "type": "integer"
+                },
+                "WorkEndTime": {
+                    "type": "string"
+                },
+                "WorkId": {
+                    "type": "string"
+                },
+                "WorkName": {
+                    "type": "string"
+                },
+                "WorkStarTime": {
+                    "type": "string"
+                },
+                "WorkTime": {
+                    "type": "string"
                 }
             }
         },

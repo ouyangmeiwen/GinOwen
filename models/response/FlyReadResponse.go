@@ -71,3 +71,25 @@ type CreatWorkDto struct {
 type UpdateWorkDto struct {
 	Success bool `form:"success" json:"success"` // 是否成功
 }
+type WorkListDto struct {
+	WorkName          string `form:"WorkName" json:"WorkName"`
+	WorkId            string `form:"WorkId" json:"WorkId"`
+	WorkTime          string `form:"WorkTime" json:"WorkTime"`
+	WorkStarTime      string `form:"WorkStarTime" json:"WorkStarTime"`
+	WorkEndTime       string `form:"WorkEndTime" json:"WorkEndTime"`
+	CreateTime        string `form:"CreateTime" json:"CreateTime"`
+	TaskStatus        int    `form:"TaskStatus" json:"TaskStatus"`
+	TriggerSatus      int    `form:"TriggerSatus" json:"TriggerSatus"`
+	Comment           string `form:"Comment" json:"Comment"`
+	DetailsCount      int    `form:"DetailsCount" json:"DetailsCount"`
+	ExceptionMsgCount int    `form:"ExceptionMsgCount" json:"ExceptionMsgCount"`
+	ExceptionMsg      string `form:"ExceptionMsg" json:"ExceptionMsg"`
+}
+type PageWorkListDto struct {
+	TotalCount     int           `form:"TotalCount" json:"TotalCount"`
+	Items          []WorkListDto `form:"Items" json:"Items"`
+	InitWorkCount  int           `form:"InitWorkCount" json:"InitWorkCount"`
+	InventoryCount int           `form:"InventoryCount" json:"InventoryCount"`
+	SucessCount    int           `form:"SucessCount" json:"SucessCount"`
+	FailtureCount  int           `form:"FailtureCount" json:"FailtureCount"`
+}
