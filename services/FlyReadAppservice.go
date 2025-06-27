@@ -840,7 +840,7 @@ func (f *FlyReadAppService) UpdateWork(input request.UpdateWorkInput, tenantid i
 	if err != nil || task.ID == "" {
 		return resp, fmt.Errorf("当前task不存在")
 	}
-	WorkTime1 := utils.FormatInLocation("2016-01-02 15:04:05", work.WorkTime)
+	WorkTime1 := utils.FormatInLocation("2006-01-02 15:04:05", work.WorkTime)
 
 	if work.TaskName != &input.WorkName || WorkTime1 != input.WorkTime || work.DeviceType != &input.DeviceType {
 		work.TaskName = &input.WorkName
@@ -953,12 +953,12 @@ func (f *FlyReadAppService) WorkList(input request.WorkListInput, tenantid int) 
 
 		var WorkStarTime string
 		if work.WorkStarTime != nil {
-			WorkStarTime = utils.FormatInLocation("2016-01-02 15:04:05", *work.WorkStarTime)
+			WorkStarTime = utils.FormatInLocation("2006-01-02 15:04:05", *work.WorkStarTime)
 		}
 
 		var WorkEndTime string
 		if work.WorkEndTime != nil {
-			WorkEndTime = utils.FormatInLocation("2016-01-02 15:04:05", *work.WorkEndTime)
+			WorkEndTime = utils.FormatInLocation("2006-01-02 15:04:05", *work.WorkEndTime)
 		}
 
 		var Comment string
@@ -974,11 +974,11 @@ func (f *FlyReadAppService) WorkList(input request.WorkListInput, tenantid int) 
 		item := response.WorkListDto{
 			WorkName:     TaskName,
 			WorkId:       work.ID,
-			WorkTime:     utils.FormatInLocation("2016-01-02 15:04:05", work.WorkTime),
+			WorkTime:     utils.FormatInLocation("2006-01-02 15:04:05", work.WorkTime),
 			WorkStarTime: WorkStarTime,
 			WorkEndTime:  WorkEndTime,
 			TaskStatus:   int(work.TaskStatus),
-			CreateTime:   utils.FormatInLocation("2016-01-02 15:04:05", work.CreationTime),
+			CreateTime:   utils.FormatInLocation("2006-01-02 15:04:05", work.CreationTime),
 			TriggerSatus: int(work.TaskStatus),
 			Comment:      Comment,
 			ExceptionMsg: ExceptionMsg,
@@ -1042,5 +1042,41 @@ func (f *FlyReadAppService) WorkList(input request.WorkListInput, tenantid int) 
 	worksAll.Session(&gorm.Session{}).Where("TaskStatus=3").Count(&FailtureCount)
 	resp.FailtureCount = int(FailtureCount)
 
+	return resp, nil
+}
+
+func (f *FlyReadAppService) deleteWorkDetail(workid string, tenantid int) (err error) {
+	err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=? and WorkID=?", tenantid, workid).Delete(&models.Libinventoryworkdetail{}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (f *FlyReadAppService) DeleteWork(input request.DeleteWorkInput, tenantid int) (resp response.DeleteWorkDto, err error) {
+
+	var work models.Libinventorywork
+	err = global.OWEN_DB.Model(&models.Libinventorywork{}).Where("IsDeleted=0 and TenantID=? and ID=?", tenantid, input.Workid).First(&work).Error
+	if err != nil {
+		return resp, err
+	}
+	if work.ID == "" {
+		return resp, fmt.Errorf("workid不存在")
+	}
+	if work.SendStatus != 0 {
+		return resp, fmt.Errorf("已创建无法删除，任务1天后未执行将自动清除！")
+	}
+	if work.TaskStatus != 0 {
+		return resp, fmt.Errorf("任务状态%d,不允许删除！", work.TaskStatus)
+	}
+	err = f.deleteWorkDetail(input.Workid, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	err = global.OWEN_DB.Delete(&work).Error
+	if err != nil {
+		return resp, err
+	}
+	resp.Success = true
 	return resp, nil
 }

@@ -93,3 +93,43 @@ type PageWorkListDto struct {
 	SucessCount    int           `form:"SucessCount" json:"SucessCount"`
 	FailtureCount  int           `form:"FailtureCount" json:"FailtureCount"`
 }
+type DeleteWorkDto struct {
+	Success bool `form:"success" json:"success"` // 是否成功
+}
+type DetailListDto struct {
+	LayerId        string `form:"LayerId" json:"LayerId"`
+	LayerCode      string `form:"LayerCode" json:"LayerCode"`
+	LayerName      string `form:"LayerName" json:"LayerName"`
+	Title          string `form:"Title" json:"Title"`
+	ISBN           string `form:"ISBN" json:"ISBN"`
+	Author         string `form:"Author" json:"Author"`
+	Publisher      string `form:"Publisher" json:"Publisher"`
+	CallNo         string `form:"CallNo" json:"CallNo"`
+	Barcode        string `form:"Barcode" json:"Barcode"`
+	LocationName   string `form:"LocationName" json:"LocationName"`
+	InventoryState int    `form:"InventoryState" json:"InventoryState"`
+	LocLayerName   string `form:"LocLayerName" json:"LocLayerName"`
+	LocLayerId     string `form:"LocLayerId" json:"LocLayerId"`
+	LocLayerCode   string `form:"LocLayerCode" json:"LocLayerCode"`
+	Remark         string `form:"Remark" json:"Remark"`
+}
+
+type TaskDetail struct {
+	DeviceType      string `form:"DeviceType" json:"DeviceType"`
+	RobotId         string `form:"RobotId" json:"RobotId"`
+	RobotName       string `form:"RobotName" json:"RobotName"`
+	RobotRouterId   string `form:"RobotRouterId" json:"RobotRouterId"`
+	RobotRouterName string `form:"RobotRouterName" json:"RobotRouterName"`
+	WorkName        string `form:"WorkName" json:"WorkName"`
+	WorkId          string `form:"WorkId" json:"WorkId"`
+	TriggerSatus    int    `form:"TriggerSatus" json:"TriggerSatus"`
+	WorkTime        string `form:"WorkTime" json:"WorkTime"`
+	WorkStarTime    string `form:"WorkStarTime" json:"WorkStarTime"`
+	WorkEndTime     string `form:"WorkEndTime" json:"WorkEndTime"`
+	WorkLayerCount  int    `form:"WorkLayerCount" json:"WorkLayerCount"`
+}
+type PageDetailListDto struct {
+	TotalCount int             `form:"TotalCount" json:"TotalCount"`
+	Items      []DetailListDto `form:"Items" json:"Items"`
+	Detail     TaskDetail      `form:"TaskDetail" json:"TaskDetail"`
+}

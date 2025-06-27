@@ -375,6 +375,52 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/DeleteWork": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取层图片",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "workid",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DeleteWorkDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetCaseCodeImage": {
             "post": {
                 "security": [
@@ -3599,6 +3645,15 @@ const docTemplate = `{
         },
         "response.DeleteLmsLogDto": {
             "type": "object"
+        },
+        "response.DeleteWorkDto": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "description": "是否成功",
+                    "type": "boolean"
+                }
+            }
         },
         "response.GetCaseImgsDto": {
             "type": "object",

@@ -171,3 +171,6 @@ curl -X 'POST' \
   "password": "123456",
   "username": "admin"
 }'
+
+
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJyb2xlX2lkIjoxLCJ0ZW5hbnRfaWQiOjUzMjUsImV4cCI6MTc1MTA3MTY2MH0.vXpXqOpVnr4AYj1Mv3TcA6KeUourCoN_UQ1Fv0dW80A

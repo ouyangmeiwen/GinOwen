@@ -627,3 +627,29 @@ func (b *FlyReadController) WorkList(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// DeleteWork
+// @Tags     FlyRead
+// @Summary  获取层图片
+// @Produce  application/json
+// @Param    data  query       request.DeleteWorkInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.DeleteWorkDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/DeleteWork [get]
+func (b *FlyReadController) DeleteWork(c *gin.Context) {
+
+	var req request.DeleteWorkInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.DeleteWorkDto
+	resp, err = ServicesGroup.flyreadAppService.DeleteWork(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

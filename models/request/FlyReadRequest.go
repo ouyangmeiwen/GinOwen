@@ -116,3 +116,17 @@ type WorkListInput struct {
 	TaskStatus   int    `form:"TaskStatus" json:"TaskStatus"`     //任务初始化0 盘点中1  成功2 失败3
 	DeviceType   string `form:"DeviceType" json:"DeviceType"`     //目前只有摄像头  盘点类型：0:全景巡盘球机(球机摄像头),1:书架定点摄像头, 2:视觉盘点机器人,示例值(0)
 }
+type DeleteWorkInput struct {
+	Workid string `form:"workid" json:"workid"`
+}
+type DetailListInput struct {
+	utils.PagedResultRequest
+	WorkId         string `form:"WorkId" json:"WorkId"`
+	LayerId        string `form:"LayerId" json:"LayerId"`
+	InventoryState int    `form:"InventoryState" json:"InventoryState"`
+	Barcode        string `form:"Barcode" json:"Barcode"`
+	Title          string `form:"Title" json:"Title"`
+	CallNo         string `form:"CallNo" json:"CallNo"`
+	ISBN           string `form:"ISBN" json:"ISBN"`
+	ShowOff        string `form:"ShowOff" json:"ShowOff"`
+}

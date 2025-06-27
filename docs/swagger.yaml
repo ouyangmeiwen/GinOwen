@@ -771,6 +771,12 @@ definitions:
     type: object
   response.DeleteLmsLogDto:
     type: object
+  response.DeleteWorkDto:
+    properties:
+      success:
+        description: 是否成功
+        type: boolean
+    type: object
   response.GetCaseImgsDto:
     properties:
       code:
@@ -1483,6 +1489,31 @@ paths:
       security:
       - BearerAuth: []
       summary: 创建任务
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/DeleteWork:
+    get:
+      parameters:
+      - in: query
+        name: workid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DeleteWorkDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取层图片
       tags:
       - FlyRead
   /api/services/app/FlyRead/GetCaseCodeImage:
