@@ -578,7 +578,7 @@ func (b *FlyReadController) CreatWork(c *gin.Context) {
 
 // UpdateWork
 // @Tags     FlyRead
-// @Summary  创建任务
+// @Summary  更新任务
 // @Produce  application/json
 // @Param    data  body     request.UpdateWorkInput 			true  "入参"
 // @Success  200   {object}  utils.Response{data=response.UpdateWorkDto,msg=string}  "返回"
@@ -604,7 +604,7 @@ func (b *FlyReadController) UpdateWork(c *gin.Context) {
 
 // WorkList
 // @Tags     FlyRead
-// @Summary  创建任务
+// @Summary  任务列表
 // @Produce  application/json
 // @Param    data  body     request.WorkListInput 			true  "入参"
 // @Success  200   {object}  utils.Response{data=response.PageWorkListDto,msg=string}  "返回"
@@ -646,6 +646,32 @@ func (b *FlyReadController) DeleteWork(c *gin.Context) {
 	}
 	var resp response.DeleteWorkDto
 	resp, err = ServicesGroup.flyreadAppService.DeleteWork(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// DetailList
+// @Tags     FlyRead
+// @Summary  获取任务详情
+// @Produce  application/json
+// @Param    data  body     request.DetailListInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.PageDetailListDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/DetailList [post]
+func (b *FlyReadController) DetailList(c *gin.Context) {
+
+	var req request.DetailListInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.PageDetailListDto
+	resp, err = ServicesGroup.flyreadAppService.DetailList(req, utils.GetCurrentTenantTd(c))
 	if err != nil {
 		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
 		utils.FailWithMessage("失败!"+err.Error(), c)

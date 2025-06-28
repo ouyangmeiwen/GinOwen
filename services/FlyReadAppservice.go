@@ -1080,3 +1080,139 @@ func (f *FlyReadAppService) DeleteWork(input request.DeleteWorkInput, tenantid i
 	resp.Success = true
 	return resp, nil
 }
+
+func (f *FlyReadAppService) GetTaskDetailAsync(workid string, tenantid int) (resp response.TaskDetail, err error) {
+	var work models.Libinventorywork
+	err = global.OWEN_DB.Model(&models.Libinventorywork{}).Where("TenantID=? and IsDeleted=0 and Id=?", tenantid, workid).First(&work).Error
+	if err != nil {
+		return resp, err
+	}
+	if work.TaskID == nil || *work.TaskID == "" {
+		return resp, fmt.Errorf("work不存在")
+	}
+	var task models.Libinventorytask
+
+	err = global.OWEN_DB.Model(&models.Libinventorytask{}).Where("TenantID=? and IsDeleted=0 and Id=?", tenantid, work.TaskID).First(&task).Error
+	if err != nil {
+		return resp, err
+	}
+
+	var detailscount int64
+	global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=? and WorkID=?", tenantid, work.ID).Count(&detailscount)
+
+	return response.TaskDetail{
+		DeviceType:      utils.SafeString(task.DeviceType),
+		RobotId:         utils.SafeString(task.RobotID),
+		RobotName:       utils.SafeString(task.RobotName),
+		RobotRouterId:   utils.SafeString(task.RobotRouterID),
+		RobotRouterName: utils.SafeString(task.RobotRouterName),
+		WorkName:        utils.SafeString(work.TaskName),
+		WorkId:          work.ID,
+		TriggerSatus:    int(work.TaskStatus),
+		WorkTime:        utils.FormatInLocation("2006-01-02 15:04:05", work.WorkTime),
+		WorkStarTime:    utils.SafeTimeString(work.WorkStarTime, "2006-01-02 15:04:05"),
+		WorkEndTime:     utils.SafeTimeString(work.WorkEndTime, "2006-01-02 15:04:05"),
+		WorkLayerCount:  int(detailscount),
+	}, nil
+}
+
+func (f *FlyReadAppService) DetailList(input request.DetailListInput, tenantid int) (resp response.PageDetailListDto, err error) {
+	var details []models.Libinventoryworkdetail
+	err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=? and WorkId=?", tenantid, input.WorkId).Find(&details).Error
+	if err != nil {
+		return resp, fmt.Errorf("%v", err)
+	}
+	if len(details) <= 0 {
+		return resp, nil
+	}
+	var detailids []string
+	for _, v := range details {
+		detailids = append(detailids, v.ID)
+	}
+	logquery := global.OWEN_DB.Model(&models.Libiteminventorylog{}).Where("TenantID=? and InventoryWorkId in ? and InventoryWorkType=1", tenantid, detailids)
+	if input.LayerId != "" {
+		logquery = logquery.Where("LayerId=?", input.LayerId)
+	}
+	if input.Barcode != "" {
+		logquery = logquery.Where("Barcode=?", input.Barcode)
+	}
+	if input.Title != "" {
+		logquery = logquery.Where("Title like ?", "%"+input.Title+"%")
+	}
+	if input.CallNo != "" {
+		logquery = logquery.Where("CallNo=?", input.CallNo)
+	}
+	if input.ISBN != "" {
+		logquery = logquery.Where("ISBN=?", input.ISBN)
+	}
+	if input.InventoryState > 0 {
+		logquery = logquery.Where("InventoryState=?", input.InventoryState)
+	}
+	if input.ShowOff != "1" {
+		logquery = logquery.Where("(InventoryState!=2 and InventoryState!=8)")
+	}
+	if input.Sorting != "" {
+		logquery = logquery.Order(input.Sorting)
+	} else {
+		logquery = logquery.Order("LayerCode asc")
+	}
+
+	var total int64
+	logquery.Count(&total)
+
+	var logs []models.Libiteminventorylog
+	err = logquery.Offset(input.SkipCount).Limit(input.MaxResultCount).Find(&logs).Error
+	if err != nil {
+		return resp, err
+	}
+
+	var layersids []string
+
+	for _, v := range logs {
+		if v.LocLayerID != nil && *v.LocLayerID != "" {
+			layersids = append(layersids, *v.LocLayerID)
+		}
+	}
+
+	var layers []models.Liblayer
+	err = global.OWEN_DB.Model(&models.Liblayer{}).Where("TenantID=? and Id in ?", tenantid, layersids).Find(&layers).Error
+	if err != nil {
+		return resp, err
+	}
+	layers_map := make(map[string]models.Liblayer)
+	for _, v := range layers {
+		layers_map[v.ID] = v
+	}
+
+	for _, v := range logs {
+		var dto response.DetailListDto
+		dto.LayerId = utils.SafeString(v.LayerID)
+		dto.LayerCode = utils.SafeString(v.LayerCode)
+		dto.LayerName = utils.SafeString(v.LayerName)
+		dto.Title = utils.SafeString(v.ItemTitle)
+		dto.ISBN = utils.SafeString(v.ItemISBN)
+		dto.Author = utils.SafeString(v.ItemAuthor)
+		dto.Publisher = utils.SafeString(v.ItemPublisher)
+		dto.CallNo = utils.SafeString(v.ItemCallNo)
+		dto.Barcode = v.ItemBarcode
+		dto.LocationName = utils.SafeString(v.LocationName)
+		dto.InventoryState = int(v.InventoryState)
+		dto.LocLayerName = utils.SafeString(v.LocLayerName)
+		dto.LocLayerId = utils.SafeString(v.LocLayerID)
+		dto.LocLayerCode = utils.SafeString(v.LocLayerCode)
+		dto.Remark = utils.SafeString(v.Remark)
+
+		if (v.LocLayerName == nil || *v.LocLayerName == "") && (v.LocLayerID != nil && *v.LocLayerID != "") {
+			dto.LocLayerName = layers_map[*v.LocLayerID].Name
+		}
+		resp.Items = append(resp.Items, dto)
+	}
+	resp.TotalCount = int(total)
+	var taskDetail response.TaskDetail
+	taskDetail, err = f.GetTaskDetailAsync(input.WorkId, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.Detail = taskDetail
+	return resp, nil
+}

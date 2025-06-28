@@ -15,10 +15,7 @@ import (
 
 // 字符串截取函数，避免溢出
 func truncateString(s string, maxLength int) string {
-	if len(s) > maxLength {
-		return s[:maxLength]
-	}
-	return s
+	return utils.SafeSubstring(s, 0, maxLength)
 }
 
 // 自定义 ResponseWriter，用于捕获响应内容

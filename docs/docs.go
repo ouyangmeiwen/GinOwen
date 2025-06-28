@@ -421,6 +421,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/DetailList": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取任务详情",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DetailListInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageDetailListDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetCaseCodeImage": {
             "post": {
                 "security": [
@@ -1148,7 +1198,7 @@ const docTemplate = `{
                 "tags": [
                     "FlyRead"
                 ],
-                "summary": "创建任务",
+                "summary": "更新任务",
                 "parameters": [
                     {
                         "description": "入参",
@@ -1448,7 +1498,7 @@ const docTemplate = `{
                 "tags": [
                     "FlyRead"
                 ],
-                "summary": "创建任务",
+                "summary": "任务列表",
                 "parameters": [
                     {
                         "description": "入参",
@@ -1671,6 +1721,12 @@ const docTemplate = `{
                         "default": 0,
                         "description": "跳过多少数量",
                         "name": "SkipCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序规则",
+                        "name": "Sorting",
                         "in": "query"
                     },
                     {
@@ -2139,6 +2195,12 @@ const docTemplate = `{
                         "default": 0,
                         "description": "跳过多少数量",
                         "name": "SkipCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序规则",
+                        "name": "Sorting",
                         "in": "query"
                     },
                     {
@@ -3038,6 +3100,53 @@ const docTemplate = `{
                 }
             }
         },
+        "request.DetailListInput": {
+            "type": "object",
+            "properties": {
+                "Barcode": {
+                    "type": "string"
+                },
+                "CallNo": {
+                    "type": "string"
+                },
+                "ISBN": {
+                    "type": "string"
+                },
+                "InventoryState": {
+                    "type": "integer"
+                },
+                "LayerId": {
+                    "type": "string"
+                },
+                "MaxResultCount": {
+                    "description": "获取多少条结果",
+                    "type": "integer",
+                    "default": 100,
+                    "maximum": 99999,
+                    "minimum": 1
+                },
+                "ShowOff": {
+                    "type": "string"
+                },
+                "SkipCount": {
+                    "description": "跳过多少数量",
+                    "type": "integer",
+                    "default": 0,
+                    "maximum": 99999,
+                    "minimum": -1
+                },
+                "Sorting": {
+                    "description": "排序规则",
+                    "type": "string"
+                },
+                "Title": {
+                    "type": "string"
+                },
+                "WorkId": {
+                    "type": "string"
+                }
+            }
+        },
         "request.GPIReceiveInput": {
             "type": "object",
             "properties": {
@@ -3606,6 +3715,10 @@ const docTemplate = `{
                     "maximum": 99999,
                     "minimum": -1
                 },
+                "Sorting": {
+                    "description": "排序规则",
+                    "type": "string"
+                },
                 "TaskStatus": {
                     "description": "任务初始化0 盘点中1  成功2 失败3",
                     "type": "integer"
@@ -3652,6 +3765,56 @@ const docTemplate = `{
                 "success": {
                     "description": "是否成功",
                     "type": "boolean"
+                }
+            }
+        },
+        "response.DetailListDto": {
+            "type": "object",
+            "properties": {
+                "Author": {
+                    "type": "string"
+                },
+                "Barcode": {
+                    "type": "string"
+                },
+                "CallNo": {
+                    "type": "string"
+                },
+                "ISBN": {
+                    "type": "string"
+                },
+                "InventoryState": {
+                    "type": "integer"
+                },
+                "LayerCode": {
+                    "type": "string"
+                },
+                "LayerId": {
+                    "type": "string"
+                },
+                "LayerName": {
+                    "type": "string"
+                },
+                "LocLayerCode": {
+                    "type": "string"
+                },
+                "LocLayerId": {
+                    "type": "string"
+                },
+                "LocLayerName": {
+                    "type": "string"
+                },
+                "LocationName": {
+                    "type": "string"
+                },
+                "Publisher": {
+                    "type": "string"
+                },
+                "Remark": {
+                    "type": "string"
+                },
+                "Title": {
+                    "type": "string"
                 }
             }
         },
@@ -4145,6 +4308,23 @@ const docTemplate = `{
                 }
             }
         },
+        "response.PageDetailListDto": {
+            "type": "object",
+            "properties": {
+                "Items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.DetailListDto"
+                    }
+                },
+                "TaskDetail": {
+                    "$ref": "#/definitions/response.TaskDetail"
+                },
+                "TotalCount": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.PageWorkListDto": {
             "type": "object",
             "properties": {
@@ -4272,6 +4452,47 @@ const docTemplate = `{
                     "additionalProperties": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "response.TaskDetail": {
+            "type": "object",
+            "properties": {
+                "DeviceType": {
+                    "type": "string"
+                },
+                "RobotId": {
+                    "type": "string"
+                },
+                "RobotName": {
+                    "type": "string"
+                },
+                "RobotRouterId": {
+                    "type": "string"
+                },
+                "RobotRouterName": {
+                    "type": "string"
+                },
+                "TriggerSatus": {
+                    "type": "integer"
+                },
+                "WorkEndTime": {
+                    "type": "string"
+                },
+                "WorkId": {
+                    "type": "string"
+                },
+                "WorkLayerCount": {
+                    "type": "integer"
+                },
+                "WorkName": {
+                    "type": "string"
+                },
+                "WorkStarTime": {
+                    "type": "string"
+                },
+                "WorkTime": {
+                    "type": "string"
                 }
             }
         },

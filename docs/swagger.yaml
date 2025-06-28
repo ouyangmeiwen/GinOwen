@@ -332,6 +332,40 @@ definitions:
       UserId:
         type: integer
     type: object
+  request.DetailListInput:
+    properties:
+      Barcode:
+        type: string
+      CallNo:
+        type: string
+      ISBN:
+        type: string
+      InventoryState:
+        type: integer
+      LayerId:
+        type: string
+      MaxResultCount:
+        default: 100
+        description: 获取多少条结果
+        maximum: 99999
+        minimum: 1
+        type: integer
+      ShowOff:
+        type: string
+      SkipCount:
+        default: 0
+        description: 跳过多少数量
+        maximum: 99999
+        minimum: -1
+        type: integer
+      Sorting:
+        description: 排序规则
+        type: string
+      Title:
+        type: string
+      WorkId:
+        type: string
+    type: object
   request.GPIReceiveInput:
     properties:
       receivedata:
@@ -744,6 +778,9 @@ definitions:
         maximum: 99999
         minimum: -1
         type: integer
+      Sorting:
+        description: 排序规则
+        type: string
       TaskStatus:
         description: 任务初始化0 盘点中1  成功2 失败3
         type: integer
@@ -776,6 +813,39 @@ definitions:
       success:
         description: 是否成功
         type: boolean
+    type: object
+  response.DetailListDto:
+    properties:
+      Author:
+        type: string
+      Barcode:
+        type: string
+      CallNo:
+        type: string
+      ISBN:
+        type: string
+      InventoryState:
+        type: integer
+      LayerCode:
+        type: string
+      LayerId:
+        type: string
+      LayerName:
+        type: string
+      LocLayerCode:
+        type: string
+      LocLayerId:
+        type: string
+      LocLayerName:
+        type: string
+      LocationName:
+        type: string
+      Publisher:
+        type: string
+      Remark:
+        type: string
+      Title:
+        type: string
     type: object
   response.GetCaseImgsDto:
     properties:
@@ -1108,6 +1178,17 @@ definitions:
       Y2:
         type: number
     type: object
+  response.PageDetailListDto:
+    properties:
+      Items:
+        items:
+          $ref: '#/definitions/response.DetailListDto'
+        type: array
+      TaskDetail:
+        $ref: '#/definitions/response.TaskDetail'
+      TotalCount:
+        type: integer
+    type: object
   response.PageWorkListDto:
     properties:
       FailtureCount:
@@ -1193,6 +1274,33 @@ definitions:
         additionalProperties:
           type: string
         type: object
+    type: object
+  response.TaskDetail:
+    properties:
+      DeviceType:
+        type: string
+      RobotId:
+        type: string
+      RobotName:
+        type: string
+      RobotRouterId:
+        type: string
+      RobotRouterName:
+        type: string
+      TriggerSatus:
+        type: integer
+      WorkEndTime:
+        type: string
+      WorkId:
+        type: string
+      WorkLayerCount:
+        type: integer
+      WorkName:
+        type: string
+      WorkStarTime:
+        type: string
+      WorkTime:
+        type: string
     type: object
   response.UpdateInventoryDto:
     type: object
@@ -1514,6 +1622,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 获取层图片
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/DetailList:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.DetailListInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageDetailListDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取任务详情
       tags:
       - FlyRead
   /api/services/app/FlyRead/GetCaseCodeImage:
@@ -1938,7 +2074,7 @@ paths:
               type: object
       security:
       - BearerAuth: []
-      summary: 创建任务
+      summary: 更新任务
       tags:
       - FlyRead
   /api/services/app/FlyRead/UploadLibItem:
@@ -2106,7 +2242,7 @@ paths:
               type: object
       security:
       - BearerAuth: []
-      summary: 创建任务
+      summary: 任务列表
       tags:
       - FlyRead
   /api/services/app/LibRow/QueryRows:
@@ -2213,6 +2349,10 @@ paths:
         minimum: -1
         name: SkipCount
         type: integer
+      - description: 排序规则
+        in: query
+        name: Sorting
+        type: string
       - in: query
         name: barcode
         type: string
@@ -2481,6 +2621,10 @@ paths:
         minimum: -1
         name: SkipCount
         type: integer
+      - description: 排序规则
+        in: query
+        name: Sorting
+        type: string
       - description: 租户
         in: query
         name: TenantId

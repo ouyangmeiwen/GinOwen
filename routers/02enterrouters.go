@@ -51,10 +51,10 @@ func initServer(address string, router *gin.Engine) *http.Server {
 	return &http.Server{
 		Addr:           address,
 		Handler:        router,
-		ReadTimeout:    20 * time.Second, // 读取超时
-		WriteTimeout:   20 * time.Second, // 写入超时
-		IdleTimeout:    10 * time.Second, // 空闲连接超时
-		MaxHeaderBytes: 1 << 20,          // 最大请求头大小 (1 MB) ，它表示将数字 1 向左移动 20 位 就是2的20次方  最大请求头大小为 1048576 字节，即 1 MB。
+		ReadTimeout:    600 * time.Second, // 读取超时
+		WriteTimeout:   600 * time.Second, // 写入超时
+		IdleTimeout:    60 * time.Second,  // 空闲连接超时
+		MaxHeaderBytes: 1 << 20,           // 最大请求头大小 (1 MB) ，它表示将数字 1 向左移动 20 位 就是2的20次方  最大请求头大小为 1048576 字节，即 1 MB。
 	}
 }
 
