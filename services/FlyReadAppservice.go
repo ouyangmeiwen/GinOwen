@@ -1216,3 +1216,81 @@ func (f *FlyReadAppService) DetailList(input request.DetailListInput, tenantid i
 	resp.Detail = taskDetail
 	return resp, nil
 }
+
+func (f *FlyReadAppService) DetailStatusList(input request.DetailStatusListInput, tenantid int) (resp response.PageDetailStatusListDto, err error) {
+	var details []models.Libinventoryworkdetail
+	details_query := global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=? and WorkId=?", tenantid, input.WorkId)
+	if input.TaskStatus >= 0 {
+		details_query = details_query.Where("TaskStatus=?", input.TaskStatus)
+	}
+	var total int64
+	details_query.Count(&total)
+
+	details_query = details_query.Order("LayerCode asc")
+
+	err = details_query.Offset(input.SkipCount).Limit(input.MaxResultCount).Find(&details).Error
+	if err != nil {
+		return resp, err
+	}
+	if len(details) <= 0 {
+		return resp, nil
+	}
+
+	if input.TaskStatus < 0 {
+		isneedUpdate := true
+		for _, v := range details {
+			if !(v.TaskStatus == 2 || v.TaskStatus == 3) {
+				isneedUpdate = false
+				break
+			}
+		}
+		if isneedUpdate {
+			var work models.Libinventorywork
+			err = global.OWEN_DB.Model(&models.Libinventorywork{}).Where("TenantID=? and IsDeleted=0 and Id=?", tenantid, input.WorkId).First(&work).Error
+			if err != nil {
+				return resp, nil
+			}
+			if work.ID != "" && work.TaskStatus != 2 && work.TriggerSatus != 2 {
+				if work.TaskStatus != 0 {
+
+					var detail models.Libinventoryworkdetail
+					err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=? and WorkId=? and  (ExceptionMsg!=null and ExceptionMsg!='')", tenantid, input.WorkId).Order("CreationTime desc").First(&detail).Error
+					if err != nil {
+
+					}
+					err = global.OWEN_DB.Model(&models.Libinventorywork{}).
+						Where("TenantID=? AND IsDeleted=0 AND Id=?", tenantid, input.WorkId).
+						Updates(map[string]interface{}{
+							"TaskStatus":   2, // 替换为你要更新的值
+							"ExceptionMsg": utils.SafeString(detail.ExceptionMsg),
+							// 其他需要更新的字段
+						}).Error
+					if err != nil {
+						return resp, err
+					}
+				}
+			}
+		}
+	}
+
+	resp.TotalCount = int(total)
+
+	for _, v := range details {
+		var dto response.DetailStatusListDto
+		dto.LayerId = utils.SafeString(v.LayerID)
+		dto.LayerCode = utils.SafeString(v.LayerCode)
+		dto.LayerName = utils.SafeString(v.LayerName)
+		dto.TaskStatus = int(v.TaskStatus)
+		dto.ExceptionMsg = utils.SafeString(v.ExceptionMsg)
+		dto.Remark = utils.SafeString(v.Remark)
+		resp.Items = append(resp.Items, dto)
+	}
+
+	var taskDetail response.TaskDetail
+	taskDetail, err = f.GetTaskDetailAsync(input.WorkId, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.Detail = taskDetail
+	return resp, nil
+}

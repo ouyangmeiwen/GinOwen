@@ -133,3 +133,16 @@ type PageDetailListDto struct {
 	Items      []DetailListDto `form:"Items" json:"Items"`
 	Detail     TaskDetail      `form:"TaskDetail" json:"TaskDetail"`
 }
+type DetailStatusListDto struct {
+	LayerId      string `form:"LayerId" json:"LayerId"`
+	LayerCode    string `form:"LayerCode" json:"LayerCode"`
+	LayerName    string `form:"LayerName" json:"LayerName"`
+	TaskStatus   int    `form:"TaskStatus" json:"TaskStatus"`
+	ExceptionMsg string `form:"ExceptionMsg" json:"ExceptionMsg"`
+	Remark       string `form:"Remark" json:"Remark"`
+}
+type PageDetailStatusListDto struct {
+	TotalCount int                   `form:"TotalCount" json:"TotalCount"`
+	Items      []DetailStatusListDto `form:"Items" json:"Items"`
+	Detail     TaskDetail            `form:"TaskDetail" json:"TaskDetail"`
+}

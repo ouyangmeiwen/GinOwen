@@ -366,6 +366,28 @@ definitions:
       WorkId:
         type: string
     type: object
+  request.DetailStatusListInput:
+    properties:
+      MaxResultCount:
+        default: 100
+        description: 获取多少条结果
+        maximum: 99999
+        minimum: 1
+        type: integer
+      SkipCount:
+        default: 0
+        description: 跳过多少数量
+        maximum: 99999
+        minimum: -1
+        type: integer
+      Sorting:
+        description: 排序规则
+        type: string
+      TaskStatus:
+        type: integer
+      WorkId:
+        type: string
+    type: object
   request.GPIReceiveInput:
     properties:
       receivedata:
@@ -847,6 +869,21 @@ definitions:
       Title:
         type: string
     type: object
+  response.DetailStatusListDto:
+    properties:
+      ExceptionMsg:
+        type: string
+      LayerCode:
+        type: string
+      LayerId:
+        type: string
+      LayerName:
+        type: string
+      Remark:
+        type: string
+      TaskStatus:
+        type: integer
+    type: object
   response.GetCaseImgsDto:
     properties:
       code:
@@ -1183,6 +1220,17 @@ definitions:
       Items:
         items:
           $ref: '#/definitions/response.DetailListDto'
+        type: array
+      TaskDetail:
+        $ref: '#/definitions/response.TaskDetail'
+      TotalCount:
+        type: integer
+    type: object
+  response.PageDetailStatusListDto:
+    properties:
+      Items:
+        items:
+          $ref: '#/definitions/response.DetailStatusListDto'
         type: array
       TaskDetail:
         $ref: '#/definitions/response.TaskDetail'
@@ -1650,6 +1698,34 @@ paths:
       security:
       - BearerAuth: []
       summary: 获取任务详情
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/DetailStatusList:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.DetailStatusListInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PageDetailStatusListDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取任务列表层详情
       tags:
       - FlyRead
   /api/services/app/FlyRead/GetCaseCodeImage:

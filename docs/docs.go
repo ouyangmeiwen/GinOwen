@@ -471,6 +471,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/DetailStatusList": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取任务列表层详情",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DetailStatusListInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PageDetailStatusListDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetCaseCodeImage": {
             "post": {
                 "security": [
@@ -3147,6 +3197,35 @@ const docTemplate = `{
                 }
             }
         },
+        "request.DetailStatusListInput": {
+            "type": "object",
+            "properties": {
+                "MaxResultCount": {
+                    "description": "获取多少条结果",
+                    "type": "integer",
+                    "default": 100,
+                    "maximum": 99999,
+                    "minimum": 1
+                },
+                "SkipCount": {
+                    "description": "跳过多少数量",
+                    "type": "integer",
+                    "default": 0,
+                    "maximum": 99999,
+                    "minimum": -1
+                },
+                "Sorting": {
+                    "description": "排序规则",
+                    "type": "string"
+                },
+                "TaskStatus": {
+                    "type": "integer"
+                },
+                "WorkId": {
+                    "type": "string"
+                }
+            }
+        },
         "request.GPIReceiveInput": {
             "type": "object",
             "properties": {
@@ -3818,6 +3897,29 @@ const docTemplate = `{
                 }
             }
         },
+        "response.DetailStatusListDto": {
+            "type": "object",
+            "properties": {
+                "ExceptionMsg": {
+                    "type": "string"
+                },
+                "LayerCode": {
+                    "type": "string"
+                },
+                "LayerId": {
+                    "type": "string"
+                },
+                "LayerName": {
+                    "type": "string"
+                },
+                "Remark": {
+                    "type": "string"
+                },
+                "TaskStatus": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.GetCaseImgsDto": {
             "type": "object",
             "properties": {
@@ -4315,6 +4417,23 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/response.DetailListDto"
+                    }
+                },
+                "TaskDetail": {
+                    "$ref": "#/definitions/response.TaskDetail"
+                },
+                "TotalCount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.PageDetailStatusListDto": {
+            "type": "object",
+            "properties": {
+                "Items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.DetailStatusListDto"
                     }
                 },
                 "TaskDetail": {

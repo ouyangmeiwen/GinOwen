@@ -130,3 +130,8 @@ type DetailListInput struct {
 	ISBN           string `form:"ISBN" json:"ISBN"`
 	ShowOff        string `form:"ShowOff" json:"ShowOff"`
 }
+type DetailStatusListInput struct {
+	utils.PagedResultRequest
+	WorkId     string `form:"WorkId" json:"WorkId"`
+	TaskStatus int    `form:"TaskStatus" json:"TaskStatus"`
+}
