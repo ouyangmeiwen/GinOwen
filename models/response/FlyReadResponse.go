@@ -146,3 +146,8 @@ type PageDetailStatusListDto struct {
 	Items      []DetailStatusListDto `form:"Items" json:"Items"`
 	Detail     TaskDetail            `form:"TaskDetail" json:"TaskDetail"`
 }
+type InventoryMonthListDto struct {
+	DateTime       string `form:"DateTime" json:"DateTime"`
+	InventoryState int    `form:"InventoryState" json:"InventoryState"`
+	Count          int    `form:"Count" json:"Count"`
+}

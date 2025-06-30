@@ -32,3 +32,28 @@ func main2() {
 	wg.Wait()
 	fmt.Println("All tasks processed")
 }
+
+func Testpools() {
+	var pool = sync.Pool{
+		New: func() interface{} {
+			return &Task{}
+		},
+	}
+
+	totalBatches := 100000000
+	for batch := 0; batch < totalBatches; batch++ {
+		tasks := make([]*Task, 0, 1000)
+		for i := 0; i < 1000; i++ {
+			task := pool.Get().(*Task)
+			// 重置 task 字段
+			*task = Task{ /* 初始化 */ }
+			tasks = append(tasks, task)
+		}
+		//db.BatchInsert(tasks)
+		// 插入完成，放回池
+		for _, task := range tasks {
+			pool.Put(task)
+		}
+	}
+
+}

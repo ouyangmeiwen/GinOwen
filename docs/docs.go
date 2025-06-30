@@ -1087,6 +1087,59 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/InventoryMonthList": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "近一个月在架离架错架统计",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InventoryMonthListInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.InventoryMonthListDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/InventorySet": {
             "post": {
                 "security": [
@@ -3480,6 +3533,9 @@ const docTemplate = `{
                 }
             }
         },
+        "request.InventoryMonthListInput": {
+            "type": "object"
+        },
         "request.InventorySetInput": {
             "type": "object",
             "required": [
@@ -4171,6 +4227,20 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/dto.InventoryHisRespObj"
                     }
+                }
+            }
+        },
+        "response.InventoryMonthListDto": {
+            "type": "object",
+            "properties": {
+                "Count": {
+                    "type": "integer"
+                },
+                "DateTime": {
+                    "type": "string"
+                },
+                "InventoryState": {
+                    "type": "integer"
                 }
             }
         },

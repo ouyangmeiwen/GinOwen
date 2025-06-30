@@ -52,7 +52,6 @@ gdb:
 
 
 release:发布
-GOOS=linux GOARCH=amd64 go build -buildvcs=false -o GinOwen
 GOOS=linux GOARCH=amd64 go build -buildvcs=false  -o GinOwen
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -buildvcs=false -o GinOwen    #独立运行
 GOOS=windows GOARCH=amd64 go build -buildvcs=false -o GinOwen.exe

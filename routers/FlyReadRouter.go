@@ -37,5 +37,6 @@ func RegisterFlyReadRoutes(r *gin.Engine) {
 		api.GET("DeleteWork", ApiGroup.flyreadApi.DeleteWork)
 		api.POST("DetailList", ApiGroup.flyreadApi.DetailList)
 		api.POST("DetailStatusList", ApiGroup.flyreadApi.DetailStatusList)
+		api.POST("InventoryMonthList", ApiGroup.flyreadApi.InventoryMonthList)
 	}
 }

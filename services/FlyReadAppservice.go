@@ -1256,7 +1256,7 @@ func (f *FlyReadAppService) DetailStatusList(input request.DetailStatusListInput
 					var detail models.Libinventoryworkdetail
 					err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=? and WorkId=? and  (ExceptionMsg!=null and ExceptionMsg!='')", tenantid, input.WorkId).Order("CreationTime desc").First(&detail).Error
 					if err != nil {
-
+						fmt.Println("detail not  found")
 					}
 					err = global.OWEN_DB.Model(&models.Libinventorywork{}).
 						Where("TenantID=? AND IsDeleted=0 AND Id=?", tenantid, input.WorkId).
@@ -1292,5 +1292,32 @@ func (f *FlyReadAppService) DetailStatusList(input request.DetailStatusListInput
 		return resp, err
 	}
 	resp.Detail = taskDetail
+	return resp, nil
+}
+
+func (f *FlyReadAppService) InventoryMonthList(input request.InventoryMonthListInput, tenantid int) (resp []response.InventoryMonthListDto, err error) {
+
+	// 取当前日期部分（清除时间）
+	dateOnly := utils.NowDateLocation()
+	// 往前推一个月
+	prevMonth := dateOnly.AddDate(0, -1, 0)
+
+	var statlist []models.Libinventorystat
+	err = global.OWEN_DB.Model(&models.Libinventorystat{}).Where("TenantID=? and OriginType=10 and StatType=0 and StatDate>?", tenantid, prevMonth).Find(&statlist).Error
+	if err != nil {
+		return resp, err
+	}
+	if len(statlist) <= 0 {
+		return resp, nil
+	}
+
+	for _, v := range statlist {
+		var dto response.InventoryMonthListDto
+		dto.DateTime = utils.FormatInLocation("2006-01-02 15:04:05", v.StatDate)
+		dto.Count = int(v.InventoryCount)
+		dto.InventoryState = int(v.InventoryState)
+		resp = append(resp, dto)
+	}
+
 	return resp, nil
 }

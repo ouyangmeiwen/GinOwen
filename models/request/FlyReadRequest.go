@@ -135,3 +135,5 @@ type DetailStatusListInput struct {
 	WorkId     string `form:"WorkId" json:"WorkId"`
 	TaskStatus int    `form:"TaskStatus" json:"TaskStatus"`
 }
+type InventoryMonthListInput struct {
+}

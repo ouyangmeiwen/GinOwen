@@ -580,6 +580,8 @@ definitions:
         description: 页大小
         type: integer
     type: object
+  request.InventoryMonthListInput:
+    type: object
   request.InventorySetInput:
     properties:
       DeviceType:
@@ -1057,6 +1059,15 @@ definitions:
         items:
           $ref: '#/definitions/dto.InventoryHisRespObj'
         type: array
+    type: object
+  response.InventoryMonthListDto:
+    properties:
+      Count:
+        type: integer
+      DateTime:
+        type: string
+      InventoryState:
+        type: integer
     type: object
   response.InventorySetDto:
     properties:
@@ -2040,6 +2051,36 @@ paths:
       security:
       - BearerAuth: []
       summary: 盘点摄像头历史任务查询
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/InventoryMonthList:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.InventoryMonthListInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.InventoryMonthListDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 近一个月在架离架错架统计
       tags:
       - FlyRead
   /api/services/app/FlyRead/InventorySet:

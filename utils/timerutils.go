@@ -43,6 +43,14 @@ func NowInLocation() time.Time {
 	return now
 }
 
+// 东八区时间系统当前时间
+func NowDateLocation() time.Time {
+	var now = NowInLocation()
+	// 取当前日期部分（清除时间）
+	dateOnly := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+	return dateOnly
+}
+
 func GetCurrentTime() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
