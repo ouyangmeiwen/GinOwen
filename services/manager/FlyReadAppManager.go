@@ -1346,3 +1346,120 @@ func (b *FlyReadAppManager) GetOcrImgs(LayerCode, ItemBarcode string, tenantid i
 	}
 	return httpRespJson, nil
 }
+
+func (b *FlyReadAppManager) QueryShelfNum(tenantid int) (resp dto.QueryShelfNumDto, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
+	fmt.Println("QueryShelfNum:", url)
+
+	//构建http请求
+	var payload dto.GetShelfNumInput
+	payload.Container = "lcsinv"
+	payload.Component = "shelf_book"
+	payload.Service = "query_shelf_num"
+	payload.Token = token
+	payload.Obj = dto.GetShelfNumObj{
+		Query_type: "1",
+	}
+
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("QueryShelfNum")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.QueryShelfNumDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if !httpRespJson.Success {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}
+
+func (b *FlyReadAppManager) QueryNotHitRank(query_limit int, tenantid int) (resp dto.QueryNotHitRankDto, err error) {
+
+	var token string
+	token, err = b.GetToken(tenantid, false)
+	if err != nil {
+		return resp, fmt.Errorf("Token获取失败" + err.Error())
+	}
+	url := b.getHttpByTenant(tenantid) + "/lcsapi/lcsinv"
+	fmt.Println("QueryNotHitRank:", url)
+
+	//构建http请求
+	var payload dto.GetNotHitListInput
+	payload.Container = "lcsinv"
+	payload.Component = "shelf_book"
+	payload.Service = "query_shelf_num"
+	payload.Token = token
+	payload.Obj = dto.GetNotHitObj{
+		Query_type:  "1",
+		Query_limit: query_limit,
+	}
+
+	// 将 map 序列化为 JSON 字节
+	data, err := json.Marshal(payload)
+	if err != nil {
+		fmt.Println("JSON 序列化失败:", err)
+		return
+	}
+	// 自定义请求头（可选）
+	headers := map[string]string{
+		"tenant-id":     fmt.Sprintf("%d", tenantid),
+		"Cookie":        fmt.Sprintf("tenant={%d}", tenantid),
+		"Authorization": fmt.Sprintf("Bearer %s", token),
+	}
+	// 发起 POST 请求
+	var httpResp string
+	httpResp, err = utils.GetFileContent("QueryNotHitRank")
+	if err != nil {
+		fmt.Println("请求参数" + string(data))
+		httpResp, err = utils.Post(url, data, headers)
+		if err != nil {
+			fmt.Println("请求失败:", err)
+			return
+		}
+		if httpResp == "" {
+			return resp, fmt.Errorf("返回结果为空")
+		}
+		fmt.Println("请求返回" + httpResp)
+	}
+	var httpRespJson dto.QueryNotHitRankDto
+	err = json.Unmarshal([]byte(httpResp), &httpRespJson)
+	if err != nil {
+		fmt.Println("JSON 反序列化失败:", err)
+	}
+	if !httpRespJson.Success {
+		return resp, fmt.Errorf("失败，错误代码: %d, 错误信息: %s", httpRespJson.Code, httpRespJson.Msg)
+	}
+	return httpRespJson, nil
+}

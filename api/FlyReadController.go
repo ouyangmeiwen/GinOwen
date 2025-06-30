@@ -731,3 +731,81 @@ func (b *FlyReadController) InventoryMonthList(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// BooksNewIndex
+// @Tags     FlyRead
+// @Summary  近一个月在架离架错架统计
+// @Produce  application/json
+// @Param    data  body     request.BooksNewIndexInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.BooksNewIndexDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/BooksNewIndex [post]
+func (b *FlyReadController) BooksNewIndex(c *gin.Context) {
+
+	var req request.BooksNewIndexInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.BooksNewIndexDto
+	resp, err = ServicesGroup.flyreadAppService.BooksNewIndex(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// GetNotHitRank
+// @Tags     FlyRead
+// @Summary  获取未命中的排行
+// @Produce  application/json
+// @Param    data  query       request.GetNotHitRankInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=[]response.GetNotHitRankDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetNotHitRank [get]
+func (b *FlyReadController) GetNotHitRank(c *gin.Context) {
+
+	var req request.GetNotHitRankInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp []response.GetNotHitRankDto
+	resp, err = ServicesGroup.flyreadAppService.GetNotHitRank(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// GetFaultRank
+// @Tags     FlyRead
+// @Summary  错架提醒
+// @Produce  application/json
+// @Param    data  query       request.GetFaultRankInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=[]response.GetFaultRankDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetFaultRank [get]
+func (b *FlyReadController) GetFaultRank(c *gin.Context) {
+
+	var req request.GetFaultRankInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp []response.GetFaultRankDto
+	resp, err = ServicesGroup.flyreadAppService.GetFaultRank(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

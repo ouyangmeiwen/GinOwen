@@ -151,3 +151,20 @@ type InventoryMonthListDto struct {
 	InventoryState int    `form:"InventoryState" json:"InventoryState"`
 	Count          int    `form:"Count" json:"Count"`
 }
+type BooksNewIndexDto struct {
+	TotalCount       int `form:"TotalCount" json:"TotalCount"`
+	Seg_num          int `form:"seg_num" json:"seg_num"`
+	Ocr_num          int `form:"ocr_num" json:"ocr_num"`
+	Match_num        int `form:"match_num" json:"match_num"`
+	Confidence_num   int `form:"confidence_num" json:"confidence_num"`
+	Unconfidence_num int `form:"unconfidence_num" json:"unconfidence_num"`
+}
+type GetNotHitRankDto struct {
+	dto.GetNotHitListDto
+}
+type GetFaultRankDto struct {
+	LayerId   string `form:"LayerId" json:"LayerId"`
+	LayerName string `form:"LayerName" json:"LayerName"`
+	Count     int    `form:"Count" json:"Count"`
+	Time      string `form:"Time" json:"Time"`
+}

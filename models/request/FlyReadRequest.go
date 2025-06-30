@@ -137,3 +137,12 @@ type DetailStatusListInput struct {
 }
 type InventoryMonthListInput struct {
 }
+
+type BooksNewIndexInput struct {
+}
+type GetNotHitRankInput struct {
+	Query_limit int `form:"query_limit" json:"query_limit"`
+}
+type GetFaultRankInput struct {
+	Count int `form:"count" json:"count"`
+}

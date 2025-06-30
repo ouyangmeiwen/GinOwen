@@ -258,6 +258,8 @@ definitions:
         description: 解锁时间，格式："yyyy-mm-dd hh:mm:ss"
         type: string
     type: object
+  request.BooksNewIndexInput:
+    type: object
   request.CreatWorkInput:
     properties:
       deviceType:
@@ -818,6 +820,21 @@ definitions:
     type: object
   response.AddScheduledTaskDto:
     type: object
+  response.BooksNewIndexDto:
+    properties:
+      TotalCount:
+        type: integer
+      confidence_num:
+        type: integer
+      match_num:
+        type: integer
+      ocr_num:
+        type: integer
+      seg_num:
+        type: integer
+      unconfidence_num:
+        type: integer
+    type: object
   response.CreatWorkDto:
     properties:
       success:
@@ -911,6 +928,17 @@ definitions:
           $ref: '#/definitions/dto.FlyReadRow'
         type: array
     type: object
+  response.GetFaultRankDto:
+    properties:
+      Count:
+        type: integer
+      LayerId:
+        type: string
+      LayerName:
+        type: string
+      Time:
+        type: string
+    type: object
   response.GetFlyTokenInputResp:
     properties:
       accessToken:
@@ -948,6 +976,21 @@ definitions:
         type: string
       sysStartTime:
         description: 系统开始时间
+        type: string
+    type: object
+  response.GetNotHitRankDto:
+    properties:
+      case_name:
+        description: 为层位名字
+        type: string
+      case_no:
+        description: 为层位号
+        type: string
+      inventory_time:
+        description: 盘点时间
+        type: string
+      unConfidence_num:
+        description: unConfidence_num
         type: string
     type: object
   response.GetOcrImgsDto:
@@ -1630,6 +1673,34 @@ paths:
       summary: 添加任务
       tags:
       - Task
+  /api/services/app/FlyRead/BooksNewIndex:
+    post:
+      parameters:
+      - description: 入参
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.BooksNewIndexInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.BooksNewIndexDto'
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 近一个月在架离架错架统计
+      tags:
+      - FlyRead
   /api/services/app/FlyRead/CreatWork:
     post:
       parameters:
@@ -1797,6 +1868,33 @@ paths:
       summary: 获取可用的层架关系
       tags:
       - FlyRead
+  /api/services/app/FlyRead/GetFaultRank:
+    get:
+      parameters:
+      - in: query
+        name: count
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.GetFaultRankDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 错架提醒
+      tags:
+      - FlyRead
   /api/services/app/FlyRead/GetFlyReadSetting:
     get:
       produces:
@@ -1863,6 +1961,33 @@ paths:
       security:
       - BearerAuth: []
       summary: 获取盘点设置
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/GetNotHitRank:
+    get:
+      parameters:
+      - in: query
+        name: query_limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.GetNotHitRankDto'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取未命中的排行
       tags:
       - FlyRead
   /api/services/app/FlyRead/GetOcrImgs:

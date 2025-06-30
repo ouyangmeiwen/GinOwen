@@ -1303,7 +1303,7 @@ func (f *FlyReadAppService) InventoryMonthList(input request.InventoryMonthListI
 	prevMonth := dateOnly.AddDate(0, -1, 0)
 
 	var statlist []models.Libinventorystat
-	err = global.OWEN_DB.Model(&models.Libinventorystat{}).Where("TenantID=? and OriginType=10 and StatType=0 and StatDate>?", tenantid, prevMonth).Find(&statlist).Error
+	err = global.OWEN_DB.Model(&models.Libinventorystat{}).Where("TenantID=? and OriginType=10 and StatType=0 and StatDate>?", tenantid, prevMonth).Order("StatDate desc,InventoryState asc").Find(&statlist).Error
 	if err != nil {
 		return resp, err
 	}
@@ -1319,5 +1319,74 @@ func (f *FlyReadAppService) InventoryMonthList(input request.InventoryMonthListI
 		resp = append(resp, dto)
 	}
 
+	return resp, nil
+}
+func (f *FlyReadAppService) BooksNewIndex(input request.BooksNewIndexInput, tenantid int) (resp response.BooksNewIndexDto, err error) {
+	var totalCount int64
+	global.OWEN_DB.Model(&models.Libitem{}).Where("TenantID=? and IsDeleted=0", tenantid).Count(&totalCount)
+	var dto_resp dto.QueryShelfNumDto
+	dto_resp, err = ManagerGroup.frymanager.QueryShelfNum(tenantid)
+	if err != nil {
+		return resp, err
+	}
+	resp.TotalCount = int(totalCount)
+	resp.Seg_num = dto_resp.Obj.Seg_num
+	resp.Ocr_num = dto_resp.Obj.Ocr_num
+	resp.Match_num = dto_resp.Obj.Match_num
+	resp.Confidence_num = dto_resp.Obj.Confidence_num
+	resp.Unconfidence_num = dto_resp.Obj.Unconfidence_num
+
+	return resp, nil
+}
+
+func (f *FlyReadAppService) GetNotHitRank(req request.GetNotHitRankInput, tenantid int) (resp []response.GetNotHitRankDto, err error) {
+	var dto_reso dto.QueryNotHitRankDto
+	dto_reso, err = ManagerGroup.frymanager.QueryNotHitRank(req.Query_limit, tenantid)
+	if err != nil {
+		return resp, err
+	}
+	for _, k := range dto_reso.Obj {
+		var one response.GetNotHitRankDto
+		one.GetNotHitListDto = k
+		resp = append(resp, one)
+	}
+	return resp, nil
+}
+
+type FaultLayerStat struct {
+	LayerName string
+	LayerId   string
+	Count     int
+	Time      time.Time
+}
+
+func (f *FlyReadAppService) GetFaultRank(input request.GetFaultRankInput, tenantid int) (resp []response.GetFaultRankDto, err error) {
+	var faultList []FaultLayerStat
+	sql := `
+SELECT 
+    MAX(LayerName) AS LayerName,
+    LayerId,
+    COUNT(*) AS Count,
+    MAX(COALESCE(LastModificationTime, CreationTime)) AS Time
+FROM libiteminventoryinfo
+WHERE 
+    InventoryState = 3 AND
+    LayerId IS NOT NULL AND TRIM(LayerId) != ''
+GROUP BY LayerId
+ORDER BY Count DESC
+LIMIT ?
+`
+	err = global.OWEN_DB.Raw(sql, input.Count).Scan(&faultList).Error
+	if err != nil {
+		return resp, err
+	}
+	for _, v := range faultList {
+		var dto response.GetFaultRankDto
+		dto.LayerId = v.LayerId
+		dto.LayerName = v.LayerName
+		dto.Count = v.Count
+		dto.Time = utils.FormatInLocation("2006-01-02 15:04:05", v.Time)
+		resp = append(resp, dto)
+	}
 	return resp, nil
 }

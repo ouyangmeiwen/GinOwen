@@ -325,6 +325,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/BooksNewIndex": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "近一个月在架离架错架统计",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.BooksNewIndexInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.BooksNewIndexDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/CreatWork": {
             "post": {
                 "security": [
@@ -624,6 +674,55 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/GetFaultRank": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "错架提醒",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "count",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.GetFaultRankDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/GetFlyReadSetting": {
             "get": {
                 "security": [
@@ -737,6 +836,55 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/response.GetInventorySetDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/GetNotHitRank": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "获取未命中的排行",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "query_limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.GetNotHitRankDto"
+                                            }
                                         },
                                         "msg": {
                                             "type": "string"
@@ -3095,6 +3243,9 @@ const docTemplate = `{
                 }
             }
         },
+        "request.BooksNewIndexInput": {
+            "type": "object"
+        },
         "request.CreatWorkInput": {
             "type": "object",
             "properties": {
@@ -3873,6 +4024,29 @@ const docTemplate = `{
         "response.AddScheduledTaskDto": {
             "type": "object"
         },
+        "response.BooksNewIndexDto": {
+            "type": "object",
+            "properties": {
+                "TotalCount": {
+                    "type": "integer"
+                },
+                "confidence_num": {
+                    "type": "integer"
+                },
+                "match_num": {
+                    "type": "integer"
+                },
+                "ocr_num": {
+                    "type": "integer"
+                },
+                "seg_num": {
+                    "type": "integer"
+                },
+                "unconfidence_num": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.CreatWorkDto": {
             "type": "object",
             "properties": {
@@ -4014,6 +4188,23 @@ const docTemplate = `{
                 }
             }
         },
+        "response.GetFaultRankDto": {
+            "type": "object",
+            "properties": {
+                "Count": {
+                    "type": "integer"
+                },
+                "LayerId": {
+                    "type": "string"
+                },
+                "LayerName": {
+                    "type": "string"
+                },
+                "Time": {
+                    "type": "string"
+                }
+            }
+        },
         "response.GetFlyTokenInputResp": {
             "type": "object",
             "properties": {
@@ -4066,6 +4257,27 @@ const docTemplate = `{
                 },
                 "sysStartTime": {
                     "description": "系统开始时间",
+                    "type": "string"
+                }
+            }
+        },
+        "response.GetNotHitRankDto": {
+            "type": "object",
+            "properties": {
+                "case_name": {
+                    "description": "为层位名字",
+                    "type": "string"
+                },
+                "case_no": {
+                    "description": "为层位号",
+                    "type": "string"
+                },
+                "inventory_time": {
+                    "description": "盘点时间",
+                    "type": "string"
+                },
+                "unConfidence_num": {
+                    "description": "unConfidence_num",
                     "type": "string"
                 }
             }
