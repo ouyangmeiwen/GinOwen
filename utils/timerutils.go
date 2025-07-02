@@ -50,6 +50,22 @@ func NowDateLocation() time.Time {
 	dateOnly := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
 	return dateOnly
 }
+func GetStatRange() (dtStart, dtEnd time.Time) {
+	today := NowInLocation()
+	// 当前季度
+	currentQuarter := (int(today.Month())-1)/3 + 1
+	lastQuarter := currentQuarter - 1
+	lastQuarterYear := today.Year()
+	if lastQuarter == 0 {
+		lastQuarter = 4
+		lastQuarterYear--
+	}
+	startMonth := (lastQuarter-1)*3 + 1
+
+	dtStart = time.Date(lastQuarterYear, time.Month(startMonth), 1, 0, 0, 0, 0, today.Location())
+	dtEnd = dtStart.AddDate(0, 3, 0) // 加三个月
+	return dtStart, dtEnd
+}
 
 func GetCurrentTime() string {
 	return time.Now().Format("2006-01-02 15:04:05")

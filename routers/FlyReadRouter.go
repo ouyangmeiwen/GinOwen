@@ -41,5 +41,7 @@ func RegisterFlyReadRoutes(r *gin.Engine) {
 		api.POST("BooksNewIndex", ApiGroup.flyreadApi.BooksNewIndex)
 		api.GET("GetNotHitRank", ApiGroup.flyreadApi.GetNotHitRank)
 		api.GET("GetFaultRank", ApiGroup.flyreadApi.GetFaultRank)
+		api.POST("BooksIndex", ApiGroup.flyreadApi.BooksIndex)
+		api.POST("BookRankIndex", ApiGroup.flyreadApi.BookRankIndex)
 	}
 }

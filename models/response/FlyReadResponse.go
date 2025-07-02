@@ -168,3 +168,23 @@ type GetFaultRankDto struct {
 	Count     int    `form:"Count" json:"Count"`
 	Time      string `form:"Time" json:"Time"`
 }
+type BooksIndexDto struct {
+	ItemsTotal              int    `form:"ItemsTotal" json:"ItemsTotal"`
+	ItemLastYear            int    `form:"ItemLastYear" json:"ItemLastYear"`
+	ItemCurrentYear         int    `form:"ItemCurrentYear" json:"ItemCurrentYear"`
+	OffBooksTotal           int    `form:"OffBooksTotal" json:"OffBooksTotal"`
+	OffBooksLastMonth       int    `form:"OffBooksLastMonth" json:"OffBooksLastMonth"`
+	OffBookCurrentMonth     int    `form:"OffBookCurrentMonth" json:"OffBookCurrentMonth"`
+	OnbooksTotal            int    `form:"OnbooksTotal" json:"OnbooksTotal"`
+	OnBookCurrentMonth      int    `form:"OnBookCurrentMonth" json:"OnBookCurrentMonth"`
+	OnbooksLastMonth        int    `form:"OnbooksLastMonth" json:"OnbooksLastMonth"`
+	BookExceptionTotal      int    `form:"BookExceptionTotal" json:"BookExceptionTotal"`
+	BookExceptionUpdateTime string `form:"BookExceptionUpdateTime" json:"BookExceptionUpdateTime"`
+}
+type BookRankIndexDto struct {
+	Title     string `form:"Title" json:"Title"`
+	Count     int    `form:"Count" json:"Count"`
+	LastCount int    `form:"LastCount" json:"LastCount"`
+	Index     int    `form:"Index" json:"Index"`
+	CallNo    string `form:"CallNo" json:"CallNo"`
+}

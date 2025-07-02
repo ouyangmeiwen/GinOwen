@@ -325,6 +325,109 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/services/app/FlyRead/BookRankIndex": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "离架排行",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.BookRankIndexInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/response.BookRankIndexDto"
+                                            }
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/app/FlyRead/BooksIndex": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "FlyRead"
+                ],
+                "summary": "图书统计类查询",
+                "parameters": [
+                    {
+                        "description": "入参",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.BooksIndexInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "返回",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.BooksIndexDto"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/services/app/FlyRead/BooksNewIndex": {
             "post": {
                 "security": [
@@ -3243,6 +3346,27 @@ const docTemplate = `{
                 }
             }
         },
+        "request.BookRankIndexInput": {
+            "type": "object",
+            "required": [
+                "Count"
+            ],
+            "properties": {
+                "Count": {
+                    "type": "integer"
+                },
+                "CountType": {
+                    "description": "1月 2季度 默认1几度",
+                    "type": "string"
+                },
+                "isOcrBarcode": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "request.BooksIndexInput": {
+            "type": "object"
+        },
         "request.BooksNewIndexInput": {
             "type": "object"
         },
@@ -4023,6 +4147,64 @@ const docTemplate = `{
         },
         "response.AddScheduledTaskDto": {
             "type": "object"
+        },
+        "response.BookRankIndexDto": {
+            "type": "object",
+            "properties": {
+                "CallNo": {
+                    "type": "string"
+                },
+                "Count": {
+                    "type": "integer"
+                },
+                "Index": {
+                    "type": "integer"
+                },
+                "LastCount": {
+                    "type": "integer"
+                },
+                "Title": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.BooksIndexDto": {
+            "type": "object",
+            "properties": {
+                "BookExceptionTotal": {
+                    "type": "integer"
+                },
+                "BookExceptionUpdateTime": {
+                    "type": "string"
+                },
+                "ItemCurrentYear": {
+                    "type": "integer"
+                },
+                "ItemLastYear": {
+                    "type": "integer"
+                },
+                "ItemsTotal": {
+                    "type": "integer"
+                },
+                "OffBookCurrentMonth": {
+                    "type": "integer"
+                },
+                "OffBooksLastMonth": {
+                    "type": "integer"
+                },
+                "OffBooksTotal": {
+                    "type": "integer"
+                },
+                "OnBookCurrentMonth": {
+                    "type": "integer"
+                },
+                "OnbooksLastMonth": {
+                    "type": "integer"
+                },
+                "OnbooksTotal": {
+                    "type": "integer"
+                }
+            }
         },
         "response.BooksNewIndexDto": {
             "type": "object",

@@ -8,6 +8,7 @@ import (
 	"GINOWEN/models/response"
 	"GINOWEN/utils"
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -1387,6 +1388,168 @@ LIMIT ?
 		dto.Count = v.Count
 		dto.Time = utils.FormatInLocation("2006-01-02 15:04:05", v.Time)
 		resp = append(resp, dto)
+	}
+	return resp, nil
+}
+func (f *FlyReadAppService) BooksIndex(input request.BooksIndexInput, tenantid int) (resp response.BooksIndexDto, err error) {
+
+	var ItemsTotal int64
+	global.OWEN_DB.Model(&models.Libitem{}).Where("TenantID=? and IsDeleted=0", tenantid).Count(&ItemsTotal)
+
+	var OffBooksTotal int64
+	global.OWEN_DB.Model(&models.Libiteminventorylog{}).Where("TenantID=? and InventoryWorkType=3", tenantid).Count(&OffBooksTotal)
+
+	var OnbooksTotal int64
+	global.OWEN_DB.Model(&models.Libiteminventoryinfo{}).Where("TenantID=? and (InventoryState=1 or InventoryState=3)", tenantid).Count(&OnbooksTotal)
+
+	var BookExceptionTotal int64
+	global.OWEN_DB.Model(&models.Libiteminventoryinfo{}).Where("TenantID=? and ExceptionMsg!=null and ExceptionMsg!=''", tenantid).Count(&BookExceptionTotal)
+
+	resp.ItemsTotal = int(ItemsTotal)
+	resp.OffBooksTotal = int(OffBooksTotal)
+	resp.OnbooksTotal = int(OnbooksTotal)
+	resp.BookExceptionTotal = int(BookExceptionTotal)
+	return resp, nil
+}
+
+type logCount struct {
+	ItemBarcode string
+	Count       int
+	ItemTitle   string
+}
+
+func (f *FlyReadAppService) BookRankIndex(input request.BookRankIndexInput, tenantid int) (resp []response.BookRankIndexDto, err error) {
+	today := utils.NowDateLocation()
+	dtEnd := time.Date(today.Year(), today.Month(), 1, 0, 0, 0, 0, today.Location())
+	dtStart := dtEnd.AddDate(0, -1, 0)
+	if input.CountType == "2" {
+		dtStart, dtEnd = utils.GetStatRange()
+	}
+	if input.IsOcrBarcode {
+		var OffBooksCurrent []logCount
+		sql := `
+		select ItemBarcode,Count(1) as Count from  libiteminventorylog where TenantId=? AND InventoryWorkType=3  AND CreationTime>=?
+GROUP BY ItemBarcode 
+ORDER BY Count DESC
+LIMIT ?
+		`
+		err = global.OWEN_DB.Raw(sql, tenantid, dtEnd, input.Count).Scan(&OffBooksCurrent).Error
+		if err != nil {
+			return resp, err
+		}
+		var barcodes []string
+		if len(OffBooksCurrent) > 0 {
+			for _, v := range OffBooksCurrent {
+				//barcode := strings.TrimPrefix(v.ItemBarcode, "*")
+				barcodes = append(barcodes, v.ItemBarcode)
+			}
+			var OffBooksLast []logCount
+			OffBooksLast_map := make(map[string]int)
+			sql = `
+		select ItemBarcode,Count(1) as Count from  libiteminventorylog where TenantId=? AND InventoryWorkType=3  
+		AND CreationTime>=? AND  CreationTime<? AND ItemBarcode IN ? 
+GROUP BY ItemBarcode 
+ORDER BY Count DESC
+LIMIT ?
+		`
+			err = global.OWEN_DB.Raw(sql, tenantid, dtStart, dtEnd, barcodes, input.Count).Scan(&OffBooksLast).Error
+			if err != nil {
+
+			}
+			if len(OffBooksLast) > 0 {
+				for _, v := range OffBooksLast {
+					OffBooksLast_map[v.ItemBarcode] = v.Count
+				}
+			}
+
+			var barcodes_book []string
+			for _, v := range barcodes {
+				barcode := strings.TrimPrefix(v, "*")
+				barcodes_book = append(barcodes_book, barcode)
+			}
+
+			var books []models.Libitem
+			books_map := make(map[string]models.Libitem)
+			err = global.OWEN_DB.Model(&models.Libitem{}).Where("TenantID=? and IsDeleted=0 and Barcode in ?", tenantid, barcodes_book).Find(&books).Error
+			if err != nil {
+
+			}
+			if len(books) > 0 {
+				for _, v := range books {
+					books_map[v.Barcode] = v
+				}
+			}
+
+			// 排序：按 Count 倒序
+			sort.Slice(OffBooksCurrent, func(i, j int) bool {
+				return OffBooksCurrent[i].Count > OffBooksCurrent[j].Count // 逆序
+			})
+
+			for i := 0; i < len(OffBooksCurrent); i++ {
+				item := OffBooksCurrent[i]
+				var dto response.BookRankIndexDto
+				book_barcode := strings.TrimPrefix(item.ItemBarcode, "*")
+				dto.Title = books_map[book_barcode].Title
+				dto.Count = item.Count
+				dto.LastCount = OffBooksLast_map[item.ItemBarcode]
+				dto.Index = i + 1
+				dto.CallNo = utils.SafeString(books_map[book_barcode].CallNo)
+				resp = append(resp, dto)
+			}
+		}
+
+	} else {
+		var OffBooksCurrent []logCount
+		sql := `
+		select ItemTitle,Count(1) as Count from  libiteminventorylog where TenantId=? AND InventoryWorkType=3  AND CreationTime>=?
+GROUP BY ItemTitle 
+ORDER BY Count DESC
+LIMIT ?
+		`
+		err = global.OWEN_DB.Raw(sql, tenantid, dtEnd, input.Count).Scan(&OffBooksCurrent).Error
+		if err != nil {
+			return resp, err
+		}
+		if len(OffBooksCurrent) > 0 {
+			var titles []string
+			for _, v := range OffBooksCurrent {
+				titles = append(titles, v.ItemTitle)
+			}
+			var OffBooksLast []logCount
+			OffBooksLast_map := make(map[string]int)
+			sql = `
+		select ItemTitle,Count(1) as Count from  libiteminventorylog where TenantId=? AND InventoryWorkType=3  
+		AND CreationTime>=? AND  CreationTime<? AND ItemTitle IN ? 
+GROUP BY ItemTitle 
+ORDER BY Count DESC
+LIMIT ?
+		`
+			err = global.OWEN_DB.Raw(sql, tenantid, dtStart, dtEnd, titles, input.Count).Scan(&OffBooksLast).Error
+			if err != nil {
+
+			}
+			if len(OffBooksLast) > 0 {
+				for _, v := range OffBooksLast {
+					OffBooksLast_map[v.ItemTitle] = v.Count
+				}
+			}
+
+			// 排序：按 Count 倒序
+			sort.Slice(OffBooksCurrent, func(i, j int) bool {
+				return OffBooksCurrent[i].Count > OffBooksCurrent[j].Count // 逆序
+			})
+
+			for i := 0; i < len(OffBooksCurrent); i++ {
+				item := OffBooksCurrent[i]
+				var dto response.BookRankIndexDto
+				dto.Title = item.ItemTitle
+				dto.Count = item.Count
+				dto.LastCount = OffBooksLast_map[item.ItemTitle]
+				dto.Index = i + 1
+				resp = append(resp, dto)
+			}
+		}
+
 	}
 	return resp, nil
 }

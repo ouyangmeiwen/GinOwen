@@ -809,3 +809,55 @@ func (b *FlyReadController) GetFaultRank(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// BooksIndex
+// @Tags     FlyRead
+// @Summary  图书统计类查询
+// @Produce  application/json
+// @Param    data  body     request.BooksIndexInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=response.BooksIndexDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/BooksIndex [post]
+func (b *FlyReadController) BooksIndex(c *gin.Context) {
+
+	var req request.BooksIndexInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.BooksIndexDto
+	resp, err = ServicesGroup.flyreadAppService.BooksIndex(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// BookRankIndex
+// @Tags     FlyRead
+// @Summary  离架排行
+// @Produce  application/json
+// @Param    data  body     request.BookRankIndexInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=[]response.BookRankIndexDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/BookRankIndex [post]
+func (b *FlyReadController) BookRankIndex(c *gin.Context) {
+
+	var req request.BookRankIndexInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp []response.BookRankIndexDto
+	resp, err = ServicesGroup.flyreadAppService.BookRankIndex(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

@@ -146,3 +146,11 @@ type GetNotHitRankInput struct {
 type GetFaultRankInput struct {
 	Count int `form:"count" json:"count"`
 }
+
+type BooksIndexInput struct {
+}
+type BookRankIndexInput struct {
+	CountType    string `form:"CountType" json:"CountType"` //1月 2季度 默认1几度
+	Count        int    `binding:"required" form:"Count" json:"Count"`
+	IsOcrBarcode bool   `form:"isOcrBarcode" json:"isOcrBarcode"`
+}
