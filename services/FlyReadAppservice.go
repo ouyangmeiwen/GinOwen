@@ -1553,3 +1553,138 @@ LIMIT ?
 	}
 	return resp, nil
 }
+
+func (f *FlyReadAppService) InventoryFlyReadIndex(input request.InventoryFlyReadIndexInput, tenantid int) (resp response.InventoryFlyReadIndexDto, err error) {
+	current, e1 := ManagerGroup.frymanager.InventoryHis(false, tenantid)
+	if e1 != nil {
+		return resp, e1
+	}
+	last, e2 := ManagerGroup.frymanager.InventoryHis(true, tenantid)
+	if e2 != nil {
+		return resp, e2
+	}
+
+	resp.Current = response.InventoryFlyReadHisDto{
+		CreateTime:  current.Obj.CreateTime,
+		UpdateTime:  current.Obj.UpdateTime,
+		WorkId:      current.Obj.WorkId,
+		CheckType:   current.Obj.CheckType,
+		CheckAll:    current.Obj.CheckAll,
+		DeviceType:  current.Obj.DeviceType,
+		Status:      current.Obj.Status,
+		TaskAllNum:  current.Obj.TaskAllNum,
+		FinishNum:   current.Obj.FinishNum,
+		BookCount:   current.Obj.BookCount,
+		AssertCount: current.Obj.AssertCount,
+	}
+	resp.Last = response.InventoryFlyReadHisDto{
+		CreateTime:  last.Obj.CreateTime,
+		UpdateTime:  last.Obj.UpdateTime,
+		WorkId:      last.Obj.WorkId,
+		CheckType:   last.Obj.CheckType,
+		CheckAll:    last.Obj.CheckAll,
+		DeviceType:  last.Obj.DeviceType,
+		Status:      last.Obj.Status,
+		TaskAllNum:  last.Obj.TaskAllNum,
+		FinishNum:   last.Obj.FinishNum,
+		BookCount:   last.Obj.BookCount,
+		AssertCount: last.Obj.AssertCount,
+	}
+	if resp.Last.WorkId != "" {
+		var work models.Libinventorywork
+		err = global.OWEN_DB.Model(&models.Libinventorywork{}).Where("TenantID=? and IsDeleted=0 and Id=?", tenantid, resp.Last.WorkId).First(&work).Error
+		if err != nil {
+			return resp, nil
+		}
+		var details []models.Libinventoryworkdetail
+		err = global.OWEN_DB.Model(&models.Libinventoryworkdetail{}).Where("TenantID=?  and WorkID=?", tenantid, resp.Last.WorkId).Find(&details).Error
+		if err != nil {
+			return resp, nil
+		}
+		if len(details) <= 0 {
+			return resp, err
+		}
+		var ids []string
+		for _, v := range details {
+			ids = append(ids, v.ID)
+		}
+		var logs []models.Libiteminventorylog
+		err = global.OWEN_DB.Model(&models.Libiteminventorylog{}).Where("TenantID=? and OriginType=10 and InventoryWorkType=1  and Id in ?", tenantid, ids).Find(&logs).Error
+		if err != nil {
+			return resp, nil
+		}
+		if len(logs) <= 0 {
+			return resp, nil
+		}
+		logs_map := make(map[int]int)
+		for _, v := range logs {
+			logs_map[int(v.InventoryState)]++
+		}
+
+		resp.Last.OnNums = logs_map[1]
+		resp.Last.FaultNums = logs_map[3]
+		resp.Last.OffNums = logs_map[2]
+		resp.Last.OnAndFaultNums = resp.Last.FaultNums + resp.Last.OnNums
+		resp.Last.TotalNums = resp.Last.OnAndFaultNums
+		if resp.Last.UpdateTime == "" && work.WorkEndTime != nil {
+			resp.Last.UpdateTime = utils.FormatInLocation("2006-01-02 15:04:05", *work.WorkEndTime)
+		}
+		if resp.Last.CreateTime == "" && work.WorkStarTime != nil {
+			resp.Last.CreateTime = utils.FormatInLocation("2006-01-02 15:04:05", *work.WorkStarTime)
+		}
+
+	}
+	return resp, nil
+}
+
+func (f *FlyReadAppService) GetStructTreeList(tenantid int) (resp []response.StructDto, err error) {
+
+	var structlist []models.Libstruct
+	err = global.OWEN_DB.Model(&models.Libstruct{}).Where("TenantID=? and IsDeleted=0", tenantid).Find(&structlist).Error
+	if err != nil {
+		return resp, err
+	}
+	var struct_map_bulid []models.Libstruct
+	var struct_map_floor []models.Libstruct
+	var struct_map_room []models.Libstruct
+
+	for _, v := range structlist {
+		if v.FloorNo == 0 && v.RoomNo == 0 {
+			//build
+			struct_map_bulid = append(struct_map_bulid, v)
+		} else if v.FloorNo != 0 && v.RoomNo == 0 {
+			//floor
+			struct_map_floor = append(struct_map_floor, v)
+		} else if v.FloorNo != 0 && v.RoomNo != 0 {
+			//room
+			struct_map_room = append(struct_map_room, v)
+		}
+	}
+	for _, build := range struct_map_bulid {
+		var dto response.StructDto
+		dto.Libstruct = build //1级
+		buildcode := fmt.Sprintf("%02d", build.BuildNo)
+		for _, floor := range struct_map_floor {
+			floorcode := fmt.Sprintf("%02d%02d%02d", floor.BuildNo, floor.FloorNo, floor.RoomNo)
+			if strings.HasPrefix(floorcode, buildcode) {
+				var dto_floor response.StructDto
+				dto_floor.Libstruct = floor
+				dto.Children = append(dto.Children, dto_floor) //二级
+			}
+		}
+
+		for index := range dto.Children {
+			floorcode := fmt.Sprintf("%02d%02d", dto.Children[index].BuildNo, dto.Children[index].FloorNo)
+			for _, room := range struct_map_room {
+				roomcode := fmt.Sprintf("%02d%02d%02d", room.BuildNo, room.FloorNo, room.RoomNo)
+				if strings.HasPrefix(roomcode, floorcode) {
+					var dto_room response.StructDto
+					dto_room.Libstruct = room
+					dto.Children[index].Children = append(dto.Children[index].Children, dto_room) //三级
+				}
+			}
+		}
+		resp = append(resp, dto)
+	}
+	return resp, nil
+}

@@ -154,3 +154,7 @@ type BookRankIndexInput struct {
 	Count        int    `binding:"required" form:"Count" json:"Count"`
 	IsOcrBarcode bool   `form:"isOcrBarcode" json:"isOcrBarcode"`
 }
+type InventoryFlyReadIndexInput struct {
+}
+type GetStructTreeListInput struct {
+}

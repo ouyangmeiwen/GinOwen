@@ -861,3 +861,55 @@ func (b *FlyReadController) BookRankIndex(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// InventoryFlyReadIndex
+// @Tags     FlyRead
+// @Summary  视觉盘点首页数据
+// @Produce  application/json
+// @Param    data  body     request.InventoryFlyReadIndexInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=[]response.InventoryFlyReadIndexDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/InventoryFlyReadIndex [post]
+func (b *FlyReadController) InventoryFlyReadIndex(c *gin.Context) {
+
+	var req request.InventoryFlyReadIndexInput
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp response.InventoryFlyReadIndexDto
+	resp, err = ServicesGroup.flyreadAppService.InventoryFlyReadIndex(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
+
+// GetStructTreeList
+// @Tags     FlyRead
+// @Summary  获取结构树
+// @Produce  application/json
+// @Param    data  query       request.GetStructTreeListInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=[]response.StructDto,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetStructTreeList [get]
+func (b *FlyReadController) GetStructTreeList(c *gin.Context) {
+
+	var req request.GetStructTreeListInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp []response.StructDto
+	resp, err = ServicesGroup.flyreadAppService.GetStructTreeList(utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}
