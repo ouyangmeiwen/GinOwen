@@ -158,3 +158,10 @@ type InventoryFlyReadIndexInput struct {
 }
 type GetStructTreeListInput struct {
 }
+
+type GetEnableStructInput struct {
+	IsQueryAll       bool   `form:"isQeuryAll" json:"isQeuryAll"`
+	Robotid          string `form:"robotid" json:"robotid"`
+	Mapid            string `form:"mapid" json:"mapid"`
+	IsShowshelfPoint bool   `form:"isshowshelfpoint" json:"isshowshelfpoint"`
+}

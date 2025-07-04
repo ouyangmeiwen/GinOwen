@@ -913,3 +913,29 @@ func (b *FlyReadController) GetStructTreeList(c *gin.Context) {
 	}
 	utils.OkWithDetailed(resp, "成功", c)
 }
+
+// GetEnableStruct
+// @Tags     FlyRead
+// @Summary  获取书架结构
+// @Produce  application/json
+// @Param    data  query       request.GetEnableStructInput 			true  "入参"
+// @Success  200   {object}  utils.Response{data=[]response.FlyReadEnableStruct,msg=string}  "返回"
+// @Security BearerAuth
+// @Router   /api/services/app/FlyRead/GetEnableStruct [get]
+func (b *FlyReadController) GetEnableStruct(c *gin.Context) {
+
+	var req request.GetEnableStructInput
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		utils.FailWithMessage(err.Error(), c)
+		return
+	}
+	var resp []response.FlyReadEnableStruct
+	resp, err = ServicesGroup.flyreadAppService.GetEnableStruct(req, utils.GetCurrentTenantTd(c))
+	if err != nil {
+		global.OWEN_LOG.Error("失败!"+err.Error(), zap.Error(err))
+		utils.FailWithMessage("失败!"+err.Error(), c)
+		return
+	}
+	utils.OkWithDetailed(resp, "成功", c)
+}

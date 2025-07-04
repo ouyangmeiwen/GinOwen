@@ -7,6 +7,7 @@ import (
 	"GINOWEN/models/request"
 	"GINOWEN/models/response"
 	"GINOWEN/utils"
+	"encoding/json"
 	"fmt"
 	"sort"
 	"strconv"
@@ -1685,6 +1686,137 @@ func (f *FlyReadAppService) GetStructTreeList(tenantid int) (resp []response.Str
 			}
 		}
 		resp = append(resp, dto)
+	}
+	return resp, nil
+}
+
+func (f *FlyReadAppService) GetEnableStruct(input request.GetEnableStructInput, tenantid int) (resp []response.FlyReadEnableStruct, err error) {
+
+	var rows dto.GetEnableRowDto
+	rows, err = ManagerGroup.frymanager.GetEnableRow(input.IsQueryAll, "", tenantid)
+	if err != nil {
+		return resp, err
+	}
+	if len(rows.Items) <= 0 {
+		return resp, nil
+	}
+	if input.Robotid != "" {
+		var shelfpoints []models.Libshelfpoint
+		shelfpoint_query := global.OWEN_DB.Model(&models.Libshelfpoint{}).Where("TenantID=? and IsDeleted=0 and RobotID=?", tenantid, input.Robotid)
+		if len(strings.TrimSpace(input.Mapid)) > 0 {
+			shelfpoint_query = shelfpoint_query.Where("MapId=?", input.Mapid)
+		}
+		err = shelfpoint_query.Find(&shelfpoints).Error
+		if err != nil {
+			return resp, err
+		}
+		if len(shelfpoints) > 0 {
+			for rowindex := range rows.Items {
+				if len(rows.Items[rowindex].Shelfs) > 0 {
+					for shelfindex := range rows.Items[rowindex].Shelfs {
+						shelf := rows.Items[rowindex].Shelfs[shelfindex]
+						for _, point := range shelfpoints {
+							if point.CreateType == 1 && point.ShelfID != nil && *point.ShelfID == shelf.Id && point.X != nil && point.Y != nil {
+								rows.Items[rowindex].Shelfs[shelfindex].IsBindShelfPoint = true
+								break
+							}
+						}
+					}
+					if !input.IsShowshelfPoint {
+						for shelfindex := range rows.Items[rowindex].Shelfs {
+							if rows.Items[rowindex].Shelfs[shelfindex].IsBindShelfPoint {
+								rows.Items[rowindex].Shelfs[shelfindex] = dto.FlyReadShelf{}
+							}
+						}
+					}
+				}
+			}
+			if !input.IsShowshelfPoint {
+				for rowindex := range rows.Items {
+					iscanRemove := true
+					for _, shelf := range rows.Items[rowindex].Shelfs {
+						if shelf.Id != "" {
+							iscanRemove = false
+							break
+						}
+					}
+					if iscanRemove {
+						rows.Items[rowindex] = dto.FlyReadRow{}
+					}
+				}
+			}
+		}
+
+	}
+	var structs []response.StructDto
+	structs, err = f.GetStructTreeList(tenantid)
+	if err != nil {
+		return resp, err
+	}
+	if len(structs) <= 0 {
+		return resp, nil
+	}
+
+	var structs_bytes []byte
+	structs_bytes, err = json.Marshal(structs)
+	if err != nil {
+		return resp, err
+	}
+	err = json.Unmarshal(structs_bytes, &resp)
+	if err != nil {
+		return resp, err
+	}
+
+	for struct1index := range resp {
+		sturct1 := resp[struct1index]
+		for _, row := range rows.Items {
+			isrowAdd := false
+			for _, shelf := range row.Shelfs {
+				if shelf.StructId == sturct1.ID {
+					isrowAdd = true
+					break
+				}
+			}
+			if isrowAdd {
+				resp[struct1index].Rows = append(resp[struct1index].Rows, row)
+			}
+		}
+		if len(sturct1.Children) > 0 {
+			for struct11index := range resp[struct1index].Children {
+				struct11 := resp[struct1index].Children[struct11index]
+				for _, row := range rows.Items {
+					isrowAdd := false
+					for _, shelf := range row.Shelfs {
+						if shelf.StructId == struct11.ID {
+							isrowAdd = true
+							break
+						}
+					}
+					if isrowAdd {
+						resp[struct1index].Children[struct11index].Rows = append(resp[struct1index].Children[struct11index].Rows, row)
+					}
+				}
+				if len(struct11.Children) > 0 {
+					for struct111index := range resp[struct1index].Children[struct11index].Children {
+						struct111 := resp[struct1index].Children[struct11index].Children[struct111index]
+						for _, row := range rows.Items {
+							isrowAdd := false
+							for _, shelf := range row.Shelfs {
+								if shelf.StructId == struct111.ID {
+									isrowAdd = true
+									break
+								}
+							}
+							if isrowAdd {
+								resp[struct1index].Children[struct11index].Children[struct111index].Rows = append(resp[struct1index].Children[struct11index].Children[struct111index].Rows, row)
+							}
+						}
+					}
+
+				}
+			}
+		}
+
 	}
 	return resp, nil
 }

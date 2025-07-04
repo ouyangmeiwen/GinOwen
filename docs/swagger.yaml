@@ -957,6 +957,59 @@ definitions:
       TaskStatus:
         type: integer
     type: object
+  response.FlyReadEnableStruct:
+    properties:
+      BuildNo:
+        type: integer
+      BuildingName:
+        type: string
+      Children:
+        items:
+          $ref: '#/definitions/response.FlyReadEnableStruct'
+        type: array
+      CreationTime:
+        type: string
+      CreatorUserId:
+        type: integer
+      DeleterUserId:
+        type: integer
+      DeletionTime:
+        type: string
+      Description:
+        type: string
+      ExtensionName:
+        type: string
+      FloorName:
+        type: string
+      FloorNo:
+        type: integer
+      Id:
+        type: string
+      Img:
+        items:
+          type: integer
+        type: array
+      IsDeleted:
+        items:
+          type: integer
+        type: array
+      LastModificationTime:
+        type: string
+      LastModifierUserId:
+        type: integer
+      Remark:
+        type: string
+      RoomName:
+        type: string
+      RoomNo:
+        type: integer
+      Rows:
+        items:
+          $ref: '#/definitions/dto.FlyReadRow'
+        type: array
+      TenantId:
+        type: integer
+    type: object
   response.GetCaseImgsDto:
     properties:
       code:
@@ -2083,6 +2136,42 @@ paths:
       security:
       - BearerAuth: []
       summary: 获取可用的层架关系
+      tags:
+      - FlyRead
+  /api/services/app/FlyRead/GetEnableStruct:
+    get:
+      parameters:
+      - in: query
+        name: isQeuryAll
+        type: boolean
+      - in: query
+        name: isshowshelfpoint
+        type: boolean
+      - in: query
+        name: mapid
+        type: string
+      - in: query
+        name: robotid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回
+          schema:
+            allOf:
+            - $ref: '#/definitions/utils.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/response.FlyReadEnableStruct'
+                  type: array
+                msg:
+                  type: string
+              type: object
+      security:
+      - BearerAuth: []
+      summary: 获取书架结构
       tags:
       - FlyRead
   /api/services/app/FlyRead/GetFaultRank:

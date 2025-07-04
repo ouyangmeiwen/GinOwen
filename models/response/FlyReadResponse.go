@@ -218,3 +218,8 @@ type StructDto struct {
 	models.Libstruct
 	Children []StructDto `form:"Children" json:"Children"`
 }
+type FlyReadEnableStruct struct {
+	StructDto
+	Rows     []dto.FlyReadRow      `form:"Rows" json:"Rows"`
+	Children []FlyReadEnableStruct `form:"Children" json:"Children"`
+}
